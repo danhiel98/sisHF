@@ -113,14 +113,14 @@
 			}else{
 		?>
 			<div class="container">
-					<div class="alert alert-danger">
-						<strong>Vaya! </strong> No hay usuarios registrados en la sucursal seleccionada.
-					</div>
+				<div class="alert alert-warning">
+					<strong>Vaya! </strong> No hay usuarios registrados en la sucursal seleccionada.
+				</div>
 			</div>
 		<?php
+			}
 		}
 	}
-}
 	if (isset($_POST["users"])) {
 		$users = UserData::getAll();
 		?>

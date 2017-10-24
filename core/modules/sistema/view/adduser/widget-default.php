@@ -17,8 +17,6 @@ if(count($_POST)>0){
 	}
 	$user->username = $_POST["username"];
 	$user->email = $_POST["email"];
-	$user->idpreguntasecreta = $_POST["secret"];
-	$user->respuestapregunta = sha1(md5($_POST["respuesta"]));
 	$user->isAdmin = $isAdmin;
 	$user->password = sha1(md5($_POST["password"]));
 	if ($emp) {

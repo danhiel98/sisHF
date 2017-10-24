@@ -1,27 +1,20 @@
 <?php
 	$updtG = false;
-	$cq = false;
-
-	if (isset($_COOKIE['question_updated'])):
-		$cq = true;
-	endif;
 
 	if (isset($_POST["updateG"])) {
 		include("controllers/general.php");
 	}
 	$user = UserData::getById($_SESSION["user_id"]);
-	$pregs = SecretQuestionData::getAll();
 ?>
 <div class="row">
 	<h2>Actualizar Informaci&oacute;n De La Cuenta</h2>
 	<br>
 	<ul class="nav nav-tabs">
-    <li <?php if(!$cq){echo "class='active'";} ?>><a href="#default">Datos Generales</a></li>
+    <li class='active'><a href="#default">Datos Generales</a></li>
     <li><a href="#passwd">Contrase&ntilde;a</a></li>
-		<li <?php if($cq){echo "class='active'";} ?>><a href="#secret">Pregunta De Recuperaci&oacute;n</a></li>
   </ul>
 	<div class="tab-content">
-		<div id="default" class="tab-pane fade <?php if(!$cq){echo 'in active';} ?> ">
+		<div id="default" class="tab-pane fade in active">
 			<div class="col-md-6">
 				<h2>Modificar Datos</h2>
 				<br>
@@ -94,70 +87,6 @@
 				</form>
 			</div>
 		</div>
-		<div id="secret" class="tab-pane fade <?php if($cq){echo 'in active';} ?>">
-			<div class="col-md-6">
-				<h2>Cambiar Pregunta De Recuperaci&oacute;n</h2>
-				<br>
-				<form class="form-horizontal" id="changequestion" method="post" action="index.php?view=changeq" role="form">
-
-					<div class="form-group control-group">
-						<label class="col-lg-4 control-label">Pregunta Actual</label>
-						<div class="col-lg-8">
-							<h4><?php echo $user->getSecretQ()->pregunta; ?></h4>
-						</div>
-					</div>
-
-					<div class="form-group control-group">
-						<label for="respuestaactual" class="col-lg-4 control-label">Respuesta</label>
-						<div class="col-lg-8 controls">
-							<input type="password" class="form-control" id="respuestaactual" name="respuestaactual" placeholder="Respuesta de pregunta actual" required>
-							<p class="help-block"></p>
-						</div>
-					</div>
-					<hr>
-					<div class="form-group control-group">
-						<label for="question" class="col-lg-4 control-label">Elegir Pregunta</label>
-						<div class="col-lg-8 controls">
-							<select class="form-control" name="question" required>
-								<?php foreach ($pregs as $p): ?>
-									<option value="<?php echo $p->id; ?>"><?php echo $p->pregunta; ?></option>
-								<?php endforeach; ?>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group control-group">
-		    		<label for="newrespuesta" class="col-lg-4 control-label">Respuesta</label>
-		    		<div class="col-lg-8 controls">
-		      		<input type="password" class="form-control" id="newrespuesta" name="newrespuesta" placeholder="Intrdoduzca la respuesta" required>
-							<p class="help-block"></p>
-		    		</div>
-		  		</div>
-
-		  		<div class="form-group control-group">
-		    		<label for="confirmnewrespuesta" class="col-lg-4 control-label">Confirmar Nueva Contraseña</label>
-		    		<div class="col-lg-8 controls">
-							<input type="password" name="confirmnewrespuesta" class="form-control" id="confirmnewrespuesta" placeholder="Confirmar respuesta" maxlength="30" data-validation-match-match="newrespuesta" required>
-							<p class="help-block"></p>
-		    		</div>
-		  		</div>
-
-					<div class="form-group">
-						<div class="col-lg-offset-4 col-lg-8">
-							<button type="submit" class="btn btn-success">Actualizar Datos</button>
-						</div>
-					</div>
-
-				</form>
-				<?php if(isset($_COOKIE['question_updated'])):?>
-	    		<div class="alert alert-success alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		    		<p><i class='glyphicon glyphicon-off'></i> Se ha cambiado pregunta de recuperaci&oacute;n exitosamente !!</p>
-	    		</div>
-	    	<?php setcookie("question_updated","",time()-18600);
-	    	 endif; ?>
-			</div>
-		</div>
 	</div>
 </div>
 <script>
@@ -167,4 +96,4 @@
 	    });
 	});
 </script>
-<br><br><br><br><br><br><br><br><br>
+<br><br><br>

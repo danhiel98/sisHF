@@ -328,14 +328,6 @@ INSERT INTO `munsv` (`ID`, `MunName`, `DEPSV_ID`) VALUES
 	(261, 'Tepetitán', 10),
 	(262, 'Verapaz', 10);
 
-CREATE TABLE preguntaSecreta(
-  idPreguntaSecreta tinyint PRIMARY KEY AUTO_INCREMENT,
-  pregunta varchar(100) not null,
-  activo boolean default 1 not null
-);
-insert into preguntaSecreta values(null, 'Cuál es el nombre de su mascota?', 1);
-insert into preguntaSecreta values(null, 'Cuál es el nombre de su canción preferida?', 1);
-
 CREATE TABLE tipoPago(
   idTipoPago tinyint primary key,
   nombre varchar(7) not null
@@ -408,12 +400,9 @@ CREATE TABLE usuario(
   email varchar(100),
   clave varchar(60) not null,
   admin boolean not null default 0,
-  idPreguntaSecreta tinyint,
-  respuestaPregunta varchar(30),
   fechaCreacion datetime not null default current_timestamp,
   activo boolean default 1 not null,
   foreign key(idEmpleado) references empleado(idEmpleado),
-  foreign key(idPreguntaSecreta) references preguntaSecreta(idPreguntaSecreta)
 );
 insert into usuario values(null,null,'Usuario','Raíz','root','root@root.com','83353d597cbad458989f2b1a5c1fa1f9f665c858',1,2,'eff01947d6d2bac0a847db98a6c9a45c93102e4b',now(), 1);
 insert into usuario values(null,null,'Administrador','Principal','admin','admin@gmail.com','90b9aa7e25f80cf4f64e990b78a9fc5ebd6cecad',1,1,"96ace645ecdc87462b4067897d81e3a68956660f",now(),1);

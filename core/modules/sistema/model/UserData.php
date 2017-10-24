@@ -4,7 +4,6 @@ class UserData {
 
 	public function Userdata(){
 		$this->idempleado = "";
-		$this->idpreguntasecreta = "";
 		$this->name = "";
 		$this->lastname = "";
 		$this->user = "";
@@ -12,22 +11,20 @@ class UserData {
 		$this->password = "";
 		$this->activo = "";
 		$this->isAdmin = "";
-		$this->respuestapregunta = "";
 		$this->fechacreacion = "NOW()";
 	}
 
 	public function getEmpleado(){ return EmpleadoData::getById($this->idempleado);}
-	public function getSecretQ(){ return SecretQuestionData::getById($this->idpreguntasecreta);}
 
 	public function add(){
-		$sql = "insert into usuario (nombre, apellido, usuario, email, clave, idPreguntaSecreta, respuestaPregunta, admin, fechaCreacion) ";
-		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",$this->idpreguntasecreta,\"$this->respuestapregunta\",\"$this->isAdmin\",$this->fechacreacion)";
+		$sql = "insert into usuario (nombre, apellido, usuario, email, clave, admin, fechaCreacion) ";
+		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",\"$this->isAdmin\",$this->fechacreacion)";
 		Executor::doit($sql);
 	}
 
 	public function addUE(){
-		$sql = "insert into usuario (idempleado, nombre, apellido, usuario, email, clave, idPreguntaSecreta, respuestaPregunta, admin, fechaCreacion) ";
-		$sql .= "value ($this->idempleado,\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",$this->idpreguntasecreta,\"$this->respuestapregunta\",\"$this->isAdmin\",$this->fechacreacion)";
+		$sql = "insert into usuario (idempleado, nombre, apellido, usuario, email, clave, admin, fechaCreacion) ";
+		$sql .= "value ($this->idempleado,\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",\"$this->isAdmin\",$this->fechacreacion)";
 		Executor::doit($sql);
 	}
 
@@ -66,11 +63,6 @@ class UserData {
 		Executor::doit($sql);
 	}
 
-	public function updateSecretQ(){
-		$sql = "update ".self::$tablename." set idPreguntaSecreta=$this->idpreguntasecreta, respuestaPregunta=\"$this->respuestapregunta\" where idUsuario=$this->id";
-		Executor::doit($sql);
-	}
-
 	public function update_passwd(){
 		$sql = "update ".self::$tablename." set clave=\"$this->password\" where idUsuario=$this->id";
 		Executor::doit($sql);
@@ -89,8 +81,6 @@ class UserData {
 			$data->username = $r['usuario'];
 			$data->email = $r['email'];
 			$data->password = $r['clave'];
-			$data->idpreguntasecreta = $r['idPreguntaSecreta'];
-			$data->respuestapregunta = $r['respuestaPregunta'];
 			$data->activo = $r['activo'];
 			$data->isAdmin = $r['admin'];
 			$found = $data;
@@ -131,8 +121,6 @@ class UserData {
 			$array[$cnt]->username = $r['usuario'];
 			$array[$cnt]->email = $r['email'];
 			$array[$cnt]->password = $r['clave'];
-			$array[$cnt]->idpreguntasecreta = $r['idPreguntaSecreta'];
-			$array[$cnt]->respuestapregunta = $r['respuestaPregunta'];
 			$array[$cnt]->activo = $r['activo'];
 			$array[$cnt]->isAdmin = $r['admin'];
 			$cnt++;
@@ -154,8 +142,6 @@ class UserData {
 			$array[$cnt]->email = $r['email'];
 			$array[$cnt]->username = $r['usuario'];
 			$array[$cnt]->password = $r['clave'];
-			$array[$cnt]->idpreguntasecreta = $r['idPreguntaSecreta'];
-			$array[$cnt]->respuestapregunta = $r['respuestaPregunta'];
 			$array[$cnt]->activo = $r['activo'];
 			$array[$cnt]->isAdmin = $r['admin'];
 			$cnt++;

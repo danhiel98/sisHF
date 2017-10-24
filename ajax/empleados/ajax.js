@@ -11,6 +11,11 @@ function obtenerDatosDeSucursal(idSucursal){
 	})
 }
 
+$(".nav > li").on("click",function(){
+	var idSuc = $("#sucursal").val();
+	obtenerDatosDeSucursal(idSuc);
+});
+
 $(document).on('load change', '#sucursal', function(){
 	var idSuc = $(this).val();
 	obtenerDatosDeSucursal(idSuc);

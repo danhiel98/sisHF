@@ -26,8 +26,8 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#all">Todos</a></li>
 			<?php if (count($sucursal)>1): ?>
-			<li><a href="#suc">Por Sucursal</a></li>
-		<?php endif; ?>
+				<li><a href="#suc">Por Sucursal</a></li>
+			<?php endif; ?>
 		</ul>
 		<br>
 		<div class="tab-content">
@@ -66,26 +66,28 @@
 					?>
 				</table>
 			</div>
+
 			<?php if (count($sucursal)>1): ?>
+			
 			<script type="text/javascript" src="ajax/empleados/ajax.js"></script>
+			
 			<div id="suc" class="tab-pane fade">
-				<div class="">
-					<div class="form-group">
-						<label for="sucursal" class="col-md-1 control-label">Sucursal</label>
-						<div class="col-md-6">
-							<select class="form-control" name="sucursal" id="sucursal">
-								<option value="">--SELECCIONE--</option>
-								<?php foreach ($sucursal as $s): ?>
-									<option value="<?php echo $s->id; ?>"><?php echo $s->nombre; ?></option>
-								<?php endforeach; ?>
-							</select>
-						</div>
+				<div class="form-group form-horizontal">
+					<label for="sucursal" class="col-md-1 control-label">Sucursal</label>
+					<div class="col-md-6">
+						<select class="form-control" name="sucursal" id="sucursal">
+							<option value="">--SELECCIONE--</option>
+							<?php foreach ($sucursal as $s): ?>
+								<option value="<?php echo $s->id; ?>"><?php echo $s->nombre; ?></option>
+							<?php endforeach; ?>
+						</select>
 					</div>
 				</div>
 				<div class="clearfix"></div>
 				<br>
 				<section id="tabla_resultado"></section>
 			</div>
+			
 			<?php endif; ?>
 		</div>
 		<?php else: ?>

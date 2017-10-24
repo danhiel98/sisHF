@@ -76,29 +76,6 @@
 					<p class="help-block"></p>
 		    </div>
 		  </div>
-			<div class="form-group control-group">
-		    <label for="seceret" class="col-lg-2 control-label">Pregunta Secreta*</label>
-		    <div class="col-md-6 controls">
-		      <select class="form-control" name="secret" required>
-						<option value="">--SELECCIONE--</option>
-						<?php foreach ($secret as $sq): ?>
-							<option value="<?php echo $sq->id; ?>"><?php echo $sq->pregunta; ?></option>
-						<?php endforeach; ?>
-		      </select>
-		    </div>
-		  </div>
-			<div class="form-group control-group">
-		    <label for="seceret" class="col-lg-2 control-label">Respuesta*</label>
-		    <div class="col-md-6 controls">
-		      <input type="password" name="respuesta" class="form-control" id="password" placeholder="Respuesta" maxlength="30" data-validation-regex-regex="[\w\d].*" data-validation-regex-message="Ha introducido caracteres inválidos" required>
-		    </div>
-		  </div>
-			<div class="form-group control-group">
-		    <label for="seceret" class="col-lg-2 control-label">Repetir Respuesta*</label>
-		    <div class="col-md-6 controls">
-		      <input type="password" name="respuesta2" class="form-control" id="password" placeholder="Repetir Respuesta" maxlength="30" data-validation-match-match="respuesta" required>
-		    </div>
-		  </div>
 		  <div class="form-group">
 		    <label for="isAdmin" class="col-lg-2 control-label">Es Administrador</label>
 		    <div class="col-md-6">
