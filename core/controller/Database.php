@@ -11,6 +11,7 @@ class Database {
 
 	function connect(){
 		$con = new mysqli($this->host,$this->user,$this->pass,$this->ddbb);
+		$con->set_charset("utf8");
 		return $con;
 	}
 
