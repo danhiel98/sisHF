@@ -5,6 +5,7 @@
 	$sucursal = SucursalData::getAll();
 	$servicios = ServiceData::getAll();
 ?>
+<!--crea este apartado-->
 <?php if(isset($_SESSION["cart"]) && count($_SESSION["cart"])>0 && isset($_GET["x"])):?>
 	<script type="text/javascript">
 		$(function(){
