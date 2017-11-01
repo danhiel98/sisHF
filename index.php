@@ -6,6 +6,4 @@
   // cargamos el modulo iniciar.
   Core::loadModule("sistema");
 
-  echo "hola";
-
 ?>
