@@ -1,4 +1,4 @@
-<a class="btn btn-default" href="index.php?view=inventarymp"><i class="fa fa-arrow-left"></i> Regresar</a>
+<a class="btn btn-default" href="index.php?view=res"><i class="fa fa-arrow-left"></i> Regresar</a>
 <div class="btn-group pull-right">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>

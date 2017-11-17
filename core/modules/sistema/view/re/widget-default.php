@@ -7,6 +7,7 @@
 <script type="text/javascript" src="ajax/buy/ajax.js"></script>
 <div class="datosModal">
 </div>
+<a href="index.php?view=inventarymp" class="btn btn-default"><i class="fa fa-arrow-left"></i> Regresar</a>
 <div class="row">
 	<div class="col-md-12">
 		<h1>Compra de materia prima</h1>

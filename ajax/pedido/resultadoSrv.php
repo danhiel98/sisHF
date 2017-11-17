@@ -9,15 +9,15 @@
 	if (count($services)>0):?>
 		<table class="table table-hover table-bordered">
 			<thead>
-				<th></th>
+				<th style="width: 45px;"></th>
 				<th>Servicio</th>
 				<th>Precio</th>
-				<th></th>
+				<th style="width: 140px;"></th>
 			</thead>
 			<tbody>
 			<?php foreach ($services as $srv): $found = false;?>
 				<tr>
-					<td></td>
+					<td><?php echo $srv->id; ?></td>
 					<td><?php echo $srv->nombre; ?></td>
 					<td>$ <?php echo $srv->precio; ?></td>
 					<td>

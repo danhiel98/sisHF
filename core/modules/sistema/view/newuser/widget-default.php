@@ -1,5 +1,4 @@
 <?php
-	$secret = SecretQuestionData::getAll();
 	$emp = false;
 
 	if (isset($_GET["emp"]) && $_GET["emp"] == "true") {

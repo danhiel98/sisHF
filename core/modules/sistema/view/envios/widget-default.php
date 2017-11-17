@@ -63,7 +63,7 @@
 		?>
 		<?php else: ?>
 			<h1>No se pueden realizar env&iacute;os</h1>
-			<p class="alert alert-danger">Debe registrar un banco para poder realizar env&iacute;os!</p>
+			<p class="alert alert-danger">Debe registrar un banco para poder realizar env&iacute;os! <a href="index.php?view=banco">Ir a bancos</a></p>
 		<?php endif; ?>
 
 	</div>

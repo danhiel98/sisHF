@@ -98,7 +98,6 @@
             <li><a href="index.php?view=categories"><i class="fa fa-th-list"></i> Categor&iacute;as </a></li>
             <li><a href="index.php?view=services"><i class="fa fa-th"></i> Servicios</a></li>
             <li><a href="index.php?view=products"><i class="fa fa-glass"></i> Productos </a></li>
-            <li><a href="index.php?view=produccion"><i class="fa fa-glass"></i> Producci&oacute;n</a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-area-chart"></i> Inventario <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -106,6 +105,7 @@
                 <li><a href="index.php?view=inventaryprod"><i class="fa fa-area-chart"></i> Productos</a></li>
               </ul>
             </li>
+            <li><a href="index.php?view=produccion"><i class="fa fa-glass"></i> Producci&oacute;n</a></li>
             <li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Compras</a></li>
             <li><a href="index.php?view=traspasos"><i class="fa fa-exchange"></i> Traspasos</a></li>
             <li><a href="index.php?view=pedidos"><i class="fa fa-list-alt"></i> Pedidos</a></li>

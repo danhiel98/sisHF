@@ -18,7 +18,7 @@
 			?>
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th style="width:80px;">No.</th>
+					<th style="width:45px;">No.</th>
 					<th>Nombre</th>
 					<th></th>
 				</thead>

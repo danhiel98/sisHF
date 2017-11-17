@@ -45,7 +45,7 @@
 			?>
 				<tr>
 					<?php if(isset($_SESSION["cartp"])){ foreach ($_SESSION["cartp"] as $c) {if($c["product_id"] == $prod["idProducto"]){ $found=true; if($c["mantenimiento"] == 1){ $mantto = true;} break; }}} ?>
-					<td></td>
+					<td><?php echo $prod['idProducto']; ?></td>
 					<td><?php echo $prod['nombre']; ?></td>
 					<td style="text-align:center;"><?php echo $prod['cantidad']; ?></td>
 					<td style="text-align:center;">$ <?php echo number_format($prod['precioVenta'],2,".",",") ?></td>

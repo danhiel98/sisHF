@@ -66,8 +66,8 @@
 					<th style="width:30px;">No.</th>
 					<th>Nombre</th>
 					<th>Descripci&oacute;n</th>
-					<th style="max-width: 30px;">M&iacute;nimo</th>
-					<th style="max-width: 50px;">Existencias</th>
+					<th style="width: 30px;">M&iacute;nimo</th>
+					<th style="width: 30px;">Existencias</th>
 					<th></th>
 				</thead>
 				<?php foreach($curr_products as $product):?>

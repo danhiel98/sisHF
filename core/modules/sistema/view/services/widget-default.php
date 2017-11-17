@@ -29,6 +29,7 @@
 
 			<table class="table table-bordered table-hover">
 			<thead>
+				<th style="width: 45px;">No.</th>
 				<th>Nombre</th>
 				<th>Descripci&oacute;n</th>
 				<th>Precio</th>
@@ -38,6 +39,7 @@
 			foreach($services as $service){
 				?>
 				<tr>
+					<td><?php echo $service->id; ?></td>
 					<td><?php echo $service->nombre; ?></td>
 					<td><?php echo $service->descripcion; ?></td>
 					<td><strong>$ <?php echo $service->precio; ?></strong></td>
