@@ -20,7 +20,7 @@
 	<?php if (count($matPrim)>0): ?>
 		<table class="table table-bordered table-hover table-responsive">
 			<thead>
-				<th style="width:30px;">ID</th>
+				<th style="width:40px;">ID</th>
 				<th>Nombre</th>
 				<th>Descripci&oacute;n</th>
 				<th>En Inventario</th>

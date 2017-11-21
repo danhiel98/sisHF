@@ -49,7 +49,8 @@
 					<a href="index.php?view=onesell&id=<?php echo $sell->id; ?>&x=<?php echo $box->id; ?>" class="btn btn-xs btn-default"><i class="fa fa-arrow-right"></i></a>
 				</td>
 				<?php
-					$sells = FacturaData::getAllSellsByFactId($sell->id);
+					$prodsx = FacturaData::getAllSellsByFactId($sell->id); #Productos vendidos en la factura
+					$servsx = FacturaData::getAllServicesByFactId($sell->id); #Servicios vendidos en la factura
 				?>
 				<td><?php echo $sell->tipo; ?></td>
 				<td><?php echo $sell->numerofactura; ?></td>
@@ -59,9 +60,13 @@
 				<td>
 					<?php
 						$total=0;
-						foreach($sells as $s){
-							$pr = $s->getProduct();
-							$total += $s->cantidad * $pr->precioventa;
+						foreach($prodsx as $p){
+							$prd = $p->getProduct();
+							$total += $p->cantidad * $prd->precioventa;
+						}
+						foreach ($servsx as $s) {
+							$srv = $s->getService();
+							$total += $s->cantidad * $srv->precio;
 						}
 						$total_total += $total;
 						echo "<b>$ ".number_format($total,2,'.',',')."</b>";

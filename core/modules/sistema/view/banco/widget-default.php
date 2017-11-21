@@ -29,6 +29,7 @@
 				<th>Nombre</th>
 				<th>Direcci&oacute;n</th>
 				<th>Tel&eacute;fono</th>
+				<th>Número de cuenta</th>
 				<th></th>
 			</thead>
 			<?php
@@ -38,6 +39,7 @@
 				<td><?php echo $bac->nombre; ?></td>
 				<td><?php echo $bac->direccion; ?></td>
 				<td><?php echo $bac->telefono; ?></td>
+				<td><?php echo $bac->numCuenta; ?></td>
 				<td style="width:40px;">
 					<a id="<?php echo $bac->id;?>" data-toggle="modal" data-target="#editar" class="btn btn-warning btn-xs btn-edit">Editar</a>
 				</td>

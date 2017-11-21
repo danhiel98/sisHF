@@ -1,4 +1,5 @@
 <?php
+	$empleados = EmpleadoData::getAll();
 	include("modals/agregar.php");
 	include("modals/editar.php");
 	$gastos = GastoData::getAll();
@@ -26,6 +27,8 @@
 			?>
 			<table class="table table-bordered table-hover">
 			<thead>
+				<th style="width:40px;">No.</th>
+				<th>Responsable</th>
 				<th>Descripci&oacute;n</th>
 				<th>Valor</th>
 				<th>No. Comprobante</th>
@@ -36,6 +39,14 @@
 			foreach($gastos as $gasto){
 				?>
 			<tr>
+				<td><?php echo $gasto->id; ?></td>
+				<td>
+					<?php
+						if ($gasto->idempleado != ""){
+							echo $gasto->getEmpleado()->nombre." ".$gasto->getEmpleado()->apellido;
+						}
+					?>
+				</td>
 				<td><?php echo $gasto->descripcion; ?></td>
 				<td>$ <?php echo $gasto->pago; ?></td>
 				<td><?php echo $gasto->comprobante; ?></td>

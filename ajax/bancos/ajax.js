@@ -15,38 +15,18 @@ var banco = (function (banco, undefined) {
           $('#enombre').val(oDato[0].nombre);
           $('#edireccion').val(oDato[0].direccion);
           $('#etelefono').val(oDato[0].telefono);
+          $('#enumeroCuenta').val(oDato[0].numeroCuenta);
         },
       });
     });
-  },
-  //----------------banco POR METODO GET SIN AJAX------------------------ /////
-
-  banco.eliminarPersona = function () {
-
-        $(".btn-eliminar").on("click", function (e) { //SE ACTIVA CUANDO SE HACE CLIC EN EL BOTON CON CLASE (btn-eliminar)
-
-            e.preventDefault();
-
-            var id=this.id; // CON EL (this.id) PODEMOS SACAR EL CONTENIDO DE LA ID  DEL BOTON CON LA CLASE (btn-eliminar) AL CUAL DIMOS CLIC
-
-
-            p = confirm("¿Estas seguro que desea eliminar?");
-
-            if(p){
-
-                 window.location="controlers/eliminar_persona.php?pedrito="+id;    //ENVIAMOS POR GET EL ID PARA LUEGO RECIBIRLO EN eliminar_persona.php
-             }
-         });
-    };
-
-
-    return banco;
+  }
+  
+  return banco;
 
 })(banco || {});
 
 $(function () {
-
-    banco.eliminarPersona();
-    banco.llenarModalEditar();
+    
+  banco.llenarModalEditar();
 
 });

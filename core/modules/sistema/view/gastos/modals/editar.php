@@ -1,6 +1,11 @@
 <?php
   if (isset($_POST["editGasto"])) {
     $data = GastoData::getById($_POST['eid']);
+    if ($_POST["eresponsable"] != ""){
+      $data->idempleado = $_POST["eresponsable"];
+    }else{
+      $data->idempleado = "null";
+    }
   	$data->descripcion = $_POST["edescripcion"];
   	$data->pago = $_POST["epago"];
     $data->comprobante = $_POST["ecomprobante"];
@@ -16,6 +21,17 @@
           <h4 class="modal-title" id="myModalLabel"><i class='glyphicon glyphicon-edit'></i> Editar Env&iacute;o</h4>
         </div>
         <div class="modal-body">
+          <div class="form-group control-group">
+            <label for="eresponsable" class="col-sm-3 control-label">Responsable:</label>
+            <div class="col-sm-8 controls">
+              <select name="eresponsable" class="form-control" id="eresponsable">
+    						<option value="">--SELECCIONE--</option>
+    						<?php foreach($empleados as $emp):?>
+    							<option value="<?php echo $emp->id; ?>"><?php echo $emp->nombre." ".$emp->apellido;?></option>
+    						<?php endforeach;?>
+    					</select>
+            </div>
+          </div>
           <div class="form-group control-group">
             <label for="nombre" class="col-sm-3 control-label">Descripci&oacute;n:</label>
             <div class="col-sm-8 controls">

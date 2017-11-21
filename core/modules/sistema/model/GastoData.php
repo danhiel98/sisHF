@@ -3,15 +3,19 @@ class GastoData {
 	public static $tablename = "gasto";
 
 	public function GastoData(){
-		$this->idusuario = "";
+		$this->idusuario = ""; #Quien registra el gasto
+		$this->idempleado = "null"; #Responsable del gasto
 		$this->descripcion = "";
 		$this->comprobante = "";
 		$this->pago = "";
 	}
-public function getUsuario(){ return UserData::getById($this->idusuario);}
+	
+	public function getUsuario(){ return UserData::getById($this->idusuario);}
+	public function getEmpleado(){ return EmpleadoData::getById($this->idempleado);}
+
 	public function add(){
-		$sql = "insert into ".self::$tablename." (idUsuario, descripcion, pago, numeroComprobante, fecha)";
-		$sql .= "value ($this->idusuario,\"$this->descripcion\",\"$this->pago\", \"$this->comprobante\", NOW())";
+		$sql = "insert into ".self::$tablename." (idUsuario, idEmpleado, descripcion, pago, numeroComprobante, fecha)";
+		$sql .= " value ($this->idusuario,$this->idempleado,\"$this->descripcion\",\"$this->pago\", \"$this->comprobante\", NOW())";
 		return Executor::doit($sql);
 	}
 
@@ -25,7 +29,7 @@ public function getUsuario(){ return UserData::getById($this->idusuario);}
 	}
 
 	public function update(){
-		$sql = "update ".self::$tablename." set descripcion=\"$this->descripcion\", pago=\"$this->pago\", numeroComprobante=\"$this->comprobante\"  where idGasto = $this->id";
+		$sql = "update ".self::$tablename." set idEmpleado=$this->idempleado, descripcion=\"$this->descripcion\", pago=\"$this->pago\", numeroComprobante=\"$this->comprobante\"  where idGasto = $this->id";
 		Executor::doit($sql);
 	}
 
@@ -37,6 +41,7 @@ public function getUsuario(){ return UserData::getById($this->idusuario);}
 		while($r = $query[0]->fetch_array()){
 			$data->id = $r['idGasto'];
 			$data->idusuario = $r['idUsuario'];
+			$data->idempleado = $r['idEmpleado'];
 			$data->descripcion = $r['descripcion'];
 			$data->pago = $r['pago'];
 			$data->comprobante = $r['numeroComprobante'];
@@ -56,6 +61,7 @@ public function getUsuario(){ return UserData::getById($this->idusuario);}
 			$array[$cnt] = new GastoData();
 			$array[$cnt]->id = $r['idGasto'];
 			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idempleado = $r['idEmpleado'];
 			$array[$cnt]->descripcion = $r['descripcion'];
 			$array[$cnt]->pago = $r['pago'];
 			$array[$cnt]->comprobante = $r['numeroComprobante'];
@@ -74,6 +80,7 @@ public function getUsuario(){ return UserData::getById($this->idusuario);}
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new GastoData();
 			$array[$cnt]->id = $r['idGasto'];
+			$array[$cnt]->idempleado = $r['idEmpleado'];
 			$array[$cnt]->descripcion = $r['descripcion'];
 			$array[$cnt]->pago = $r['pago'];
 			$array[$cnt]->comprobante = $r['numeroComprobante'];
@@ -92,6 +99,7 @@ public function getUsuario(){ return UserData::getById($this->idusuario);}
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new GastoData();
 			$array[$cnt]->id = $r['idGasto'];
+			$array[$cnt]->idempleado = $r['idEmpleado'];
 			$array[$cnt]->descripcion = $r['descripcion'];
 			$array[$cnt]->pago = $r['pago'];
 			$array[$cnt]->comprobante = $r['numeroComprobante'];

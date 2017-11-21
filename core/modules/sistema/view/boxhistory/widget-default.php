@@ -35,8 +35,13 @@
 				<?php
 					$total=0;
 					foreach($facts as $fc){
-						$sells = FacturaData::getAllSellsByFactId($fc->id);
-						foreach ($sells as $s) {
+						$prodsx = FacturaData::getAllSellsByFactId($fc->id); #Productos vendidos en la factura
+						$servsx = FacturaData::getAllServicesByFactId($fc->id); #Servicios vendidos en la factura
+						foreach ($prodsx as $p) {
+							$precio = $p->total;
+							$total += $precio;
+						}
+						foreach ($servsx as $s) {
 							$precio = $s->total;
 							$total += $precio;
 						}

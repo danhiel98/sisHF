@@ -1,6 +1,6 @@
 var envio = (function (envio, undefined) {
   var _disabled = true;
- //----------------ENVIO POR AJAX POR METODO POST ------------------------////
+
   envio.llenarModalEditar = function () {
         $(".btn-edit").on("click", function (e) {
             e.preventDefault();
@@ -11,43 +11,71 @@ var envio = (function (envio, undefined) {
                 url: 'ajax/envios/resultado.php',
                 data: { idEnv: idenvio },
                 success: function (data) {
-                    var oDato = JSON.parse(data);// JSON.parse convierte ese JSON en un objeto
+                    var oDato = JSON.parse(data);
                     $('#eid').val(oDato[0].idEnvioBanco);
                     $('#ebanco').val(oDato[0].idBanco);
                     $('#ecantidad').val(oDato[0].cantidad);
                     $('#ecomprobante').val(oDato[0].numComprobante);
+                    $.ajax({
+                        type: "POST",
+                        url: "ajax/envios/numCuenta.php",
+                        data: { idBanc: oDato[0].idBanco },
+                        success: function (data) {
+                            var oDato = JSON.parse(data);
+                            $("#enumeroCuenta").val(oDato[0].numeroCuenta);
+                        }
+                    });
                 },
             });
         });
     },
-  //----------------ENVIO POR METODO GET SIN AJAX------------------------ /////
 
-  envio.eliminarPersona = function () {
+    envio.obtenerNumCuenta = function(){
+        $("#banco").on("change", function(){
+            var idBanco = $(this).val();
+            if (idBanco != "" && idBanco > 0){
+                $.ajax({
+                    type: "POST",
+                    url: "ajax/envios/numCuenta.php",
+                    data: { idBanc: idBanco },
+                    success: function (data) {
+                        var oDato = JSON.parse(data);
+                        $("#numeroCuenta").val(oDato[0].numeroCuenta);
+                    }
+                });
+            }else{
+                $("#numeroCuenta").val("");
+            }
+        });
+    },
 
-        $(".btn-eliminar").on("click", function (e) { //SE ACTIVA CUANDO SE HACE CLIC EN EL BOTON CON CLASE (btn-eliminar)
-
-            e.preventDefault();
-
-            var id=this.id; // CON EL (this.id) PODEMOS SACAR EL CONTENIDO DE LA ID  DEL BOTON CON LA CLASE (btn-eliminar) AL CUAL DIMOS CLIC
-
-
-            p = confirm("¿Estas seguro que desea eliminar?");
-
-            if(p){
-
-                 window.location="controlers/eliminar_persona.php?pedrito="+id;    //ENVIAMOS POR GET EL ID PARA LUEGO RECIBIRLO EN eliminar_persona.php
-             }
-         });
-    };
-
+      envio.obtenerNumCuenta2 = function () {
+          $("#ebanco").on("change", function () {
+              var idBanco = $(this).val();
+              if (idBanco != "" && idBanco > 0) {
+                  $.ajax({
+                      type: "POST",
+                      url: "ajax/envios/numCuenta.php",
+                      data: { idBanc: idBanco },
+                      success: function (data) {
+                          var oDato = JSON.parse(data);
+                          $("#enumeroCuenta").val(oDato[0].numeroCuenta);
+                      }
+                  });
+              } else {
+                  $("#enumeroCuenta").val("");
+              }
+          });
+      }
 
     return envio;
 
 })(envio || {});
 
 $(function () {
-
-    envio.eliminarPersona();
+    
+    envio.obtenerNumCuenta();
+    envio.obtenerNumCuenta2();
     envio.llenarModalEditar();
 
 });

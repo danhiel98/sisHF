@@ -1,5 +1,5 @@
 <?php
-
+	include "loader.php";
 	if(isset($_SESSION["cartp"])){
 		$cart = $_SESSION["cartp"];
 
@@ -36,4 +36,5 @@
 	}
 	unset($_SESSION["sucursal"]);
 	unset($_SESSION["cartp"]);
+	@header("location: index.php?view=pedidos")
 ?>

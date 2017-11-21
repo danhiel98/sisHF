@@ -1,6 +1,8 @@
 <?php if (isset($_GET["x"]) && !empty($_GET["x"])): ?>
   <?php $id = $_GET["x"]; ?>
   <a class="btn btn-default" href="index.php?view=b&id=<?php echo $id; ?>"><i class="fa fa-arrow-left"></i> Regresar</a>
+<?php elseif(isset($_GET["b"])): ?>
+  <a class="btn btn-default" href="index.php?view=box"><i class="fa fa-arrow-left"></i> Regresar</a>
 <?php else: ?>
   <a class="btn btn-default" href="index.php?view=sells"><i class="fa fa-arrow-left"></i> Regresar</a>
 <?php endif; ?>

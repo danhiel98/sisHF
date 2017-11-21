@@ -34,6 +34,7 @@
 			<table class="table table-bordered table-hover">
 			<thead>
 				<th>Banco</th>
+				<th>No. Cuenta</th>
 				<th>Cantidad</th>
 				<th>No. Comprobante</th>
 				<th>Fecha</th>
@@ -45,6 +46,7 @@
 			?>
 				<tr>
 					<td><?php echo $env->getBanco()->nombre; ?></td>
+					<td><?php echo $env->getBanco()->numCuenta; ?></td>
 					<td>$ <?php echo number_format($env->cantidad,2,'.',','); ?></td>
 					<td><?php echo $env->comprobante; ?></td>
 					<td><?php echo $env->fecha; ?></td>

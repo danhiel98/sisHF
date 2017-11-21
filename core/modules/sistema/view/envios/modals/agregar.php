@@ -19,20 +19,26 @@
             </div>
           </div>
           <div class="form-group control-group">
+            <label for="numeroCuenta" class="col-sm-3 control-label">Número de cuenta:</label>
+            <div class="col-sm-8 controls">
+              <input type="text" name="numeroCuenta" class="form-control" id="numeroCuenta" placeholder="N&uacute;mero de cuenta bancaria" maxlength="25" data-validation-regex-regex="[0-9A-Za-z-]{10,25}" data-validation-regex-message="Número de cuenta no válido" readonly="readonly">
+            </div>
+          </div>
+          <div class="form-group control-group">
             <label for="cantidad" class="col-sm-3 control-label">Cantidad:</label>
             <div class="col-sm-8 controls">
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="fa fa-fw fa-dollar"></i>
                 </span>
-                <input type="text" name="cantidad" class="form-control" id="cantidad" placeholder="Cantidad de dinero a enviar" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="5" required>
+                <input type="text" name="cantidad" class="form-control" id="cantidad" placeholder="Cantidad de dinero a enviar" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="1" required>
               </div>
             </div>
           </div>
           <div class="form-group control-group">
             <label for="comprobante" class="col-sm-3 control-label">Comprobante:</label>
             <div class="col-sm-8 controls">
-              <input type="text" name="comprobante" class="form-control" id="comprobante" placeholder="N&uacute;mero de comprobante" data-validation-regex-regex="[0-9A-Za-z-]*" data-validation-regex-message="Introduzca un n&uacute;mero v&aacute;lido" maxlength="32" minlength="4" required>
+              <input type="text" name="comprobante" class="form-control" id="comprobante" placeholder="N&uacute;mero de comprobante" data-validation-regex-regex="[0-9A-Za-z-]*" data-validation-regex-message="Introduzca un n&uacute;mero v&aacute;lido" maxlength="15" minlength="5" required>
             </div>
           </div>
         </div>

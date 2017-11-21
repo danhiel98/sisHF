@@ -414,6 +414,7 @@ CREATE TABLE banco(
   nombre varchar(30) not null,
   direccion varchar(200),
   telefono varchar(10),
+  numeroCuenta varchar(25) not null,
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario)
 );
@@ -422,12 +423,14 @@ CREATE TABLE banco(
 CREATE TABLE gasto(
   idGasto mediumint PRIMARY KEY AUTO_INCREMENT,
   idUsuario smallint not null,
+  idEmpleado mediumint,
   descripcion varchar(100) not null,
   numeroComprobante varchar(32),
   pago decimal(9,2) not null,
   fecha date not null,
   estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario)
+  foreign key(idUsuario) references usuario(idUsuario),
+  foreign key(idEmpleado) references empleado(idEmpleado)
 );
 
 /*OK*/

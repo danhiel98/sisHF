@@ -7,12 +7,12 @@
 	$services = ServiceData::getAll();
 
 	if (count($services)>0):?>
-		<table class="table table-hover table-bordered">
+		<table class="table table-bordered table-hover table-responsive">
 			<thead>
-				<th></th>
+				<th style="width:45px;"></th>
 				<th>Servicio</th>
 				<th>Precio</th>
-				<th></th>
+				<th style="width: 140px;"></th>
 			</thead>
 			<tbody>
 			<?php foreach ($services as $srv): $found = false;?>

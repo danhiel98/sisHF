@@ -6,11 +6,12 @@ class BancoData {
 		$this->nombre = "";
 		$this->direccion = "";
 		$this->telefono = "";
+		$this->numCuenta = "";
 	}
 
 	public function add(){
-		$sql = "insert into banco (idUsuario,nombre, direccion, telefono) ";
-		$sql .= "values ($this->idusuario,\"$this->nombre\",\"$this->direccion\",\"$this->telefono\")";
+		$sql = "insert into banco (idUsuario,nombre, direccion, telefono, numeroCuenta) ";
+		$sql .= "values ($this->idusuario,\"$this->nombre\",\"$this->direccion\",\"$this->telefono\",\"$this->numCuenta\")";
 		Executor::doit($sql);
 	}
 
@@ -25,7 +26,7 @@ class BancoData {
 
 // partiendo de que ya tenemos creado un objecto ClientData previamente utilizamos el contexto
 	public function update(){
-		$sql = "update ".self::$tablename." set nombre=\"$this->nombre\", direccion=\"$this->direccion\", telefono=\"$this->telefono\" where idBanco = $this->id";
+		$sql = "update ".self::$tablename." set nombre=\"$this->nombre\", direccion=\"$this->direccion\", telefono=\"$this->telefono\", numeroCuenta=\"$this->numCuenta\" where idBanco = $this->id";
 		Executor::doit($sql);
 	}
 
@@ -39,6 +40,7 @@ class BancoData {
 			$data->nombre = $r['nombre'];
 			$data->direccion = $r['direccion'];
 			$data->telefono = $r['telefono'];
+			$data->numCuenta = $r['numeroCuenta'];
 			$found = $data;
 			break;
 		}
@@ -56,6 +58,7 @@ class BancoData {
 			$array[$cnt]->nombre = $r['nombre'];
 			$array[$cnt]->direccion = $r['direccion'];
 			$array[$cnt]->telefono = $r['telefono'];
+			$array[$cnt]->numCuenta = $r['numeroCuenta'];
 			$cnt++;
 		}
 		return $array;
@@ -72,6 +75,7 @@ class BancoData {
 			$array[$cnt]->nombre = $r['nombre'];
 			$array[$cnt]->direccion = $r['direccion'];
 			$array[$cnt]->telefono = $r['telefono'];
+			$array[$cnt]->numCuenta = $r['numeroCuenta'];
 			$cnt++;
 		}
 		return $array;

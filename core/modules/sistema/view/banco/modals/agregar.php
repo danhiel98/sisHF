@@ -27,6 +27,12 @@
               <input type="text" name="telefono" class="form-control" id="telefono" placeholder="N&uacute;mero telef&oacute;nico" onkeyup="fnc(this,'-',tel,true)" onpaste="return false" onKeyPress="return soloNumeros(event)" maxlength="9" data-validation-regex-regex="[0-9]{4}-[0-9]{4}" data-validation-regex-message="Introduzca un número de teléfono válido">
             </div>
           </div>
+          <div class="form-group control-group">
+            <label for="numeroCuenta" class="col-sm-3 control-label">Número de cuenta:</label>
+            <div class="col-sm-8 controls">
+              <input type="text" name="numeroCuenta" class="form-control" id="numeroCuenta" placeholder="N&uacute;mero de cuenta bancaria" maxlength="25" data-validation-regex-regex="[0-9A-Za-z-]{10,25}" data-validation-regex-message="Introduzca un número de cuenta válido">
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

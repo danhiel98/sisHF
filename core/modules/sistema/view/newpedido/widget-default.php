@@ -46,7 +46,9 @@
 			<div id="servs" class="tab-pane fade">
 				<p><b>Agregar servicio a la venta</b></p>
 				<br>
-				<div class="col-md-12" id="resultado_srv">
+				<div class="row">
+					<div class="col-md-12" id="resultado_srv">
+					</div>
 				</div>
 			</div>
 		</div>
