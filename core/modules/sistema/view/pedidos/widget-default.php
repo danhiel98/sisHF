@@ -62,7 +62,7 @@
 			<br>
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th></th>
+					<th style="width: 45px;"></th>
 					<th>No.</th>
 					<th>Cliente</th>
 					<th>Fecha de Solicitud</th>
@@ -71,7 +71,7 @@
 				</thead>
 				<?php foreach($pedidos_act as $pdo):?>
 				<tr>
-					<td><?php echo ""; ?></td>
+					<td><a href="index.php?view=detallepedido&id=<?php echo $pdo->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
 					<td><?php echo $pdo->id; ?></td>
 					<td><?php echo $pdo->getClient()->name; ?></td>
 					<td><?php echo $pdo->fechapedido; ?></td>

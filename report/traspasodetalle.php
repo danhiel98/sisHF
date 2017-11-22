@@ -3,19 +3,24 @@ include "../core/autoload.php";
 include "../core/modules/sistema/model/TraspasoData.php";
 include "../core/modules/sistema/model/SucursalData.php";
 include "../core/modules/sistema/model/UserData.php";
+include "../core/modules/sistema/model/ProductData.php";
 
 require_once '../ReporteExcel/functions/excel.php';
 activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
-$tras = TraspasoData::getById();
+//$traspasode = TraspasoData::getAllProductsByTraspasoId($_GET["id"]);
+$traspasoDatos = TraspasoData::getById($_GET["id"]);
+
+$prodtrasp = TraspasoData::getAllProductsByTraspasoId($_GET["id"]);
+/*$tras = TraspasoData::getAllProductsByTraspasoId();
 $traspasode = array();
-foreach ($tras as $trass) {
-  if ($trass->id == $_GET["id"]) {
+foreach ($tras as $t) {
+  if ($t->idtraspasoprod == $_GET["id"]) {
     array_push($traspasode, $trass);
   }
-}
+}*/
 
 $objPHPExcel = new PHPExcel();
 
@@ -34,7 +39,7 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
+          'color' => array('rgb' => '#0A0909'),
         )
       ),
     );
@@ -50,34 +55,49 @@ function cellColor($cells,$color){
     ));
 }
 
-cellColor('A1:D1','A7B6F8');
-$objPHPExcel->getActiveSheet()->getStyle('A1'.':D1')->applyFromArray($borders);
-$objPHPExcel->getActiveSheet()->getStyle('A2'.':D2')->applyFromArray($borders);
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->setCellValueByColumnAndRow(0, 1, "test");
+$sheet->mergeCells('A1:C1');
+$sheet->getStyle('A1')->getAlignment()->applyFromArray(
+    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
+);
+
+cellColor('A1:C1','A7B6F8');
 $objPHPExcel->setActiveSheetIndex(0)
-            ->mergeCells('A1:D1')
+            ->mergeCells('A1:C1')
             ->setCellValue('A1', 'TRASPASOS REGISTRADOS')
-            ->setCellValue('A2', 'Origen')
-            ->setCellValue('B2', 'Destino')
-            ->setCellValue('C2', 'Fecha')
-            ->setCellValue('D2', 'Realizado Por');
+            ->setCellValue('A3', 'Origen')
+            ->setCellValue('A4', 'Destino')
+            ->setCellValue('A5', 'Fecha')
+            ->setCellValue('A6', 'Realizado Por');
 
+$objPHPExcel->setActiveSheetIndex(0)
+              ->setCellValue("B3", $traspasoDatos->getSucursalO()->nombre)
+              ->setCellValue("B4", $traspasoDatos->getSucursalD()->nombre)
+              ->setCellValue("B5", $traspasoDatos->fecha)
+              ->setCellValue("B6", $traspasoDatos->getUser()->name);
 
-$i = 3;
-foreach ($traspasode as $tras) {
+cellColor('A8:C8','E2DFDF');
+$objPHPExcel->getActiveSheet()->getStyle('A8'.':C8')->applyFromArray($borders);
+//$objPHPExcel->getActiveSheet()->getStyle('A2'.':D2')->applyFromArray($borders);
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A8', 'Producto')
+            ->setCellValue('B8', 'Descripcion')
+            ->setCellValue('C8', 'Cantidad');
+$i = 9;
+foreach ($prodtrasp as $pt) {
   $objPHPExcel->setActiveSheetIndex(0)
-              ->setCellValue("A$i", $tras->getSucursalO()->nombre)
-              ->setCellValue("B$i", $tras->getSucursalD()->nombre)
-              ->setCellValue("C$i", $tras->fecha)
-              ->setCellValue("D$i", $tras->getUser()->name);
-  cellColor('A'.$i.':D'.$i, 'E0FCFD');
-  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':D'.$i)->applyFromArray($borders);
+              ->setCellValue("A$i", $pt->getProduct()->nombre)
+              ->setCellValue("B$i", $pt->getProduct()->descripcion)
+              ->setCellValue("C$i", $pt->cantidad);
+  
+  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':C'.$i)->applyFromArray($borders);
   $i++;
 }
 
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
 
 $objPHPExcel->getActiveSheet()->setTitle('Reporte de Traspasos');
 

@@ -24,7 +24,6 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
         )
       ),
     );
@@ -40,8 +39,15 @@ function cellColor($cells,$color){
     ));
 }
 
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->setCellValueByColumnAndRow(0, 1, "test");
+$sheet->mergeCells('A1:C1');
+$sheet->getStyle('A1')->getAlignment()->applyFromArray(
+    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
+);
+
 cellColor('A1:C1','A7B6F8');
-cellColor('A3:C3','27D3E1');
+cellColor('A3:C3','E2DFDF');
 $objPHPExcel->getActiveSheet()->getStyle('A1'.':C1')->applyFromArray($borders);
 $objPHPExcel->getActiveSheet()->getStyle('A3'.':C3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
@@ -58,7 +64,7 @@ foreach ($productosinventery as $producinve) {
 							->setCellValue("A$i", $producinve->nombre)
 							->setCellValue("B$i", $producinve->descripcion)
 							->setCellValue("C$i", $producinve->existencias);
-	cellColor('A'.$i.':C'.$i, 'E0FCFD');
+              
  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':C'.$i)->applyFromArray($borders);
 	$i++;
 }

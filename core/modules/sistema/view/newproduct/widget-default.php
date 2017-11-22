@@ -43,7 +43,7 @@
 						<span class="input-group-addon">
 							<i class="fa fa-fw fa-dollar"></i>
 						</span>
-						<input type="text" name="preciocosteo"onkeypress="return precio(event)" required class="form-control" id="preciocosteo" placeholder="Precio de entrada" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="1" required>
+						<input type="text" name="preciocosteo" onkeypress="return precio(event)" required class="form-control" id="preciocosteo" placeholder="Precio de entrada" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="1" required>
            
         	</div>
           <p class="help-block"></p>
