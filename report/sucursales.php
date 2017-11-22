@@ -25,7 +25,6 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
         )
       ),
     );
@@ -41,8 +40,16 @@ function cellColor($cells,$color){
     ));
 }
 
+
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->setCellValueByColumnAndRow(0, 1, "test");
+$sheet->mergeCells('A1:D1');
+$sheet->getStyle('A1')->getAlignment()->applyFromArray(
+    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
+);
+
 cellColor('A1:D1','A7B6F8');
-cellColor('A3:D3','27D3E1');
+cellColor('A3:D3','E2DFDF');
 $objPHPExcel->getActiveSheet()->getStyle('A1'.':D1')->applyFromArray($borders);
 $objPHPExcel->getActiveSheet()->getStyle('A3'.':D3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
@@ -61,7 +68,6 @@ foreach ($sucursales as $suc) {
 							->setCellValue("B$i", $suc->nombre)
 							->setCellValue("C$i", $suc->direccion)
 							->setCellValue("D$i", $suc->telefono);
-	cellColor('A'.$i.':D'.$i, 'E0FCFD');
    $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':D'.$i)->applyFromArray($borders);
 	$i++;
 }
