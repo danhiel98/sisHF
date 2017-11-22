@@ -42,7 +42,6 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
         )
       ),
     );
@@ -58,31 +57,39 @@ function cellColor($cells,$color){
     ));
 }
 
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->setCellValueByColumnAndRow(0, 1, "test");
+$sheet->mergeCells('A1:F1');
+$sheet->getStyle('A1')->getAlignment()->applyFromArray(
+    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
+);
+
 cellColor('A1:F1','A7B6F8');
+$objPHPExcel->getActiveSheet()->getStyle('A9'.':F9')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
             //->mergeCells('A1:A5')
             ->setCellValue('A1', 'Resumen De Venta')
-            ->setCellValue('A2', 'No.')
-            ->setCellValue('A3', 'FECHA')
-            ->setCellValue('A4', 'CLIENTE')
-            ->setCellValue('A5', 'VENDEDOR');
+            ->setCellValue('A3', 'No.')
+            ->setCellValue('A4', 'FECHA')
+            ->setCellValue('A5', 'CLIENTE')
+            ->setCellValue('A6', 'VENDEDOR');
 
 //for ($i = 3; $i<7; $i++)
 	$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue("B2", $fact->numerofactura)
-							->setCellValue("B3", $fact->fecha)
-              ->setCellValue("B4", $fact->getClient()->name." ".$fact->getClient()->lastname)
-              ->setCellValue("B5", $fact->getUser()->name." ".$fact->getUser()->lastname);
-cellColor('A7:F7','A7B6F8');
+							->setCellValue("B3", $fact->numerofactura)
+							->setCellValue("B4", $fact->fecha)
+              ->setCellValue("B5", $fact->getClient()->name." ".$fact->getClient()->lastname)
+              ->setCellValue("B6", $fact->getUser()->name." ".$fact->getUser()->lastname);
+cellColor('A8:F8','E2DFDF');
         $objPHPExcel->setActiveSheetIndex(0)
-              ->setCellValue('A7', 'Codigo.')
-              ->setCellValue('B7', 'Cantidad')
-              ->setCellValue('C7', 'Nombre Producto')
-              ->setCellValue('D7', 'Precio')
-              ->setCellValue('E7', 'Total')
-                ->setCellValue('F7', 'Total Final');
+              ->setCellValue('A8', 'Codigo.')
+              ->setCellValue('B8', 'Cantidad')
+              ->setCellValue('C8', 'Nombre Producto')
+              ->setCellValue('D8', 'Precio')
+              ->setCellValue('E8', 'Total')
+                ->setCellValue('F8', 'Total Final');
 
-         $i=8;
+         $i=9;
          foreach ($pVend as $rv) {
            $objPHPExcel->setActiveSheetIndex(0)
              					->setCellValue("A$i", $rv->idproducto)
@@ -90,13 +97,12 @@ cellColor('A7:F7','A7B6F8');
                       ->setCellValue("C$i", $rv->getProduct()->nombre)
                       ->setCellValue("D$i","$ ". $rv->getProduct()->precioventa)
                       ->setCellValue("E$i","$ ".$rv->total)
-                      ->setCellValue("F8","$ ".$total+=$rv->total);
-           cellColor('A'.$i.':E'.$i, 'E0FCFD');
-           cellColor('F8', '46FF33');
+                      ->setCellValue("F9","$ ".$total+=$rv->total);
+
           $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':F'.$i)->applyFromArray($borders);
            $i++;
          }
-         $i=8;
+         $i=9;
          foreach ($sVend as $rvs) {
            $objPHPExcel->setActiveSheetIndex(0)
              					->setCellValue("A$i", $rvs->idventa)
@@ -104,9 +110,8 @@ cellColor('A7:F7','A7B6F8');
                       ->setCellValue("C$i", $rvs->getService()->nombre)
                       ->setCellValue("D$i","$ ". $rvs->getService()->precio)
                       ->setCellValue("E$i","$ ".$rvs->total)
-                      ->setCellValue("F8","$ ".$total+=$rvs->total);
-           cellColor('A'.$i.':E'.$i, 'E0FCFD');
-           cellColor('F8', '46FF33');
+                      ->setCellValue("F9","$ ".$total+=$rvs->total);
+
           $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':F'.$i)->applyFromArray($borders);
            $i++;
          }

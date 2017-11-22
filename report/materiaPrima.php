@@ -24,10 +24,16 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
         )
       ),
     );
+
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->setCellValueByColumnAndRow(0, 1, "test");
+$sheet->mergeCells('A1:D1');
+$sheet->getStyle('A1')->getAlignment()->applyFromArray(
+    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
+);
 
 function cellColor($cells,$color){
     global $objPHPExcel;
@@ -41,14 +47,14 @@ function cellColor($cells,$color){
 }
 
 cellColor('A1:D1','A7B6F8');
-cellColor('A3:D3','27D3E1');
+cellColor('A3:D3','E2DFDF');
 $objPHPExcel->getActiveSheet()->getStyle('A1'.':D1')->applyFromArray($borders);
 $objPHPExcel->getActiveSheet()->getStyle('A3'.':D3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
             ->mergeCells('A1:D1')
-            ->setCellValue('A1', 'MATERIA REGISTRADOS')
+            ->setCellValue('A1', 'MATERIA PRIMA REGISTRADA')
             ->setCellValue('A3', 'Nombre')
-            ->setCellValue('B3', 'Descripciòn')
+            ->setCellValue('B3', 'Descripción')
             ->setCellValue('C3', 'Minimo')
             ->setCellValue('D3', 'Existencias');
 
@@ -60,7 +66,7 @@ foreach ($materias as $mate) {
 							->setCellValue("B$i", $mate->descripcion)
 							->setCellValue("C$i", $mate->minimo)
               ->setCellValue("D$i", $mate->existencias);
-	cellColor('A'.$i.':D'.$i, 'E0FCFD');
+	
  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':D'.$i)->applyFromArray($borders);
 	$i++;
 }
