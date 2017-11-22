@@ -13,31 +13,56 @@
 		</div>
 		<h1><i class='glyphicon glyphicon-shopping-cart'></i> Lista de Ventas</h1>
 		<div class="clearfix"></div>
-		<div class="">
-        		<label for="inicio" class="col-lg-2 control-label">Fecha De Inicio</label>
-            <div class="col-lg-2 controls">
-              <div class='input-group date' id='dtpInicio'>
-              	<input type="text" name="inicio" id="inicio" class="form-control" required data-validation-regex-regex="[0-9]{1,2}(-|/)[0-9]{1,2}(-|/)[0-9]{4}" data-validation-regex-message="Utilice un formato válido" />
-                <span class="input-group-addon">
-                  <span class="fa fa-calendar"></span>
-                </span>
-              </div>
-              
-              <p class="help-block"></p>
-            </div>
-          </div>
-          <div class="">
-        		<label for="fin" class="col-lg-2 control-label">Fecha L&iacute;mite</label>
-            <div class="col-lg-2 controls">
-            	<div class='input-group date' id='dtpFin'>
-              	<input type="text" name="fin" id="fin" class="form-control" required data-validation-regex-regex="[0-9]{1,2}(-|/)[0-9]{1,2}(-|/)[0-9]{4}" data-validation-regex-message="Utilice un formato válido" />
-                <span class="input-group-addon">
-                	<span class="fa fa-calendar"></span>
-                </span>
-              </div>
-              <p class="help-block"></p>
-            </div>
-        	 </div>
+
+       	<div class="container">
+		        	 	<label for="inicio" class="col-lg-2 control-label">Fecha De Inicio</label>
+		   	<div class='col-md-2'>
+		        <div class="form-group">
+		            <div class='input-group date' id='datetimepicker6'>
+		                <input type='text' class="form-control" />
+		                <span class="input-group-addon">
+		                    <span class="glyphicon glyphicon-calendar"></span>
+		                </span>
+		            </div>
+		        </div>
+		    </div>
+		    <label for="inicio" class="col-lg-2 control-label">Fecha Fin</label>
+		    <div class='col-md-2'>
+		        <div class="form-group">
+		            <div class='input-group date' id='datetimepicker7'>
+		                <input type='text' class="form-control" />
+		                <span class="input-group-addon">
+		                    <span class="glyphicon glyphicon-calendar"></span>
+		                </span>
+		            </div>
+		        </div>
+			 </div>
+			 <div class="btn-group pull-center">
+					<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#ver">
+						<i class="fa fa-search"></i> Buscar</span>
+					</button>
+			 </div>
+
+			    <script type="text/javascript">
+			      $(function () {
+			          $('#datetimepicker6').datetimepicker({
+			          	  format: "DD/MM/YYYY",
+					      locale: "es",
+					      minDate: new Date()
+			          });
+			          $('#datetimepicker7').datetimepicker({
+			            useCurrent: false //Important! See issue #1075
+			          });
+			          $("#datetimepicker6").on("dp.change", function (e) {
+			            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+			          });
+			          $("#datetimepicker7").on("dp.change", function (e) {
+			            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+			          });
+			      });
+			    </script>
+			    
+</div>
 
 		<?php
 			$products = FacturaData::getFacturas();
@@ -107,18 +132,3 @@
 		<br><br><br><br><br><br><br><br><br><br>
 	</div>
 </div>
-<script type="text/javascript">
-  $(function () {
-    $('#dtpInicio').datetimepicker({
-      format: "DD/MM/YYYY",
-      locale: "es",
-      minDate: new Date()
-    });
-    $('#dtpFin').datetimepicker({
-      format: "DD/MM/YYYY",
-      locale: "es",
-      minDate: new Date()
-      //useCurrent: false //Important! See issue #1075
-    });
-  });
-</script>

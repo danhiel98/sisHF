@@ -31,7 +31,7 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
+          'color' => array('rgb' => '#0A0909'),
         )
       ),
     );
@@ -55,16 +55,18 @@ $sheet->getStyle('A1')->getAlignment()->applyFromArray(
 );
 
 
-cellColor('A4:C4','27D3E1');
+cellColor('A3:C3','E2DFDF');
+cellColor('A1','A7B6F8');
 $objPHPExcel->getActiveSheet()->getStyle('A4'.':C4')->applyFromArray($borders);
+$objPHPExcel->getActiveSheet()->getStyle('A3'.':C3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
-            ->mergeCells('A2:C2')
-            ->setCellValue('A2', "REPORTE DE CORTE DE CAJA")
-            ->setCellValue('A4', "Nº")
-            ->setCellValue('B4', 'Total')
-            ->setCellValue('C4', 'Fecha');
+            ->mergeCells('A1:C1')
+            ->setCellValue('A1', "REPORTE DE CORTE DE CAJA")
+            ->setCellValue('A3', "Nº")
+            ->setCellValue('B3', 'Total')
+            ->setCellValue('C3', 'Fecha');
 
-            $i = 5;
+            $i = 4;
             $factu = BoxData::getAll();
             if(count($factu)>0){
       				$total_total = 0;

@@ -33,7 +33,7 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
+          'color' => array('rgb' => '#0A0909'),
         )
       ),
     );
@@ -49,8 +49,15 @@ function cellColor($cells,$color){
     ));
 }
 
-cellColor('A6:D6','27D3E1');
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->setCellValueByColumnAndRow(0, 1, "test");
+$sheet->mergeCells('A1:D1'); 
+$sheet->getStyle('A1')->getAlignment()->applyFromArray(
+    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
+);
 
+cellColor('A1','27D3E1');
+cellColor('A6:D6','E2DFDF');
 $objPHPExcel->setActiveSheetIndex(0)
             ->mergeCells('A1:D1')
             ->setCellValue('A1', 'CORTE DE CAJA #'.$_GET["id"])
@@ -95,6 +102,8 @@ if (count($facturas)>0) {
 }
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
 
 $objPHPExcel->getActiveSheet()->setTitle('Reporte de Corte de Caja');
 
