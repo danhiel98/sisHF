@@ -24,7 +24,6 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
         )
       ),
     );
@@ -39,13 +38,19 @@ function cellColor($cells,$color){
         )
     ));
 }
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->setCellValueByColumnAndRow(0, 1, "test");
+$sheet->mergeCells('A1:E1');
+$sheet->getStyle('A1')->getAlignment()->applyFromArray(
+    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
+);
 
 cellColor('A1:E1','A7B6F8');
-cellColor('A3:E3','27D3E1');
+cellColor('A3:E3','E2DFDF');
 $objPHPExcel->getActiveSheet()->getStyle('A1'.':E1')->applyFromArray($borders);
 $objPHPExcel->getActiveSheet()->getStyle('A3'.':E3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
-            ->mergeCells('A1:D1')
+            ->mergeCells('A1:E1')
             ->setCellValue('A1', 'PROVEEDORES REGISTRADOS')
             ->setCellValue('A3', 'Nombre')
             ->setCellValue('B3', 'Provee')
@@ -62,7 +67,6 @@ foreach ($Proveedores as $provider) {
 							->setCellValue("C$i", $provider->direccion)
 							->setCellValue("D$i", $provider->telefono)
               ->setCellValue("E$i", $provider->correo);
-	cellColor('A'.$i.':E'.$i, 'E0FCFD');
  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':E'.$i)->applyFromArray($borders);
 	$i++;
 }
