@@ -27,7 +27,7 @@
 	<?php
 		foreach ($materiaP as $mp):
 			$found = false;
-			if ($mp->existencias > 0):
+			#if ($mp->existencias > 0):
 			?>
 			<tr>
 				<td><?php echo $mp->id; ?></td>
@@ -43,7 +43,7 @@
 							<input type="hidden" name="product_id" value="<?php echo $mp->id; ?>">
 							<div class="form-group control-group">
 								<div class="controls">
-									<input type="text" name="cantidad" value="1" style="width:80px;" min="1" max="<?php echo $mp->existencias; ?>" class="form-control" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
+									<input type="text" name="cantidad" value="1" style="width:80px;" min="1" class="form-control" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
 									<button type="submit" id="<?php echo $mp->id; ?>" class="btn btn-sm btn-success"><i class="fa fa-cart-plus fa-fw"></i></button>
 									<p class="help-block"></p>
 								</div>
@@ -53,7 +53,7 @@
 					</td>
 				</tr>
 		<?php
-			endif; 
+			#endif; 
 		endforeach;
 		?>
 		</table>
