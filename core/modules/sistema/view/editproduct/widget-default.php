@@ -20,14 +20,16 @@
           <img src="storage/products/<?php echo $product->imagen;?>" class="img-responsive">
           <?php endif;?>
         </div>
+        <p class="help-block"></p>
       </div>
 
-      <div class="form-group">
+      <div class="form-group control-group">
         <label for="nombre" class="col-lg-3 control-label">Nombre*</label>
         <div class="col-md-8">
-          <input type="text" name="nombre" class="form-control" id="nombre" value="<?php echo $product->nombre; ?>" placeholder="Nombre del Producto">
-        </div>
-      </div>
+          <input type="text" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" onSubmit="return validarnombre()" placeholder="Nombres" onkeypress="return vNom(event,this)" name="nombre" class="form-control" id="nombre" value="<?php echo $product->nombre; ?>" placeholder="Nombre del Producto">
+      <p class="help-block"></p> 
+          </div>
+          </div>
 
       <div class="form-group control-group">
         <label for="category" class="col-lg-3 control-label">Categor&iacute;a</label>
@@ -42,47 +44,52 @@
               <?php endif; ?>
             <?php endforeach; ?>
           </select>
+          <p class="help-block"></p>
         </div>
-      </div>
+       </div>
 
-      <div class="form-group">
+      <div class="form-group control-group">
         <label for="descripcion" class="col-lg-3 control-label">Descripci&oacute;n</label>
-        <div class="col-md-8">
-          <textarea name="descripcion" class="form-control" id="descripcion" placeholder="Descripcion del Producto"><?php echo $product->descripcion;?></textarea>
+        <div class="col-md-8 controls">
+          <textarea name="descripcion" class="form-control" id="descripcion" data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,100}" data-validation-regex-message="Introduzca una descripción válida"  placeholder="Descripcion del Producto"><?php echo $product->descripcion;?></textarea>
+          <p class="help-block"></p>
         </div>
-      </div>
+        </div>
 
-      <div class="form-group">
+      <div class="form-group control-group">
         <label for="preciocosteo" class="col-lg-3 control-label">Precio de Costeo*</label>
-        <div class="col-md-8">
-          <input type="text" name="preciocosteo" class="form-control" value="<?php echo $product->preciocosteo; ?>" id="preciocosteo" placeholder="Precio de entrada">
+        <div class="col-md-8 controls">
+          <input type="text" name="preciocosteo" class="form-control" value="<?php echo $product->preciocosteo; ?>" id="preciocosteo" placeholder="Precio de entrada" onkeypress="return precio(event)" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="1">
+          <p class="help-block"></p>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group control-group">
         <label for="precioventa" class="col-lg-3 control-label">Precio de Venta*</label>
-        <div class="col-md-8">
-          <input type="text" name="precioventa" class="form-control" id="precioventa" value="<?php echo $product->precioventa; ?>" placeholder="Precio de salida">
+        <div class="col-md-8 controls">
+          <input type="text" name="precioventa" onkeypress="return precio(event)" class="form-control" id="precioventa" value="<?php echo $product->precioventa; ?>" placeholder="Precio de salida" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="1">
+          <p class="help-block"></p>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group control-group">
         <label for="minimo" class="col-lg-3 control-label">Mínima en inventario:</label>
-        <div class="col-md-8">
-          <input type="text" name="minimo" class="form-control" value="<?php echo ProductoSucursalData::getBySucursalProducto(1,$product->id)->minimo;?>" id="minimo" placeholder="M&iacute;nima en Inventario">
+        <div class="col-md-8 controls">
+          <input type="text" name="minimo" onkeypress="return soloNumeros(event)" data-validation-regex-regex="[0-9]{1,9}" data-validation-regex-message="Introduzca un M&iacute;nima en Inventario válido" onpaste="return false"  maxlength="9" min="1" class="form-control" value="<?php echo ProductoSucursalData::getBySucursalProducto(1,$product->id)->minimo;?>" id="minimo" placeholder="M&iacute;nima en Inventario">
+          <p class="help-block"></p>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group control-group">
 				<label for="mantto" class="col-lg-3 control-label">Requiere Mantenimiento</label>
-				<div class="col-md-6">
+				<div class="col-md-6 controls">
 					<input type="checkbox" name="mantto" id="mantto" <?php if($product->mantenimiento){ echo "checked";}?>>
 				</div>
 			</div>
 
-      <div class="form-group">
+      <div class="form-group control-group">
         <label for="is_active" class="col-lg-3 control-label" >Est&aacute; activo</label>
-        <div class="col-md-8">
+        <div class="col-md-8 controls">
           <div class="checkbox">
             <label>
               <input type="checkbox" name="is_active" <?php if($product->estado){ echo "checked";}?>>
