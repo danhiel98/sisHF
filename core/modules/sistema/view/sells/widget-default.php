@@ -45,11 +45,7 @@
 
 			    <script type="text/javascript">
 			      $(function () {
-			          $('#datetimepicker6').datetimepicker({
-			          	  format: "DD/MM/YYYY",
-					      locale: "es",
-					      minDate: new Date()
-			          });
+			          $('#datetimepicker6').datetimepicker();
 			          $('#datetimepicker7').datetimepicker({
 			            useCurrent: false //Important! See issue #1075
 			          });
