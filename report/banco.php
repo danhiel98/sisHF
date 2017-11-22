@@ -24,7 +24,6 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
         )
       ),
     );
@@ -40,8 +39,15 @@ function cellColor($cells,$color){
     ));
 }
 
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->setCellValueByColumnAndRow(0, 1, "test");
+$sheet->mergeCells('A1:D1');
+$sheet->getStyle('A1')->getAlignment()->applyFromArray(
+    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
+);
+
 cellColor('A1:D1','A7B6F8');
-cellColor('A3:D3','27D3E1');
+cellColor('A3:D3','E2DFDF');
 $objPHPExcel->getActiveSheet()->getStyle('A1'.':D1')->applyFromArray($borders);
 $objPHPExcel->getActiveSheet()->getStyle('A3'.':D3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
@@ -49,7 +55,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', 'BANCOS REGISTRADOS')
             ->setCellValue('A3', 'Nº')
             ->setCellValue('B3', 'Nombre')
-            ->setCellValue('C3', 'Direcciòn')
+            ->setCellValue('C3', 'Dirección')
             ->setCellValue('D3', 'Telèfono');
 
 $bancos = BancoData::getAll();
@@ -60,7 +66,7 @@ foreach ($bancos as $banc) {
 							->setCellValue("B$i", $banc->nombre)
 							->setCellValue("C$i", $banc->direccion)
 							->setCellValue("D$i", $banc->telefono);
-	cellColor('A'.$i.':D'.$i, 'E0FCFD');
+
  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':D'.$i)->applyFromArray($borders);
 	$i++;
 }
