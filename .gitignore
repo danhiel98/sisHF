@@ -1,2 +1,5 @@
 #Ignorar lo siguiente:
 desktop.ini
+*.jpg
+*.png
+*.gif
