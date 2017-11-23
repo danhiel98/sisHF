@@ -40,10 +40,9 @@ function cellColor($cells,$color){
     ));
 }
 
-
 $sheet = $objPHPExcel->getActiveSheet();
 $sheet->setCellValueByColumnAndRow(0, 1, "test");
-$sheet->mergeCells('A1:D1');
+$sheet->mergeCells('A1:D1'); 
 $sheet->getStyle('A1')->getAlignment()->applyFromArray(
     array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
 );
