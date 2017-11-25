@@ -45,8 +45,13 @@
 
 			    <script type="text/javascript">
 			      $(function () {
-			          $('#datetimepicker6').datetimepicker();
+			          $('#datetimepicker6').datetimepicker({
+			          	  format: "DD/MM/YYYY",
+					      locale: "es"
+			          });
 			          $('#datetimepicker7').datetimepicker({
+			          	format: "DD/MM/YYYY",
+			          	locale: "es",
 			            useCurrent: false //Important! See issue #1075
 			          });
 			          $("#datetimepicker6").on("dp.change", function (e) {
