@@ -63,7 +63,7 @@
 			<table class="table table-bordered table-hover">
 				<thead>
 					<th style="width: 45px;"></th>
-					<th>No.</th>
+					<th style="width: 45px;">No.</th>
 					<th>Cliente</th>
 					<th>Fecha de Solicitud</th>
 					<th>Fecha de Entrega</th>

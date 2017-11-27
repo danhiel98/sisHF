@@ -6,6 +6,7 @@
 <?php else: ?>
   <a class="btn btn-default" href="index.php?view=sells"><i class="fa fa-arrow-left"></i> Regresar</a>
 <?php endif; ?>
+
 <div class="btn-group pull-right">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
@@ -90,7 +91,8 @@
     </tr>
   <?php endforeach; ?>
 </table>
-<br><br><h1>Total: $ <?php echo number_format($total,2,'.',','); ?></h1>
+<br><br>
+<h1>Total: $ <?php echo number_format($total,2,'.',','); ?></h1>
 <?php else:?>
 	501 Internal Error
 <?php endif; ?>

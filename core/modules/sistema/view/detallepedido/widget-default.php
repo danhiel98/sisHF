@@ -4,9 +4,98 @@
         $id = $_GET["id"];
         $pedido = PedidoData::getById($id);
     }
+
     if (count($pedido) == 1):
+        $prodP = PedidoData::getAllProductsByPedidoId($_GET["id"]);
+        $servP = PedidoData::getAllServicesByPedidoId($_GET["id"]);
+        $total = 0;
+        $client = $pedido->getClient();
 ?>
-<div class="row">
-    Hola
-</div>
+    <div class="row">
+        <a class="btn btn-default" href="index.php?view=pedidos"><i class="fa fa-arrow-left"></i> Regresar</a>
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-download"></i> Descargar <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="report/pedido.php?id=<?php echo $_GET["id"];?>">Word 2007 (.docx)</a></li>
+            </ul>
+        </div>
+        <h1>Resumen de Pedido</h1>
+        <table class="table table-bordered">
+            <tr>
+                <td>Fecha De Pedido</td>
+                <td><?php echo date("d-m-Y", strtotime($pedido->fechapedido)); ?></td>
+            </tr>
+            <tr>
+                <td>Fecha De Entrega</td>
+                <td><?php echo $pedido->fechaentrega; ?></td>
+            </tr>
+            <tr>
+                <td>Entregado</td>
+                <td>
+                    <?php if ($pedido->entregado == 1): ?>
+                        <span class="fa fa-check"></span>
+                    <?php else: ?>
+                        <span class="fa fa-times"></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php if ($pedido->entregado == 1): ?>
+            <tr>
+                <td>Fecha Entregado</td>
+                <td><?php echo $pedido->fechafinalizado; ?></td>
+            </tr>
+            <?php endif; ?>
+            <tr>
+                <td style="width:150px;">Cliente</td>
+                <td><?php echo $client->name." ".$client->lastname;?></td>
+            </tr>
+            <?php if($pedido->idusuario != ""):
+                $user = $pedido->getUser();
+            ?>
+            <tr>
+                <td>Atendido por</td>
+                <td><?php echo $user->name." ".$user->lastname;?></td>
+            </tr>
+            <?php endif; ?>
+        </table>
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <th>C&oacute;digo</th>
+                <th>Cantidad</th>
+                <th>Nombre del Producto / Servicio</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+            </thead>
+        <?php
+            foreach($prodP as $pedid):
+                $prod = $pedid->getProduct();
+        ?>
+        <tr>
+            <td><?php echo $prod->id ;?></td>
+            <td><?php echo $pedid->cantidad ;?></td>
+            <td><?php echo $prod->nombre ;?></td>
+            <td>$ <?php echo number_format($prod->precioventa,2,".",",") ;?></td>
+            <td><b>$ <?php echo number_format($pedid->cantidad*$prod->precioventa,2,".",","); $total += $pedid->cantidad*$prod->precioventa;?></b></td>
+        </tr>
+        <?php	endforeach;	?>
+        <?php
+            foreach ($servP as $pedid):
+            $prod = $pedid->getService();
+        ?>
+            <tr>
+            <td><?php echo $prod->id ;?></td>
+            <td><?php echo $pedid->cantidad ;?></td>
+            <td><?php echo $prod->nombre ;?></td>
+            <td>$ <?php echo number_format($prod->precio,2,".",",") ;?></td>
+            <td><b>$ <?php echo number_format($pedid->cantidad*$prod->precio,2,".",","); $total += $pedid->cantidad*$prod->precio;?></b></td>
+            </tr>
+        <?php endforeach; ?>
+        </table>
+        <h1>Total: $ <?php echo number_format($total,2,'.',','); ?></h1>
+    </div>
+    <?php else: ?>
+    <?php @header("Location: index.php?view=pedidos"); ?>
 <?php endif ?>
