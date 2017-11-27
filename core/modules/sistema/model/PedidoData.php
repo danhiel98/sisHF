@@ -10,7 +10,7 @@ class PedidoData {
 		$this->fechapedido = "";
 		$this->fechaentrega = "";
 		$this->entregado = "";
-		$this->fechaFinalizado = "";
+		$this->fechafinalizado = "";
 
 		$this->idproducto = "";
 		$this->idservicio = "";
@@ -111,6 +111,41 @@ class PedidoData {
 			$array[$cnt]->cancelado = $r['cancelado'];
 			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
 			$array[$cnt]->estado = $r['estado'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getAllProductsByPedidoId($id){
+		$sql = "select * from pedidoProducto where idPedido = $id";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new PedidoData();
+			$array[$cnt]->idpedidoproducto = $r['idPedidoProducto'];
+			$array[$cnt]->idpedido = $r['idPedido'];
+			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->cantidad = $r['cantidad'];
+			$array[$cnt]->total = $r['total'];
+			$array[$cnt]->mantenimiento = $r['mantenimiento'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getAllServicesByPedidoId($id){
+		$sql = "select * from pedidoServicio where idPedido = $id";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new PedidoData();
+			$array[$cnt]->idpedidoservicio = $r['idPedidoServicio'];
+			$array[$cnt]->idpedido = $r['idPedido'];
+			$array[$cnt]->idservicio = $r['idServicio'];
+			$array[$cnt]->cantidad = $r['cantidad'];
+			$array[$cnt]->total = $r['total'];
 			$cnt++;
 		}
 		return $array;

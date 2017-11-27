@@ -33,8 +33,10 @@
 			}
 
 		}
+		unset($_SESSION["sucursal"]);
+		unset($_SESSION["cartp"]);
+		@header("location: index.php?view=detallepedido&id=$r[1]");
+	}else{
+		@header("location: index.php?view=pedidos");
 	}
-	unset($_SESSION["sucursal"]);
-	unset($_SESSION["cartp"]);
-	@header("location: index.php?view=pedidos")
 ?>

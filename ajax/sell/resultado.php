@@ -1,34 +1,32 @@
 <?php
+	
 	session_start();
-	//Establecer la conexión a la Base de Datos
-	$host = 'localhost';
-	$basededatos = 'sistemaHierroForjado';
-	$usuario = 'root';
-	$contrasena = '';
-
-	$conexion = new mysqli($host, $usuario,$contrasena, $basededatos);
-	if ($conexion->connect_errno){
-		die("Falló la conexión:(".$conexion -> mysqli_connect_errno().")".$conexion->mysqli_connect_error());
-	}
-
+	include ("../../core/autoload.php");
+	include ("../../core/modules/sistema/model/ProductData.php");
+	include ("../../core/modules/sistema/model/ProductoSucursalData.php");
+	include ("../../core/modules/sistema/model/SucursalData.php");
+	
 	$idSucursal = $_POST["sucursal"];
 	$prod = false;
 
-	$query="SELECT ps.idProductoSucursal, ps.idProducto, ps.idSucursal, ps.cantidad,
-		p.idProducto, p.nombre, p.descripcion, p.mantenimiento, p.precioVenta FROM productoSucursal as ps
-		INNER JOIN producto as p ON ps.idProducto = p.idProducto WHERE ps.idSucursal = $idSucursal AND ps.cantidad > 0";
-
+	$productos = array();
+	
 	if(isset($_POST['productos'])){
 		$prod = true;
-		$q = $conexion->real_escape_string($_POST['productos']);
-		$query="SELECT ps.idProductoSucursal, ps.idProducto, ps.idSucursal, ps.cantidad,
-		 	p.idProducto, p.nombre, p.descripcion, p.mantenimiento, p.precioVenta FROM productoSucursal as ps
-			INNER JOIN producto as p ON ps.idProducto = p.idProducto WHERE (p.nombre LIKE '%$q%'
-			OR p.descripcion LIKE '%$q%') AND (ps.cantidad > 0 AND ps.idSucursal = $idSucursal)" ;
-	}
+		$nombreProd = $_POST['productos'];
+		$products = ProductData::getLike($nombreProd);
 
-	$buscarProductos = $conexion->query($query);
-	if ($buscarProductos->num_rows > 0){
+		foreach ($products as $prd):
+			$prodSuc = ProductoSucursalData::getBySucursalProducto($idSucursal,$prd->id);
+			if (count($prodSuc) == 1){
+				array_push($productos,$prodSuc);
+			}
+		endforeach;
+	}else{
+		$productos = ProductoSucursalData::getAllBySucId($idSucursal);
+	}
+	
+	if (count($productos) > 0){
 		?>
 		<table class="table table-bordered table-hover table-responsive">
 			<thead>
@@ -40,30 +38,30 @@
 				<th style="width: 150px;"></th>
 			</thead>
 	<?php
-		while($prod = $buscarProductos->fetch_assoc()){
+		foreach($productos as $prod){
 			$found = false;
 			$mantto = false;
 			?>
 				<tr>
-					<?php if(isset($_SESSION["cart"])){ foreach ($_SESSION["cart"] as $c) {if($c["product_id"] == $prod["idProducto"]){ $found=true; if($c["mantenimiento"] == 1){ $mantto = true;} break; }}} ?>
+					<?php if(isset($_SESSION["cart"])){ foreach ($_SESSION["cart"] as $c) {if($c["product_id"] == $prod->idproducto){ $found=true; if($c["mantenimiento"] == 1){ $mantto = true;} break; }}} ?>
 					<td></td>
-					<td><?php echo $prod['nombre']; ?></td>
-					<td><?php echo $prod['cantidad']; ?></td>
-					<td>$ <?php echo number_format($prod['precioVenta'],2,".",",") ?></td>
-					<td>
-						<input type="checkbox" class="mantto" id="<?php echo $prod['idProducto']; ?>" <?php if ($prod["mantenimiento"] != 1) {echo " disabled ";} if($found){echo " disabled ";} if($mantto){echo " checked ";}?>>
+					<td><?php echo $prod->getProduct()->nombre; ?></td>
+					<td><?php echo $prod->cantidad; ?></td>
+					<td>$ <?php echo number_format($prod->getProduct()->precioventa,2,".",",") ?></td>
+					<td align="center">
+						<input type="checkbox" class="mantto" id="<?php echo $prod->idproducto; ?>" <?php if ($prod->getProduct()->mantenimiento != 1) {echo " disabled ";} if($found){echo " disabled ";} if($mantto){echo " checked ";}?>>
 					</td>
 					<td>
 					<?php if ($found): ?>
 						<a data-toggle="modal" data-target="#resumen" class="btn btn-info"><i class="fa fa-check fa-fw"></i>Agregado</a>
 					<?php else: ?>
 						<form class="form-inline enviar" method="POST" action="ajax/sell/addxsell.php">
-							<input type="hidden" name="product_id" value="<?php echo $prod['idProducto']; ?>">
-							<input type="hidden" name="mantenimiento" value="0" id="m<?php echo $prod['idProducto']; ?>">
+							<input type="hidden" name="product_id" value="<?php echo $prod->idproducto; ?>">
+							<input type="hidden" name="mantenimiento" value="0" id="m<?php echo $prod->idproducto; ?>">
 							<input type="hidden" name="service_id" value="" required>
 							<div class="form-group control-group">
 								<div class="controls">
-									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="width:85px;" min="1" max="<?php echo $prod['cantidad']; ?>" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
+									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="width:85px;" min="1" max="<?php echo $prod->cantidad; ?>" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
 									<button type="submit" class="btn btn-sm btn-primary"><i class="icon-cart"></i></button>
 									<p class="help-block"></p>
 								</div>

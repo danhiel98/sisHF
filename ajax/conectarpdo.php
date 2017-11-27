@@ -9,7 +9,7 @@
 
 		try{
 			$conn = new PDO('mysql:host='.$host.'; dbname='.$db, $user, $pwd);
-			$conn->exec("set names UTF8");
+			$conn->exec("set names 'UTF8'");
 		}catch(PDOException $e){
 			exit();
 		}
