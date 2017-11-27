@@ -19,11 +19,11 @@ foreach ($emple as $emp) {
 $objPHPExcel = new PHPExcel();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator("Developero")
-               ->setLastModifiedBy("Maarten Balliauw")
-               ->setTitle("Office 2007 XLSX Test Document")
-               ->setSubject("Office 2007 XLS Test Document")
-               ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+$objPHPExcel->getProperties()->setCreator("Hierro Forjado")
+               ->setLastModifiedBy("HierroForjado")
+               ->setTitle("Excel Document")
+               ->setSubject("Excel Document")
+               ->setDescription("Excel Documents")
                ->setKeywords("office 2007 openxml php")
                ->setCategory("Test result file");
 
@@ -67,14 +67,14 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('C3', 'Nombre')
             ->setCellValue('D3', 'Apellido')
             ->setCellValue('E3', 'Sexo')
-            ->setCellValue('F3', 'Telèfono')
-            ->setCellValue('G3', 'Àrea')
+            ->setCellValue('F3', 'Teléfono')
+            ->setCellValue('G3', 'Área')
             ->setCellValue('H3', 'Sucursal');
 
 $i = 4;
 foreach ($empleado as $xdempleado) {
 	$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue("A$i", $xdempleado->dui)
+							->setCellValue("A$i", $xdempleado->getEmpleado()->dui)
 							->setCellValue("B$i", $xdempleado->getEmpleado()->nit)
 							->setCellValue("C$i", $xdempleado->getEmpleado()->nombre)
 							->setCellValue("D$i", $xdempleado->getEmpleado()->apellido)

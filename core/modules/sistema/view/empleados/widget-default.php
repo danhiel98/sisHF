@@ -12,7 +12,7 @@
 			<?php if(count($empleados) > 0 ): ?>
 				<div class="btn-group pull-right">
 				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				    <i class="fa fa-download"></i> Descargar Todos <span class="caret"></span>
+				    <i class="fa fa-download"></i> Descargar <span class="caret"></span>
 				  </button>
 				  <ul class="dropdown-menu" role="menu">
 				    <li><a href="report/empleadosAll.php">Excel(.xlsx)</a></li>
@@ -82,6 +82,16 @@
 							<?php endforeach; ?>
 						</select>
 					</div>
+					<div class="btn-group pull-right">
+					<div>
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-download"></i> Descargar <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a id="reporteEPS" target="_blank">Excel (.xlsx)</a></li>
+						</ul>
+					</div>
+				</div>
 				</div>
 				<div class="clearfix"></div>
 				<br>
@@ -100,5 +110,14 @@
 	    $(".nav-tabs a").click(function(){
 	        $(this).tab('show');
 	    });
+	});
+	$(function(){
+		$("#sucursal").on("change",function(){
+			var valor = $(this).val();
+			if (valor >= 1){
+				$("#reporteEPS").attr("href","report/empleados.php?idEmple="+valor);
+			}else{
+			}
+		});
 	});
 </script>

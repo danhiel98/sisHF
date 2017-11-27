@@ -16,17 +16,6 @@
 			}
 			if (count($usuarios)>0) {
 		?>
-		<!--para imprimir el reporte de los usuarios-->
-		<div class="btn-group pull-right">
-  			<div>
-  			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    			<i class="fa fa-download"></i> Descargar<span class="caret"></span>
-  			</button>
-  			<ul class="dropdown-menu" role="menu">
-    			<li><a target="_blank" href="report/usuario.php?idSuc=<?php echo $_POST['sucursal']; ?>">Excel (.xlsx)</a></li>
-  			</ul>
-			</div>
-  		</div>
 			<table class="table table-bordered table-hover">
 				<thead>
 					<th>Nombres</th>
@@ -124,17 +113,6 @@
 	if (isset($_POST["users"])) {
 		$users = UserData::getAll();
 		?>
-		<!--para imprimir todos los usuario-->
-		<div class="btn-group pull-right">
-  			<div>
-  			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    			<i class="fa fa-download"></i> Descarga <span class="caret"></span>
-  			</button>
-  			<ul class="dropdown-menu" role="menu">
-    			<li><a href="report/users.php ">Excel (.xlsx)</a></li>
-  			</ul>
-			</div>
-  		</div>
 		<table class="table table-bordered table-hover">
 			<thead>
 				<th>Nombres</th>
