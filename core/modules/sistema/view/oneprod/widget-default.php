@@ -27,6 +27,10 @@
 ?>
 <table class="table table-bordered">
   <tr>
+    <td style="width:150px;">No.</td>
+    <td><strong><?php echo $prodxn->id; ?></strong></td>
+  </tr>
+  <tr>
     <td style="width:150px;">Estado</td>
     <td><strong><?php echo $estado; ?></strong></td>
   </tr>
@@ -36,10 +40,6 @@
       <td><strong><?php echo $prodxn->fechafinalizado; ?></strong></td>
     </tr>
   <?php endif; ?>
-  <tr>
-    <td style="width:150px;">No.</td>
-    <td><strong><?php echo $prodxn->id; ?></strong></td>
-  </tr>
   <tr>
     <td style="width:150px;">Producto</td>
     <td><strong><?php echo $prodxn->getProduct()->nombre; ?></strong></td>

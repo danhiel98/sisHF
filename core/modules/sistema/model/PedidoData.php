@@ -52,6 +52,12 @@ class PedidoData {
 		Executor::doit($sql);
 	}
 
+	public static function finalizar($id){
+		$sql = "update ".self::$tablename." set entregado = 1, fechaFinalizado = NOW() where idPedido=$id;";
+		#return $sql;
+		Executor::doit($sql);
+	}
+
 	public static function getById($id){
 		$sql = "select * from ".self::$tablename." where idPedido=$id";
 		$query = Executor::doit($sql);
@@ -94,6 +100,46 @@ class PedidoData {
 		return $array;
 	}
 
+	public static function getEntregado(){
+		$sql = "select * from ".self::$tablename." where entregado = 1 AND estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new PedidoData();
+			$array[$cnt]->id = $r['idPedido'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idcliente = $r['idCliente'];
+			$array[$cnt]->fechapedido = $r['fechaPedido'];
+			$array[$cnt]->fechaentrega = $r['fechaEntrega'];
+			$array[$cnt]->entregado = $r['entregado'];
+			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
+			$array[$cnt]->estado = $r['estado'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getPendiente(){
+		$sql = "select * from ".self::$tablename." where entregado = 0 AND estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new PedidoData();
+			$array[$cnt]->id = $r['idPedido'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idcliente = $r['idCliente'];
+			$array[$cnt]->fechapedido = $r['fechaPedido'];
+			$array[$cnt]->fechaentrega = $r['fechaEntrega'];
+			$array[$cnt]->entregado = $r['entregado'];
+			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->estado = $r['estado'];
+			$cnt++;
+		}
+		return $array;
+	}
 
 	public static function getAllByPage($start_from,$limit){
 		$sql = "select * from ".self::$tablename." where idPedido>=$start_from limit $limit";

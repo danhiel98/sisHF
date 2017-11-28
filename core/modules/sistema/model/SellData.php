@@ -66,7 +66,6 @@ class SellData {
 	}
 
 
-
 	public static function getSells(){
 		$sql = "select * from ".self::$tablename." where operation_type_id=2 order by created_at desc";
 		$query = Executor::doit($sql);
@@ -75,9 +74,9 @@ class SellData {
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new SellData();
 			$array[$cnt]->id = $r['id'];
-		$array[$cnt]->person_id = $r['person_id'];
+			$array[$cnt]->person_id = $r['person_id'];
 			$array[$cnt]->user_id = $r['user_id'];
-				$array[$cnt]->created_at = $r['created_at'];
+			$array[$cnt]->created_at = $r['created_at'];
 			$cnt++;
 		}
 		return $array;
@@ -107,9 +106,9 @@ class SellData {
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new SellData();
 			$array[$cnt]->id = $r['id'];
-		$array[$cnt]->person_id = $r['person_id'];
+			$array[$cnt]->person_id = $r['person_id'];
 			$array[$cnt]->user_id = $r['user_id'];
-				$array[$cnt]->created_at = $r['created_at'];
+			$array[$cnt]->created_at = $r['created_at'];
 			$cnt++;
 		}
 		return $array;
@@ -123,9 +122,9 @@ class SellData {
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new SellData();
 			$array[$cnt]->id = $r['id'];
-		$array[$cnt]->person_id = $r['person_id'];
+			$array[$cnt]->person_id = $r['person_id'];
 			$array[$cnt]->user_id = $r['user_id'];
-				$array[$cnt]->created_at = $r['created_at'];
+			$array[$cnt]->created_at = $r['created_at'];
 			$cnt++;
 		}
 		return $array;

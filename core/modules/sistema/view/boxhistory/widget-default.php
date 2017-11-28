@@ -1,5 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
+		<a class="btn btn-default" href="<?php echo $_SERVER['HTTP_REFERER']; ?>"><i class="fa fa-arrow-left"></i>Regresar</a>
 		<div class="btn-group pull-right">
   		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     		<i class="fa fa-download"></i> Descargar <span class="caret"></span>
@@ -56,7 +57,7 @@
 		</table>
 		<h1>Total: <?php echo "$ ".number_format($total_total,2,".",","); ?></h1>
 	<?php
-	}else {
+		}else {
 	?>
 		<div class="jumbotron">
 			<div class="container">

@@ -59,6 +59,7 @@
 	<div class="clearfix"></div>
 		<br><table class="table table-bordered table-hover">
 		<thead>
+			<th>No.</th>
 			<th>Nombre</th>
 			<th>Descripci&oacute;n</th>
 			<th>Total Existencias</th>
@@ -73,14 +74,15 @@
 				}
 			?>
 		<tr class="">
+			<td><?php echo $product->id; ?></td>
 			<td><?php echo $product->nombre; ?></td>
 			<td><?php echo $product->descripcion; ?></td>
 			<td><?php echo $total; ?></td>
 			<td style="width:40px;">
 				<a href="index.php?view=detailprod&idProd=<?php echo $product->id; ?>" class="btn btn-default btn-sm"><i class="fa fa-bars fa-fw"></i> Detalles</a>
-				<!--<a id="<?php echo $product->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"> Editar</a>-->
-				<!--<a href="index.php?view=input&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-circle-arrow-up"></i> Alta</a>-->
-				<!--<a href="index.php?view=history&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-time"></i> Historial</a>-->
+				<!--<a id="<?php #echo $product->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"> Editar</a>-->
+				<!--<a href="index.php?view=input&product_id=<?php #echo $product->id; ?>" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-circle-arrow-up"></i> Alta</a>-->
+				<!--<a href="index.php?view=history&product_id=<?php #echo $product->id; ?>" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-time"></i> Historial</a>-->
 			</td>
 		</tr>
 		<?php endforeach;?>

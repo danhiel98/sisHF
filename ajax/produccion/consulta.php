@@ -10,6 +10,7 @@
   $prodxsA = false;
   $prodxsT = false;
   $prodxsC = false;
+  
   $productns = ProduccionData::getAll();
   if (count($productns)>0) {
     $prodxs = true;

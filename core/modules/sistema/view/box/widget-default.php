@@ -6,7 +6,7 @@
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
 			<?php if (count($boxes)>0): ?>
-				<a href="index.php?view=boxhistory" class="btn btn-primary "><i class="fa fa-clock-o"></i> Historial</a>
+				<a href="index.php?view=boxhistory" class="btn btn-default "><i class="fa fa-clock-o"></i> Historial</a>
 			<?php endif; ?>
 			<?php if (count($caja)>0): ?>
 				<a href="index.php?view=processbox" class="btn btn-primary ">Procesar Datos <i class="fa fa-arrow-right"></i></a>

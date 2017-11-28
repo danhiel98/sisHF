@@ -3,7 +3,7 @@
   // define('LBROOT',getcwd()); // LegoBox Root ... the server root
   // include("core/controller/Database.php");
   include("loader.php");
-  if(Session::getUID()==""){
+  if(Session::getUID() == ""){
     $base = new Database();
     $con = $base->connect();
 
@@ -47,4 +47,5 @@
       @header("location: ./index.php");
     }
   }
+  @header("location: index.php");
 ?>

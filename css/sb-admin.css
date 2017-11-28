@@ -162,3 +162,157 @@ table.tablesorter thead tr th:hover {
   }
 
 }
+
+.panel-red {
+    border-color: #E75151;
+}
+
+.panel-red > .panel-heading {
+    border-color: #E75151;
+    color: #fff;
+    background-color: #E75151;
+}
+
+.panel-red > a {
+    color: rgb(184, 68, 68);
+}
+
+.panel-orange {
+    border-color: #FF9900;
+}
+
+.panel-orange > .panel-heading {
+    border-color: #FF9900;
+    color: #fff;
+    background-color: #FF9900;
+}
+
+.panel-orange > a {
+    color: rgb(214, 127, 6);
+}
+
+.panel-green {
+    border-color: #259F6C;
+}
+
+.panel-green > .panel-heading {
+    border-color: #259F6C;
+    color: #fff;
+    background-color: #259F6C;
+}
+
+.panel-green > a {
+    color: rgb(24, 92, 62);
+}
+
+.panel-purple {
+    border-color: #23033C;
+}
+
+.panel-purple > .panel-heading {
+    border-color: #23033C;
+    color: #fff;
+    background-color: #23033C;
+}
+
+.panel-purple > a {
+    color: rgb(27, 5, 46);
+}
+
+.panel-yellow {
+    border-color: #FFDE25;
+}
+
+.panel-yellow > .panel-heading {
+    border-color: #FFDE25;
+    color: #fff;
+    background-color: #FFDE25;
+}
+
+.panel-yellow > a {
+    color: rgb(206, 176, 26);
+}
+
+.panel-brown {
+    border-color: #4A2C2C;
+}
+
+.panel-brown > .panel-heading {
+    border-color: #4A2C2C;
+    color: #fff;
+    background-color: #4A2C2C;
+}
+
+.panel-brown > a {
+    color: rgb(54, 32, 32);
+}
+
+.panel-green-2 {
+    border-color: #113C4A;
+}
+
+.panel-green-2 > .panel-heading {
+    border-color: #113C4A;
+    color: #fff;
+    background-color: #113C4A;
+}
+
+.panel-green-2 > a {
+    color: rgb(8, 46, 58);
+}
+
+.panel-lightBlue {
+    border-color: #1FAD9F;
+}
+
+.panel-lightBlue > .panel-heading {
+    border-color: #1FAD9F;
+    color: #fff;
+    background-color: #1FAD9F;
+}
+
+.panel-lightBlue > a {
+    color: rgb(27, 129, 119);
+}
+
+.panel-blue {
+    border-color: #000249;
+}
+
+.panel-blue > .panel-heading {
+    border-color: #000249;
+    color: #fff;
+    background-color: #000249;
+}
+
+.panel-blue > a {
+    color: #020431;
+}
+
+.panel-azulGris {
+    border-color: #476268;
+}
+
+.panel-azulGris > .panel-heading {
+    border-color: #476268;
+    color: #fff;
+    background-color: #476268;
+}
+
+.panel-azulGris > a {
+    color: #354a4e;
+}
+
+.panel-red {
+    border-color: rgb(145, 46, 64);
+}
+
+.panel-red > .panel-heading {
+    border-color: rgb(145, 46, 64);
+    color: #fff;
+    background-color: rgb(145, 46, 64);
+}
+
+.panel-red > a {
+    color: rgb(99, 36, 47);
+}

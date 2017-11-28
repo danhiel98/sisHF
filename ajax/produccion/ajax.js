@@ -1,5 +1,3 @@
-//$(obtener_registros());
-
 function obtener_registros(buscar){
 	$.ajax({
 		url : 'ajax/produccion/resultado.php',
@@ -31,7 +29,7 @@ function producciones(tab){
 		type: "POST",
 		dataType: "html",
 		data: {
-			tab : tab
+			tab: tab
 		}
 	}).done(function(res){
 		$("#resultado").html(res);
