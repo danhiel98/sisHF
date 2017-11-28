@@ -26,7 +26,18 @@
 	<div class="col-md-12">
 		
 		<div class="btn-group pull-right">
-			<a class="btn btn-default" <?php if (count($empleados)<=0){echo "disabled onclick='return false'"; $nemp = true;} ?> href="<?php if($nemp){echo "#";}elseif($_SESSION["user_id"]==1){echo 'index.php?view=newuser';}else{echo 'index.php?view=newuser&emp=true';} ?>"><i class="icon-user-plus"></i> Nuevo Usuario</a>
+			<a class="btn btn-default" <?php 
+			if (count($empleados)<=0){
+				echo "disabled onclick='return false'"; $nemp = true;
+			} ?> 
+			href="<?php if($nemp){echo "#";}elseif($_SESSION["user_id"]==1){
+					echo 'index.php?view=newuser';}else{echo 'index.php?view=newuser&emp=true';} ?>"><i class="icon-user-plus"></i> Nuevo Usuario</a>
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    					<i class="fa fa-download"></i> Descargar <span class="caret"></span>
+  					</button>
+  					<ul class="dropdown-menu" role="menu">
+    					<li><a href="report/users.php ">Excel (.xlsx)</a></li>
+  					</ul>
 		</div>
 
 		<h1>Lista de Usuarios</h1>
@@ -61,11 +72,23 @@
 					<label for="sucursal" class="col-md-1 control-label">Sucursal</label>
 					<div class="col-md-6">
 						<select class="form-control" name="sucursal" id="sucursal">
-							<option value="">--SELECCIONE--</option>
+							<option id="su" value="">--SELECCIONE--</option>
 							<?php foreach ($sucursal as $s): ?>
 								<option value="<?php echo $s->id; ?>"><?php echo $s->nombre; ?></option>
 							<?php endforeach; ?>
 						</select>
+					</div>
+				</div>
+
+				<!--para imprimir el reporte de los usuarios-->
+				<div class="btn-group pull-right">
+					<div>
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-download"></i> Descargar<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a id="reporteUSU" target="_blank" >Excel (.xlsx)</a></li>
+						</ul>
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -100,4 +123,15 @@
 			$(this).tab('show');
 		});
 	});
+//Para enviar el id de la sucursal al hacer el cambio de sucursal
+	$(function(){
+		$("#sucursal").on("change",function(){
+			var valor = $(this).val();
+			if (valor >= 1){
+				$("#reporteUSU").attr("href","report/usuario.php?idSuc="+valor);
+			}else{
+			}
+		});
+	});
+		
 </script>

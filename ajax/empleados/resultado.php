@@ -7,7 +7,7 @@
 
 	$emps = EmpleadoData::getAll();
 	$sucursal = $_POST["sucursal"];
-
+	
 	if (count($emps) > 0):
 		
 		if($sucursal != "" && $sucursal != null):
@@ -22,17 +22,6 @@
 			
 			if (count($empleados)>0):
 ?>
-				<!--para imprimir reportes para empleados segun la sucursal seleccionada-->
-				<div class="btn-group pull-right">
-					<div>
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a target="_blank" href="report/empleados.php?idEmple=<?php echo $_POST['sucursal']; ?>">Excel (.xlsx)</a></li>
-						</ul>
-					</div>
-				</div>
 				<table class="table table-bordered table-hover">
 					<thead>
 						<th>DUI</th>
