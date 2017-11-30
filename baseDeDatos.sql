@@ -858,4 +858,4 @@ CREATE TABLE configuraciones(
   valor varchar(50) not null
 );
 
-insert into configuraciones values('iva','0.13');
+insert into configuraciones values(null,'iva','0.13');
