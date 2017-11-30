@@ -32,7 +32,7 @@
 			<div class="form-group control-group">
         <label for="descripcion" class="col-lg-2 control-label">Descripci&oacute;n</label>
         <div class="col-md-6 controls">
-          <textarea name="descripcion" class="form-control" id="descripcion" placeholder="Descripci&oacute;n del Producto" data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,100}" data-validation-regex-message="Introduzca una descripción válida" ></textarea>
+          <textarea maxlength="200" name="descripcion" class="form-control" id="descripcion" placeholder="Descripci&oacute;n del Producto" data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,200}" data-validation-regex-message="Introduzca una descripción válida" ></textarea>
           <p class="help-block"></p>
         </div>
       </div>

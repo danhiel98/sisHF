@@ -124,10 +124,8 @@
 				<th style="text-align:center;">Admin</th>
 				<th></th>
 			</thead>
-			<?php
-			foreach($users as $user){
-			?>
-			<?php if((isset($_SESSION["usr_suc"]) && ($user->getEmpleado()->getSucursal()->id == $_SESSION["usr_suc"])) || isset($_SESSION["adm"])): ?>
+			<?php foreach($users as $user): ?>
+				<?php if((isset($_SESSION["usr_suc"]) && ($user->getEmpleado()->getSucursal()->id == $_SESSION["usr_suc"])) || isset($_SESSION["adm"])): ?>
 				<tr>
 					<td><?php echo $user->getEmpleado()->nombre; ?></td>
 					<td><?php echo $user->getEmpleado()->apellido; ?></td>
@@ -190,29 +188,28 @@
 							$emp = "&emp=$user->idempleado";
 						}?>
 				</tr>
-		<?php
-		endif;
-		}
-		?>
+			<?php
+				endif;
+			endforeach;
+			?>
 		</table>
 		<?php
 	}
-	if (isset($_POST["idUsrS"]) && !empty(isset($_POST["idUsrS"]))) {
-		$usr = UserData::getById($_POST["idUsrS"]);
-		if ($usr->activo == 0) {
-			$usr->activo = 1;
-		}elseif ($usr->activo == 1) {
-			$usr->activo = 0;
-		}
-		$usr->updateS();
-	}
-	if (isset($_POST["idUsrT"]) && !empty(isset($_POST["idUsrT"]))) {
-		$usr = UserData::getById($_POST["idUsrT"]);
-		if ($usr->isAdmin == 0) {
-			$usr->isAdmin = 1;
-		}elseif ($usr->isAdmin == 1) {
-			$usr->isAdmin = 0;
-		}
-		$usr->updateT();
-	}
 ?>
+<script>
+	$(".estado").on("confirmed.bs.confirmation",function(){
+		var id = this.id;
+		alert("Ha ejecutado la función acualizarEstado y ha enviado el id " + id);
+		actualizarEstado(id);
+		var idSuc = $('#sucursal').val();
+		obtenerDatosDeSucursal(idSuc);
+	});
+	
+	$(".admin").on("confirmed.bs.confirmation",function(){
+		var id = this.id;
+		alert("Ha ejecutado la función acualizarTipo y ha enviado el id " + id);
+		actualizarTipo(id);
+		var idSuc = $('#sucursal').val();
+		obtenerDatosDeSucursal(idSuc);
+	});
+</script>

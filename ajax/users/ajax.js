@@ -1,10 +1,21 @@
-var x = '<script type="text/javascript" src="js/bootstrap-confirmation.js"></script>';
-x += "<script>$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]',container: 'body'});$('[data-toggle=confirmation-singleton]').confirmation({rootSelector: '[data-toggle=confirmation-singleton]',container: 'body'});$('[data-toggle=confirmation-popout]').confirmation({rootSelector: '[data-toggle=confirmation-popout]',container: 'body'});$('#confirmation-delegate').confirmation({selector: 'button'});</script>"
-var f1 = "obtenerUsuarios('x');";
-var y = '<script>$(".estado").on("confirmed.bs.confirmation",function(){var id = this.id;actualizarEstado(id);'+f1+'});$(".admin").on("confirmed.bs.confirmation",function(){var id = this.id;actualizarTipo(id);'+f1+'});</script>';
-var f2 = "var idSuc = $('#sucursal').val();obtenerDatosDeSucursal(idSuc);"
-var z = '<script>$(".estado").on("confirmed.bs.confirmation",function(){var id = this.id;actualizarEstado(id);'+f2+'});$(".admin").on("confirmed.bs.confirmation",function(){var id = this.id;actualizarTipo(id);'+f2+'});</script>';
+function usuarios(tab) {
+	$.ajax({
+		url: "ajax/users/consulta.php",
+		type: "POST",
+		dataType: "html",
+		data: {
+			tab: tab
+		}
+	}).done(function (res) {
+		$("#resultado").html(res);
+	});
+}
 
+$(function () {
+	usuarios();
+});
+
+/*
 function obtenerDatosDeSucursal(idSucursal){
 	$.ajax({
 		url : 'ajax/users/resultado.php',
@@ -12,7 +23,10 @@ function obtenerDatosDeSucursal(idSucursal){
 		dataType : 'html',
 		data : { sucursal: idSucursal }
 	}).done(function(resultado){
-		$("#tabla_resultado").html(x+resultado+z);
+		$.getScript("js/bootstrap-confirmation.js", function (data, textStatus, jqxhr) {
+			//
+		});
+		$("#tabla_resultado").html(resultado);
 	})
 }
 
@@ -23,13 +37,16 @@ function obtenerUsuarios(usr){
 		dataType: "html",
 		data: {users: usr}
 	}).done(function(res){
-		$("#all").html(x+res+y);
+		$.getScript("js/jqBootstrapValidation.js", function (data, textStatus, jqxhr) {
+			//
+		});
+		$("#all").html(res);
 	})
 }
 
 function actualizarEstado(id){
 	$.ajax({
-		url: "ajax/users/resultado.php",
+		url: "ajax/users/procesos.php",
 		type: "POST",
 		data: {idUsrS: id}
 	});
@@ -37,7 +54,7 @@ function actualizarEstado(id){
 
 function actualizarTipo(id){
 	$.ajax({
-		url: "ajax/users/resultado.php",
+		url: "ajax/users/procesos.php",
 		type: "POST",
 		data: {idUsrT: id}
 	});
@@ -51,3 +68,4 @@ $(document).on('load change', '#sucursal', function(){
 $(function(){
 	obtenerUsuarios("x");
 });
+*/

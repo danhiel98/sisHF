@@ -114,7 +114,7 @@
 			<div class="form-group control-group">
 				<label for="txtDireccion" class="col-lg-2 control-label">Direcci&oacute;n*</label>
 				<div class="col-md-6 controls">
-					<textarea maxlength="200" name="txtDireccion" class="form-control" id="txtDireccion" placeholder="Direcci&oacute;n" required data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,100}" data-validation-regex-message="Introduzca una dirección válida"></textarea>
+					<textarea maxlength="200" name="txtDireccion" class="form-control" id="txtDireccion" placeholder="Direcci&oacute;n" required data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,200}" data-validation-regex-message="Introduzca una dirección válida"></textarea>
 					<p class="help-block"></p>
 				</div>
 			</div>

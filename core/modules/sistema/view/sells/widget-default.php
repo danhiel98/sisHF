@@ -1,67 +1,65 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-						<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						 <li><a href="report/pedidos.php">Excel (.xlsx)</a></li>
-					</ul>
-		</div>
-		<div class="btn-group  pull-right">
 			<a class="btn btn-default" href="index.php?view=sell"><i class="fa fa-usd"></i> Vender</a>
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<i class="fa fa-download"></i> Descargar <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+					<li><a href="report/pedidos.php">Excel (.xlsx)</a></li>
+			</ul>
 		</div>
 		<h1><i class='glyphicon glyphicon-shopping-cart'></i> Lista de Ventas</h1>
 		<div class="clearfix"></div>
        	<div>
 		    <label for="inicio" class="col-lg-2 control-label">Fecha De Inicio</label><div class='col-md-2'>
-		        <div class="form-group">
-		            <div class='input-group date' id='datetimepicker6'>
-		                <input type='text' class="form-control" />
-		                <span class="input-group-addon">
-		                    <span class="glyphicon glyphicon-calendar"></span>
-		                </span>
-		            </div>
-		        </div>
-		    </div>
-		    <label for="inicio" class="col-lg-2 control-label">Fecha Fin</label>
-		    <div class='col-md-2'>
-		        <div class="form-group">
-		            <div class='input-group date' id='datetimepicker7'>
-		                <input type='text' class="form-control" />
-		                <span class="input-group-addon">
-		                    <span class="glyphicon glyphicon-calendar"></span>
-		                </span>
-		            </div>
-		        </div>
-			 </div>
-			 <div class="btn-group pull-center">
-					<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#ver">
-						<i class="fa fa-search"></i> Buscar</span>
-					</button>
-			 </div>
+			<div class="form-group">
+				<div class='input-group date' id='datetimepicker6'>
+					<input type='text' class="form-control" />
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<label for="inicio" class="col-lg-2 control-label">Fecha Fin</label>
+		<div class='col-md-2'>
+			<div class="form-group">
+				<div class='input-group date' id='datetimepicker7'>
+					<input type='text' class="form-control" />
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="btn-group pull-center">
+			<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#ver">
+				<i class="fa fa-search"></i> Buscar</span>
+			</button>
+		</div>
 
-			    <script type="text/javascript">
-			      $(function () {
-			          $('#datetimepicker6').datetimepicker({
-			          	  format: "DD/MM/YYYY",
-					      locale: "es"
-			          });
-			          $('#datetimepicker7').datetimepicker({
-			          	format: "DD/MM/YYYY",
-			          	locale: "es",
-			            useCurrent: false //Important! See issue #1075
-			          });
-			          $("#datetimepicker6").on("dp.change", function (e) {
-			            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-			          });
-			          $("#datetimepicker7").on("dp.change", function (e) {
-			            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-			          });
-			      });
-			    </script>
-			    
+		<script type="text/javascript">
+			$(function () {
+				$('#datetimepicker6').datetimepicker({
+					format: "DD/MM/YYYY",
+					locale: "es"
+				});
+				$('#datetimepicker7').datetimepicker({
+				format: "DD/MM/YYYY",
+				locale: "es",
+				useCurrent: false //Important! See issue #1075
+				});
+				$("#datetimepicker6").on("dp.change", function (e) {
+				$('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+				});
+				$("#datetimepicker7").on("dp.change", function (e) {
+				$('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+				});
+			});
+		</script>  
 	</div>
+	
 	<div class="clearfix"></div>
 		<?php
 			$products = FacturaData::getFacturas();

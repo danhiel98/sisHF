@@ -68,6 +68,27 @@ class UserData {
 		Executor::doit($sql);
 	}
 
+	public static function login($user,$pass){
+		$sql = "select * from usuario where (email= \"".$user."\" or usuario = \"".$user."\") and clave= \"".$pass."\"";
+		$query = Executor::doit($sql);
+		$found = null;
+		$data = new UserData();
+		while($r = $query[0]->fetch_array()){
+			$data->id = $r['idUsuario'];
+			$data->idempleado = $r['idEmpleado'];
+			$data->name = $r['nombre'];
+			$data->lastname = $r['apellido'];
+			$data->username = $r['usuario'];
+			$data->email = $r['email'];
+			$data->password = $r['clave'];
+			$data->activo = $r['activo'];
+			$data->isAdmin = $r['admin'];
+			$found = $data;
+			break;
+		}
+		return $found;
+	}
+
 	public static function getById($id){
 		$sql = "select * from ".self::$tablename." where idUsuario = $id";
 		$query = Executor::doit($sql);
