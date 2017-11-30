@@ -838,3 +838,12 @@ CREATE TABLE salidaCajaChica(
   foreign key(idCajaChica) references cajaChica(idCajaChica),
   foreign key(idEmpleado) references empleado(idEmpleado)
 );
+
+
+CREATE TABLE configuraciones(
+  idConfig smallint PRIMARY KEY AUTO_INCREMENT,
+  nombre varchar(20) not null,
+  valor varchar(50) not null
+);
+
+insert into configuraciones values('iva','0.13');

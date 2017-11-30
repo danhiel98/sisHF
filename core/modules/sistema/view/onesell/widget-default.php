@@ -12,7 +12,7 @@
     <i class="fa fa-download"></i> Descargar <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="report/onesell-word.php?id=<?php echo $_GET["id"];?>">Word 2007 (.docx)</a></li>
+  <li><a target="_blank" href="pdf/documentos/factura_pdf.php?id=<?php echo $_GET["id"];?>">PDF (.pdf)</a></li>
   </ul>
 </div>
 <h1>Resumen de Venta</h1>
