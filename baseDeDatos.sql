@@ -390,6 +390,18 @@ insert into empleado values(null,1,'67831124-4','1014-311292-100-3','Juan','Pine
 insert into empleado values(null,1,'56473828-2','1010-091292-102-2','Esmeralda','Medoza','Casado/a','Mujer','1992-12-09','Col. La Esperanza','Zacatecoluca','La Paz','Bachillerato','Pintar','7354-3903',1);
 */
 
+CREATE TABLE tipoUsuario(
+  idTipo tinyint PRIMARY KEY AUTO_INCREMENT,
+  nombre varchar(15) not null,
+  activo boolean not null default 1
+);
+
+insert into tipoUsuario values
+(null,"Root",1),
+(null,"Administrador",1),
+(null,"Vendedor",1),
+(null,"Producción",1);
+
 /*OK*/
 CREATE TABLE usuario(
   idUsuario smallint PRIMARY KEY AUTO_INCREMENT,
@@ -399,9 +411,10 @@ CREATE TABLE usuario(
   usuario varchar(30) not null,
   email varchar(100),
   clave varchar(60) not null,
-  admin boolean not null default 0,
+  tipo tinyint not null default 0,
   fechaCreacion datetime not null default current_timestamp,
   activo boolean default 1 not null,
+  foreign key(tipo) references tipoUsuario(idTipo),
   foreign key(idEmpleado) references empleado(idEmpleado)
 );
 insert into usuario values(null,null,'Administrador','Principal','admin','admin@gmail.com','90b9aa7e25f80cf4f64e990b78a9fc5ebd6cecad',1,now(),1);

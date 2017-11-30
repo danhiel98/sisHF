@@ -13,7 +13,7 @@
       <div class="form-group control-group">
         <label for="nombre" class="col-lg-2 control-label">Nombre*</label>
           <div class="col-md-6 controls">
-            <input type="text" name="nombre" required class="form-control" id="nombre" placeholder="Nombre del Producto"  maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" onSubmit="return validarnombre()" placeholder="Nombres" onkeypress="return vNom(event,this)">
+            <input type="text" name="nombre" required class="form-control" id="nombre" placeholder="Nombre del Producto"  maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" placeholder="Nombres" onkeypress="return vNom(event,this)">
           	<p class="help-block"></p>
           </div>
       </div>

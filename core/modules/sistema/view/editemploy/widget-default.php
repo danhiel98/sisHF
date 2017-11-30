@@ -1,7 +1,7 @@
 <?php
 
 	$u = UserData::getById(Session::getUID());
-	if (!$u->isAdmin):
+	if (!$u->tipo == 1 || !$u->tipo == 2):
 ?>
 		<script type="text/javascript">
 			window.location = "index.php?view=home";
@@ -59,7 +59,7 @@
 		  <div class="form-group control-group">
 		    <label for="txtNombre" class="col-lg-2 control-label">Nombres*</label>
 		    <div class="col-md-6 controls">
-		      <input type="text" name="txtNombre" class="form-control" id="txtNombre" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" onSubmit="return validarnombre()" placeholder="Nombres" onkeypress="return vNom(event,this)" required value="<?php echo $empleado->nombre; ?>">
+		      <input type="text" name="txtNombre" class="form-control" id="txtNombre" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" placeholder="Nombres" onkeypress="return vNom(event,this)" required value="<?php echo $empleado->nombre; ?>">
 					<p class="help-block"></p>
 				</div>
 		  </div>

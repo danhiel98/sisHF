@@ -17,7 +17,7 @@
 	$sucursal = SucursalData::getAll();
 
 ?>
-    <script src="js/bootstrap-confirmation.js"></script>
+    <script src="res/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
     <?php if ($users): ?>
     <ul class="nav nav-tabs">
         <li class="active"><a href="#all">Todos</a></li>

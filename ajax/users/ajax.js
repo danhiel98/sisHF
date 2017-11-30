@@ -1,3 +1,4 @@
+/*
 function usuarios(tab) {
 	$.ajax({
 		url: "ajax/users/consulta.php",
@@ -15,7 +16,8 @@ $(function () {
 	usuarios();
 });
 
-/*
+*/
+
 function obtenerDatosDeSucursal(idSucursal){
 	$.ajax({
 		url : 'ajax/users/resultado.php',
@@ -23,13 +25,11 @@ function obtenerDatosDeSucursal(idSucursal){
 		dataType : 'html',
 		data : { sucursal: idSucursal }
 	}).done(function(resultado){
-		$.getScript("js/bootstrap-confirmation.js", function (data, textStatus, jqxhr) {
-			//
-		});
-		$("#tabla_resultado").html(resultado);
+		$("#resultadoSucursal").html(resultado);
 	})
 }
 
+/*
 function obtenerUsuarios(usr){
 	$.ajax({
 		url: "ajax/users/resultado.php",
@@ -60,12 +60,12 @@ function actualizarTipo(id){
 	});
 }
 
-$(document).on('load change', '#sucursal', function(){
-	var idSuc = $(this).val();
-	obtenerDatosDeSucursal(idSuc);
-});
-
 $(function(){
 	obtenerUsuarios("x");
 });
 */
+
+$(document).on('load change', '#sucursal', function () {
+	var idSuc = $(this).val();
+	obtenerDatosDeSucursal(idSuc);
+});

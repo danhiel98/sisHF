@@ -1,6 +1,6 @@
 <?php
 	$u = UserData::getById(Session::getUID());
-	if (!$u->isAdmin) {
+	if (!$u->tipo == 1 || !$u->tipo == 2) {
 		?>
 		<script type="text/javascript">
 			window.location = "index.php?view=home";
@@ -87,7 +87,7 @@
 		    <div class="col-md-6">
 					<div class="checkbox">
 		    		<label>
-		      		<input type="checkbox" name="isAdmin" <?php if($user->isAdmin){ echo "checked";}?>>
+		      		<input type="checkbox" name="isAdmin" <?php if($user->tipo == 2){ echo "checked";}?>>
 		    		</label>
 		  		</div>
 		    </div>

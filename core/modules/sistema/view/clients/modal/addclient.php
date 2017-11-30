@@ -5,7 +5,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><i class='glyphicon glyphicon-edit'></i> Registrar Cliente</h4>
       </div>
-      <form class="form-horizontal" method="post" id="addclient" action="index.php?view=addclient" role="form" name="frmcliente" onSubmit="return validar();">
+      <form class="form-horizontal" method="post" id="addclient" action="index.php?view=addclient" role="form" name="frmcliente">
         <div class="modal-body">
     			<div class="form-group control-group">
     		    <label for="txtDui" class="col-sm-3 control-label">DUI*</label>
@@ -31,7 +31,7 @@
     		  <div class="form-group control-group">
     		    <label for="txtNombre" class="col-sm-3 control-label">Nombres*</label>
     		    <div class="col-sm-8 controls">
-    		      <input type="text" name="txtNombre" class="form-control" id="txtNombre" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" onSubmit="return validarnombre()" placeholder="Nombres" onkeypress="return vNom(event,this)" required>
+    		      <input type="text" name="txtNombre" class="form-control" id="txtNombre" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" placeholder="Nombres" onkeypress="return vNom(event,this)" required>
     					<p class="help-block"></p>
     		    </div>
     		  </div>
@@ -67,7 +67,7 @@
     		  <div class="form-group control-group">
             <label for="txtDireccion" class="col-sm-3 control-label">Direcci&oacute;n*</label>
     		    <div class="col-sm-8 controls">
-    		      <textarea maxlength="200" name="txtDireccion" class="form-control" id="txtDireccion" placeholder="Direcci&oacute;n" required data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,}" data-validation-regex-message="Introduzca una dirección válida"></textarea>
+    		      <textarea maxlength="150" name="txtDireccion" class="form-control" id="txtDireccion" placeholder="Direcci&oacute;n" required data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,}" data-validation-regex-message="Introduzca una dirección válida"></textarea>
               <p class="help-block"></p>
     		    </div>
     		  </div>

@@ -3,7 +3,7 @@
 		<a class="btn btn-default" href="index.php?view=clients"><i class="fa fa-arrow-left"></i> Regresar</a>
     <h1>Registrar Nuevo Cliente</h1>
     <br>
-		<form class="form-horizontal" method="post" id="addclient" action="index.php?view=addclient" role="form" name="frmcliente" onSubmit="return (validar();">
+		<form class="form-horizontal" method="post" id="addclient" action="index.php?view=addclient" role="form" name="frmcliente">
 			<div class="form-group control-group">
 		    <label for="txtDui" class="col-lg-2 control-label">DUI*</label>
 		    <div class="col-md-6">
@@ -28,7 +28,7 @@
 		  <div class="form-group control-group">
 		    <label for="txtNombre" class="col-lg-2 control-label">Nombres*</label>
 		    <div class="col-md-6 controls">
-		      <input type="text" name="txtNombre" class="form-control" id="txtNombre" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" onSubmit="return validarnombre()" placeholder="Nombres" onkeypress="return vNom(event,this)" required>
+		      <input type="text" name="txtNombre" class="form-control" id="txtNombre" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" placeholder="Nombres" onkeypress="return vNom(event,this)" required>
 					<p class="help-block"></p>
 		    </div>
 		  </div>
@@ -64,7 +64,7 @@
 		  <div class="form-group control-group">
         <label for="txtDireccion" class="col-lg-2 control-label">Direcci&oacute;n*</label>
 		    <div class="col-md-6 controls">
-		      <textarea maxlength="200" name="txtDireccion" class="form-control" id="txtDireccion" placeholder="Direcci&oacute;n" required data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,}" data-validation-regex-message="Introduzca una dirección válida"></textarea>
+		      <textarea maxlength="150" name="txtDireccion" class="form-control" id="txtDireccion" placeholder="Direcci&oacute;n" required data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,}" data-validation-regex-message="Introduzca una dirección válida"></textarea>
           <p class="help-block"></p>
 		    </div>
 		  </div>
