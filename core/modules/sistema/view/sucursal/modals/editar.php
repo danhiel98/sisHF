@@ -27,15 +27,15 @@
             <label for="direccion" class="col-sm-3 control-label">Direcci&oacute;n:</label>
             <div class="col-sm-8">
               <div class="input-group controls">
-                <textarea class="form-control" rows="3" cols="80" name="edireccion" id="edireccion" placeholder="Introduzca la direcci&oacute;n de la sucursal" data-validation-regex-regex="[Á-Úá-ú#().,_/\w\s]{3,200}" data-validation-regex-message="Introduzca una dirección válida" required maxlength="200"></textarea>
+                <textarea class="form-control" rows="3" cols="80" name="edireccion" id="edireccion" placeholder="Introduzca la direcci&oacute;n de la sucursal" data-validation-regex-regex="[Á-Úá-ú#().,_/\w\s]{3,150}" data-validation-regex-message="Introduzca una dirección válida" required maxlength="150"></textarea>
                 <p class="help-block"></p>
               </div>
             </div>
           </div>
           <div class="form-group control-group">
-            <label for="telefono" class="col-sm-3 control-label">Tel&eacute;fono:</label>
+            <label for="etelefono" class="col-sm-3 control-label">Tel&eacute;fono:</label>
             <div class="col-sm-8 controls">
-              <input required type="text" name="etelefono" class="form-control" id="etelefono" placeholder="Tel&eacute;fono" onkeyup="fnc(this,'-',tel,true)" onpaste="return false" required onKeyPress="return soloNumeros(event)" maxlength="10" data-validation-regex-regex="[0-9]{4}-[0-9]{4}" data-validation-regex-message="Introduzca un número Teléfono válido" maxlength="9">
+              <input type="text" name="etelefono" class="form-control" id="etelefono" placeholder="N&uacute;mero telef&oacute;nico" onkeyup="fnc(this,'-',tel,true);" onpaste="return false" required onKeyPress="return soloNumeros(event);" maxlength="9" data-validation-regex-regex="[0-9]{4}-[0-9]{4}" data-validation-regex-message="Introduzca un número de teléfono válido" maxlength="9">
 		          <p class="help-block"></p>
             </div>
           </div>

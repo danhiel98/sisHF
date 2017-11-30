@@ -40,7 +40,7 @@
                 <span class="input-group-addon">
                   <i class="fa fa-fw fa-dollar"></i>
                 </span>
-                <input type="text" name="ecantidad" class="form-control" id="ecantidad" placeholder="Cantidad De Dinero A Enviar" required data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="5">
+                <input type="text" name="ecantidad" class="form-control" id="ecantidad" placeholder="Cantidad De Dinero A Enviar" required data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="1">
               </div>
             </div>
           </div>

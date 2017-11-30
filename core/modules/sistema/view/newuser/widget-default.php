@@ -7,13 +7,15 @@
 		if (isset($_SESSION["usr_suc"]) && !isset($_SESSION["adm"])) {
 			$empleados = EmpleadoData::getAllForUserBySucId($_SESSION["usr_suc"]);
 		}
+		#Obtener los tipos de usuraios existentes
+		$tipos = UserTypeData::getAll();
 	}else{
 		if ($_SESSION["user_id"] != 1) {
 			@header("location: index.php?view=users");
 		}
 	}
 ?>
-<!--<script type="text/javascript" src="ajax/usuario/ajax.js"></script>-->
+<script type="text/javascript" src="ajax/usuario/ajax.js"></script>
 <a href="index.php?view=users" class="btn btn-default"><i class="fa fa-arrow-left"></i> Regresar</a>
 <div class="row">
 	<div class="col-md-12">
@@ -76,14 +78,15 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="isAdmin" class="col-lg-2 control-label">Es Administrador</label>
+		    <label for="tipo" class="col-lg-2 control-label">Tipo</label>
 		    <div class="col-md-6">
-					<div class="checkbox">
-		    <label>
-		      <input type="checkbox" name="isAdmin">
-		    </label>
-		  </div>
-		    </div>
+					<select name="tipo" class="form-control" required>
+						<option value="">--SELECCIONE--</option>
+						<?php foreach ($tipos as $tipo): ?>
+							<option value="<?php echo $tipo->id; ?>"><?php echo $tipo->nombre; ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
 		  </div>
 
 		  <p class="alert alert-info">* Campos obligatorios</p>

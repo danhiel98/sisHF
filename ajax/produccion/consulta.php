@@ -167,7 +167,7 @@
       </div>
       <?php if (count($matp) <= 0 && count($prods) <= 0): ?>
         <div class="alert alert-warning">
-          Para registrar una producci&oacute;n debe haber productos y materia prima en el sistema.
+          Para registrar una producci&oacute;n debe haber <a href="index.php?view=products">productos</a> y <a href="index.php?view=inventarymp">materia</a> prima en el sistema.
         </div>
 			<?php elseif(count($matp) <= 0): ?>
 				<div class="alert alert-warning">

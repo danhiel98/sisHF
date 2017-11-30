@@ -26,7 +26,7 @@
             <label for="direccion" class="col-sm-3 control-label">Descripci&oacute;n:</label>
             <div class="col-sm-8 controls">
               <div class="input-group">
-                <textarea class="form-control" name="edescripcion" rows="3" cols="80" id="edescripcion" required placeholder="Introduzca la descripci&oacute;n del servicio" data-validation-regex-regex="[Á-Úá-ú#().,_/\w\s]{3,200}" data-validation-regex-message="Introduzca una dirección válida" maxlength="200"></textarea>
+                <textarea class="form-control" name="edescripcion" rows="3" cols="80" id="edescripcion" required placeholder="Introduzca la descripci&oacute;n del servicio" data-validation-regex-regex="[Á-Úá-ú#().,_/\w\s]{3,200}" data-validation-regex-message="Introduzca una dirección válida" maxlength="150"></textarea>
               </div>
             </div>
           </div>

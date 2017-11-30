@@ -47,7 +47,7 @@
 					}
 				?>
 				<td style="width: 50px; max-width: 60px;">
-					<form class="frmDtos" data-id="<?php echo $mp->id; ?>" action="ajax/buy/addtore.php" method="post">
+					<form onsubmit="return false;" class="frmDtos" data-id="<?php echo $mp->id; ?>" action="ajax/buy/addtore.php" method="post">
 						<div class="control-group">
 							<div class="controls">
 								<input <?php if($found){echo "disabled";} ?> type="text" class="form-control cmpCant cmpValid" data-id="<?php echo $mp->id; ?>" name="cantidad" placeholder="Cantidad" pattern="[0-9]*" data-validation-pattern-message="Cantidad inv&aacute;lida." maxlength="6" min="1"  value="<?php if($found){echo $cn;} ?>" required>
@@ -56,24 +56,23 @@
 					</form>
 				</td>
 				<td style="width: 140px;">
-					<form class="frmDtos" data-id="<?php echo $mp->id; ?>" action="ajax/buy/addtore.php" method="post">
+					<form onsubmit="return false;" class="frmDtos" data-id="<?php echo $mp->id; ?>" action="ajax/buy/addtore.php" method="post">
 						<div class="control-group">
 							<div class="controls">
 								<div class="input-group">
-	                <span class="input-group-addon">
-	                  <i class="fa fa-dollar"></i>
-	                </span>
-										<input <?php if($found){echo "disabled";} ?> style="font-size: 0.9em;" type="text" class="form-control cmpPrec cmpValid" data-id="<?php echo $mp->id; ?>" name="precio" placeholder="Precio Unitario" min="0.01" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Cantidad inv&aacute;lida" value="<?php if($found){echo number_format ($pr,2,".",",");} ?>" required>
-	              </div>
+									<span class="input-group-addon">
+										<i class="fa fa-dollar"></i>
+									</span>
+									<input <?php if($found){echo "disabled";} ?> style="font-size: 0.9em;" type="text" class="form-control cmpPrec cmpValid" data-id="<?php echo $mp->id; ?>" name="precio" placeholder="Precio Unitario" min="0.01" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Cantidad inv&aacute;lida" value="<?php if($found){echo number_format ($pr,2,".",",");} ?>" required>
+	              				</div>
 							</div>
 						</div>
 					</form>
 				</td>
 				<td style="width:50px;">
 					<?php if (!$found): ?>
-						<button disabled type="submit" class="btn btn-success btn-sm btnEnviar" data-id="<?php echo $mp->id; ?>"><i class="fa fa-cart-plus"></i> </button>
+						<button disabled type="button" class="btn btn-success btn-sm btnEnviar" data-id="<?php echo $mp->id; ?>"><i class="fa fa-cart-plus"></i></button>
 					<?php else: ?>
-						<!--<button type="submit" class="btn btn-info btn-sm btnEnviar" data-id="<?php echo $mp->id; ?>"><i class="fa fa-refresh"></i></button>-->
 						<button type="button" class="btn btn-danger btn-sm btnQuitar" data-id="<?php echo $mp->id; ?>"><i class="fa fa-trash"></i></button>
 					<?php endif; ?>
 				</td>

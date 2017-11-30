@@ -25,6 +25,7 @@
   include "core/modules/".Module::$module."/model/ProduccionMPData.php";
   include "core/modules/".Module::$module."/model/PedidoData.php";
   include "core/modules/".Module::$module."/model/DireccionData.php";
+  include "core/modules/".Module::$module."/model/UserTypeData.php";
 
   include "core/modules/".Module::$module."/model/UserData.php";
   include "core/modules/".Module::$module."/model/ProductData.php";

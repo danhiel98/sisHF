@@ -25,16 +25,29 @@
 		    <button>Iniciar Sesi&oacute;n</button>
 		  </form>
 		</div>
-		<?php if (isset($_COOKIE["incpwd"])): ?>
-			<div class="contenedor">
-				<div class="alert alert-warning alert-dismissible">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<p><i class='fa fa-warning'></i> Usuario y/o contraseña incorrecto(s).</p>
-					<p>Vuelva a intentarlo.</p>
-				</div>
+		<div class="contenedor">
+			<?php 
+				if (isset($_COOKIE["incpwd"])):
+			?>
+			
+			<div style="text-align: center;" class="alert alert-warning alert-dismissible">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<p><i class='fa fa-warning'></i> Usuario y/o contraseña incorrecto(s).</p>
+				<p>Vuelva a intentarlo.</p>
 			</div>
-		<?php
-			setcookie("incpwd","",time()-18600);
-		 	endif; ?>
+			
+			<?php 
+				setcookie("incpwd","",time()-18600);
+				elseif (isset($_COOKIE["inactiveUsr"])):
+			?>
+			<div style="text-align: center;" class="alert alert-warning alert-dismissible">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<p><i class='fa fa-warning'></i> El usuario se encuentra inactivo.</p>
+			</div>
+			<?php
+				setcookie("inactiveUsr","",time()-18600);
+				endif;
+			?>
+		</div>
 	</div>
 </div>
