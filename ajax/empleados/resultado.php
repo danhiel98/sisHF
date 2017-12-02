@@ -22,6 +22,7 @@
 			
 			if (count($empleados)>0):
 ?>
+			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 					<thead>
 						<th>DUI</th>
@@ -50,6 +51,7 @@
 					<?php endif; ?>
 				<?php endforeach; ?>
 				</table>
+			</div>
 			<?php else: ?>
 				<div class="alert alert-warning">
 					Vaya! No hay datos en la sucursal selecionada.

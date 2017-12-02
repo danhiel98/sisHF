@@ -4,7 +4,6 @@
 	include ("../../core/autoload.php");
 	include ("../../core/modules/sistema/model/MateriaPrimaData.php");
 	include ("../../core/modules/sistema/model/ReabastecimientoMPData.php");
-	#include ("../../core/modules/sistema/model/SucursalData.php");
 
 	$matP = false;
 	$materiaP = MateriaPrimaData::getAll();
@@ -22,7 +21,7 @@
 				<th>Nombre</th>
 				<th>Descripción</th>
 				<th style="width:50px;">Existencias</th>
-				<th style="width: 140px;">Comprar</th>
+				<th style="width: 140px;">Agregar</th>
 			</thead>
 	<?php
 		foreach ($materiaP as $mp):
@@ -47,7 +46,7 @@
 									<button type="submit" id="<?php echo $mp->id; ?>" class="btn btn-sm btn-success"><i class="fa fa-cart-plus fa-fw"></i></button>
 									<p class="help-block"></p>
 								</div>
-	  					</div>
+	  						</div>
 						</form>
 					<?php endif; ?>
 					</td>

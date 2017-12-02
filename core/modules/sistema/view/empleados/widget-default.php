@@ -32,39 +32,41 @@
 		<br>
 		<div class="tab-content">
 			<div id="all" class="tab-pane fade in active">
-				<table class="table table-bordered table-hover">
-					<thead>
-						<th>DUI</th>
-						<th>NIT</th>
-						<th>Apellidos</th>
-						<th>Nombres</th>
-						<th>Sexo</th>
-						<th>Tel&eacute;fono</th>
-						<th>&Aacute;rea</th>
-						<th>Sucursal</th>
-						<th></th>
-					</thead>
-					<?php
-					foreach($empleados as $empleado):
-						?>
-						<tr>
-							<td><?php echo $empleado->dui; ?></td>
-							<td><?php echo $empleado->nit; ?></td>
-							<td><?php echo $empleado->apellido; ?></td>
-							<td><?php echo $empleado->nombre; ?></td>
-							<td><?php echo $empleado->sexo; ?></td>
-							<td><?php echo $empleado->telefono; ?></td>
-							<td><?php echo $empleado->area; ?></td>
-							<td><?php echo $empleado->getSucursal()->nombre; ?></td>
-							<td style="width:40px;">
-								<a href="index.php?view=editemploy&id=<?php echo $empleado->id;?>" class="btn btn-warning btn-xs">Editar</a>
-								<!--<a onclick="return confirm('¿Seguro que desea eliminar el registro?');" href="index.php?view=delemploy&id=<?php echo $empleado->id;?>" class="btn btn-danger btn-xs">Eliminar</a>-->
-							</td>
-						</tr>
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<thead>
+							<th>DUI</th>
+							<th>NIT</th>
+							<th>Apellidos</th>
+							<th>Nombres</th>
+							<th>Sexo</th>
+							<th>Tel&eacute;fono</th>
+							<th>&Aacute;rea</th>
+							<th>Sucursal</th>
+							<th></th>
+						</thead>
 						<?php
-					endforeach;
-					?>
-				</table>
+						foreach($empleados as $empleado):
+							?>
+							<tr>
+								<td><?php echo $empleado->dui; ?></td>
+								<td><?php echo $empleado->nit; ?></td>
+								<td><?php echo $empleado->apellido; ?></td>
+								<td><?php echo $empleado->nombre; ?></td>
+								<td><?php echo $empleado->sexo; ?></td>
+								<td><?php echo $empleado->telefono; ?></td>
+								<td><?php echo $empleado->area; ?></td>
+								<td><?php echo $empleado->getSucursal()->nombre; ?></td>
+								<td style="width:40px;">
+									<a href="index.php?view=editemploy&id=<?php echo $empleado->id;?>" class="btn btn-warning btn-xs">Editar</a>
+									<!--<a onclick="return confirm('¿Seguro que desea eliminar el registro?');" href="index.php?view=delemploy&id=<?php echo $empleado->id;?>" class="btn btn-danger btn-xs">Eliminar</a>-->
+								</td>
+							</tr>
+							<?php
+						endforeach;
+						?>
+					</table>
+				</div>
 			</div>
 
 			<?php if (count($sucursal)>1): ?>

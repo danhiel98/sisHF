@@ -57,7 +57,7 @@
                   <td><?php echo $pdo->fechapedido; ?></td>
                   <td><?php echo $pdo->fechaentrega; ?></td>
                   <td>
-                    <a title="Finalizar" href="#" class="btn btn-sm btn-success finalizar" id="<?php echo $pdo->id; ?>"
+                    <a title="Finalizar" href="#" class="btn btn-xs btn-success finalizar" id="<?php echo $pdo->id; ?>"
                       data-toggle="confirmation-popout" data-popout="true" data-placement="left"
                       data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
                       data-btn-ok-class="btn-success btn-xs"

@@ -34,31 +34,32 @@
 
 		<!-- Si hay más de 0 sucursales: -->
 		<?php if(count($sucursal)>0): ?>
-		
-		<table class="table table-bordered table-hover">
-			<thead>
-				<th style="text-align: center; width: 45px;">No.</th>
-				<th>Nombre</th>
-				<th>Direcci&oacute;n</th>
-				<th style="width: 100px;">Tel&eacute;fono</th>
-				<th></th>
-			</thead>
-			
-			<?php foreach($sucursal as $suc): ?>
-			
-			<tr>
-				<td style="text-align: center;"><?php echo $suc->id; ?></td>
-				<td style="max-width: 140px;"><?php echo $suc->nombre; ?></td>
-				<td style="max-width: 300px;"><?php echo $suc->direccion; ?></td>
-				<td style="min-width:90px;"><?php echo $suc->telefono; ?></td>
-				<td style="width:40px;">
-					<a data-toggle="modal" data-target="#editar" id="<?php echo $suc->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
-				</td>
-			</tr>
-			
-			<?php endforeach; ?>
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<th style="text-align: center; width: 45px;">No.</th>
+					<th>Nombre</th>
+					<th>Direcci&oacute;n</th>
+					<th style="width: 100px;">Tel&eacute;fono</th>
+					<th></th>
+				</thead>
+				
+				<?php foreach($sucursal as $suc): ?>
+				
+				<tr>
+					<td style="text-align: center;"><?php echo $suc->id; ?></td>
+					<td><?php echo $suc->nombre; ?></td>
+					<td><?php echo $suc->direccion; ?></td>
+					<td style="min-width:90px;"><?php echo $suc->telefono; ?></td>
+					<td style="width:40px;">
+						<a data-toggle="modal" data-target="#editar" id="<?php echo $suc->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
+					</td>
+				</tr>
+				
+				<?php endforeach; ?>
 
-		</table>
+			</table>
+		</div>
 		
 		<?php
 		else:

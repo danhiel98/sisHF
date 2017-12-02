@@ -30,12 +30,12 @@
 		?>
 		<table class="table table-bordered table-hover table-responsive">
 			<thead>
-				<th style="width: 45px;"></th>
+				<!--<th style="width: 45px;"></th>-->
 				<th>Producto</th>
-				<th style="width: 200px;">Disponibles</th>
-				<th style="width: 200px;">Precio Unitario</th>
-				<th style="width: 150px;">Mantenimiento</th>
-				<th style="width: 150px;"></th>
+				<th style="width: 100px;">Disponibles</th>
+				<th style="width: 150px;">Precio Unitario</th>
+				<th style="width: 55px;">Mantenimiento</th>
+				<th style="width: 120px;"></th>
 			</thead>
 	<?php
 		foreach($productos as $prod){
@@ -44,12 +44,16 @@
 			?>
 				<tr>
 					<?php if(isset($_SESSION["cartp"])){ foreach ($_SESSION["cartp"] as $c) {if($c["product_id"] == $prod->idproducto){ $found=true; if($c["mantenimiento"] == 1){ $mantto = true;} break; }}} ?>
-					<td></td>
+					<!--<td></td>-->
 					<td><?php echo $prod->getProduct()->nombre; ?></td>
 					<td><?php echo $prod->cantidad; ?></td>
 					<td>$ <?php echo number_format($prod->getProduct()->precioventa,2,".",",") ?></td>
 					<td align="center">
-						<input type="checkbox" class="mantto" id="<?php echo $prod->idproducto; ?>" <?php if ($prod->getProduct()->mantenimiento != 1) {echo " disabled ";} if($found){echo " disabled ";} if($mantto){echo " checked ";}?>>
+						<?php if ($prod->getProduct()->mantenimiento == 1):?>
+						<input type="checkbox" class="mantto" id="<?php echo $prod->idproducto; ?>" <?php if($found){echo " disabled ";} if($mantto){echo " checked ";}?> />
+						<?php else: ?>
+						<span class="fa fa-times"></span>
+						<?php endif; ?>
 					</td>
 					<td>
 					<?php if ($found): ?>
@@ -61,11 +65,10 @@
 							<input type="hidden" name="service_id" value="" required>
 							<div class="form-group control-group">
 								<div class="controls">
-									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="width:85px;" min="1" max="<?php echo $prod->cantidad; ?>" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
+									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="max-width: 60px;" min="1" max="<?php echo $prod->cantidad; ?>" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
 									<button type="submit" class="btn btn-sm btn-primary"><i class="icon-cart"></i></button>
-									<p class="help-block"></p>
 								</div>
-	  					</div>
+	  						</div>
 						</form>
 					<?php endif; ?>
 					</td>
@@ -85,7 +88,8 @@
 
 				$(document).ready(function(){
 					$("form.enviar").submit(function(){
-						console.log(this);
+						console.log($(this));
+						/*
 						if($(this).attr("class") != "form-inline enviar has-error"){
 							$.ajax({
 								url: $(this).attr("action"),
@@ -99,6 +103,7 @@
 								}
 							});
 						}
+						*/
 						return false;
 					});
 				});

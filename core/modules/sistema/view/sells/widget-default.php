@@ -6,7 +6,7 @@
 				<i class="fa fa-download"></i> Descargar <span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu" role="menu">
-					<li><a href="report/pedidos.php">Excel (.xlsx)</a></li>
+				<li><a href="report/pedidos.php">Excel (.xlsx)</a></li>
 			</ul>
 		</div>
 		<h1><i class='glyphicon glyphicon-shopping-cart'></i> Lista de Ventas</h1>

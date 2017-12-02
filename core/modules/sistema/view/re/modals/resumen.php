@@ -44,27 +44,29 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered">
-            <thead>
-              <th>C&oacute;digo</th>
-        			<th>Producto</th>
-        			<th>Cantidad</th>
-        			<th>Precio Unitario</th>
-        			<th>Total</th>
-            </thead>
-            <?php foreach($_SESSION["reabastecerMP"] as $p):
-        			$product = MateriaPrimaData::getById($p["idMateriaPrima"]);
-        			$total += $p["precio"]*$p["cantidad"];
-        		?>
-        		<tr>
-        			<td><?php echo $product->id; ?></td>
-        			<td><?php echo $product->nombre; ?></td>
-        			<td><?php echo $p["cantidad"]; ?></td>
-        		  <td>$<?php echo number_format($p["precio"], 2); ?></td>
-        			<td>$<?php echo number_format($p["precio"]*$p["cantidad"], 2); ?></td>
-        		</tr>
-        		<?php endforeach; ?>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <th>C&oacute;digo</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+              </thead>
+              <?php foreach($_SESSION["reabastecerMP"] as $p):
+                $product = MateriaPrimaData::getById($p["idMateriaPrima"]);
+                $total += $p["precio"]*$p["cantidad"];
+              ?>
+              <tr>
+                <td><?php echo $product->id; ?></td>
+                <td><?php echo $product->nombre; ?></td>
+                <td><?php echo $p["cantidad"]; ?></td>
+                <td>$<?php echo number_format($p["precio"], 2); ?></td>
+                <td>$<?php echo number_format($p["precio"]*$p["cantidad"], 2); ?></td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          </div>
           <h2>Total a pagar: <strong>$ <?php echo number_format($total,2,".",","); ?></strong></h2>
         <?php else: ?>
           <p class="alert alert-warning">No ha agregado productos.</p>

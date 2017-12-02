@@ -156,10 +156,12 @@
   
 	$(function(){
 		$('.estado a').editable({
+			showbuttons: false,
 			url: 'ajax/users/procesos.php' 
 		});
 
 		$('.tipo a').editable({
+			showbuttons: false,
 			url: 'ajax/users/procesos.php'
 		});
 	});

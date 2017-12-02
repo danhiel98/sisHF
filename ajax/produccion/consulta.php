@@ -4,12 +4,12 @@
 	include ("../../core/autoload.php");
 	include ("../../core/modules/sistema/model/MateriaPrimaData.php");
 	include ("../../core/modules/sistema/model/ProductData.php");
-	include ("../../core/modules/sistema/model/ProduccionData.php");
+  include ("../../core/modules/sistema/model/ProduccionData.php");
+  include ("../../core/modules/sistema/model/ProduccionMPData.php");
 
   $prodxs = false;
   $prodxsA = false;
   $prodxsT = false;
-  $prodxsC = false;
   
   $productns = ProduccionData::getAll();
   if (count($productns)>0) {
@@ -23,12 +23,10 @@
   if (count($productnsA)>0) {
     $prodxsA = true;
   }
-  $productnsC = ProduccionData::getCancel();
-  if (count($productnsC)>0) {
-    $prodxsC = true;
-  }
+
   $matp = MateriaPrimaData::getAll();
-	$prods = ProductData::getAll();
+  $prods = ProductData::getAll();
+  
 ?>
 	<script src="js/bootstrap-confirmation.js"></script>
   <?php if (count($matp)>0 && count($prods)>0): ?>
@@ -69,7 +67,7 @@
                   <td><?php echo $pa->fechainicio; ?></td>
                   <td><?php echo $pa->fechafin; ?></td>
                   <td>
-										<a title="Finalizar" href="#" class="btn btn-sm btn-success finalizar" id="<?php echo $pa->id; ?>"
+										<a title="Finalizar" href="#" class="btn btn-xs btn-success finalizar" id="<?php echo $pa->id; ?>"
 											data-toggle="confirmation-popout" data-popout="true" data-placement="left"
 											data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
 											data-btn-ok-class="btn-success btn-xs"
@@ -208,31 +206,19 @@
 				data: {
 					idFin: id
 				}
-			}).done(function(){
-				producciones("end");
-			});
-		}
-
-		function cancelar(id){
-			$.ajax({
-				url: "ajax/produccion/procesos.php",
-				type: "POST",
-				dataType: "html",
-				data: {
-					idCancel: id
-				}
-			}).done(function(){
-				producciones("cancel");
+			}).done(function(res){
+        if (res != ""){
+          
+          $("#detalles").modal().show();
+        }else{
+          producciones("end");
+        }
 			});
 		}
 
 		$(".finalizar").on("confirmed.bs.confirmation",function(){
 			var id = this.id;
 			finalizar(id);
-		});
-		$(".cancelar").on("confirmed.bs.confirmation",function(){
-			var id = this.id;
-			cancelar(id);
 		});
 
 	</script>

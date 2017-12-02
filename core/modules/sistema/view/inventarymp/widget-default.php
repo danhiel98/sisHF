@@ -1,53 +1,74 @@
 <?php
-	$products = MateriaPrimaData::getAll();
+	
+	$materiaP = MateriaPrimaData::getAll();
 	include('modals/agregar.php');
 	include('modals/editar.php');
-	$products = MateriaPrimaData::getAll();
+	$providers = ProviderData::getAll();
+
+	$matP = false; #Verificar si se ha agregado materia prima al inventario
+	$provs = false; #Verifiar si se han agregado proveedores
+
+	if (count($materiaP)>0){
+		$matP = true;
+	}
+
+	if (count($providers)>0){
+		$provs = true;
+	}
+
 ?>
 <script src="ajax/matprim/mpajax.js"></script>
 <div class="row">
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
+			
 			<a data-toggle="modal" data-target="#agregar" class="btn btn-default"><i class='fa fa-plus'></i> Agregar Materia Prima</a>
-			<?php if (count($products)>0): ?>
+			<?php if ($matP): ?>
 			<a href="index.php?view=re" class="btn btn-default"><i class='fa fa-shopping-cart'></i> Realizar Compra</a>
 			<div class="btn-group pull-right">
-  			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    		<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-	  		</button>
-	  		<ul class="dropdown-menu" role="menu">
-	    		<li><a href="report/materiaPrima.php">Excel (.xlsx)</a></li>
-	  		</ul>
-  		</div>
+  				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					<i class="fa fa-download"></i> Descargar <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="report/materiaPrima.php">Excel (.xlsx)</a></li>
+				</ul>
+  			</div>
 			<?php endif; ?>
+			
 		</div>
+
 		<h1><i class="glyphicon glyphicon-stats"></i> Inventario De Materia Prima</h1>
 		<div class="clearfix"></div>
 		<?php
+		
 		$page = 1;
 		if(isset($_GET["page"])){
 			$page=$_GET["page"];
 		}
-		$limit=10;
+
+		$limit = 10;
 		if(isset($_GET["limit"]) && $_GET["limit"]!="" && $_GET["limit"]!=$limit){
 			$limit=$_GET["limit"];
 		}
-		if(count($products)>0){
+		
+		if($matP){
 
-			if($page==1){
-				$curr_products = MateriaPrimaData::getAllByPage($products[0]->id,$limit);
+			if($page == 1){
+				$curr_products = MateriaPrimaData::getAllByPage($materiaP[0]->id,$limit);
 			}else{
-				$curr_products = MateriaPrimaData::getAllByPage($products[($page-1)*$limit]->id,$limit);
+				$curr_products = MateriaPrimaData::getAllByPage($materiaP[($page-1)*$limit]->id,$limit);
 			}
-			$npaginas = floor(count($products)/$limit);
-			$spaginas = count($products)%$limit;
+
+			$npaginas = floor(count($materiaP)/$limit);
+			$spaginas = count($materiaP) % $limit;
 
 			if($spaginas>0){ $npaginas++;}
 		?>
+
 		<h3>P&aacute;gina <?php echo $page." de ".$npaginas; ?></h3>
 		<div class="btn-group pull-right">
 		<?php
-			$px=$page-1;
+			$px = $page-1;
 			if($px>0):
 		?>
 			<a class="btn btn-sm btn-default" href="<?php echo "index.php?view=inventarymp&limit=$limit&page=".($px); ?>"><i class="glyphicon glyphicon-chevron-left"></i> Atr&aacute;s </a>
@@ -76,7 +97,7 @@
 					<td style="max-width: 120px;"><?php echo $product->nombre; ?></td>
 					<td style="max-width: 250px;"><?php echo $product->descripcion; ?></td>
 					<td><?php echo $product->minimo; ?></td>
-					<td><?php echo $product->existencias; ?></td>
+					<td style="text-align: center;"><?php echo $product->existencias; ?></td>
 					<td style="width:40px;">
 						<a id="<?php echo $product->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"> Editar</a>
 					</td>

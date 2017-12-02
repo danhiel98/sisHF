@@ -73,7 +73,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <?php
           $u=null;
-          if(Session::getUID()!=""):
+          if(Session::getUID()!="" && !isset($_GET["about"])):
             $u = UserData::getById(Session::getUID());
           ?>
           <ul class="nav navbar-nav side-nav">
@@ -155,7 +155,12 @@
         if (isset($_GET["view"]) && Session::getUID() == "") {
           @header("location: index.php");
         }
-        View::load("login");
+        if (isset($_GET["about"]) && $_GET["about"] == "true"){
+          View::load("fechas");          
+        }else{
+          View::load("login");
+        }
+        
         ?>
       </div><!-- /#page-wrapper -->
     </div><!-- /#wrapper -->

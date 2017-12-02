@@ -81,15 +81,3 @@
 			</script>
 		<?php }
 		?>
-<script>
-	$(function(){
-		$("#tipo").on("change",function(){
-			alert($(this).val());
-
-
-
-
-			
-		});
-	});
-</script>

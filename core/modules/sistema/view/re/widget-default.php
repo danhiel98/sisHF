@@ -21,9 +21,9 @@
 					</div>
 				</div>
 				<div class="btn-group pull-right">
-						<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#resumen">
-							<i class="fa fa-list"></i> Ver Resumen</span>
-						</button>
+					<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#resumen">
+						<i class="fa fa-list"></i> Ver Resumen</span>
+					</button>
 				</div>
 			</div>
 		</form>
