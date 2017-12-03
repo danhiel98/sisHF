@@ -67,6 +67,9 @@ class CierreCajaData {
 	}
 
 	public static function getLike($q){
+		$base = new Database();
+		$cnx = $base->connect();
+		$p = $cnx->real_escape_string($q);
 		$sql = "select * from ".self::$tablename." where name like '%$q%'";
 		$query = Executor::doit($sql);
 		$array = array();

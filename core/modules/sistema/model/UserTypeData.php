@@ -55,6 +55,9 @@ class UserTypeData {
 	}
 
 	public static function getLike($q){
+		$base = new Database();
+		$cnx = $base->connect();
+		$p = $cnx->real_escape_string($q);
 		$sql = "select * from ".self::$tablename." where nombre like '%$q%' and activo = 1";
 		$query = Executor::doit($sql);
 		$array = array();

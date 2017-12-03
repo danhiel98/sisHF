@@ -11,6 +11,7 @@
 	</script>
 <?php endif; ?>
 <script src="ajax/produccion/ajax.js"></script>
+<a class="btn btn-default" href="index.php?view=produccion"><i class="fa fa-arrow-left"></i>Regresar</a>
 <div class="row">
 <?php if (count($prods)>0): ?>
 	<h1>Registrar Producci&oacute;n De Productos</h1>
@@ -21,7 +22,6 @@
 			<div class="row">
 				<div class="col-md-5 col-sm-6 col-xs-10">
 					<div class="input-group">
-						<input type="hidden" name="view" value="newtraspaso">
 						<input type="text" name="product" id="busqueda" placeholder="Nombre o descripci&oacute;n" class="form-control" autofocus>
 						<span class="input-group-addon"><i class="fa fa-search fa-fw"></i>Buscar</span>
 					</div>

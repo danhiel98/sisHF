@@ -1,6 +1,6 @@
 <?php
 
-	@session_start();
+  @session_start();
 	include ("../../core/autoload.php");
 	include ("../../core/modules/sistema/model/PedidoData.php");
 	include ("../../core/modules/sistema/model/ClientData.php");
@@ -26,8 +26,10 @@
   }
 
   $clientes = ClientData::getAll();
-	$prods = ProductData::getAll();
+  $prods = ProductData::getAll();
+  
 ?>
+  <?php include "detallesError.php"; ?>
 	<script src="js/bootstrap-confirmation.js"></script>
   <?php if ($pdids): ?>
   	<ul class="nav nav-tabs">
@@ -162,7 +164,12 @@
         }
       }).done(function(){
         //Esta función se encarga de obtenes todos los datos de los pedidos, se encuentra en el archivo ajax.js
-        pedidos("end"); //Creo que ya no la utilizo para nada xD 
+        if (res != ""){
+          $("#detallesProd").html(res); //Cargar los detalles de la materia prima insuficiente
+          $("#detalles").modal().show(); //Mostrar el modal
+        }else{
+          pedidos("end"); //Creo que ya no la utilizo para nada xD
+        }
       });
     }
 

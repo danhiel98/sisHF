@@ -1,3 +1,4 @@
+<!-- Este archivo sirve para obtener los datos generales de las producciones activas y las terminadas -->
 <?php
 
 	@session_start();
@@ -7,9 +8,9 @@
   include ("../../core/modules/sistema/model/ProduccionData.php");
   include ("../../core/modules/sistema/model/ProduccionMPData.php");
 
-  $prodxs = false;
-  $prodxsA = false;
-  $prodxsT = false;
+  $prodxs = false; #Verificar si hay producciones registradas
+  $prodxsA = false; #Verificar si hay producciones activas
+  $prodxsT = false; #Verificar si hay producciones terminadas
   
   $productns = ProduccionData::getAll();
   if (count($productns)>0) {
@@ -28,6 +29,7 @@
   $prods = ProductData::getAll();
   
 ?>
+  <?php include "detallesError.php"; ?>
 	<script src="js/bootstrap-confirmation.js"></script>
   <?php if (count($matp)>0 && count($prods)>0): ?>
 		<script type="text/javascript">
@@ -178,13 +180,14 @@
       <?php endif; ?>
     <?php endif; ?>
 	<script>
-
+    //Cambiar de tab
 		$(document).ready(function(){
 	    $(".nav-tabs a").click(function(){
 	      $(this).tab('show');
 	    });
 	  });
-
+    
+    //No modificar, le dan la funcionalidad a el piput de confirmación
 		$('[data-toggle=confirmation]').confirmation({
 			rootSelector: '[data-toggle=confirmation]',
 			container: 'body'});
@@ -208,10 +211,10 @@
 				}
 			}).done(function(res){
         if (res != ""){
-          
-          $("#detalles").modal().show();
+          $("#detallesMP").html(res); //Cargar los detalles de la materia prima insuficiente
+          $("#detalles").modal().show(); //Mostrar el modal
         }else{
-          producciones("end");
+          producciones("end"); //Todo está bien, se finaliza la producción
         }
 			});
 		}

@@ -87,10 +87,8 @@
 				});
 
 				$(document).ready(function(){
-					$("form.enviar").submit(function(){
-						console.log($(this));
-						/*
-						if($(this).attr("class") != "form-inline enviar has-error"){
+					$("form.enviar").submit(function(event){
+						if($(".input-sm",this).attr("aria-invalid") != "true"){
 							$.ajax({
 								url: $(this).attr("action"),
 								type: "POST",
@@ -103,8 +101,7 @@
 								}
 							});
 						}
-						*/
-						return false;
+						event.preventDefault();
 					});
 				});
 			</script>

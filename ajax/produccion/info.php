@@ -1,4 +1,5 @@
 <?php
+	#En este archivo se almacena la información del producto que se va a producir
 
 	@session_start();
 
