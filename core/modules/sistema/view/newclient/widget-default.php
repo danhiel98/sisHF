@@ -21,7 +21,7 @@
 		  <div class="form-group control-group">
 		    <label for="txtNrc" class="col-lg-2 control-label">NRC</label>
 		    <div class="col-md-6">
-		      <input type="text" name="txtNrc" maxlength="17" class="form-control" id="txtNrc" placeholder="N&uacute;mero De Registro De Contribuyente" onkeyup="fnc(this,'-',nrc,true)" onpaste="return false" onkeypress="return soloNumeros(event)" data-validation-regex-regex="[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}" data-validation-regex-message="Introduzca un NCR válido" placeholder="N&uacute;mero De NCR">
+		      <input type="text" name="txtNrc" maxlength="17" class="form-control" id="txtNrc" placeholder="N&uacute;mero De Registro De Contribuyente" onkeyup="fnc(this,'-',nrc,true)" onpaste="return false" onkeypress="return soloNumeros(event)" data-validation-regex-regex="[0-9]{6}-[0-9]{1}" data-validation-regex-message="Introduzca un NCR válido" placeholder="N&uacute;mero De NCR">
 		      <p class="help-block"></p>
 		    </div>
 		  </div>

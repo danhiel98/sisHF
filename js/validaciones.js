@@ -1,6 +1,6 @@
 var dui = new Array(8,1)
 var nit = new Array(4,6,3,1)
-var nrc = new Array(4,6,3,1)
+var nrc = new Array(6,1)
 var tel = new Array(4,4)
   function fnc(elem,separador,pat,numerico) {
     if(elem.valoranterior != elem.value) {
