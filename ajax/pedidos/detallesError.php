@@ -8,7 +8,7 @@
       </div>
       <div class="modal-body" id="modal-body">
         <div>
-            <p class="alert alert-warning">No se puede marcar como entregado el pedido porque no hay suficientes <a target="_blank" href="index.php?view=inventarymp">productos.</a></p>
+            <p class="alert alert-warning">No se puede marcar como entregado el pedido porque no hay suficientes <a target="_blank" href="index.php?view=inventaryprod">productos.</a></p>
         </div>
         <div id="detallesProd">
           <!-- En este div se va a cargar los datos de la materia prima insuficiente -->

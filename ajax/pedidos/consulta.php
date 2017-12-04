@@ -81,7 +81,7 @@
         <?php endif; ?>
       </div>
       <div id="end" class="tab-pane fade">
-        <h2>Producciones finalizadas</h2>
+        <h2>Pedidos Entregados</h2>
         <?php if ($pdidsT): ?>
         <div class="table-responsive">
           <table class="table table-hover table-bordered">
@@ -162,7 +162,7 @@
         data: {
           idFin: id
         }
-      }).done(function(){
+      }).done(function(res){
         //Esta función se encarga de obtenes todos los datos de los pedidos, se encuentra en el archivo ajax.js
         if (res != ""){
           $("#detallesProd").html(res); //Cargar los detalles de la materia prima insuficiente

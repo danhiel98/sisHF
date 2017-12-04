@@ -37,6 +37,7 @@
 				<th style="width: 55px;">Mantenimiento</th>
 				<th style="width: 120px;"></th>
 			</thead>
+			<tbody>
 	<?php
 		foreach($productos as $prod){
 			$found = false;
@@ -65,7 +66,7 @@
 							<input type="hidden" name="service_id" value="" required>
 							<div class="form-group control-group">
 								<div class="controls">
-									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="max-width: 60px;" min="1" max="<?php echo $prod->cantidad; ?>" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
+									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="max-width: 60px;" min="1" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
 									<button type="submit" class="btn btn-sm btn-primary"><i class="icon-cart"></i></button>
 								</div>
 	  						</div>
@@ -76,45 +77,46 @@
 		<?php
 			}
 		?>
-			</table>
-			<script type="text/javascript">
-				$(".mantto").on("change", function(){
-					if (this.checked) {
-						$("#m"+this.id).val("1");
-					}else{
-						$("#m"+this.id).val("0");
-					}
-				});
+			</tbody>
+		</table>
+		<script type="text/javascript">
+			$(".mantto").on("change", function(){
+				if (this.checked) {
+					$("#m"+this.id).val("1");
+				}else{
+					$("#m"+this.id).val("0");
+				}
+			});
 
-				$(document).ready(function(){
-					$("form.enviar").submit(function(event){
-						if($(".input-sm",this).attr("aria-invalid") != "true"){
-							$.ajax({
-								url: $(this).attr("action"),
-								type: "POST",
-								data: $(this).serialize(),
-								success: function(){
-									datosModal();
-									datosResumen();
-									var idSuc = $("#sOrigen").val();
-									obtenerDatosDeSucursal(idSuc);
-								}
-							});
-						}
-						event.preventDefault();
-					});
+			$(document).ready(function(){
+				$("form.enviar").submit(function(event){
+					if($(".input-sm",this).attr("aria-invalid") != "true"){
+						$.ajax({
+							url: $(this).attr("action"),
+							type: "POST",
+							data: $(this).serialize(),
+							success: function(){
+								datosModal();
+								datosResumen();
+								var idSuc = $("#sOrigen").val();
+								obtenerDatosDeSucursal(idSuc);
+							}
+						});
+					}
+					event.preventDefault();
 				});
-			</script>
-		<?php
+			});
+		</script>
+	<?php
 		}else{
 	?>
 		<div class="alert alert-danger">
 		<?php if ($prod): ?>
-				No se encontraron coincidencias con sus criterios de búsqueda.
+			No se encontraron coincidencias con sus criterios de búsqueda.
 		<?php else: ?>
-				No hay productos disponibles en esta sucursal.
+			No hay productos disponibles en esta sucursal.
 		<?php endif; ?>
 		</div>
 	<?php
 		}
-?>
+	?>

@@ -11,7 +11,7 @@
 	</script>
 <?php endif; ?>
 <script src="ajax/produccion/ajax.js"></script>
-<a class="btn btn-default" href="index.php?view=produccion"><i class="fa fa-arrow-left"></i>Regresar</a>
+<a class="btn btn-default" href="<?php if(isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo "index.php?view=produccion";} ?>"><i class="fa fa-arrow-left"></i>Regresar</a>
 <div class="row">
 <?php if (count($prods)>0): ?>
 	<h1>Registrar Producci&oacute;n De Productos</h1>
@@ -41,16 +41,14 @@
 		</section>
 	</div>
 	<?php else: ?>
-		<h1>No se pueden registrar la producci&oacute;n</h1>
-		<div class="jumbotron">
-			<div class="container">
-				<h4>Para registrar una producci&oacute;n debe haber materia prima.</h4>
-			</div>
+		<div class="alert alert-warning">No se pueden registrar la producci&oacute;n.</div>
+		<div class="alert alert-info">
+			Para registrar una producci&oacute;n debe haber <a href="index.php?view=inventarymp">materia prima.</a>
 		</div>
 	<?php endif; ?>
 <?php else: ?>
 	<div class="col-md-12">
-		<h1>No se puede registrar la producci&oacute;n.</h1>
+		<div class="alert alert-warning">No se puede registrar la producci&oacute;n.</div>
 		<div class="alert alert-info">
 			Para registrar una producción debe tener productos registrados en el sistema.
 			<a href="index.php?view=products">Ir a productos.</a>
