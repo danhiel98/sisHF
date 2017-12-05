@@ -30,9 +30,10 @@
 			},
 			})
 		.done(function(resultado){
-			var valid = "<script src='js/jqBootstrapValidation.js'></script><script>$(function () { $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(); } );";
-			valid += " function soloNumeros(e){key = (window.Event) ? e.which : e.keyCode; return (key >= 48 && key <= 57 || key >= 8 && key <= 31 || key == 0);}</script>"
-			$("#tabla_resultado").html(valid+resultado);
+			$.getScript("js/jqBootstrapValidation.js", function (data, textStatus, jqxhr) {
+				//Acciones a realizar
+			});
+			$("#tabla_resultado").html(resultado);
 		});
 	}
 
@@ -54,9 +55,10 @@
 			data : { sucursal: idSucursal },
 			})
 		.done(function(resultado){
-			var valid = "<script src='js/jqBootstrapValidation.js'></script><script>$(function () { $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(); } );";
-			valid += " function soloNumeros(e){key = (window.Event) ? e.which : e.keyCode; return (key >= 48 && key <= 57 || key >= 8 && key <= 31 || key == 0);}</script>"
-			$("#tabla_resultado").html(valid+resultado);
+			$.getScript("js/jqBootstrapValidation.js", function (data, textStatus, jqxhr) {
+				//Acciones a realizar
+			});
+			$("#tabla_resultado").html(resultado);
 		})
 	}
 

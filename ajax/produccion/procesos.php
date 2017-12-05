@@ -21,7 +21,7 @@
 		foreach ($materiaPrima as $mp){
 			$matPrim = MateriaPrimaData::getById($mp->idmateriaprima);
 			$resta = $matPrim->existencias - $mp->cantidad;
-			if ($resta <= 0){
+			if ($resta < 0){
 				$error = true; #Ha encontrado al menos un error
 				array_push($errorMP,$mp); #Agregar datos de la materia prima insuficiente encontrada
 			}

@@ -52,41 +52,43 @@
 			</div>
 			<div class="clearfix"></div>
 			<br>
-			<table class="table table-bordered table-hover">
-				<thead>
-					<th>ID</th>
-					<th style="width: 80px;">Imagen</th>
-					<th>Nombre</th>
-					<th>Descripci&oacute;n</th>
-					<th>Categoría</th>
-					<th style="width: 120px;">Precio Costeo</th>
-					<th style="width: 110px;">Precio Venta</th>
-					<th style="width: 100px;">Req. Mantto</th>
-					<th></th>
-				</thead>
-				<?php foreach($curr_products as $product):?>
-				<tr>
-					<td style="width: 50px;"><?php echo $product->id; ?></td>
-					<td>
-						<?php if($product->imagen!=""):?>
-							<img src="storage/products/<?php echo $product->imagen;?>" style="width:64px;">
-						<?php endif;?>
-					</td>
-					<td><?php echo $product->nombre; ?></td>
-					<td><?php echo $product->descripcion; ?></td>
-					<td><?php echo $product->getCategory()->nombre; ?></td>
-					<td>$ <?php echo number_format($product->preciocosteo,2,'.',','); ?></td>
-					<td>$ <?php echo number_format($product->precioventa,2,'.',','); ?></td>
-					<td style="text-align: center;"><span class="fa <?php if($product->mantenimiento){echo "fa-check";}else{echo "fa-times";} ?>"></span></td>
-					<td style="width:30px;">
-						<a href="index.php?view=editproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
-					</td>
-				</tr>
-				<?php endforeach;?>
-			</table>
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<th>ID</th>
+						<th style="width: 80px;">Imagen</th>
+						<th>Nombre</th>
+						<th>Descripci&oacute;n</th>
+						<th>Categoría</th>
+						<th style="width: 120px;">Precio Costeo</th>
+						<th style="width: 110px;">Precio Venta</th>
+						<th style="width: 100px;">Req. Mantto</th>
+						<th></th>
+					</thead>
+					<?php foreach($curr_products as $product):?>
+					<tr>
+						<td style="width: 50px;"><?php echo $product->id; ?></td>
+						<td>
+							<?php if($product->imagen!=""):?>
+								<img src="storage/products/<?php echo $product->imagen;?>" style="width:64px;">
+							<?php endif;?>
+						</td>
+						<td><?php echo $product->nombre; ?></td>
+						<td><?php echo $product->descripcion; ?></td>
+						<td><?php echo $product->getCategory()->nombre; ?></td>
+						<td>$ <?php echo number_format($product->preciocosteo,2,'.',','); ?></td>
+						<td>$ <?php echo number_format($product->precioventa,2,'.',','); ?></td>
+						<td style="text-align: center;"><span class="fa <?php if($product->mantenimiento){echo "fa-check";}else{echo "fa-times";} ?>"></span></td>
+						<td style="width:30px;">
+							<a href="index.php?view=editproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
+						</td>
+					</tr>
+					<?php endforeach;?>
+				</table>
+			</div>
 			<div class="btn-group pull-right">
 			<?php
-			for($i=0;$i<$npaginas;$i++){
+			for($i = 0; $i<$npaginas; $i++){
 				echo "<a href='index.php?view=products&limit=$limit&page=".($i+1)."' class='btn btn-default btn-sm'>".($i+1)."</a> ";
 			}
 			?>

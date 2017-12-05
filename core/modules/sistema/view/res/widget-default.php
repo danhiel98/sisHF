@@ -41,7 +41,7 @@
 				?>
 				<tr>
 					<td style="width:30px;"><a href="index.php?view=onere&id=<?php echo $re->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
-					<td style="width:40px;">
+					<td style="width:125px;">
 						<?php echo $re->comprobante; ?>
 					</td>
 					<td>

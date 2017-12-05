@@ -73,7 +73,7 @@
 				<th>Cliente</th>
 				<th>Vendedor</th>
 				<th>Fecha</th>
-				<th>Tipo Documento</th>
+				<th>Tipo Comprobante</th>
 				<th>Total</th>
 				<th></th>
 			</thead>
@@ -94,7 +94,7 @@
 				</td>
 				<td><?php echo $sell->getUser()->name." ".$sell->getUser()->lastname; ?></td>
 				<td><?php echo $sell->fecha; ?></td>
-				<td><?php echo $sell->tipo; ?></td>
+				<td><?php echo $sell->getComprobante()->nombre; ?></td>
 				<td>
 					<?php
 						$total=0;

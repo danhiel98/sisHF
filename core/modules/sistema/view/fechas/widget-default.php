@@ -1,5 +1,5 @@
 <h2>Using Locales</h2>
-<div class="container">
+<div class="col-md-12">
     <div class="row">
         <div class='col-sm-6'>
             <div class="form-group">
@@ -22,7 +22,7 @@
 </div>
 
 <h2>Custom Formats</h2>
-<div class="container">
+<div class="col-md-12">
     <div class="row">
         <div class='col-sm-6'>
             <div class="form-group">
@@ -37,6 +37,8 @@
         <script type="text/javascript">
             $(function () {
                 $('#datetimepicker3').datetimepicker({
+                    //format: 'LT'
+                    //locale: 'es',
                     format: 'LT'
                 });
             });
@@ -46,7 +48,7 @@
 
 <h2>No Icon (Input Field Only)</h2>
 
-<div class="container">
+<div class="col-md-12">
     <div class="row">
         <div class='col-sm-6'>
             <input type='text' class="form-control" id='datetimepicker4' />
@@ -60,7 +62,7 @@
 </div>
 
 <h2>Enabled/Disabled Dates</h2>
-<div class="container">
+<div class="col-md-12">
     <div class="row">
         <div class='col-sm-6'>
             <div class="form-group">
@@ -88,7 +90,7 @@
 </div>
 
 <h2>Linked Pickers</h2>
-<div class="container">
+<div class="col-md-12">
     <div class='col-md-5'>
         <div class="form-group">
             <div class='input-group date' id='datetimepicker6'>
@@ -126,7 +128,7 @@
 </div>
 
 <h2>Custom Icons</h2>
-<div class="container">
+<div class="col-md-12">
     <div class="col-sm-6">
         <div class="form-group">
             <div class='input-group date' id='datetimepicker8'>
@@ -153,7 +155,7 @@
 </div>
 
 <h2>View Mode</h2>
-<div class="container">
+<div class="col-md-12">
     <div class="col-sm-6">
         <div class="form-group">
             <div class='input-group date' id='datetimepicker9'>
@@ -175,7 +177,7 @@
 </div>
 
 <h2>Min View Mode</h2>
-<div class="container">
+<div class="col-md-12">
     <div class="col-sm-6" style="height:50px;">
         <div class="form-group">
             <div class='input-group date' id='datetimepicker10'>

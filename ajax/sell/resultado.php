@@ -49,7 +49,11 @@
 					<td><?php echo $prod->cantidad; ?></td>
 					<td>$ <?php echo number_format($prod->getProduct()->precioventa,2,".",",") ?></td>
 					<td align="center">
-						<input type="checkbox" class="mantto" id="<?php echo $prod->idproducto; ?>" <?php if ($prod->getProduct()->mantenimiento != 1) {echo " disabled ";} if($found){echo " disabled ";} if($mantto){echo " checked ";}?>>
+						<?php if ($prod->getProduct()->mantenimiento == 1):?>
+						<input type="checkbox" class="mantto" id="<?php echo $prod->idproducto; ?>" <?php if($found){echo " disabled ";} if($mantto){echo " checked ";}?>>
+						<?php else: ?>
+						<span class="fa fa-times"></span>
+						<?php endif; ?>
 					</td>
 					<td>
 					<?php if ($found): ?>
@@ -85,7 +89,6 @@
 
 				$(document).ready(function(){
 					$("form.enviar").submit(function(){
-						console.log(this);
 						if($(this).attr("class") != "form-inline enviar has-error"){
 							$.ajax({
 								url: $(this).attr("action"),
