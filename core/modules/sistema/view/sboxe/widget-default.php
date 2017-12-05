@@ -9,16 +9,17 @@ if (isset($_GET["val"]) && $_GET["val"] == "ent" || $_GET["val"] == "sal") {
 ?>
 <div class="row">
 	<div class="col-md-12">
+		
+		<?php if($accion == "ent"): ?>
 		<a class="btn btn-default" href="index.php?view=sbox"><i class="fa fa-arrow-left"></i> Regresar</a>
 		<div class="btn-group pull-right">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     		<i class="fa fa-download"></i> Descargar <span class="caret"></span>
   		</button>
   		<ul class="dropdown-menu" role="menu">
-    		<li><a href="report/onere-word.php?id=<?php echo $_GET["id"];?>">Word 2007 (.docx)</a></li>
+    		<li><a href="report/cajaChicaIngreso.php">Excel (.xlsx)</a></li>
   		</ul>
 		</div>
-		<?php if($accion == "ent"): ?>
 		<h1><i class='fa fa-archive'></i> Entradas De Dinero En Caja Chica</h1>
 		<?php
 			$ingresos = CajaChicaData::getIngresos();
@@ -48,6 +49,17 @@ if (isset($_GET["val"]) && $_GET["val"] == "ent" || $_GET["val"] == "sal") {
 			}
 		?>
 		<?php elseif($accion == "sal"): ?>
+
+		<a class="btn btn-default" href="index.php?view=sbox"><i class="fa fa-arrow-left"></i> Regresar</a>
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    		<i class="fa fa-download"></i> Descargar <span class="caret"></span>
+  		</button>
+  		<ul class="dropdown-menu" role="menu">
+    		<li><a href="report/cajaChicaSalida.php">Excel (.xlsx)</a></li>
+  		</ul>
+		</div>
+		
 		<h1><i class='fa fa-archive'></i> Salidas De Dinero De Caja Chica</h1>
 		<?php
 			$salidas = CajaChicaData::getSalidas();

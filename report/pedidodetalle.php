@@ -15,6 +15,13 @@ require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
     $prodP = PedidoData::getAllProductsByPedidoId($_GET["id"]);
     $servP = PedidoData::getAllServicesByPedidoId($_GET["id"]);
 
+// para que ponga el nombre y le agregue la fecha y hora
+date_default_timezone_set('America/El_Salvador');
+$hora= date('m/d/y g:ia');
+
+header('Content-Disposition: attachment;filename="Detalle De Pedido "'.$hora." ".".xlsx");
+
+
 $objPHPExcel = new PHPExcel();
 
 // Set document properties

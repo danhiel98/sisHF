@@ -14,16 +14,21 @@ activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
+date_default_timezone_set('America/El_Salvador');
+$hora= date('m/d/y g:ia');
+
+header('Content-Disposition: attachment;filename="Corte De Caja"'.$hora." ".".xlsx");
+
 $objPHPExcel = new PHPExcel();
 
 // Set document properties
 $objPHPExcel->getProperties()->setCreator("Hierro Forjado")
                ->setLastModifiedBy("Administrador")
-               ->setTitle("Reporte de bancos")
-               ->setSubject("Bancos activos")
-               ->setDescription("Reporte de los bancos a los que se hacen envíos de dinero.")
-               ->setKeywords("excel php reporte bancos")
-               ->setCategory("Bancos");
+               ->setTitle("Reporte de Corte De Caja")
+               ->setSubject("Corte De Caja activos")
+               ->setDescription("Reporte de los cortes de caja.")
+               ->setKeywords("excel php reporte caja")
+               ->setCategory("Corte De Caja");
 
 $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')
                                           ->setSize(10);
@@ -72,30 +77,37 @@ $objPHPExcel->setActiveSheetIndex(0)
       				$total_total = 0;
               foreach ($factu as  $facid) {
                   $facturas = FacturaData::getByBoxId($facid->id);
-              }
+            
+                      $objPHPExcel->setActiveSheetIndex(0)
+                                      ->setCellValue("A$i", $facid->id);
+
+              $total=0;
                 foreach ($facturas as $fact) {
-                  $ventasFactura = FacturaData::getAllSellsByFactId($fact->id);
-                  $total=0;
-                  foreach($ventasFactura as $s){
-                    $prod = $s->getProduct();
-                    $total += $s->cantidad * $prod->precioventa;
+                      $prodsx = FacturaData::getAllSellsByFactId($fact->id); #Productos vendidos en la factura
+                      $servsx = FacturaData::getAllServicesByFactId($fact->id); #Servicios vendidos en la factura
+                        foreach ($prodsx as $p) {
+                        $precio = $p->total;
+                        $total += $precio;
+                      }
+                      foreach ($servsx as $s) {
+                        $precio = $s->total;
+                        $total += $precio;
+                      }
+
                   }
+                  $total_total += $total;
+
                   $objPHPExcel->setActiveSheetIndex(0)
-                              ->setCellValue("A$i", $fact->id)
                               ->setCellValue("B$i",  "$ ".$total)
-                              ->setCellValue("C$i", $fact->fecha);
+                              ->setCellValue("C$i", $facid->fecha);
 
                               $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':C'.$i)->applyFromArray($borders);
                               $i++;
-                  $total_total+= $total;
-                }
-
-                $i++;
                 $objPHPExcel->setActiveSheetIndex(0)
                             ->setCellValue("A$i", "Total")
                             ->setCellValue("B$i","$ ". $total_total);
             }
-
+}
 
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
