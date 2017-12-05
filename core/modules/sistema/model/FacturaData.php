@@ -216,24 +216,6 @@ class FacturaData {
 		return $array;
 	}
 
-		public static function getBetweenDates($start,$end){
-		$sql = "select * from ".self::$tablename." where date(fecha) between '$start' and '$end' order by fecha desc";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new FacturaData();
-			$array[$cnt]->id = $r['idFacturaVenta'];
-			$array[$cnt]->numerofactura = $r['numeroFactura'];
-			$array[$cnt]->idusuario = $r['idUsuario'];
-			$array[$cnt]->idcliente = $r['idCliente'];
-			$array[$cnt]->tipo = $r['tipo'];
-			$array[$cnt]->fecha = $r['fecha'];
-			$cnt++;
-		}
-		return $array;
-	}
-
 	public static function getAllByPage($start_from,$limit){
 		$sql = "select * from ".self::$tablename." where id<=$start_from limit $limit";
 		$query = Executor::doit($sql);
