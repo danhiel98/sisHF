@@ -2,10 +2,15 @@
 include "../core/autoload.php";
 include "../core/modules/sistema/model/ClientData.php";
 
+date_default_timezone_set('America/El_Salvador');
+$hora= date('m/d/y g:ia');
+header('Content-Disposition: attachment;filename="Clientes "'.$hora." ".".xlsx");
+
 require_once '../ReporteExcel/functions/excel.php';
 activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
+
 
 $objPHPExcel = new PHPExcel();
 

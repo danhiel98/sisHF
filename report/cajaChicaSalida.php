@@ -9,6 +9,12 @@ activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
+date_default_timezone_set('America/El_Salvador');
+$hora= date('m/d/y g:ia');
+
+header('Content-Disposition: attachment;filename="Caja Chica Salida"'.$hora." ".".xlsx");
+
+
 $objPHPExcel = new PHPExcel();
 
 // Set document properties
@@ -26,7 +32,7 @@ $borders = array(
       'borders' => array(
         'allborders' => array(
           'style' => PHPExcel_Style_Border::BORDER_THIN,
-          'color' => array('rgb' => 'red'),
+          'color' => array('rgb' => '#0A0909'),
         )
       ),
     );
@@ -42,13 +48,19 @@ function cellColor($cells,$color){
     ));
 }
 
-cellColor('A1:F1','A7B6F8');
-cellColor('A3:F3','27D3E1');
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->setCellValueByColumnAndRow(0, 1, "test");
+$sheet->mergeCells('A1:F1');
+$sheet->getStyle('A1')->getAlignment()->applyFromArray(
+    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
+);
+
+cellColor('A1','A7B6F8');
+cellColor('A3:F3','E2DFDF');
 $objPHPExcel->getActiveSheet()->getStyle('A1'.':F1')->applyFromArray($borders);
 $objPHPExcel->getActiveSheet()->getStyle('A3'.':F3')->applyFromArray($borders);
 
 $objPHPExcel->setActiveSheetIndex(0)
-            ->mergeCells('A1:F1')
             ->setCellValue('A1', 'Detalle De Salida De Dinero En Caja Chica')
             ->setCellValue('A3', 'Nº')
             ->setCellValue('B3', 'Ingresado por')
@@ -67,7 +79,6 @@ foreach ($sali as $sal) {
               ->setCellValue("D$i", $sal->cantidad)
               ->setCellValue("E$i", $sal->descripcion)
               ->setCellValue("F$i", $sal->fecha);
-  cellColor('A'.$i.':F'.$i, 'E0FCFD');
   $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':F'.$i)->applyFromArray($borders);
   $i++;
 }

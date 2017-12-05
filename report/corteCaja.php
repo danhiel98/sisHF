@@ -16,6 +16,13 @@ require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
 $box = BoxData::getById($_GET["id"]);
 
+
+date_default_timezone_set('America/El_Salvador');
+$hora= date('m/d/y g:ia');
+
+header('Content-Disposition: attachment;filename="Caja Chica Salida"'.$hora." ".".xlsx");
+
+
 $objPHPExcel = new PHPExcel();
 
 // Set document properties

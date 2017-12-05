@@ -25,16 +25,23 @@ $fact = FacturaData::getById($_GET["id"]);
 //array_push($tVend,$sVend);
 $total = 0;
 
+// para que ponga el nombre y le agregue la fecha y hora
+date_default_timezone_set('America/El_Salvador');
+$hora= date('m/d/y g:ia');
+
+header('Content-Disposition: attachment;filename="Resumen De Compra"'.$hora." ".".xlsx");
+
+
 $objPHPExcel = new PHPExcel();
 
 // Set document properties
 $objPHPExcel->getProperties()->setCreator("Hierro Forjado")
                ->setLastModifiedBy("Administrador")
-               ->setTitle("Reporte de Resumen De Ventas")
-               ->setSubject("Resumen De Ventas activas")
-               ->setDescription("Reporte de los Resumen De Ventas")
-               ->setKeywords("excel php reporte Resumen De Ventas")
-               ->setCategory("Resumen De Ventas");
+               ->setTitle("Reporte de Resumen De Compras")
+               ->setSubject("Resumen De Compras activas")
+               ->setDescription("Reporte de los Resumen De Compras")
+               ->setKeywords("excel php reporte Resumen De Compras")
+               ->setCategory("Resumen De Compras");
 
 $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')
                                           ->setSize(10);
@@ -68,7 +75,7 @@ cellColor('A1:F1','A7B6F8');
 $objPHPExcel->getActiveSheet()->getStyle('A9'.':F9')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
             //->mergeCells('A1:A5')
-            ->setCellValue('A1', 'Resumen De Venta')
+            ->setCellValue('A1', 'Resumen De Compra')
             ->setCellValue('A3', 'No.')
             ->setCellValue('A4', 'FECHA')
             ->setCellValue('A5', 'CLIENTE')

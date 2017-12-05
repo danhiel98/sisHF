@@ -10,11 +10,20 @@ require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
 $emple = UserData::getAll();
 $empleado = array();
+$nameSucur="";
 foreach ($emple as $emp) {
   if ($emp->getEmpleado()->idsucursal == $_GET["idEmple"]) {
     array_push($empleado, $emp);
+
+    $nameSucur= $emp->getEmpleado()->getSucursal()->nombre;
   }
 }
+
+// para que ponga el nombre y le agregue la fecha y hora
+date_default_timezone_set('America/El_Salvador');
+$hora= date('m/d/y g:ia');
+
+header('Content-Disposition: attachment;filename="Empleados de "'.$nameSucur." ".$hora." ".".xlsx");
 
 $objPHPExcel = new PHPExcel();
 

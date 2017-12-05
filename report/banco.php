@@ -7,6 +7,11 @@ activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
+date_default_timezone_set('America/El_Salvador');
+$hora= date('m/d/y g:ia');
+
+header('Content-Disposition: attachment;filename="Bancos"'.$hora." ".".xlsx");
+
 $objPHPExcel = new PHPExcel();
 
 // Set document properties

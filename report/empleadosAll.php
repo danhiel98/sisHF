@@ -8,6 +8,13 @@ activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
+// para que ponga el nombre y le agregue la fecha y hora
+date_default_timezone_set('America/El_Salvador');
+$hora= date('m/d/y g:ia');
+
+header('Content-Disposition: attachment;filename="Todos los empleados"'.$hora." ".".xlsx");
+
+
 $objPHPExcel = new PHPExcel();
 
 // Set document properties
@@ -15,7 +22,7 @@ $objPHPExcel->getProperties()->setCreator("Hierro Forjado")
                ->setLastModifiedBy("Administrador")
                ->setTitle("Reporte de Todos Empleados")
                ->setSubject("Empleados activos")
-               ->setDescription("Reporte de los Empleados a los que se hacen envíos de dinero.")
+               ->setDescription("Reporte de los Empleados.")
                ->setKeywords("excel php reporte Empleados")
                ->setCategory("Empleados");
 
