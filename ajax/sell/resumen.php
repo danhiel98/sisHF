@@ -31,6 +31,10 @@
 					}
 					$total += $totalx;
 				?>
+
+
+
+				<input type="hidden" name="total" id="total" value="<?php echo $total; ?>">
 				<tr>
 					<td><?php echo $prod->nombre; ?></td>
 					<td style="width:80px; text-align:center;">$ <?php echo number_format($prod->precioventa,2,".",","); ?></td>

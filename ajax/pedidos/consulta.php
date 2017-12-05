@@ -1,6 +1,6 @@
 <?php
 
-	@session_start();
+  @session_start();
 	include ("../../core/autoload.php");
 	include ("../../core/modules/sistema/model/PedidoData.php");
 	include ("../../core/modules/sistema/model/ClientData.php");
@@ -26,8 +26,10 @@
   }
 
   $clientes = ClientData::getAll();
-	$prods = ProductData::getAll();
+  $prods = ProductData::getAll();
+  
 ?>
+  <?php include "detallesError.php"; ?>
 	<script src="js/bootstrap-confirmation.js"></script>
   <?php if ($pdids): ?>
   	<ul class="nav nav-tabs">
@@ -57,7 +59,7 @@
                   <td><?php echo $pdo->fechapedido; ?></td>
                   <td><?php echo $pdo->fechaentrega; ?></td>
                   <td>
-                    <a title="Finalizar" href="#" class="btn btn-sm btn-success finalizar" id="<?php echo $pdo->id; ?>"
+                    <a title="Finalizar" href="#" class="btn btn-xs btn-success finalizar" id="<?php echo $pdo->id; ?>"
                       data-toggle="confirmation-popout" data-popout="true" data-placement="left"
                       data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
                       data-btn-ok-class="btn-success btn-xs"
@@ -79,7 +81,7 @@
         <?php endif; ?>
       </div>
       <div id="end" class="tab-pane fade">
-        <h2>Producciones finalizadas</h2>
+        <h2>Pedidos Entregados</h2>
         <?php if ($pdidsT): ?>
         <div class="table-responsive">
           <table class="table table-hover table-bordered">
@@ -116,58 +118,65 @@
       <div class="alert alert-info" style="font-size: 1.2em;">
         No hay datos.
       </div>
-      <?php if (count($matp) <= 0 && count($prods) <= 0): ?>
+      <?php if (count($clientes) <= 0 && count($prods) <= 0): ?>
         <div class="alert alert-warning">
-          Para registrar una producci&oacute;n debe haber productos y materia prima en el sistema.
+          Para registrar un pedido debe haber <a href="index.php?view=products">productos</a> y <a href="index.php?view=clients">clientes</a> registrados en el sistema.
         </div>
-			<?php elseif(count($matp) <= 0): ?>
+			<?php elseif(count($clientes) <= 0): ?>
 				<div class="alert alert-warning">
-          Para registrar una producci&oacute;n debe haber materia prima. <a href="index.php?view=inventarymp">Ir a materia prima.</a>
+          Para registrar un pedido debe haber clientes registrados. <a href="index.php?view=clients">Ir a clientes.</a>
         </div>
 			<?php elseif(count($prods) <= 0): ?>
 				<div class="alert alert-warning">
-          Para registrar una producci&oacute;n debe haber productos en el sistema. <a href="index.php?view=products">Ir a productos.</a>
+          Para registrar un pedido debe haber productos en el sistema. <a href="index.php?view=products">Ir a productos.</a>
         </div>
       <?php endif; ?>
     <?php endif; ?>
-	<script>
 
-	$(document).ready(function(){
-    $(".nav-tabs a").click(function(){
-      $(this).tab('show');
+  <script>
+    
+    $(document).ready(function(){
+      $(".nav-tabs a").click(function(){
+        $(this).tab('show');
+      });
     });
-  });
 
-	$('[data-toggle=confirmation]').confirmation({
-		rootSelector: '[data-toggle=confirmation]',
-		container: 'body'});
-	$('[data-toggle=confirmation-singleton]').confirmation({
-		rootSelector: '[data-toggle=confirmation-singleton]',
-		container: 'body'});
-	$('[data-toggle=confirmation-popout]').confirmation({
-		rootSelector: '[data-toggle=confirmation-popout]',
-		container: 'body'});
-	$('#confirmation-delegate').confirmation({
-		selector: 'button'
-	});
+    $('[data-toggle=confirmation]').confirmation({
+      rootSelector: '[data-toggle=confirmation]',
+      container: 'body'});
+    $('[data-toggle=confirmation-singleton]').confirmation({
+      rootSelector: '[data-toggle=confirmation-singleton]',
+      container: 'body'});
+    $('[data-toggle=confirmation-popout]').confirmation({
+      rootSelector: '[data-toggle=confirmation-popout]',
+      container: 'body'});
+    $('#confirmation-delegate').confirmation({
+      selector: 'button'
+    });
 
-	function finalizar(id){
-		$.ajax({
-			url: "ajax/pedidos/procesos.php",
-			type: "POST",
-			dataType: "html",
-			data: {
-				idFin: id
-			}
-		}).done(function(){
-      //Esta función se encarga de obtenes todos los datos de los pedidos, se encuentra en el archivo ajax.js
-			pedidos("end");
-		});
-	}
+    function finalizar(id){
+      $.ajax({
+        url: "ajax/pedidos/procesos.php",
+        type: "POST",
+        dataType: "html",
+        data: {
+          idFin: id
+        }
+      }).done(function(res){
+        //Esta función se encarga de obtenes todos los datos de los pedidos, se encuentra en el archivo ajax.js
+        if (res != ""){
+          $("#detallesProd").html(res); //Cargar los detalles de la materia prima insuficiente
+          $("#detalles").modal().show(); //Mostrar el modal
+        }else{
+          pedidos("end"); //Creo que ya no la utilizo para nada xD
+        }
+      });
+    }
 
-	$(".finalizar").on("confirmed.bs.confirmation",function(){
-		var id = this.id;
-		finalizar(id);
-	});
+    //Al dar clic en "Sí" en el popup de confirmación
+    $(".finalizar").on("confirmed.bs.confirmation",function(){
+      var id = this.id;
+      finalizar(id);
+    });
 
 	</script>

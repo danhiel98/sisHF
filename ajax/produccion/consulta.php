@@ -1,15 +1,16 @@
+<!-- Este archivo sirve para obtener los datos generales de las producciones activas y las terminadas -->
 <?php
 
 	@session_start();
 	include ("../../core/autoload.php");
 	include ("../../core/modules/sistema/model/MateriaPrimaData.php");
 	include ("../../core/modules/sistema/model/ProductData.php");
-	include ("../../core/modules/sistema/model/ProduccionData.php");
+  include ("../../core/modules/sistema/model/ProduccionData.php");
+  include ("../../core/modules/sistema/model/ProduccionMPData.php");
 
-  $prodxs = false;
-  $prodxsA = false;
-  $prodxsT = false;
-  $prodxsC = false;
+  $prodxs = false; #Verificar si hay producciones registradas
+  $prodxsA = false; #Verificar si hay producciones activas
+  $prodxsT = false; #Verificar si hay producciones terminadas
   
   $productns = ProduccionData::getAll();
   if (count($productns)>0) {
@@ -23,13 +24,12 @@
   if (count($productnsA)>0) {
     $prodxsA = true;
   }
-  $productnsC = ProduccionData::getCancel();
-  if (count($productnsC)>0) {
-    $prodxsC = true;
-  }
+
   $matp = MateriaPrimaData::getAll();
-	$prods = ProductData::getAll();
+  $prods = ProductData::getAll();
+  
 ?>
+  <?php include "detallesError.php"; ?>
 	<script src="js/bootstrap-confirmation.js"></script>
   <?php if (count($matp)>0 && count($prods)>0): ?>
 		<script type="text/javascript">
@@ -69,7 +69,7 @@
                   <td><?php echo $pa->fechainicio; ?></td>
                   <td><?php echo $pa->fechafin; ?></td>
                   <td>
-										<a title="Finalizar" href="#" class="btn btn-sm btn-success finalizar" id="<?php echo $pa->id; ?>"
+										<a title="Finalizar" href="#" class="btn btn-xs btn-success finalizar" id="<?php echo $pa->id; ?>"
 											data-toggle="confirmation-popout" data-popout="true" data-placement="left"
 											data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
 											data-btn-ok-class="btn-success btn-xs"
@@ -167,7 +167,7 @@
       </div>
       <?php if (count($matp) <= 0 && count($prods) <= 0): ?>
         <div class="alert alert-warning">
-          Para registrar una producci&oacute;n debe haber productos y materia prima en el sistema.
+          Para registrar una producci&oacute;n debe haber <a href="index.php?view=products">productos</a> y <a href="index.php?view=inventarymp">materia</a> prima en el sistema.
         </div>
 			<?php elseif(count($matp) <= 0): ?>
 				<div class="alert alert-warning">
@@ -180,13 +180,14 @@
       <?php endif; ?>
     <?php endif; ?>
 	<script>
-
+    //Cambiar de tab
 		$(document).ready(function(){
 	    $(".nav-tabs a").click(function(){
 	      $(this).tab('show');
 	    });
 	  });
-
+    
+    //No modificar, le dan la funcionalidad a el piput de confirmación
 		$('[data-toggle=confirmation]').confirmation({
 			rootSelector: '[data-toggle=confirmation]',
 			container: 'body'});
@@ -208,31 +209,19 @@
 				data: {
 					idFin: id
 				}
-			}).done(function(){
-				producciones("end");
-			});
-		}
-
-		function cancelar(id){
-			$.ajax({
-				url: "ajax/produccion/procesos.php",
-				type: "POST",
-				dataType: "html",
-				data: {
-					idCancel: id
-				}
-			}).done(function(){
-				producciones("cancel");
+			}).done(function(res){
+        if (res != ""){
+          $("#detallesMP").html(res); //Cargar los detalles de la materia prima insuficiente
+          $("#detalles").modal().show(); //Mostrar el modal
+        }else{
+          producciones("end"); //Todo está bien, se finaliza la producción
+        }
 			});
 		}
 
 		$(".finalizar").on("confirmed.bs.confirmation",function(){
 			var id = this.id;
 			finalizar(id);
-		});
-		$(".cancelar").on("confirmed.bs.confirmation",function(){
-			var id = this.id;
-			cancelar(id);
 		});
 
 	</script>

@@ -206,13 +206,13 @@ table.tablesorter thead tr th:hover {
 }
 
 .panel-purple {
-    border-color: #23033C;
+    border-color: #268690;
 }
 
 .panel-purple > .panel-heading {
-    border-color: #23033C;
+    border-color: #268690;
     color: #fff;
-    background-color: #23033C;
+    background-color: #268690;
 }
 
 .panel-purple > a {
@@ -220,27 +220,27 @@ table.tablesorter thead tr th:hover {
 }
 
 .panel-yellow {
-    border-color: #FFDE25;
+    border-color: #5179a2;
 }
 
 .panel-yellow > .panel-heading {
-    border-color: #FFDE25;
+    border-color: #5179a2;
     color: #fff;
-    background-color: #FFDE25;
+    background-color: #5179a2;
 }
 
 .panel-yellow > a {
-    color: rgb(206, 176, 26);
+    color: #345575;
 }
 
 .panel-brown {
-    border-color: #4A2C2C;
+    border-color: #795548;
 }
 
 .panel-brown > .panel-heading {
-    border-color: #4A2C2C;
+    border-color: #795548;
     color: #fff;
-    background-color: #4A2C2C;
+    background-color: #795548;
 }
 
 .panel-brown > a {
@@ -301,18 +301,4 @@ table.tablesorter thead tr th:hover {
 
 .panel-azulGris > a {
     color: #354a4e;
-}
-
-.panel-red {
-    border-color: rgb(145, 46, 64);
-}
-
-.panel-red > .panel-heading {
-    border-color: rgb(145, 46, 64);
-    color: #fff;
-    background-color: rgb(145, 46, 64);
-}
-
-.panel-red > a {
-    color: rgb(99, 36, 47);
 }

@@ -162,6 +162,9 @@ class ProduccionData {
 	}
 
 	public static function getLike($p){
+		$base = new Database();
+		$cnx = $base->connect();
+		$p = $cnx->real_escape_string($p);
 		$sql = "select * from ".self::$tablename." where fechaInicio like '%$p%' or fechaFin like '%$p%'";
 		$query = Executor::doit($sql);
 		$array = array();

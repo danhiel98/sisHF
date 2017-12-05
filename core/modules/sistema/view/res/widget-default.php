@@ -1,9 +1,27 @@
+<?php
+	$materiaP = MateriaPrimaData::getAll();
+	$matP = false;
+	if (count($materiaP)>0){
+		$matP = true;
+	}
+?>
 <div class="row">
 	<div class="col-md-12">
+		<?php if ($matP): ?>
+		<div class="btn-group pull-right">
+			<a href="index.php?view=re" class="btn btn-default"><i class='fa fa-shopping-cart'></i> Realizar Compra</a>
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<i class="fa fa-download"></i> Descargar <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="report/materiaPrima.php">Excel (.xlsx)</a></li>
+			</ul>
+		</div>
+		<?php endif; ?>
 		<h1><i class='glyphicon glyphicon-shopping-cart'></i> Compras de Materia Prima</h1>
 		<div class="clearfix"></div>
 		<?php
-		$reabs = ReabastecimientoData::getAll();
+			$reabs = ReabastecimientoData::getAll();
 		if(count($reabs)>0){
 		?>
 		<br>
@@ -24,7 +42,7 @@
 				<tr>
 					<td style="width:30px;"><a href="index.php?view=onere&id=<?php echo $re->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
 					<td style="width:40px;">
-						<?php echo $re->id; ?>
+						<?php echo $re->comprobante; ?>
 					</td>
 					<td>
 						<?php echo $re->getProvider()->nombre;?>

@@ -49,7 +49,7 @@
           <div class="form-group control-group">
         		<label for="cantidad" class="col-lg-3 control-label">Cantidad A Producir</label>
             <div class="col-lg-7 controls">
-              <input type="text" class="form-control" name="cantidad" id="cantidad" required>
+              <input type="text" class="form-control" name="cantidad" id="cantidad" data-validation-regex-regex="[0-9]{1,3}" data-validation-regex-message="Introduzca un número" required>
               <p class="help-block"></p>
             </div>
           </div>
@@ -158,7 +158,7 @@
     } catch (e) {
       alert("Ha ocurrido un error!" + e.getMessage());
     } finally {
-      console.log("Se ejecutó la función...");
+      console.log("Se ejecutó la función...s");
     }
   }
 </script>

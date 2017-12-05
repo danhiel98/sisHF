@@ -19,8 +19,8 @@
 	<h2>No hay alertas</h2>
 	<p>Por el momento no hay alertas de inventario, estas se muestran cuando el inventario ha alcanzado el nivel m&iacute;nimo.</p>
 	-->
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-brown">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="panel panel-green-2">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
@@ -41,8 +41,8 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-yellow">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="panel panel-purple">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
@@ -63,8 +63,8 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-green">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="panel panel-lightBlue">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
@@ -85,8 +85,8 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-purple">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="panel panel-azulGris">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
@@ -107,7 +107,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<div class="panel panel-green-2">
 			<div class="panel-heading">
 				<div class="row">
@@ -129,8 +129,8 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-orange">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="panel panel-purple">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
@@ -151,7 +151,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<div class="panel panel-lightBlue">
 			<div class="panel-heading">
 				<div class="row">
@@ -173,8 +173,8 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-blue">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="panel panel-azulGris">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
@@ -195,8 +195,8 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-azulGris">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="panel panel-green-2">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
@@ -217,8 +217,8 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-red">
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="panel panel-purple">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">

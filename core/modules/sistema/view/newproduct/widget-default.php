@@ -13,7 +13,7 @@
       <div class="form-group control-group">
         <label for="nombre" class="col-lg-2 control-label">Nombre*</label>
           <div class="col-md-6 controls">
-            <input type="text" name="nombre" required class="form-control" id="nombre" placeholder="Nombre del Producto"  maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" onSubmit="return validarnombre()" placeholder="Nombres" onkeypress="return vNom(event,this)">
+            <input type="text" name="nombre" required class="form-control" id="nombre" placeholder="Nombre del Producto"  maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" placeholder="Nombres" onkeypress="return vNom(event,this)">
           	<p class="help-block"></p>
           </div>
       </div>
@@ -32,7 +32,7 @@
 			<div class="form-group control-group">
         <label for="descripcion" class="col-lg-2 control-label">Descripci&oacute;n</label>
         <div class="col-md-6 controls">
-          <textarea name="descripcion" class="form-control" id="descripcion" placeholder="Descripci&oacute;n del Producto" data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,100}" data-validation-regex-message="Introduzca una descripción válida" ></textarea>
+          <textarea maxlength="200" name="descripcion" class="form-control" id="descripcion" placeholder="Descripci&oacute;n del Producto" data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,200}" data-validation-regex-message="Introduzca una descripción válida" ></textarea>
           <p class="help-block"></p>
         </div>
       </div>

@@ -71,7 +71,7 @@
 		</table>
 		<?php
 		}else{
-			echo "<p class='alert alert-danger'>No hay clientes registrados</p>";
+			echo "<p class='alert alert-info'>No hay clientes registrados</p>";
 		}
 		?>
 	</div>

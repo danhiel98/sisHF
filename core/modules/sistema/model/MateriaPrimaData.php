@@ -105,6 +105,9 @@ class MateriaPrimaData {
 	}
 
 	public static function getLike($p){
+		$base = new Database();
+		$cnx = $base->connect();
+		$p = $cnx->real_escape_string($p);
 		$sql = "select * from ".self::$tablename." where nombre like '%$p%' or descripcion like '%$p%' and estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();

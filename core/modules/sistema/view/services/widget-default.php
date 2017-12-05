@@ -32,7 +32,7 @@
 				<th style="width: 45px;">No.</th>
 				<th>Nombre</th>
 				<th>Descripci&oacute;n</th>
-				<th>Precio</th>
+				<th style="width: 90px;">Precio</th>
 				<th></th>
 			</thead>
 			<?php
@@ -42,10 +42,9 @@
 					<td><?php echo $service->id; ?></td>
 					<td><?php echo $service->nombre; ?></td>
 					<td><?php echo $service->descripcion; ?></td>
-					<td><strong>$ <?php echo $service->precio; ?></strong></td>
+					<td style="width: 90px;"><strong>$ <?php echo $service->precio; ?></strong></td>
 					<td style="width:40px;">
-						<a data-toggle="modal" data-target="#editar" id="<?php echo $service->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
-						<!--<a onclick="return confirm('¿Seguro que desea eliminar el registro?')" href="index.php?view=delservice&id=<?php echo $service->id;?>" class="btn btn-danger btn-xs">Eliminar</a>-->
+						<a data-toggle="modal" data-target="#editar" id="<?php echo $service->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>				
 					</td>
 				</tr>
 				<?php

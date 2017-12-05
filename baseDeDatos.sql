@@ -390,6 +390,18 @@ insert into empleado values(null,1,'67831124-4','1014-311292-100-3','Juan','Pine
 insert into empleado values(null,1,'56473828-2','1010-091292-102-2','Esmeralda','Medoza','Casado/a','Mujer','1992-12-09','Col. La Esperanza','Zacatecoluca','La Paz','Bachillerato','Pintar','7354-3903',1);
 */
 
+CREATE TABLE tipoUsuario(
+  idTipo tinyint PRIMARY KEY AUTO_INCREMENT,
+  nombre varchar(15) not null,
+  activo boolean not null default 1
+);
+
+insert into tipoUsuario values
+(null,"Root",1),
+(null,"Administrador",1),
+(null,"Vendedor",1),
+(null,"Producción",1);
+
 /*OK*/
 CREATE TABLE usuario(
   idUsuario smallint PRIMARY KEY AUTO_INCREMENT,
@@ -399,12 +411,12 @@ CREATE TABLE usuario(
   usuario varchar(30) not null,
   email varchar(100),
   clave varchar(60) not null,
-  admin boolean not null default 0,
+  tipo tinyint not null default 0,
   fechaCreacion datetime not null default current_timestamp,
   activo boolean default 1 not null,
+  foreign key(tipo) references tipoUsuario(idTipo),
   foreign key(idEmpleado) references empleado(idEmpleado)
 );
-insert into usuario values(null,null,'Usuario','Raíz','root','root@root.com','83353d597cbad458989f2b1a5c1fa1f9f665c858',1,now(), 1);
 insert into usuario values(null,null,'Administrador','Principal','admin','admin@gmail.com','90b9aa7e25f80cf4f64e990b78a9fc5ebd6cecad',1,now(),1);
 
 /*OK*/
@@ -522,10 +534,10 @@ CREATE TABLE categoria(
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario)
 );
-insert into categoria values(null,2,"Cerrajerí­a Ornamental",NOW(),1);
-insert into categoria values(null,2,"Mueblerí­a",NOW(),1);
-insert into categoria values(null,2,"Artesaní­a",NOW(),1);
-insert into categoria values(null,2,"Industrial",NOW(),1);
+insert into categoria values(null,1,"Cerrajerí­a Ornamental",NOW(),1);
+insert into categoria values(null,1,"Mueblerí­a",NOW(),1);
+insert into categoria values(null,1,"Artesaní­a",NOW(),1);
+insert into categoria values(null,1,"Industrial",NOW(),1);
 
 /*
 CREATE TABLE costeo(
@@ -838,3 +850,12 @@ CREATE TABLE salidaCajaChica(
   foreign key(idCajaChica) references cajaChica(idCajaChica),
   foreign key(idEmpleado) references empleado(idEmpleado)
 );
+
+
+CREATE TABLE configuraciones(
+  idConfig smallint PRIMARY KEY AUTO_INCREMENT,
+  nombre varchar(20) not null,
+  valor varchar(50) not null
+);
+
+insert into configuraciones values(null,'iva','0.13');

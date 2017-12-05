@@ -1,21 +1,21 @@
 <?php
 	$products = ProductData::getAll();
+	$matPrim = MateriaPrimaData::getAll();
 ?>
 <div class="row">
 	<div class="col-md-12">
 		<!-- Single button -->
-		<div class="btn-group pull-right">
-			<?php if (count($products)>0): ?>
-				<div class="btn-group pull-right" >
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		    		<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-			  		</button>
-			  		<ul class="dropdown-menu" role="menu">
-			    		<li><a href="report/inventarioproducto.php">Excel (.xlsx)</a></li>
-			  		</ul>
-				</div>
-			<?php endif; ?>
+		<?php if (count($products)>0 && count($matPrim) >0): ?>
+		<div class="btn-group pull-right" >
+			<a href="index.php?view=newproducn" class="btn btn-default"><i class="icon-plus"></i> Agregar a producción</a>
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-download"></i> Descargar <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="report/inventarioproducto.php">Excel (.xlsx)</a></li>
+			</ul>
 		</div>
+		<?php endif; ?>
 		<h1><i class="glyphicon glyphicon-stats"></i> Inventario De Productos</h1>
 		<div class="clearfix"></div>
 		<?php

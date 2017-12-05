@@ -39,7 +39,7 @@
             <label for="edireccion" class="col-sm-3 control-label">Direcci&oacute;n:</label>
             <div class="col-sm-8 controls">
               <div class="input-group">
-                <textarea class="form-control" name="edireccion" rows="3" cols="80" id="edireccion" placeholder="Introduzca la direcci&oacute;n del proveedor" data-validation-regex-regex="[Á-Úá-ú#().,_/\w\s]{3,200}" data-validation-regex-message="Introduzca una dirección válida" maxlength="200" required></textarea>
+                <textarea class="form-control" name="edireccion" rows="3" cols="80" id="edireccion" placeholder="Introduzca la direcci&oacute;n del proveedor" data-validation-regex-regex="[Á-Úá-ú#().,_/\w\s]{3,150}" data-validation-regex-message="Introduzca una dirección válida" maxlength="150" required></textarea>
               </div>
             </div>
           </div>

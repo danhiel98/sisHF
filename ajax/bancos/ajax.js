@@ -1,6 +1,5 @@
 var banco = (function (banco, undefined) {
   var _disabled = true;
- //----------------banco POR AJAX POR METODO POST ------------------------////
   banco.llenarModalEditar = function () {
     $(".btn-edit").on("click", function (e) {
       e.preventDefault();
@@ -10,7 +9,7 @@ var banco = (function (banco, undefined) {
         url: 'ajax/bancos/resultado.php',
         data: { idBanc: idbanco },
         success: function (data) {
-          var oDato = JSON.parse(data);// JSON.parse convierte ese JSON en un objeto
+          var oDato = JSON.parse(data);
           $('#eid').val(oDato[0].idBanco);
           $('#enombre').val(oDato[0].nombre);
           $('#edireccion').val(oDato[0].direccion);

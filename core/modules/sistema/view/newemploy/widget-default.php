@@ -7,7 +7,7 @@
 	<div class="col-md-12">
 		<h1>Registrar Empleado</h1>
 		<br>
-		<form class="form-horizontal" method="post" id="addemploy" action="index.php?view=addemploy" role="form">
+		<form class="form-horizontal" method="post" action="index.php?view=addemploy">
 			<div class="form-group control-group">
 				<label for="txtSucursal" class="col-lg-2 control-label">Sucursal*</label>
 				<div class="col-md-6 controls">
@@ -28,28 +28,24 @@
 		    <label for="txtDui" class="col-lg-2 control-label">DUI*</label>
 		    <div class="col-md-6 controls">
 		      <input autofocus type="text" name="txtDui" class="form-control" id="txtDui" placeholder="DUI" maxlength="10" data-validation-regex-regex="[0-9]{8}-[0-9]{1}" data-validation-regex-message="Introduzca un DUI válido" onkeyup="fnc(this,'-',dui,true)" onpaste="return false" onkeypress="return soloNumeros(event)" data-validation-ajax-ajax="ajax/empleados/dui.php" required>
-					<p class="help-block"></p>
 				</div>
 			</div>
-		   <div class="form-group control-group">
+		  <div class="form-group control-group">
 		    <label for="txtNit" class="col-lg-2 control-label">NIT</label>
 		    <div class="col-md-6 controls">
 		      <input type="text" name="txtNit" class="form-control" id="txtNit" maxlength="17" data-validation-regex-regex="[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}" data-validation-regex-message="Introduzca un NIT válido" placeholder="N&uacute;mero De NIT" onkeyup="fnc(this,'-',nit,true)" onpaste="return false" onKeyPress="return soloNumeros(event)" data-validation-ajax-ajax="ajax/empleados/nit.php" required>
-					<p class="help-block"></p>
 				</div>
 		  </div>
 			<div class="form-group control-group">
 				<label for="txtNombre" class="col-lg-2 control-label">Nombres*</label>
 		    <div class="col-md-6 controls">
-		      <input type="text" name="txtNombre" class="form-control" id="txtNombre" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" onSubmit="return validarnombre()" placeholder="Nombres" onkeypress="return vNom(event,this)" required>
-					<p class="help-block"></p>
+		      <input type="text" name="txtNombre" class="form-control" id="txtNombre" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" placeholder="Nombres" onkeypress="return vNom(event,this)" required>
 				</div>
 		  </div>
 		  <div class="form-group control-group">
 		    <label for="txtApellido" class="col-lg-2 control-label">Apellidos*</label>
 		    <div class="col-md-6 controls">
 		      <input type="text" name="txtApellido" required class="form-control" id="txtApellido" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un apellido válido"  placeholder="Apellidos" onkeypress="return vNom(event,this)" required>
-					<p class="help-block"></p>
 				</div>
 		  </div>
 		  <div class="form-group control-group">
@@ -82,7 +78,6 @@
 							<span class="fa fa-calendar"></span>
 						</span>
 					</div>
-					<p class="help-block"></p>
 				</div>
 			</div>
 		  <div class="form-group control-group">
@@ -114,8 +109,7 @@
 			<div class="form-group control-group">
 				<label for="txtDireccion" class="col-lg-2 control-label">Direcci&oacute;n*</label>
 				<div class="col-md-6 controls">
-					<textarea maxlength="200" name="txtDireccion" class="form-control" id="txtDireccion" placeholder="Direcci&oacute;n" required data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,100}" data-validation-regex-message="Introduzca una dirección válida"></textarea>
-					<p class="help-block"></p>
+					<textarea maxlength="200" name="txtDireccion" class="form-control" id="txtDireccion" placeholder="Direcci&oacute;n" required data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,200}" data-validation-regex-message="Introduzca una dirección válida"></textarea>
 				</div>
 			</div>
 		  <div class="form-group control-group">

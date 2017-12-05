@@ -73,12 +73,12 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <?php
           $u=null;
-          if(Session::getUID()!=""):
+          if(Session::getUID()!="" && !isset($_GET["about"])):
             $u = UserData::getById(Session::getUID());
           ?>
           <ul class="nav navbar-nav side-nav">
             <li><a href="index.php?view=home"><i class="fa fa-home"></i> Inicio</a></li>
-            <?php if ($u->isAdmin): ?>
+            <?php if ($u->tipo == 1 || $u->tipo == 2): ?>
             <li><a href="index.php?view=sucursal"><i class="icon-office"></i> Sucursales</a></li>
             <li><a href="index.php?view=empleados"><i class="icon-users"></i> Empleados </a></li>
             <li><a href="index.php?view=users"><i class="fa fa-users"></i> Usuarios </a></li>
@@ -129,7 +129,11 @@
             $u=null;
             if(Session::getUID()!=""){
               $u = UserData::getById(Session::getUID());
-              $user = $u->name." ".$u->lastname;
+              if ($u->idempleado == null || $u->idempleado == ""){
+                $user = $u->name." ".$u->lastname;
+              }else{
+                $user = $u->getEmpleado()->nombre." ".$u->getEmpleado()->apellido;
+              }
             }
           ?>
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -151,7 +155,12 @@
         if (isset($_GET["view"]) && Session::getUID() == "") {
           @header("location: index.php");
         }
-        View::load("login");
+        if (isset($_GET["about"]) && $_GET["about"] == "true"){
+          View::load("fechas");          
+        }else{
+          View::load("login");
+        }
+        
         ?>
       </div><!-- /#page-wrapper -->
     </div><!-- /#wrapper -->

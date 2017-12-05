@@ -5,6 +5,13 @@
   // * Database
   // * Session
 
+  #Variables de sesión generales a utilizar:
+  /*
+  *  $_SESSION["usr_suc"] = 1; -> El id de la sucursal en la que se encuentra el usuario
+  *  $_SESSION["adm"] = true; -> Si el usuario es adminisrador
+  *  $_SESSION['user_id'] = $userid; -> El id de usuario
+  */
+
   include "core/modules/".Module::$module."/model/ClientData.php";
   include "core/modules/".Module::$module."/model/SucursalData.php";
   include "core/modules/".Module::$module."/model/BancoData.php";
@@ -25,6 +32,7 @@
   include "core/modules/".Module::$module."/model/ProduccionMPData.php";
   include "core/modules/".Module::$module."/model/PedidoData.php";
   include "core/modules/".Module::$module."/model/DireccionData.php";
+  include "core/modules/".Module::$module."/model/UserTypeData.php";
 
   include "core/modules/".Module::$module."/model/UserData.php";
   include "core/modules/".Module::$module."/model/ProductData.php";

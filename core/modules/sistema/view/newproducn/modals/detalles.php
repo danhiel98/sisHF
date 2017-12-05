@@ -25,7 +25,7 @@
               <div class="form-group control-group">
         				<label for="cantidad" class="col-lg-3 control-label">Cantidad A Producir</label>
         		    <div class="col-lg-7 controls">
-                	<input type="text" class="form-control" name="cantidad">
+                	<input type="text" class="form-control" name="cantidad" data-validation-regex-regex="[0-9]" required>
                   <p class="help-block"></p>
                 </div>
         		  </div>

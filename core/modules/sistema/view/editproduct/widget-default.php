@@ -26,7 +26,7 @@
       <div class="form-group control-group">
         <label for="nombre" class="col-lg-3 control-label">Nombre*</label>
         <div class="col-md-8">
-          <input type="text" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" onSubmit="return validarnombre()" placeholder="Nombres" onkeypress="return vNom(event,this)" name="nombre" class="form-control" id="nombre" value="<?php echo $product->nombre; ?>" placeholder="Nombre del Producto">
+          <input type="text" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un nombre válido" placeholder="Nombres" onkeypress="return vNom(event,this)" name="nombre" class="form-control" id="nombre" value="<?php echo $product->nombre; ?>" placeholder="Nombre del Producto">
       <p class="help-block"></p> 
           </div>
           </div>

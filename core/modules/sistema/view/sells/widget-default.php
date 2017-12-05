@@ -7,11 +7,12 @@
 				<i class="fa fa-download"></i> Descargar <span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu" role="menu">
-					<li><a id="btn_envio" target="_blank" href="#">Excel (.xlsx)</a></li>
+				<li><a id="btn_envio" target="_blank" href="#">Excel (.xlsx)</a></li>
 			</ul>
 		</div>
 		<h1><i class='glyphicon glyphicon-shopping-cart'></i> Lista de Ventas</h1>
 		<div class="clearfix"></div>
+
     <div id="btnAdd">
     </div>
    
@@ -46,21 +47,7 @@
     </div>
   </div>
 </div>
-<!--
-<input type="text" class="primerFecha" name="">
-<input type="text" class="segundaFecha" name="">
 
-<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="btn_envio">
-     <a id="reporteBV" target="_blank" href="#">envio</a>
-</button>
-
-<input type="text" class="primerFecha" name="">
-<input type="text" class="segundaFecha" name="">
-
-<button type="button">
-     <a id="reporteBV" href="report/resumenventas.php?facInicio=02/05/2017&facFinal=05/12/2017 " >envio</a>
-</button>
--->
 <script type="text/javascript">
   $(function () {
       $('#dateStart').datetimepicker({
@@ -93,5 +80,4 @@ $(function(){
     });
 });
 </script>
-
 

@@ -21,10 +21,6 @@
 					$prodPd->mantenimiento = $c["mantenimiento"];
 					$prodPd->total = $c["cantidad"] * $prodPd->getProduct()->precioventa;
 					$prodPd->addProdPd();
-
-					$prods = ProductoSucursalData::getBySucursalProducto($pdido->idsucursal,$prodPd->idproducto);
-					$prods->cantidad = $prods->cantidad - $prodPd->cantidad;
-					$prods->updateEx();
 				}elseif($c["product_id"] == "" && $c["service_id"] != ""){
 					$prodPd->idservicio = $c["service_id"];
 					$prodPd->total = $c["cantidad"] * $prodPd->getService()->precio;

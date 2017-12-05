@@ -1,5 +1,3 @@
-//$(obtener_registros());
-
 function obtener_registros(buscar){
 	$.ajax({
 		url : 'ajax/buy/resultado.php',
@@ -8,9 +6,6 @@ function obtener_registros(buscar){
 		data : { producto: buscar }
 		})
 	.done(function(resultado){
-		//var valid = "<script src='js/jqBootstrapValidation.js'></script><script>$(function () { $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(); } );";
-		//valid += " function soloNumeros(e){key = (window.Event) ? e.which : e.keyCode; return (key >= 48 && key <= 57 || key >= 8 && key <= 31 || key == 0);}</script>"
-		//$("#resultado").html(valid+resultado);
 		$("#resultado").html(resultado);
 		$(".datosModal").load("ajax/buy/modal.php");
 		$.getScript("js/jqBootstrapValidation.js",function(data, textStatus, jqxhr){

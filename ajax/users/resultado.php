@@ -5,214 +5,88 @@
 	include ("../../core/modules/sistema/model/EmpleadoData.php");
 	include ("../../core/modules/sistema/model/SucursalData.php");
 
-	if (isset($_POST["sucursal"]) && !empty($_POST["sucursal"])){
+	if (isset($_POST["sucursal"]) && !empty($_POST["sucursal"])):
 		$users = UserData::getAll();
-		if (count($users) > 0){
+		if (count($users) > 0):
 			$usuarios = array();
 			foreach($users as $user){
 				if ($user->getEmpleado()->getSucursal()->id == $_POST["sucursal"]){
 					array_push($usuarios,$user);
 				}
 			}
-			if (count($usuarios)>0) {
+			if (count($usuarios)>0):
 		?>
 			<table class="table table-bordered table-hover">
-				<thead>
-					<th>Nombres</th>
-					<th>Apellidos</th>
-					<th>Usuario</th>
-					<th>Correo Electr&oacute;nico</th>
-					<th>Sucursal</th>
-					<th>Activo</th>
-					<th>Admin</th>
-					<th></th>
-				</thead>
-			<?php
-				foreach($usuarios as $user){
-			?>
-				<?php if ($user->getEmpleado()->getSucursal()->id == $_POST["sucursal"]): ?>
-				<tr>
-					<td><?php echo $user->getEmpleado()->nombre; ?></td>
-					<td><?php echo $user->getEmpleado()->apellido; ?></td>
-					<td><?php echo $user->username; ?></td>
-					<td><?php echo $user->email; ?></td>
-					<td><?php echo $user->getEmpleado()->getSucursal()->nombre; ?></td>
-					<td>
-					<?php if($user->activo):?>
-						<i class="glyphicon glyphicon-ok"></i>
-					<?php endif; ?>
-					</td>
-					<td>
-					<?php if($user->isAdmin):?>
-						<i class="glyphicon glyphicon-ok"></i>
-					<?php endif; ?>
-					</td>
+					<thead>
+						<th>Nombres</th>
+						<th>Apellidos</th>
+						<th>Usuario</th>
+						<th>Correo Electr&oacute;nico</th>
+						<th>Sucursal</th>
+						<th style="text-align:center;">Estado</th>
+						<th style="text-align:center;">Tipo</th>
+					</thead>
+					<?php foreach($usuarios as $user): ?>
+						<?php if((isset($_SESSION["usr_suc"]) && ($user->getEmpleado()->getSucursal()->id == $_SESSION["usr_suc"])) || isset($_SESSION["adm"])): ?>
+						<tr>
+							<td><?php echo $user->getEmpleado()->nombre; ?></td>
+							<td><?php echo $user->getEmpleado()->apellido; ?></td>
+							<td><?php echo $user->username; ?></td>
+							<td><?php echo $user->email; ?></td>
+							<td><?php echo $user->getEmpleado()->getSucursal()->nombre; ?></td>
+							<td class="estado" style="text-align:center;">
+								<a href="#" id="estado" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->activo; ?>" data-source="ajax/users/estados.php" title="Estado"></a>
+							</td>
+							<td class="tipo" style="text-align:center;">
+								<a href="#" id="tipo" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->tipo; ?>" data-source="ajax/users/tipos.php" title="Tipo"></a>
+							</td>
+						</tr>
 					<?php
-					$emp = "";
-					if ($user->idempleado != null) {
-						$emp = "&emp=$user->idempleado";
-					}?>
-					<td width=110px>
-						<div class="btn-group">
-							<button class="btn btn-default btn-sm">
-								Opci&oacute;n
-							</button>
-							<button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#" class="estado" id="<?php echo $user->id; ?>" data-toggle="confirmation-popout" data-popout="true" data-placement="left"
-										data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-home fa-fw"
-										data-btn-ok-class="btn-success btn-xs"
-										data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
-										data-btn-cancel-class="btn-danger btn-xs"
-										data-title="Está seguro?">
-										<?php if($user->activo):?>
-										Desactivar
-										<?php else: ?>
-										Activar
-										<?php endif; ?>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="admin" id="<?php echo $user->id; ?>" data-toggle="confirmation-popout" data-popout="true" data-placement="left"
-										data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-home fa-fw"
-										data-btn-ok-class="btn-success btn-xs"
-										data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
-										data-btn-cancel-class="btn-danger btn-xs"
-										data-title="Está seguro?">
-										<?php if($user->isAdmin):?>
-										Usuario Normal
-										<?php else: ?>
-										Administrador
-										<?php endif; ?>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</td>
-				</tr>
-				<?php endif; ?>
-				<?php
-					}
-				?>
-			</table>
+						endif;
+					endforeach;
+					?>
+				</table>
 			<?php
-			}else{
+			else:
 		?>
-			<div class="container">
-				<div class="alert alert-warning">
+				<div class="alert alert-info">
 					<strong>Vaya! </strong> No hay usuarios registrados en la sucursal seleccionada.
 				</div>
-			</div>
 		<?php
-			}
-		}
-	}
-	if (isset($_POST["users"])) {
-		$users = UserData::getAll();
-		?>
-		<table class="table table-bordered table-hover">
-			<thead>
-				<th>Nombres</th>
-				<th>Apellidos</th>
-				<th>Usuario</th>
-				<th>Correo Electr&oacute;nico</th>
-				<th>Sucursal</th>
-				<th style="text-align:center;">Activo</th>
-				<th style="text-align:center;">Admin</th>
-				<th></th>
-			</thead>
-			<?php
-			foreach($users as $user){
-			?>
-			<?php if((isset($_SESSION["usr_suc"]) && ($user->getEmpleado()->getSucursal()->id == $_SESSION["usr_suc"])) || isset($_SESSION["adm"])): ?>
-				<tr>
-					<td><?php echo $user->getEmpleado()->nombre; ?></td>
-					<td><?php echo $user->getEmpleado()->apellido; ?></td>
-					<td><?php echo $user->username; ?></td>
-					<td><?php echo $user->email; ?></td>
-					<td><?php echo $user->getEmpleado()->getSucursal()->nombre; ?></td>
-					<td style="text-align:center;">
-					<?php if($user->activo):?>
-						<i class="glyphicon glyphicon-ok"></i>
-					<?php endif; ?>
-					</td>
-					<td style="text-align:center;">
-					<?php if($user->isAdmin):?>
-						<i class="glyphicon glyphicon-ok"></i>
-					<?php endif; ?>
-					</td>
-					<td width=110px>
-						<div class="btn-group">
-							<button class="btn btn-default btn-sm">
-								Opci&oacute;n
-							</button>
-							<button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#" class="estado" id="<?php echo $user->id; ?>" data-toggle="confirmation-popout" data-popout="true" data-placement="left"
-										data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-home fa-fw"
-										data-btn-ok-class="btn-success btn-xs"
-										data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
-										data-btn-cancel-class="btn-danger btn-xs"
-										data-title="Está seguro?">
-										<?php if($user->activo):?>
-										Desactivar
-										<?php else: ?>
-										Activar
-										<?php endif; ?>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="admin" id="<?php echo $user->id; ?>" data-toggle="confirmation-popout" data-popout="true" data-placement="left"
-										data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-home fa-fw"
-										data-btn-ok-class="btn-success btn-xs"
-										data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
-										data-btn-cancel-class="btn-danger btn-xs"
-										data-title="Está seguro?">
-										<?php if($user->isAdmin):?>
-										Usuario Normal
-										<?php else: ?>
-										Administrador
-										<?php endif; ?>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</td>
-					<?php
-						$emp = "";
-						if ($user->idempleado != null) {
-							$emp = "&emp=$user->idempleado";
-						}?>
-				</tr>
-		<?php
+			endif;
 		endif;
-		}
-		?>
-		</table>
-		<?php
-	}
-	if (isset($_POST["idUsrS"]) && !empty(isset($_POST["idUsrS"]))) {
-		$usr = UserData::getById($_POST["idUsrS"]);
-		if ($usr->activo == 0) {
-			$usr->activo = 1;
-		}elseif ($usr->activo == 1) {
-			$usr->activo = 0;
-		}
-		$usr->updateS();
-	}
-	if (isset($_POST["idUsrT"]) && !empty(isset($_POST["idUsrT"]))) {
-		$usr = UserData::getById($_POST["idUsrT"]);
-		if ($usr->isAdmin == 0) {
-			$usr->isAdmin = 1;
-		}elseif ($usr->isAdmin == 1) {
-			$usr->isAdmin = 0;
-		}
-		$usr->updateT();
-	}
+	else:
 ?>
+		<div class="alert alert-info">
+			Seleccione una sucursal.
+		</div>
+<?php
+	endif;
+?>
+
+<script>
+	//Obtener los script necesarios para que funcione x-editable
+	$.when(
+		//Se supone que era para cargar varios scripts, pero al final solamente se necesita uno
+		$.getScript( "res/x-editable/bootstrap3-editable/js/bootstrap-editable.js" ),
+		$.Deferred(function( deferred ){    // esperar a que el DOM esté listo
+			$( deferred.resolve );
+		})
+	).done(function(){
+		console.log("Script cargados correctamente!");
+	}).fail(function(){
+		console.log("Algo salió mal");
+	});
+
+	$(function(){
+		$('.estado a').editable({
+			showbuttons: false,
+			url: 'ajax/users/procesos.php' 
+		});
+
+		$('.tipo a').editable({
+			showbuttons: false,
+			url: 'ajax/users/procesos.php'
+		});
+	});
+</script>

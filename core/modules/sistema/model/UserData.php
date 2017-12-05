@@ -10,21 +10,22 @@ class UserData {
 		$this->email = "";
 		$this->password = "";
 		$this->activo = "";
-		$this->isAdmin = "";
+		$this->tipo = "";
 		$this->fechacreacion = "NOW()";
 	}
 
 	public function getEmpleado(){ return EmpleadoData::getById($this->idempleado);}
+	public function getUserType(){ return UserTypeData::getById($this->tipo);}
 
 	public function add(){
-		$sql = "insert into usuario (nombre, apellido, usuario, email, clave, admin, fechaCreacion) ";
-		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",\"$this->isAdmin\",$this->fechacreacion)";
+		$sql = "insert into usuario (nombre, apellido, usuario, email, clave, tipo, fechaCreacion) ";
+		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",\"$this->tipo\",$this->fechacreacion)";
 		Executor::doit($sql);
 	}
 
 	public function addUE(){
-		$sql = "insert into usuario (idempleado, nombre, apellido, usuario, email, clave, admin, fechaCreacion) ";
-		$sql .= "value ($this->idempleado,\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",\"$this->isAdmin\",$this->fechacreacion)";
+		$sql = "insert into usuario (idempleado, nombre, apellido, usuario, email, clave, tipo, fechaCreacion) ";
+		$sql .= "value ($this->idempleado,\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",\"$this->tipo\",$this->fechacreacion)";
 		Executor::doit($sql);
 	}
 
@@ -39,7 +40,7 @@ class UserData {
 	}
 
 	public function update(){
-		$sql = "update ".self::$tablename." set nombre=\"$this->name\", apellido=\"$this->lastname\", usuario=\"$this->username\", email=\"$this->email\", activo=\"$this->activo\", admin=\"$this->isAdmin\" where idUsuario=$this->id";
+		$sql = "update ".self::$tablename." set nombre=\"$this->name\", apellido=\"$this->lastname\", usuario=\"$this->username\", email=\"$this->email\", activo=\"$this->activo\", tipo=\"$this->tipo\" where idUsuario=$this->id";
 		Executor::doit($sql);
 	}
 
@@ -49,23 +50,39 @@ class UserData {
 	}
 
 	public function updateT(){
-		$sql = "update ".self::$tablename." set admin = $this->isAdmin where idUsuario=$this->id";
-		Executor::doit($sql);
-	}
-
-	public function updateG(){
-		$sql = "update ".self::$tablename." set usuario=\"$this->user\", email=\"$this->email\" where idUsuario=$this->id";
+		$sql = "update ".self::$tablename." set tipo = $this->tipo where idUsuario=$this->id";
 		Executor::doit($sql);
 	}
 
 	public function updateUE(){
-		$sql = "update ".self::$tablename." set usuario=\"$this->username\", email=\"$this->email\", activo=\"$this->activo\", admin=\"$this->isAdmin\" where idUsuario=$this->id";
+		$sql = "update ".self::$tablename." set usuario=\"$this->username\", email=\"$this->email\", activo=\"$this->activo\", tipo=\"$this->tipo\" where idUsuario=$this->id";
 		Executor::doit($sql);
 	}
 
 	public function update_passwd(){
 		$sql = "update ".self::$tablename." set clave=\"$this->password\" where idUsuario=$this->id";
 		Executor::doit($sql);
+	}
+
+	public static function login($user,$pass){
+		$sql = "select * from usuario where (email= \"".$user."\" or usuario = \"".$user."\") and clave= \"".$pass."\"";
+		$query = Executor::doit($sql);
+		$found = null;
+		$data = new UserData();
+		while($r = $query[0]->fetch_array()){
+			$data->id = $r['idUsuario'];
+			$data->idempleado = $r['idEmpleado'];
+			$data->name = $r['nombre'];
+			$data->lastname = $r['apellido'];
+			$data->username = $r['usuario'];
+			$data->email = $r['email'];
+			$data->password = $r['clave'];
+			$data->activo = $r['activo'];
+			$data->tipo = $r['tipo'];
+			$found = $data;
+			break;
+		}
+		return $found;
 	}
 
 	public static function getById($id){
@@ -82,7 +99,7 @@ class UserData {
 			$data->email = $r['email'];
 			$data->password = $r['clave'];
 			$data->activo = $r['activo'];
-			$data->isAdmin = $r['admin'];
+			$data->tipo = $r['tipo'];
 			$found = $data;
 			break;
 		}
@@ -122,7 +139,7 @@ class UserData {
 			$array[$cnt]->email = $r['email'];
 			$array[$cnt]->password = $r['clave'];
 			$array[$cnt]->activo = $r['activo'];
-			$array[$cnt]->isAdmin = $r['admin'];
+			$array[$cnt]->tipo = $r['tipo'];
 			$cnt++;
 		}
 		return $array;
@@ -143,13 +160,16 @@ class UserData {
 			$array[$cnt]->username = $r['usuario'];
 			$array[$cnt]->password = $r['clave'];
 			$array[$cnt]->activo = $r['activo'];
-			$array[$cnt]->isAdmin = $r['admin'];
+			$array[$cnt]->tipo = $r['tipo'];
 			$cnt++;
 		}
 		return $array;
 	}
 
 	public static function getLike($q){
+		$base = new Database();
+		$cnx = $base->connect();
+		$p = $cnx->real_escape_string($q);
 		$sql = "select * from ".self::$tablename." where nombre like '%$q%'";
 		$query = Executor::doit($sql);
 		$array = array();
@@ -163,7 +183,7 @@ class UserData {
 			$array[$cnt]->email = $r['email'];
 			$array[$cnt]->username = $r['usuario'];
 			$array[$cnt]->activo = $r['activo'];
-			$array[$cnt]->isAdmin = $r['admin'];
+			$array[$cnt]->tipo = $r['tipo'];
 			$cnt++;
 		}
 		return $array;

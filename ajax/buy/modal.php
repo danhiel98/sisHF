@@ -5,7 +5,6 @@
   include ("../../core/modules/sistema/model/MateriaPrimaData.php");
   $proveedores = ProviderData::getAll();
   $found = false;
-  $proveedores = ProviderData::getAll();
 ?>
 <div class="modal fade" id="resumen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
@@ -49,9 +48,10 @@
               </div>
             </div>
           </div>
-          <table class="table table-bordered">
+
+          <table class="table table-bordered table-responsive">
             <thead>
-              <th>C&oacute;digo</th>
+              <th style="width: 50px;">C&oacute;digo</th>
         			<th>Producto</th>
         			<th>Cantidad</th>
         			<th>Precio Unitario</th>
@@ -62,7 +62,7 @@
         			$total += $p["precio"]*$p["cantidad"];
         		?>
         		<tr>
-        			<td><?php echo $product->id; ?></td>
+        			<td style="width: 50px; text-align: center;"><?php echo $product->id; ?></td>
         			<td><?php echo $product->nombre; ?></td>
         			<td><?php echo $p["cantidad"]; ?></td>
         		  <td>$<?php echo number_format($p["precio"], 2); ?></td>
@@ -70,6 +70,7 @@
         		</tr>
         		<?php endforeach; ?>
           </table>
+          
           <h2>Total a pagar: <strong>$ <?php echo number_format($total,2,".",","); ?></strong></h2>
         <?php else: ?>
           <p class="alert alert-warning">No ha agregado productos.</p>
