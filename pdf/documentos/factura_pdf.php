@@ -2,7 +2,8 @@
 
 	@session_start();
 	include ("../../core/autoload.php");
-	include ("../../core/modules/sistema/model/FacturaData.php");
+    include ("../../core/modules/sistema/model/FacturaData.php");
+    include ("../../core/modules/sistema/model/ComprobanteData.php");
 	include ("../../core/modules/sistema/model/ProductData.php");
 	include ("../../core/modules/sistema/model/ClientData.php");
 	include ("../../core/modules/sistema/model/UserData.php");

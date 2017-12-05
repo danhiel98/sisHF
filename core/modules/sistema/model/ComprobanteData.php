@@ -21,7 +21,7 @@ class ComprobanteData {
 		$sql = "select * from ".self::$tablename." where idTipo = $id";
 		$query = Executor::doit($sql);
 			$found = null;
-			$data = new ReabastecimientoData();
+			$data = new ComprobanteData();
 			while($r = $query[0]->fetch_array()){
 				$data->id = $r['idTipo'];
 				$data->nombre = $r['nombre'];

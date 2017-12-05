@@ -33,7 +33,7 @@
 ?>
 <table class="table table-bordered">
   <tr>
-    <td>No. <?php echo $sell->tipo; ?></td>
+    <td>No. <?php echo $sell->getComprobante()->nombre; ?></td>
     <td><?php echo $sell->numerofactura; ?></td>
   </tr>
   <tr>

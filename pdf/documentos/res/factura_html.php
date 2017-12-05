@@ -64,16 +64,8 @@
 								Email: hierroforjado@gmail.com
 								
 							</td>
-							<?php
-								$tipo = "";
-								if ($sell->tipo == "CCF"){
-									$tipo = "Comprobante de CF";
-								}else{
-									$tipo = $sell->tipo;
-								}
-							?>
 							<td style="width: 25%;text-align:right">
-							<?php echo strtoupper($tipo) ?> Nº <?php echo $sell->numerofactura; ?>
+							<?php echo strtoupper($sell->getComprobante()->nombre); ?> Nº <?php echo $sell->numerofactura; ?>
 							</td>
 							
 						</tr>
