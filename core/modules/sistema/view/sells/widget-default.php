@@ -13,10 +13,6 @@
 		<h1><i class='glyphicon glyphicon-shopping-cart'></i> Lista de Ventas</h1>
 		<div class="clearfix"></div>
 
-    <div id="btnAdd">
-    </div>
-   
-    <div>
         <label for="inicio" class="col-lg-2 control-label">Fecha De Inicio</label><div class='col-md-2'>
             <div class="form-group">
                 <div id="dateStart" class='input-group date'>

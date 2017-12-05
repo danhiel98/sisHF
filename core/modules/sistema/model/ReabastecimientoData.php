@@ -5,20 +5,19 @@
 		public function ReabastecimientoData(){
 			$this->idusuario = "";
 			$this->idproveedor = "";
-			$this->comprobante = "";
-			$this->tipo = "";
-			$this->comprobante = "";
+			$this->tipoComprobante = ""; #Tipo de comprobante
+			$this->comprobante = ""; #No. de comprobante
 			$this->total = 0;
 			$this->fecha = "NOW()";
 		}
 
-		#public function getOperationType(){return OperationData::getById($this->idoperacion);}
+		public function getComprobante(){return ComprobanteData::getById($this->tipoComprobante);}
 		public function getProvider(){ return ProviderData::getById($this->idproveedor);}
 		public function getUser(){return UserData::getById($this->idusuario);}
 
 		public function add(){
-			$sql = "insert into ".self::$tablename." (idUsuario, idProveedor, tipo, numComprobante, fecha, total) ";
-			$sql .= "value ($this->idusuario, $this->idproveedor, $this->tipo, $this->comprobante, $this->fecha, $this->total)";
+			$sql = "insert into ".self::$tablename." (idUsuario, idProveedor, tipoComprobante, numComprobante, fecha, total) ";
+			$sql .= "value ($this->idusuario, $this->idproveedor, $this->tipoComprobante, $this->comprobante, $this->fecha, $this->total)";
 			return Executor::doit($sql);
 		}
 
@@ -36,7 +35,7 @@
 			$sql = "update ".self::$tablename." set estado = 0 where idFacturaMateriaPrima = $this->id";
 			Executor::doit($sql);
 		}
-
+		
 		public static function getById($id){
 			$sql = "select * from ".self::$tablename." where idFacturaMateriaPrima = $id and estado = 1";
 			$query = Executor::doit($sql);
@@ -46,7 +45,7 @@
 				$data->id = $r['idFacturaMateriaPrima'];
 				$data->idproveedor = $r['idProveedor'];
 				$data->idusuario = $r['idUsuario'];
-				$data->tipo = $r['tipo'];
+				$data->tipoComprobante = $r['tipoComprobante'];
 				$data->comprobante = $r['numComprobante'];
 				$data->fecha = $r['fecha'];
 				$data->total = $r['total'];
@@ -66,7 +65,7 @@
 				$array[$cnt]->id = $r['idFacturaMateriaPrima'];
 				$array[$cnt]->idproveedor = $r['idProveedor'];
 				$array[$cnt]->idUsuario = $r['idUsuario'];
-				$array[$cnt]->tipo = $r['tipo'];
+				$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
 				$array[$cnt]->comprobante = $r['numComprobante'];
 				$array[$cnt]->fecha = $r['fecha'];
 				$array[$cnt]->total = $r['total'];
@@ -85,7 +84,7 @@
 				$array[$cnt]->id = $r['idFacturaMateriaPrima'];
 				$array[$cnt]->idproveedor = $r['idProveedor'];
 				$array[$cnt]->idUsuario = $r['idUsuario'];
-				$array[$cnt]->tipo = $r['tipo'];
+				$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
 				$array[$cnt]->comprobante = $r['numComprobante'];
 				$array[$cnt]->fecha = $r['fecha'];
 				$array[$cnt]->total = $r['total'];
@@ -93,6 +92,7 @@
 			}
 			return $array;
 		}
+
 	}
 
 ?>

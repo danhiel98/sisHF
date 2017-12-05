@@ -41,13 +41,19 @@
 		</section>
 	</div>
 	<?php else: ?>
-		<div class="alert alert-warning">No se pueden registrar la producci&oacute;n.</div>
-		<div class="alert alert-info">
-			Para registrar una producci&oacute;n debe haber <a href="index.php?view=inventarymp">materia prima.</a>
+		<div class="col-md-12">
+			<div class="clearfix"></div>
+			<br>
+			<div class="alert alert-warning">No se pueden registrar la producci&oacute;n.</div>
+			<div class="alert alert-info">
+				Para registrar una producci&oacute;n debe haber <a href="index.php?view=inventarymp">materia prima.</a>
+			</div>
 		</div>
 	<?php endif; ?>
 <?php else: ?>
 	<div class="col-md-12">
+		<div class="clearfix"></div>
+		<br>
 		<div class="alert alert-warning">No se puede registrar la producci&oacute;n.</div>
 		<div class="alert alert-info">
 			Para registrar una producción debe tener productos registrados en el sistema.

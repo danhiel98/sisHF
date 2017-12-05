@@ -19,7 +19,7 @@
 		foreach ($products as $prd){
 			$prod = ProductoSucursalData::getBySucursalProducto($_SESSION["usr_suc"],$prd->idproducto);
 			$resta = $prod->cantidad - $prd->cantidad; #Cantidad de productos existentes - cantidad de productos pedidos
-			if ($resta <= 0){
+			if ($resta < 0){
 				$error = true; #Ha encontrado al menos un error
 				array_push($errorProd,$prd); #Agregar datos de los productos insuficiente encontrados
 			}
@@ -31,7 +31,7 @@
 				$prod->cantidad -= $prd->cantidad;
 				$prod->updateEx();
 			}
-			$pedido->finalizar();
+			$pedido->finalizar($pedido->id);
 		}else{
 			?>
 			<div class="list-group">

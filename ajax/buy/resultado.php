@@ -73,7 +73,7 @@
 					<?php if (!$found): ?>
 						<button disabled type="button" class="btn btn-success btn-sm btnEnviar" data-id="<?php echo $mp->id; ?>"><i class="fa fa-cart-plus"></i></button>
 					<?php else: ?>
-						<button type="button" class="btn btn-danger btn-sm btnQuitar" data-id="<?php echo $mp->id; ?>"><i class="fa fa-trash"></i></button>
+						<button type="button" class="btn btn-danger btn-sm btnQuitar" data-id="<?php echo $mp->id; ?>"><i class="fa fa-times"></i></button>
 					<?php endif; ?>
 				</td>
 			</tr>

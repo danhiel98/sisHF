@@ -12,21 +12,11 @@
 			}
 			$fact->idusuario = Session::getUID();
 			$fact->fecha = "NOW()";
-			if (isset($_POST["tipo"])) {
-				switch ($_POST["tipo"]) {
-					case 1:
-						$fact->tipo = "Factura";
-						break;
-					case 2:
-						$fact->tipo = "CCF";
-					default:
-						break;
-				}
-				$fact->numerofactura = $_POST["numero"];
-				$fact->tipo = $_POST["tipo"];
-			}
+			$fact->tipoComprobante = $_POST["tipo"];
+			$fact->numerofactura = $_POST["numero"];
+			
 			$r = $fact->add();
-
+			
 			foreach($cart as $c){
 				$venta = new FacturaData();
 				$venta->idfactura = $r[1];

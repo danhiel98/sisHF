@@ -24,6 +24,12 @@
 			</select>
 		</div>
 	</div>
+	<div class="form-group">
+		<label for="dui" class="col-sm-4 control-label">DUI</label>
+		<div class="col-sm-8">
+			<input name="dui" id="dui" type="text" class="form-control" disabled>
+		</div>
+	</div>
 	<div class="form-group control-group">
 		<label for="tipo" class="col-sm-4 control-label">Comprobante</label>
 		<div class="controls col-sm-8">
@@ -49,7 +55,7 @@
 	<?php if ($found): ?>
 		<script type="text/javascript">
 			$(function(){
-				var html = '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button><a href="index.php?view=sell&delAll" class="btn btn-danger">Cancelar</a><button name="addTraspaso" type="submit" class="btn btn-md btn-primary" title="Registrar Traspaso" ><span class="glyphicon glyphicon-floppy-saved"></span> Guardar</button>';
+				var html = '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button><a href="index.php?view=sell&delAll" class="btn btn-danger">Cancelar</a><button type="submit" class="btn btn-md btn-primary" title="Guardar Venta" ><span class="glyphicon glyphicon-floppy-saved"></span> Guardar</button>';
 				$("#modal-footer").html(html);
 			});
 		</script>
@@ -73,6 +79,19 @@
 	$("#cliente").on("load change",function(){
 		var idCliente = $(this).val();
 		obtenerComprobante(idCliente);
+		$.ajax({
+			url: "ajax/sell/dui.php",
+			type: "POST",
+			data: {idCli: idCliente},
+			success: function (data) {
+				if (data){
+					var oDato = JSON.parse(data);
+					$('#dui').val(oDato.dui);
+				}else{
+					$('#dui').val("");					
+				}
+			}
+		});
 	});
 	$(function(){
 		obtenerComprobante();

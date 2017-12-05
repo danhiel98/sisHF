@@ -40,9 +40,9 @@
 					<td style="width:80px; text-align:center;">$ <?php echo number_format($prod->precioventa,2,".",","); ?></td>
 					<td style="width:70px; text-align:center;"><?php echo $c["cantidad"]; ?></td>
 					<td style="width:95px; text-align:center;">$ <?php echo number_format($totalx,2,".",","); ?></td>
-					<td style="width:40px; text-align:center;"><input type="checkbox" disabled name="" value="" <?php if($c["mantenimiento"] == 1){echo "checked";} ?>></td>
+					<td style="width:40px; text-align:center;"><span class="fa fa-<?php if($c['mantenimiento'] == 1){echo "check";}else{echo "times";} ?>"></span></td>
 					<td style="width:30px; text-align:center;">
-						<a data-type="<?php if($prd){echo 'prod';}elseif($srv){echo 'serv';} ?>" id="<?php if($prd){echo $c['product_id'];}elseif($srv){echo $c['service_id'];} ?>" class="btn btn-danger btn-xs btn-del"><i class="fa fa-trash"></i></a>
+						<a data-type="<?php if($prd){echo 'prod';}elseif($srv){echo 'serv';} ?>" id="<?php if($prd){echo $c['product_id'];}elseif($srv){echo $c['service_id'];} ?>" class="btn btn-danger btn-xs btn-del"><i class="fa fa-times"></i></a>
 					</td>
 				</tr>
 			<?php endforeach; ?>
@@ -60,18 +60,30 @@
 						$.ajax({
 							url: "ajax/sell/quitar.php",
 							type: "POST",
-							data: {idProd : this.id}
+							data: {idProd : this.id},
+							success: function(){
+								console.log("Todo bien prod");
+							},
+							fail: function(){
+								alert("Todo bien prod X");
+							}
 						});
 						resumen();
-			    });
+			    	});
 					$("[data-type=serv].btn-del").on("click",function(){
 						$.ajax({
 							url: "ajax/sell/quitar.php",
 							type: "POST",
-							data: {idServ : this.id}
+							data: {idServ : this.id},
+							success: function(){
+								console.log("Todo bien serv")
+							},
+							fail: function(){
+								alert("Todo bien serv X");
+							}
 						});
 						resumen();
-			    });
+					});
 				});
 			</script>
 		<?php }else{ ?>

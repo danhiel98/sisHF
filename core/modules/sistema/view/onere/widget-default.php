@@ -23,7 +23,7 @@
     </tr>
     <tr>
     	<th style="width:150px;">Tipo Comprobante</th>
-    	<td><?php echo $reab->tipo;?></td>
+    	<td><?php echo $reab->getComprobante()->nombre;?></td>
     </tr>
     <tr>
     	<th style="width:150px;">No. Comprobante</th>

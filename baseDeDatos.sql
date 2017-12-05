@@ -402,6 +402,16 @@ insert into tipoUsuario values
 (null,"Vendedor",1),
 (null,"Producción",1);
 
+CREATE TABLE tipoComprobante(
+  idTipo tinyint PRIMARY KEY AUTO_INCREMENT,
+  nombre varchar(30) not null
+);
+
+insert into tipoComprobante values
+(null,"Factura"),
+(null,"Comprobante de Crédito Fiscal"),
+(null,"Ticket");
+
 /*OK*/
 CREATE TABLE usuario(
   idUsuario smallint PRIMARY KEY AUTO_INCREMENT,
@@ -491,7 +501,7 @@ CREATE TABLE facturaMateriaPrima(
   idFacturaMateriaPrima mediumint PRIMARY KEY AUTO_INCREMENT,
   idUsuario smallint not null,
   idProveedor smallint not null,
-  tipo enum("Factura","CCF") default "Factura" not null,
+  tipoComprobante tinyint not null, /* Factura, CCF, Ticket */
   tipoPago tinyint not null default 1,
   numComprobante varchar(32) not null,
   fecha datetime not null default current_timestamp,
@@ -499,6 +509,7 @@ CREATE TABLE facturaMateriaPrima(
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idProveedor) references proveedor(idProveedor),
+  foreign key(tipoComprobante) references tipoComprobante(idTipo),
   foreign key(tipoPago) references tipoPago(idTipoPago)
   /*foreign key(idCierreCaja) references cierreCaja(idCierreCaja)*/
 );
@@ -534,61 +545,12 @@ CREATE TABLE categoria(
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario)
 );
-insert into categoria values(null,1,"Cerrajerí­a Ornamental",NOW(),1);
-insert into categoria values(null,1,"Mueblerí­a",NOW(),1);
-insert into categoria values(null,1,"Artesaní­a",NOW(),1);
-insert into categoria values(null,1,"Industrial",NOW(),1);
+insert into categoria values
+(null,1,"Cerrajerí­a Ornamental",NOW(),1),
+(null,1,"Artesaní­a",NOW(),1),
+(null,1,"Mueblerí­a",NOW(),1),
+(null,1,"Industrial",NOW(),1);
 
-/*
-CREATE TABLE costeo(
-  idCosteo mediumint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  nombreProducto varchar(50) not null,
-  fechaCosteo date not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario)
-);
-
-CREATE TABLE materialCosteo(
-  idMaterialCosteo int PRIMARY KEY AUTO_INCREMENT,
-  idCosteo mediumint not null,
-  idMateriaPrima int not null,
-  cantidad decimal(9,2) not null,
-  pagar decimal(9,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idCosteo) references costeo(idCosteo),
-  foreign key(idMateriaPrima) references materiaPrima(idMateriaPrima)
-);
-
-CREATE TABLE manoDeObraCosteo(
-  idManoDeObraCosteo int PRIMARY KEY AUTO_INCREMENT,
-  idCosteo mediumint not null,
-  descripcion varchar(100) not null,
-  precio double(9,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idCosteo) references costeo(idCosteo)
-);
-
-CREATE TABLE comisionesCosteo(
-  idComisionesCosteo int PRIMARY KEY AUTO_INCREMENT,
-  idCosteo mediumint not null,
-  descripcion varchar(50) not null,
-  porcentaje double(2,2) not null,
-  precio double(2,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idCosteo) references costeo(idCosteo)
-);
-
-CREATE TABLE impuestosCosteo(
-  idImpuestosCosteo int PRIMARY KEY AUTO_INCREMENT,
-  idCosteo mediumint not null,
-  descripcion varchar(50) not null,
-  porcentaje double(2,2) not null,
-  precio double(2,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idCosteo) references costeo(idCosteo)
-);
-*/
 
 CREATE TABLE servicio(
   idServicio smallint PRIMARY KEY AUTO_INCREMENT,
@@ -760,7 +722,7 @@ CREATE TABLE facturaVenta(
   idCierreCaja tinyint,
   numeroFactura varchar(8) not null,
   fecha datetime default current_timestamp not null,
-  tipo enum("Factura","CCF") default "Factura" not null,
+  tipoComprobante tinyint not null,
   tipoPago tinyint not null default 1,
   numeroComprobante varchar(32),
   estado boolean default 1 not null,
@@ -768,6 +730,7 @@ CREATE TABLE facturaVenta(
   foreign key(idSucursal) references sucursal(idSucursal),
   foreign key(idCliente) references cliente(idCliente),
   foreign key(idCierreCaja) references cierreCaja(idCierreCaja),
+  foreign key(tipoComprobante) references tipoComprobante(idTipo),
   foreign key(tipoPago) references tipoPago(idTipoPago)
 );
 
@@ -850,7 +813,6 @@ CREATE TABLE salidaCajaChica(
   foreign key(idCajaChica) references cajaChica(idCajaChica),
   foreign key(idEmpleado) references empleado(idEmpleado)
 );
-
 
 CREATE TABLE configuraciones(
   idConfig smallint PRIMARY KEY AUTO_INCREMENT,

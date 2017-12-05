@@ -7,7 +7,7 @@ class FacturaData {
 		$this->idcliente = "";
 		$this->idusuario = "";
 		$this->idsucursal = "";
-		$this->tipo = "Factura";
+		$this->tipoComprobante = "";
 		$this->idcierrecaja = "";
 		#$this->fecha = "NOW()";
 
@@ -19,6 +19,7 @@ class FacturaData {
 		$this->total = "";
 	}
 
+	public function getComprobante(){return ComprobanteData::getById($this->tipoComprobante);}
 	public function getFact(){ return FacturaData::getById($this->idfactura);}
 	public function getClient(){ return ClientData::getById($this->idcliente);}
 	public function getUser(){ return UserData::getById($this->idusuario);}
@@ -26,8 +27,8 @@ class FacturaData {
 	public function getService(){ return ServiceData::getById($this->idservicio);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (numeroFactura, idCliente, idUsuario, idSucursal, tipo)";
-		$sql .= "value (\"$this->numerofactura\",$this->idcliente,$this->idusuario,$this->idsucursal,\"$this->tipo\")";
+		$sql = "insert into ".self::$tablename." (numeroFactura, idCliente, idUsuario, idSucursal, tipoComprobante)";
+		$sql .= "value (\"$this->numerofactura\",$this->idcliente,$this->idusuario,$this->idsucursal,\"$this->tipoComprobante\")";
 		return Executor::doit($sql);
 	}
 
@@ -68,7 +69,7 @@ class FacturaData {
 			$data->numerofactura = $r['numeroFactura'];
 			$data->idusuario = $r['idUsuario'];
 			$data->idcliente = $r['idCliente'];
-			$data->tipo = $r['tipo'];
+			$data->tipoComprobante = $r['tipoComprobante'];
 			$data->fecha = $r['fecha'];
 			$found = $data;
 			break;
@@ -121,7 +122,7 @@ class FacturaData {
 			$array[$cnt]->numerofactura = $r['numeroFactura'];
 			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->idcliente = $r['idCliente'];
-			$array[$cnt]->tipo = $r['tipo'];
+			$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
 			$array[$cnt]->fecha = $r['fecha'];
 			$cnt++;
 		}
@@ -139,7 +140,7 @@ class FacturaData {
 			$array[$cnt]->numerofactura = $r['numeroFactura'];
 			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->idcliente = $r['idCliente'];
-			$array[$cnt]->tipo = $r['tipo'];
+			$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
 			$array[$cnt]->fecha = $r['fecha'];
 			$cnt++;
 		}
@@ -157,7 +158,7 @@ class FacturaData {
 			$array[$cnt]->numerofactura = $r['numeroFactura'];
 			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->idcliente = $r['idCliente'];
-			$array[$cnt]->tipo = $r['tipo'];
+			$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
 			$array[$cnt]->fecha = $r['fecha'];
 			$cnt++;
 		}
@@ -175,7 +176,7 @@ class FacturaData {
 			$array[$cnt]->numerofactura = $r['numeroFactura'];
 			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->idcliente = $r['idCliente'];
-			$array[$cnt]->tipo = $r['tipo'];
+			$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
 			$array[$cnt]->fecha = $r['fecha'];
 			$cnt++;
 		}
@@ -193,45 +194,12 @@ class FacturaData {
 			$array[$cnt]->numerofactura = $r['numeroFactura'];
 			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->idcliente = $r['idCliente'];
-			$array[$cnt]->tipo = $r['tipo'];
+			$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
 			$array[$cnt]->fecha = $r['fecha'];
 			$cnt++;
 		}
 		return $array;
 	}
-
-	public static function getRes(){
-		$sql = "select * from ".self::$tablename." where operation_type_id=1 order by created_at desc";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new SellData();
-			$array[$cnt]->id = $r['id'];
-		$array[$cnt]->person_id = $r['person_id'];
-			$array[$cnt]->user_id = $r['user_id'];
-				$array[$cnt]->created_at = $r['created_at'];
-			$cnt++;
-		}
-		return $array;
-	}
-
-	public static function getAllByPage($start_from,$limit){
-		$sql = "select * from ".self::$tablename." where id<=$start_from limit $limit";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new SellData();
-			$array[$cnt]->id = $r['id'];
-			$array[$cnt]->person_id = $r['person_id'];
-			$array[$cnt]->user_id = $r['user_id'];
-			$array[$cnt]->created_at = $r['created_at'];
-			$cnt++;
-		}
-		return $array;
-	}
-
 }
 
 ?>
