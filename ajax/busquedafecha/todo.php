@@ -5,7 +5,8 @@
 	include ("../../core/modules/sistema/model/UserData.php");
 	include ("../../core/modules/sistema/model/ClientData.php");
   include ("../../core/modules/sistema/model/ProductData.php");
-	include ("../../core/modules/sistema/model/FacturaData.php");
+  include ("../../core/modules/sistema/model/FacturaData.php");
+  include ("../../core/modules/sistema/model/ComprobanteData.php");
 
   $fact = FacturaData::getFacturas();
 
@@ -45,7 +46,7 @@
                   <td><?php echo $fa->getClient()->name." ".$fa->getClient()->lastname; ?></td>
                   <td><?php echo $fa->getUser()->name." ".$fa->getUser()->lastname; ?></td>
                   <td><?php echo $fa->fecha; ?></td>
-                  <td><?php echo $fa->tipo; ?></td>
+                  <td><?php echo $fa->getComprobante()->nombre; ?></td>
                   <td>
                     <?php
                       $total=0;
