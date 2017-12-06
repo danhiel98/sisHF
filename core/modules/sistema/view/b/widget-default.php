@@ -37,7 +37,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<th></th>
-				<th>Tipo Documento</th>
+				<th>Tipo Comprobante</th>
 				<th>No.</th>
 				<th>Cliente</th>
 				<th>Total</th>
@@ -52,7 +52,7 @@
 					$prodsx = FacturaData::getAllSellsByFactId($sell->id); #Productos vendidos en la factura
 					$servsx = FacturaData::getAllServicesByFactId($sell->id); #Servicios vendidos en la factura
 				?>
-				<td><?php echo $sell->tipo; ?></td>
+				<td><?php echo $sell->getComprobante()->nombre; ?></td>
 				<td><?php echo $sell->numerofactura; ?></td>
 				<td>
 					<?php if($sell->idcliente != ""){echo $sell->getClient()->name." ".$sell->getClient()->lastname;}else{echo "----";} ?>

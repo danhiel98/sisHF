@@ -115,7 +115,7 @@ foreach ($fact as $fa) {
               ->setCellValue("B$i", $fa->getClient()->name." ".$fa->getClient()->lastname)
               ->setCellValue("C$i", $fa->getUser()->name." ".$fa->getUser()->lastname)
               ->setCellValue("D$i", $fa->fecha)
-              ->setCellValue("E$i", $fa->tipo)
+              ->setCellValue("E$i", $fa->getComprobante()->nombre)
               ->setCellValue("F$i", "$ ".$total);
  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':F'.$i)->applyFromArray($borders);
   $i++;

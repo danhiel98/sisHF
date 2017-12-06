@@ -25,7 +25,7 @@
 				<th>No.</th>
 				<th>Cliente</th>
 				<th>Fecha</th>
-				<th>Tipo Documento</th>
+				<th>Tipo Comprobante</th>
 				<th>Total</th>
 				<th></th>
 			</thead>
@@ -45,7 +45,7 @@
 					<?php if($sell->idcliente != ""){echo $sell->getClient()->name." ".$sell->getClient()->lastname;}else{echo "----";} ?>
 				</td>
 				<td><?php echo $sell->fecha; ?></td>
-				<td><?php echo $sell->tipo; ?></td>
+				<td><?php echo $sell->getComprobante()->nombre; ?></td>
 				<td>
 					<?php
 						$total=0;

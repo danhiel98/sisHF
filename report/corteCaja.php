@@ -93,7 +93,7 @@ if (count($facturas)>0) {
         $total += $s->cantidad * $prod->precioventa;
       }
       $objPHPExcel->setActiveSheetIndex(0)
-                  ->setCellValue("A$i", $fact->tipo)
+                  ->setCellValue("A$i", $fact->getComprobante()->nombre)
                   ->setCellValue("B$i", $fact->numerofactura)
                   ->setCellValue("C$i", $fact->getClient()->name." ".$fact->getClient()->lastname)
                   ->setCellValue("D$i", "$ ".$total);
