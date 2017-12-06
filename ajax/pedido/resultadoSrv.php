@@ -44,18 +44,20 @@
 		</table>
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$("form.enviar").submit(function(){
-					$.ajax({
-						url: $(this).attr("action"),
-						type: "POST",
-						data: $(this).serialize(),
-						success: function(){
-							datosModal();
-							datosResumen();
-							obtenerServ();
-						}
-					});
-					return false;
+				$("form.enviar").submit(function(event){
+					if($(".input-sm",this).attr("aria-invalid") != "true"){
+						$.ajax({
+							url: $(this).attr("action"),
+							type: "POST",
+							data: $(this).serialize(),
+							success: function(){
+								datosModal();
+								datosResumen();
+								obtenerServ();
+							}
+						});
+					}
+					event.preventDefault();
 				});
 			});
 		</script>

@@ -1,4 +1,5 @@
 <?php
+  
   if (isset($_GET["view"])) {
     $vista = $_GET["view"];
     switch ($vista) {
@@ -76,6 +77,7 @@
           if(Session::getUID()!="" && !isset($_GET["about"])):
             $u = UserData::getById(Session::getUID());
           ?>
+          
           <ul class="nav navbar-nav side-nav">
             <li><a href="index.php?view=home"><i class="fa fa-home"></i> Inicio</a></li>
             <?php if ($u->tipo == 1 || $u->tipo == 2): ?>
@@ -130,16 +132,19 @@
             if(Session::getUID()!=""){
               $u = UserData::getById(Session::getUID());
               if ($u->idempleado == null || $u->idempleado == ""){
-                $user = $u->name." ".$u->lastname;
+                $nombreUsuario = $u->name." ".$u->lastname;
               }else{
-                $user = $u->getEmpleado()->nombre." ".$u->getEmpleado()->apellido;
+                $nombre = preg_split("[ ]", $u->getEmpleado()->nombre);
+                $apellido = preg_split("[ ]",$u->getEmpleado()->apellido);
+                $nombreUsuario = $nombre[0]." ".$apellido[0];
               }
             }
           ?>
-          <ul class="nav navbar-nav navbar-right navbar-user">
-            <li class="dropdown user-dropdown">
+          <ul class="nav navbar-nav navbar-right ">
+            <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <?php echo $user; ?> <b class="caret"></b>
+              <i class="fa fa-user fa-fw"></i>
+              <?php echo $nombreUsuario; ?> <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
                 <li><a href="index.php?view=configuration">Configuraci&oacute;n</a></li>
@@ -147,6 +152,9 @@
               </ul>
             </li>
           </ul>
+          
+          <?php include "alertas.php"; ?>
+          
           <?php endif; ?>
         </div><!-- /.navbar-collapse -->
       </nav>

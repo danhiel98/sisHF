@@ -6,7 +6,6 @@ class CajaChicaData {
 		$this->cantidad = "";
 		$this->entradas = "";
 		$this->salidas = "";
-		#$this->idencargado = "";
 		#Para ingresos y salidas:
 		$this->idusuario = "";
 		$this->cantidad = "";
@@ -15,16 +14,8 @@ class CajaChicaData {
 		$this->descripcion = "";
 	}
 
-	#public function getEncargado(){ return EmpleadoData::getById($this->idencargado);}
 	public function getUsuario(){ return UserData::getById($this->idusuario);}
 	public function getEmpleado(){ return EmpleadoData::getById($this->idempleado);}
-
-	/*
-	public function actualizarEncargado(){
-		$sql = "update ".self::$tablename." set encargado = \"$this->idencargado\"";
-		Executor::doit($sql);
-	}
-	*/
 	
 	public function addIngreso(){
 		$sql = "insert into ingresoCajaChica (idUsuario, cantidad, fecha) ";
@@ -77,22 +68,6 @@ class CajaChicaData {
 		return $array;
 	}
 
-	public static function getAllR(){
-		$sql = "select * from ".self::$tablename;
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new CajaChicaData();
-			$array[$cnt]->id = $r['idCajaChica'];
-			$array[$cnt]->cantidad = $r['cantidad'];
-			$array[$cnt]->entradas = $r['entradas'];
-			$array[$cnt]->salidas = $r['salidas'];
-			$cnt++;
-		}
-		return $array;
-	}
-
 	public static function getAll(){
 		$sql = "select * from ".self::$tablename;
 		$query = Executor::doit($sql);
@@ -107,20 +82,6 @@ class CajaChicaData {
 			break;
 		}
 		return $found;
-	}
-
-	public static function getLike($q){
-		$sql = "select * from ".self::$tablename." where name like '%$q%'";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new BoxData();
-			$array[$cnt]->id = $r['id'];
-			$array[$cnt]->created_at = $r['created_at'];
-			$cnt++;
-		}
-		return $array;
 	}
 
 

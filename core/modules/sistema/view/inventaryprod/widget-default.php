@@ -62,27 +62,30 @@
 			<th>No.</th>
 			<th>Nombre</th>
 			<th>Descripci&oacute;n</th>
+			<th>Mínimo</th>
+			<th>Existencias</th>
 			<th>Total Existencias</th>
 			<th></th>
 		</thead>
 		<?php foreach($curr_products as $product):?>
 			<?php
-				$prods = ProductoSucursalData::getAllByProductId($product->id);
+				$prodSuc = new ProductoSucursalData();
+				$productoSucursal = $prodSuc->getBySucursalProducto($_SESSION["usr_suc"],$product->id);
+				$prods = $prodSuc->getAllByProductId($product->id);
 				$total = 0;
 				foreach ($prods as $p) {
 					$total += $p->cantidad;
 				}
 			?>
-		<tr class="">
+		<tr>
 			<td><?php echo $product->id; ?></td>
 			<td><?php echo $product->nombre; ?></td>
 			<td><?php echo $product->descripcion; ?></td>
+			<td><?php echo $productoSucursal->minimo; ?></td>
+			<td><?php echo $productoSucursal->cantidad; ?></td>
 			<td><?php echo $total; ?></td>
 			<td style="width:40px;">
 				<a href="index.php?view=detailprod&idProd=<?php echo $product->id; ?>" class="btn btn-default btn-sm"><i class="fa fa-bars fa-fw"></i> Detalles</a>
-				<!--<a id="<?php #echo $product->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"> Editar</a>-->
-				<!--<a href="index.php?view=input&product_id=<?php #echo $product->id; ?>" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-circle-arrow-up"></i> Alta</a>-->
-				<!--<a href="index.php?view=history&product_id=<?php #echo $product->id; ?>" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-time"></i> Historial</a>-->
 			</td>
 		</tr>
 		<?php endforeach;?>
@@ -117,6 +120,6 @@
 		<?php
 	}
 	?>
-		<br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br>
 	</div>
 </div>

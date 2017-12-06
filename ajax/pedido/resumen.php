@@ -38,7 +38,7 @@
 					<td style="width:95px; text-align:center;">$ <?php echo number_format($totalx,2,".",","); ?></td>
 					<td style="width:40px; text-align:center;"><span class="fa fa-<?php if($c['mantenimiento'] == 1){echo "check";}else{echo "times";} ?>"></span></td>
 					<td style="width:30px; text-align:center;">
-						<a data-type="<?php if($prd){echo 'prod';}elseif($srv){echo 'serv';} ?>" id="<?php if($prd){echo $c['product_id'];}elseif($srv){echo $c['service_id'];} ?>" class="btn btn-danger btn-xs btn-del"><i class="fa fa-trash"></i></a>
+						<a data-type="<?php if($prd){echo 'prod';}elseif($srv){echo 'serv';} ?>" id="<?php if($prd){echo $c['product_id'];}elseif($srv){echo $c['service_id'];} ?>" class="btn btn-danger btn-xs btn-del"><i class="fa fa-times"></i></a>
 					</td>
 				</tr>
 			<?php endforeach; ?>
