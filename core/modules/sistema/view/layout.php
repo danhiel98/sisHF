@@ -113,9 +113,7 @@
             <li><a href="index.php?view=pedidos"><i class="fa fa-list-alt"></i> Pedidos</a></li>
             <li><a href="index.php?view=sells"><i class="fa fa-shopping-cart"></i> Ventas</a></li>
             <li><a href="index.php?view=box"><i class="fa fa-archive"></i> Caja</a></li>
-            <!--
-            <li><a href="index.php?view=devolucion"><i class="fa fa-glass"></i> Devoluci&oacute;n</a></li>
-            -->
+            <li><a href="index.php?view=devolucion"><i class="fa fa-reply"></i> Devoluciones</a></li>
             <li><a href="index.php?view=sbox"><i class="fa fa-archive"></i> Caja Chica </a></li>
             <div class="clearfix"></div>
             <br><br>

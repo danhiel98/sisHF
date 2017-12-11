@@ -11,11 +11,14 @@
 		<option value="">--NINGUNO--</option>
 		<option value="1">Factura</option>
 	<?php
-		if ($cliente->nrc != "" && $cliente->nrc != null) {
+		if ($cliente->nrc != "" && $cliente->nrc != null):
 	?>
 		<option value="2">Comprobante de Crédito Fiscal</option>
 	<?php
-		}
+		endif;
+	?>
+		<option value="3">Recibo</option>
+	<?php
 	}else{
 		echo '<option value="">--SELECCIONE UN CLIENTE--</option>';
 	}

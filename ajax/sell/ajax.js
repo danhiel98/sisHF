@@ -1,4 +1,3 @@
-	//$(obtener_registros());
 	$.ajaxSetup({
   	error: function( jqXHR, textStatus, errorThrown ) {
     	if (jqXHR.status === 0) {

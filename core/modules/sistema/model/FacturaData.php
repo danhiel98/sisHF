@@ -9,17 +9,18 @@ class FacturaData {
 		$this->idsucursal = "";
 		$this->tipoComprobante = "";
 		$this->idcierrecaja = "";
-		#$this->fecha = "NOW()";
+		$this->totalLetras = "";
 
 		$this->idfactura = "";
 		$this->idproducto = "";
 		$this->idservicio = "";
+		$this->precio = "";
 		$this->cantidad = "";
 		$this->mantenimiento = "";
 		$this->total = "";
 	}
 
-	public function getComprobante(){return ComprobanteData::getById($this->tipoComprobante);}
+	public function getComprobante(){ return ComprobanteData::getById($this->tipoComprobante);}
 	public function getFact(){ return FacturaData::getById($this->idfactura);}
 	public function getClient(){ return ClientData::getById($this->idcliente);}
 	public function getUser(){ return UserData::getById($this->idusuario);}
@@ -27,20 +28,20 @@ class FacturaData {
 	public function getService(){ return ServiceData::getById($this->idservicio);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (numeroFactura, idCliente, idUsuario, idSucursal, tipoComprobante)";
-		$sql .= "value (\"$this->numerofactura\",$this->idcliente,$this->idusuario,$this->idsucursal,\"$this->tipoComprobante\")";
+		$sql = "insert into ".self::$tablename." (numeroFactura, idCliente, idUsuario, idSucursal, tipoComprobante, totalLetras)";
+		$sql .= "value (\"$this->numerofactura\",$this->idcliente,$this->idusuario,$this->idsucursal,\"$this->tipoComprobante\",\"$this->totalLetras\")";
 		return Executor::doit($sql);
 	}
 
 	public function addProdV(){
-		$sql = "insert into ventaProducto (idFacturaVenta, idProducto, cantidad, mantenimiento, total)";
-		$sql .= "value ($this->idfactura,$this->idproducto,$this->cantidad,$this->mantenimiento,$this->total)";
+		$sql = "insert into ventaProducto (idFacturaVenta, idProducto, precio, cantidad, mantenimiento, total)";
+		$sql .= "value ($this->idfactura,$this->idproducto,\"$this->precio\",$this->cantidad,$this->mantenimiento,$this->total)";
 		return Executor::doit($sql);
 	}
 
 	public function addServV(){
-		$sql = "insert into ventaServicio(idFacturaVenta, idServicio, cantidad, total)";
-		$sql .= "value ($this->idfactura,$this->idservicio,$this->cantidad,$this->total)";
+		$sql = "insert into ventaServicio(idFacturaVenta, idServicio, precio, cantidad, total)";
+		$sql .= "value ($this->idfactura,$this->idservicio,\"$this->precio\",$this->cantidad,$this->total)";
 		return Executor::doit($sql);
 	}
 
@@ -70,6 +71,7 @@ class FacturaData {
 			$data->idusuario = $r['idUsuario'];
 			$data->idcliente = $r['idCliente'];
 			$data->tipoComprobante = $r['tipoComprobante'];
+			$data->totalLetras = $r['totalLetras'];
 			$data->fecha = $r['fecha'];
 			$found = $data;
 			break;
@@ -87,6 +89,7 @@ class FacturaData {
 			$array[$cnt]->idventa = $r['idVentaProducto'];
 			$array[$cnt]->idfactura = $r['idFacturaVenta'];
 			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->precio = $r['precio'];
 			$array[$cnt]->cantidad = $r['cantidad'];
 			$array[$cnt]->total = $r['total'];
 			$cnt++;
@@ -104,6 +107,7 @@ class FacturaData {
 			$array[$cnt]->idventa = $r['idVentaServicio'];
 			$array[$cnt]->idfactura = $r['idFacturaVenta'];
 			$array[$cnt]->idservicio = $r['idServicio'];
+			$array[$cnt]->precio = $r['precio'];
 			$array[$cnt]->cantidad = $r['cantidad'];
 			$array[$cnt]->total = $r['total'];
 			$cnt++;
@@ -200,6 +204,26 @@ class FacturaData {
 		}
 		return $array;
 	}
+
+	public static function getLastRecibo(){
+		$sqlVenta = "select max(numeroFactura) as lastRecibo from facturaventa where tipoComprobante = 3";
+		$query = Executor::doit($sqlVenta);
+		while($r = $query[0]->fetch_array()){
+			$reciboVenta = $r['lastRecibo'];
+			break;
+		}
+
+		$sqlAbono = "select max(numeroComprobante) as lastRecibo from abono where tipoComprobante = 3";
+		$query = Executor::doit($sqlAbono);
+		while($r = $query[0]->fetch_array()){
+			$reciboAbono = $r['lastRecibo'];
+			break;
+		}
+
+		return max($reciboAbono, $reciboVenta);
+
+	}
+
 }
 
 ?>

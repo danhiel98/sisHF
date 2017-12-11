@@ -1,14 +1,7 @@
 <?php $users = ClientData::getAll(); ?>
-<?php
-	#include 'modal/addclient.php';
-	#include 'modal/editclient.php';
-?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
-			<!--
-			<a data-toggle="modal" data-target="#newclient" class="btn btn-default"><i class='fa fa-smile-o'></i> Registrar Cliente</a>
-			-->
 			<a href="index.php?view=newclient" class="btn btn-default"><i class='fa fa-smile-o'></i> Registrar Cliente</a>
 			<?php if(count($users) > 0): ?>
 				<div class="btn-group pull-right">
@@ -35,9 +28,7 @@
 				<th>NRC</th>
 				<th>Apellidos</th>
 				<th>Nombres</th>
-				<th>Sexo</th>
 				<th>Correo Electr&oacute;nico</th>
-				<!--<th>Fecha Nacimiento</th>-->
 				<th>Tel&eacute;fono</th>
 				<th></th>
 			</thead>
@@ -51,7 +42,6 @@
 				<td><?php echo $user->nrc;?></td>
 				<td><?php echo $user->lastname; ?></td>
 				<td><?php echo $user->name; ?></td>
-				<td><?php echo $user->sexo; ?></td>
 				<td><?php echo $user->email; ?></td>
 				<?php
 					if ($user->birth != "") {
@@ -59,15 +49,14 @@
 						$user->birth = $fecha[0]."/".$fecha[1]."/".$fecha[2];
 					}
 				?>
-				<!--<td><?php #echo $user->birth; ?></td>-->
 				<td><?php echo $user->phone; ?></td>
 				<td style="width:40px;">
 					<a href="index.php?view=editclient&id=<?php echo $user->id;?>" class="btn btn-warning btn-xs">Editar</a>
 				</td>
 			</tr>
 			<?php
-		}
-		?>
+			}
+			?>
 		</table>
 		<?php
 		}else{

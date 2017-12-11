@@ -52,12 +52,10 @@
                     <?php
                       $total=0;
                       foreach($prodsx as $p){
-                        $prd = $p->getProduct();
-                        $total += $p->cantidad * $prd->precioventa;
+                        $total += $p->total;
                       }
                       foreach ($servsx as $s) {
-                        $srv = $s->getService();
-                        $total += $s->cantidad * $srv->precio;
+                        $total += $s->total;
                       }
                       echo "<b>$ ".number_format($total,2,'.',',')."</b>";
                     ?>

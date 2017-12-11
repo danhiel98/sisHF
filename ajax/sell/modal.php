@@ -45,10 +45,15 @@
 	<div class="form-group control-group">
 		<label for="numero" class="col-sm-4 control-label">No. Comprobante</label>
 		<div class="controls col-sm-8">
-			<input type="text" class="form-control" name="numero" pattern="[0-9]{2,8}" data-validation-pattern-message="Introduzca un valor válido" maxlength="8" required>
+			<input type="text" class="form-control" id="numComprobante" name="numero" pattern="[0-9]{1,8}" data-validation-pattern-message="Introduzca un valor válido" maxlength="8" required>
 		</div>
 	</div>
-
+	<div class="form-group control-group">
+		<label for="numero" class="col-sm-4 control-label">Son</label>
+		<div class="controls col-sm-8">
+			<textarea class="form-control" name="totalLetras" id="totalLetras" cols="10" rows="3" maxlenght="150" required></textarea>
+		</div>
+	</div>
 	<input type="hidden" name="origen" value="<?php echo $_SESSION["usr_suc"]; ?>">
 	<div id="resumenX">
 	</div>
@@ -96,4 +101,24 @@
 	$(function(){
 		obtenerComprobante();
 	});
+
+	$("#tipo").on("change", function(){
+		tipo = $(this).val();
+		comprobante = $("#numComprobante");
+		if (tipo == 3){
+			$.ajax({
+				url: "ajax/sell/numeroRecibo.php",
+				type: "POST",
+				dataType: "json",
+				success: function(data){
+					comprobante.attr("disabled","disabled");
+					comprobante.val(data);
+				}
+			});
+		}else{
+			comprobante.removeAttr("disabled");
+			comprobante.val("");
+		}
+	});
+
 </script>

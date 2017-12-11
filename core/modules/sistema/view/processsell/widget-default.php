@@ -1,5 +1,7 @@
 <?php
-
+	
+	include "loader.php";
+	
 	if(isset($_SESSION["cart"])){
 		$cart = $_SESSION["cart"];
 
@@ -13,8 +15,13 @@
 			$fact->idusuario = Session::getUID();
 			$fact->fecha = "NOW()";
 			$fact->tipoComprobante = $_POST["tipo"];
-			$fact->numerofactura = $_POST["numero"];
-			
+
+			if ($_POST["tipo"] == 3){
+				$fact->numerofactura = $fact->getLastRecibo() + 1;
+			}else{
+				$fact->numerofactura = $_POST["numero"];				
+			}
+			$fact->totalLetras = $_POST["totalLetras"];			
 			$r = $fact->add();
 			
 			foreach($cart as $c){
@@ -23,8 +30,9 @@
 				$venta->cantidad = $c["cantidad"];
 				if ($c["product_id"] != "" && $c["service_id"] == "") {
 					$venta->idproducto = $c["product_id"];
+					$venta->precio = $venta->getProduct()->precioventa;
 					$venta->mantenimiento = $c["mantenimiento"];
-					$venta->total = $c["cantidad"] * $venta->getProduct()->precioventa;
+					$venta->total = $c["cantidad"] * $venta->precio;
 					$venta->addProdV();
 
 					$prods = ProductoSucursalData::getBySucursalProducto($fact->idsucursal,$venta->idproducto);
@@ -32,7 +40,8 @@
 					$prods->updateEx();
 				}elseif($c["product_id"] == "" && $c["service_id"] != ""){
 					$venta->idservicio = $c["service_id"];
-					$venta->total = $c["cantidad"] * $venta->getService()->precio;
+					$venta->precio = $venta->getService()->precio;
+					$venta->total = $c["cantidad"] * $venta->precio;
 					$venta->addServV();
 				}
 			}
