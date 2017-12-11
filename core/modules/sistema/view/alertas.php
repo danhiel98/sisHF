@@ -9,7 +9,8 @@
     $alertaProd = array();
 
     $materiaPrima = MateriaPrimaData::getAll();
-    $productos = ProductoSucursalData::getAll();
+    
+    $productos = ProductoSucursalData::getAllBySucId($_SESSION["usr_suc"]);
 
     foreach ($materiaPrima as $mp){
         if ($mp->existencias <= $mp->minimo){
@@ -25,7 +26,9 @@
         }
     }
 
-    $totalAlertas = count($alertaMP) + count($alertaProd);
+    $totalMP = count($alertaMP);
+    $totalProd = count($alertaProd);
+    $totalAlertas = $totalMP + $totalProd;
 
 ?>
 
@@ -38,14 +41,14 @@
         </a>
         <ul class="dropdown-menu">
             <?php if ($totalAlertas > 0): ?>
-                <?php if (count($alertaProd > 0)): ?>
+                <?php if ($totalProd > 0): ?>
                 <li>
-                    <a data-toggle="modal" data-target="#alertaProd" href="#">Alerta(s) en productos <span class="label label-warning"><?php echo count($alertaProd); ?></span></a>
+                    <a data-toggle="modal" data-target="#alertaProd" href="#">Alerta(s) en productos <span class="label label-warning"><?php echo $totalProd; ?></span></a>
                 </li>
                 <?php endif; ?>
-                <?php if (count($alertaMP > 0)): ?>
+                <?php if ($totalMP > 0): ?>
                 <li>
-                    <a data-toggle="modal" data-target="#alertaMP" href="#"> Alerta(s) en materia prima <span class="label label-warning"><?php echo count($alertaMP); ?></span></a>
+                    <a data-toggle="modal" data-target="#alertaMP" href="#"> Alerta(s) en materia prima <span class="label label-warning"><?php echo $totalMP; ?></span></a>
                 </li>
                 <?php endif; ?>
             <?php else: ?>
@@ -57,6 +60,7 @@
     </li>
 </ul>
 
+<?php if ($totalProd > 0): ?>
 <div class="modal fade" id="alertaProd">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -88,7 +92,9 @@
     </div>
   </div>
 </div>
+<?php endif; ?>
 
+<?php if ($totalMP > 0): ?>
 <div class="modal fade" id="alertaMP">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -120,3 +126,4 @@
     </div>
   </div>
 </div>
+<?php endif; ?>

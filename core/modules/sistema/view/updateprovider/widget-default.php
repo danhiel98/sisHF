@@ -1,5 +1,7 @@
 <?php
 
+include "loader.php";
+
 if(count($_POST)>0){
 	$proveedor = ProviderData::getById($_POST["idProveedor"]);
 	$proveedor->nombre = $_POST["txtNombre"];

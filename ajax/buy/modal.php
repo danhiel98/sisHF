@@ -24,7 +24,7 @@
               <label for="tipo" class="col-sm-4 control-label">Proveedor</label>
               <div class="controls col-sm-8">
                 <select name="proveedor" class="form-control" required>
-      		    		<option value="">-- NINGUNO --</option>
+      		    		<option value="">--NINGUNO--</option>
       		    		<?php foreach($proveedores as $prov):?>
       		    		<option value="<?php echo $prov->id;?>"><?php echo $prov->nombre;?></option>
       		    		<?php endforeach;?>
@@ -34,7 +34,7 @@
             <div class="form-group control-group">
               <label for="tipo" class="col-sm-4 control-label">Comprobante</label>
               <div class="controls col-sm-8">
-                <select class="form-control" name="tipo" id="tipo" required>
+                <select class="form-control" name="tipo" id="tipoComp">
                   <option value="">--SELECCIONE--</option>
                   <option value="1">Factura</option>
                   <option value="2">Cr&eacute;dito Fiscal</option>
@@ -44,7 +44,7 @@
             <div class="form-group control-group">
               <label for="numero" class="col-sm-4 control-label">No. Comprobante</label>
               <div class="controls col-sm-8">
-                <input type="text" class="form-control" name="numero" pattern="[0-9]{2,8}" data-validation-pattern-message="Introduzca un valor válido" maxlength="8" required>
+                <input type="text" class="form-control" id="numeroComp" name="numero" pattern="[0-9]{2,8}" data-validation-pattern-message="Introduzca un valor válido" maxlength="8">
               </div>
             </div>
           </div>

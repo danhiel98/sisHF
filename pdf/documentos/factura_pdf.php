@@ -5,7 +5,8 @@
     include ("../../core/modules/sistema/model/FacturaData.php");
     include ("../../core/modules/sistema/model/ComprobanteData.php");
 	include ("../../core/modules/sistema/model/ProductData.php");
-	include ("../../core/modules/sistema/model/ClientData.php");
+    include ("../../core/modules/sistema/model/ClientData.php");
+    include ("../../core/modules/sistema/model/ServiceData.php");
 	include ("../../core/modules/sistema/model/UserData.php");
 	
 	$sell = FacturaData::getById($_GET["id"]);

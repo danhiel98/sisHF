@@ -147,8 +147,9 @@
               <?php echo $nombreUsuario; ?> <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="index.php?view=configuration">Configuraci&oacute;n</a></li>
-                <li><a href="logout.php">Salir</a></li>
+                <li><a href="index.php?view=configuration"><i class="fa fa-cog fa-fw"></i> Configuraci&oacute;n</a></li>
+                <li><a target="_blank" href="about"><i class="fa fa-info fa-fw"></i> Acerca de</a></li>
+                <li><a href="logout.php"><i class="fa icon-exit fa-fw"></i> Salir</a></li>
               </ul>
             </li>
           </ul>
@@ -163,11 +164,8 @@
         if (isset($_GET["view"]) && Session::getUID() == "") {
           @header("location: index.php");
         }
-        if (isset($_GET["about"]) && $_GET["about"] == "true"){
-          View::load("fechas");          
-        }else{
-          View::load("login");
-        }
+        
+        View::load("login");
         
         ?>
       </div><!-- /#page-wrapper -->

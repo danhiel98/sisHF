@@ -96,7 +96,7 @@
 			<form class="form-inline">
 				<label for="limit">L&iacute;mite</label>
 				<input type="hidden" name="view" value="products">
-				<input type="number" value=<?php echo $limit?> name="limit" style="width:60px;" class="form-control">
+				<input type="number" value=<?php echo $limit?> name="limit" style="width:60px;" class="form-control" min="1">
 			</form>
 			<div class="clearfix"></div>
 	<?php

@@ -53,7 +53,7 @@
           <div class="form-group control-group">
             <label for="ecomprobante" class="col-sm-3 control-label">Comprobante:</label>
             <div class="col-sm-8 controls">
-              <input type="text" name="ecomprobante" class="form-control" id="ecomprobante" placeholder="N&uacute;mero de comprobante" data-validation-regex-regex="[0-9A-Za-z-]*" data-validation-regex-message="Introduzca un n&uacute;mero v&aacute;lido" maxlength="32" minlength="4">
+              <input type="text" name="ecomprobante" class="form-control" id="ecomprobante" placeholder="N&uacute;mero de comprobante" data-validation-regex-regex="[0-9A-Za-z-]*" data-validation-regex-message="Introduzca un n&uacute;mero v&aacute;lido" maxlength="32" minlength="4" required>
             </div>
           </div>
         </div>

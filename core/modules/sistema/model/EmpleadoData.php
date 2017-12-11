@@ -35,8 +35,7 @@ class EmpleadoData {
 		$sql = "update ".self::$tablename." set estado = 0 where idEmpleado = $this->id";
 		Executor::doit($sql);
 	}
-
-	// partiendo de que ya tenemos creado un objecto EmpleadoData previamente utilizamos el contexto
+	
 	public function update(){
 		$sql = "update ".self::$tablename." set dui=\"$this->dui\", nit=\"$this->nit\", nombre=\"$this->nombre\", apellido=\"$this->apellido\", sexo=\"$this->sexo\", estadoCivil=\"$this->estadocivil\", fechaNacimiento=\"$this->fechanacimiento\", nivelAcademico=\"$this->nivelacademico\", direccion=\"$this->direccion\", idMunic=\"$this->idMunic\", idDepto=\"$this->idDepto\", area=\"$this->area\", telefono=\"$this->telefono\", idSucursal = $this->idsucursal where idEmpleado = $this->id";
 		Executor::doit($sql);

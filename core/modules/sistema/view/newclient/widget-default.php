@@ -14,7 +14,7 @@
 		  <div class="form-group control-group">
 		    <label for="txtNit" class="col-lg-2 control-label">NIT</label>
 		    <div class="col-md-6">
-		      <input type="text" name="txtNit" class="form-control" id="txtNit" maxlength="17" data-validation-regex-regex="[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}" data-validation-regex-message="Introduzca un NIT válido" placeholder="N&uacute;mero De NIT" onkeyup="fnc(this,'-',nit,true)" onpaste="return false" required onKeyPress="return soloNumeros(event)">
+		      <input type="text" name="txtNit" class="form-control" id="txtNit" maxlength="17" data-validation-regex-regex="[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}" data-validation-regex-message="Introduzca un NIT válido" placeholder="N&uacute;mero De NIT" onkeyup="fnc(this,'-',nit,true)" onpaste="return false" onKeyPress="return soloNumeros(event)">
 					<p class="help-block"></p>
 		    </div>
 		  </div>
@@ -33,16 +33,16 @@
 		    </div>
 		  </div>
 		  <div class="form-group control-group">
-		    <label for="txtApellido" class="col-lg-2 control-label">Apellidos*</label>
+		    <label for="txtApellido" class="col-lg-2 control-label">Apellidos</label>
 		    <div class="col-md-6">
-		      <input type="text" name="txtApellido" class="form-control" id="txtApellido" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un apellido válido"  placeholder="Apellidos" onkeypress="return vNom(event,this)" required>
+		      <input type="text" name="txtApellido" class="form-control" id="txtApellido" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un apellido válido"  placeholder="Apellidos" onkeypress="return vNom(event,this)">
 					<p class="help-block"></p>
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="txtSexo" class="col-lg-2 control-label">Sexo*</label>
+		    <label for="txtSexo" class="col-lg-2 control-label">Sexo</label>
 		    <div class="col-md-6">
-		        <select class="form-control" name="txtSexo" required>
+		        <select class="form-control" name="txtSexo">
 							<option value="">--SELECCIONE--</option>
 							<option value="Hombre">Hombre</option>
 		          <option value="Mujer">Mujer</option>

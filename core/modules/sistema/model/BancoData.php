@@ -31,7 +31,7 @@ class BancoData {
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where idBanco = $id and estado = 1";
+		$sql = "select * from ".self::$tablename." where idBanco = $id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new BancoData();

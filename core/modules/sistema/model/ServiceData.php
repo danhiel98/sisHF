@@ -29,7 +29,7 @@ class ServiceData {
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where idServicio=$id and estado = 1";
+		$sql = "select * from ".self::$tablename." where idServicio=$id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new ServiceData();

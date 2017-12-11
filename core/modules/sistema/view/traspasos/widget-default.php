@@ -2,6 +2,7 @@
 
 	$sucs = false;
 	$sucursales = SucursalData::getAll();
+	$prodSuc = ProductoSucursalData::getAllBySucId($_SESSION["usr_suc"]);
 	if (count($sucursales)>1) {
 		$sucs = true;
 	}
@@ -10,7 +11,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="btn-group  pull-right">
-			<?php if ($sucs): ?>
+			<?php if ($sucs && count($prodSuc)>0): ?>
 			<a href="index.php?view=newtraspaso" class="btn btn-default"><i class="fa fa-exchange"></i> Registrar Traspaso</a>
 			<?php endif; ?>
 			<?php if (count($traspasos)>0): ?>

@@ -28,7 +28,7 @@
 		}
 
 		public static function getById($id){
-			$sql = "select * from ".self::$tablename." where idCompraMateriaPrima = $id and estado = 1";
+			$sql = "select * from ".self::$tablename." where idCompraMateriaPrima = $id";
 			$query = Executor::doit($sql);
 			$found = null;
 			$data = new ReabastecimientoMPData();

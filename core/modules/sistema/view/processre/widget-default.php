@@ -1,9 +1,7 @@
 <?php
-	#print_r($_POST);
+	include "loader.php";
 	if(isset($_SESSION["reabastecerMP"])){
 		$cart = $_SESSION["reabastecerMP"];
-		#print_r($cart);
-		
 		if(count($cart) > 0){
 
 			$total = 0;
@@ -11,8 +9,10 @@
 			if(count($_POST)>0){
 				$reab->idproveedor = $_POST["proveedor"];
 				$reab->idusuario = Session::getUID();
-				$reab->tipoComprobante = $_POST["tipo"];
-				$reab->comprobante = $_POST["numero"];
+				if (isset($_POST["tipo"]) && $_POST["tipo"] != ""){
+					$reab->tipoComprobante = $_POST["tipo"];
+					$reab->comprobante = $_POST["numero"];
+				}
 				$s = $reab->add();
 			}
 			foreach($cart as  $c){

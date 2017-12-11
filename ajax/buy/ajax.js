@@ -1,9 +1,9 @@
 function obtener_registros(buscar){
 	$.ajax({
-		url : 'ajax/buy/resultado.php',
-		type : 'POST',
-		dataType : 'html',
-		data : { producto: buscar }
+		url: 'ajax/buy/resultado.php',
+		type: 'POST',
+		dataType: 'html',
+		data: { producto: buscar }
 		})
 	.done(function(resultado){
 		$("#resultado").html(resultado);
@@ -20,26 +20,5 @@ $(document).on('keyup focus', '#busqueda', function(){
 		obtener_registros(valorBusqueda);
 	}else {
 		obtener_registros();
-	}
-});
-
-function obtenerConNRC(dato){
-	$.ajax({
-		url : 'ajax/sell/resultado2.php',
-		type : 'POST',
-		dataType : 'html',
-		data : { tipo: dato },
-		})
-	.done(function(resultado){
-		$("#cliente").html(resultado);
-	})
-}
-
-$("#tipo").on("load change",function(){
-	var tipo = $(this).val();
-	if (tipo == 2) {
-		obtenerConNRC("CCF");
-	}else{
-		obtenerConNRC();
 	}
 });

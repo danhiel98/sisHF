@@ -1,5 +1,7 @@
 <?php
 
+include "loader.php";
+
 if(count($_POST)>0){
 	$sucursal = SucursalData::getById($_POST["idSucursal"]);
 	$sucursal->nombre = $_POST["txtNombre"];
@@ -8,6 +10,5 @@ if(count($_POST)>0){
 	$sucursal->update();
 	print "<script>window.location='index.php?view=sucursal';</script>";
 }
-
 
 ?>

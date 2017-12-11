@@ -22,7 +22,6 @@ class ConfigurationData {
 		Executor::doit($sql);
 	}
 
-// partiendo de que ya tenemos creado un objecto ConfigurationData previamente utilizamos el contexto
 	public function update(){
 		$sql = "update ".self::$tablename." set nombre=\"$this->name\" where id=$this->id";
 		Executor::doit($sql);

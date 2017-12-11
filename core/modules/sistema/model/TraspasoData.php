@@ -43,7 +43,7 @@ class TraspasoData {
 		Executor::doit($sql);
 	}
 
-	// partiendo de que ya tenemos creado un objecto CategoryData previamente utilizamos el contexto
+	
 	public function update(){
 		$sql = "update ".self::$tablename." set idSucursalOrigen=$this->idorigen, idSucursalDestino=$this->destino where idTraspaso = $this->id";
 		Executor::doit($sql);

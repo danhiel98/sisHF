@@ -18,21 +18,19 @@
 	<?php if (count($matp)>0): ?>
 	<div class="col-md-12">
 		<p><b>Buscar Materia Prima:</b></p>
-  		<form>
-			<div class="row">
-				<div class="col-md-5 col-sm-6 col-xs-10">
-					<div class="input-group">
-						<input type="text" name="product" id="busqueda" placeholder="Nombre o descripci&oacute;n" class="form-control" autofocus>
-						<span class="input-group-addon"><i class="fa fa-search fa-fw"></i>Buscar</span>
-					</div>
-				</div>
-				<div class="btn-group pull-right">
-					<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#resumen">
-						<i class="fa fa-list"></i> Ver Resumen</span>
-					</button>
+		<div class="row">
+			<div class="col-md-5 col-sm-6 col-xs-10">
+				<div class="input-group">
+					<input type="text" name="product" id="busqueda" placeholder="Nombre o descripci&oacute;n" class="form-control" autofocus>
+					<span class="input-group-addon"><i class="fa fa-search fa-fw"></i>Buscar</span>
 				</div>
 			</div>
-		</form>
+			<div class="btn-group pull-right">
+				<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#resumen">
+					<i class="fa fa-list"></i> Ver Resumen</span>
+				</button>
+			</div>
+		</div>
 	</div>
 	<div class="clearfix"></div>
 	<br>

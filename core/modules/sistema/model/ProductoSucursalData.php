@@ -30,18 +30,6 @@ class ProductoSucursalData {
 		Executor::doit($sql);
 	}
 
-	/*
-	public function del(){
-		$sql = "update ".self::$tablename." set estado = 0 where idEnvioBanco=$this->id";
-		Executor::doit($sql);
-	}
-
-	public function update(){
-		$sql = "update ".self::$tablename." set idBanco=\"$this->idBanco\", cantidad=\"$this->cantidad\" where idEnvioBanco = $this->id";
-		Executor::doit($sql);
-	}
-	*/
-
 	public static function getById($id){
 		$sql = "select * from ".self::$tablename." where idProductoSucursal = $id";
 		$query = Executor::doit($sql);

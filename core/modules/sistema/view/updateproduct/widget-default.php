@@ -7,7 +7,7 @@
 		$product->nombre = $_POST["nombre"];
 		$product->preciocosteo = $_POST["preciocosteo"];
 		$product->precioventa = $_POST["precioventa"];
-	  $product->descripcion = $_POST["descripcion"];
+	 	$product->descripcion = $_POST["descripcion"];
 		$product->estado = 0;
 		$product->mantenimiento = 0;
 		if (isset($_POST["is_active"])) {

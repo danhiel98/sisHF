@@ -1,5 +1,7 @@
 <?php
-
+	
+	include "loader.php";
+	
 	if(count($_POST)>0){
 		$user = ClientData::getById($_POST["user_id"]);
 		$user->dui = $_POST["txtDui"];

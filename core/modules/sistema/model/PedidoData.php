@@ -54,7 +54,6 @@ class PedidoData {
 
 	public static function finalizar($id){
 		$sql = "update ".self::$tablename." set entregado = 1, fechaFinalizado = NOW() where idPedido=$id;";
-		#return $sql;
 		Executor::doit($sql);
 	}
 

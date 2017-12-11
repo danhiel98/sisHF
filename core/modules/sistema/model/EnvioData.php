@@ -28,14 +28,14 @@ class EnvioData {
 		Executor::doit($sql);
 	}
 
-	// partiendo de que ya tenemos creado un objecto CategoryData previamente utilizamos el contexto
+	
 	public function update(){
 		$sql = "update ".self::$tablename." set idBanco=\"$this->idBanco\", cantidad=\"$this->cantidad\", numComprobante=\"$this->comprobante\" where idEnvioBanco = $this->id";
 		Executor::doit($sql);
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where idEnvioBanco = $id and estado = 1";
+		$sql = "select * from ".self::$tablename." where idEnvioBanco = $id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new EnvioData();

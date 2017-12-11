@@ -410,7 +410,7 @@ CREATE TABLE tipoComprobante(
 insert into tipoComprobante values
 (null,"Factura"),
 (null,"Comprobante de Crédito Fiscal"),
-(null,"Ticket");
+(null,"Recibo");
 
 /*OK*/
 CREATE TABLE usuario(
@@ -501,9 +501,9 @@ CREATE TABLE facturaMateriaPrima(
   idFacturaMateriaPrima mediumint PRIMARY KEY AUTO_INCREMENT,
   idUsuario smallint not null,
   idProveedor smallint not null,
-  tipoComprobante tinyint not null, /* Factura, CCF, Ticket */
+  tipoComprobante tinyint, /* Factura, CCF, Ticket */
   tipoPago tinyint not null default 1,
-  numComprobante varchar(32) not null,
+  numComprobante varchar(32),
   fecha datetime not null default current_timestamp,
   total decimal(9,2) not null,
   estado boolean default 1 not null,

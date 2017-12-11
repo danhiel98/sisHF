@@ -27,7 +27,7 @@ class UserTypeData {
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where idTipo = $id and activo = 1";
+		$sql = "select * from ".self::$tablename." where idTipo = $id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new UserTypeData();
