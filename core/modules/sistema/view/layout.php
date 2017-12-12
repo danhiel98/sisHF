@@ -111,6 +111,7 @@
             <li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Compras</a></li>
             <li><a href="index.php?view=traspasos"><i class="fa fa-exchange"></i> Traspasos</a></li>
             <li><a href="index.php?view=pedidos"><i class="fa fa-list-alt"></i> Pedidos</a></li>
+            <li><a href="index.php?view=pagos"><i class="fa fa-credit-card"></i> Pagos</a></li>
             <li><a href="index.php?view=sells"><i class="fa fa-shopping-cart"></i> Ventas</a></li>
             <li><a href="index.php?view=box"><i class="fa fa-archive"></i> Caja</a></li>
             <li><a href="index.php?view=devolucion"><i class="fa fa-reply"></i> Devoluciones</a></li>
@@ -118,7 +119,6 @@
             <div class="clearfix"></div>
             <br><br>
             <!--
-            <li><a href="index.php?view=compras"><i class="fa fa-refresh"></i> Compras</a></li>
             <li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Reabastecimientos <small><span class="label label-success">Nuevo</span></small></a></li>
             <li><a href="index.php?view=reports"><i class="fa fa-tasks"></i> Reportes</a></li>
             -->

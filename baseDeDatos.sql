@@ -672,6 +672,7 @@ CREATE TABLE pedido(
   adelanto decimal(9,2) not null,
   tipoPago tinyint not null,
   */
+  restante decimal(9,2) not null,
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idCliente) references cliente(idCliente),
@@ -684,6 +685,7 @@ CREATE TABLE pedidoProducto(
   idPedido int not null,
   idProducto mediumint not null,
   cantidad int not null,
+  precio decimal(9,2) not null,
   total decimal(9,2) not null,
   mantenimiento boolean not null default 0,
   estado boolean default 1 not null,
@@ -696,6 +698,7 @@ CREATE TABLE pedidoServicio(
   idPedido int not null,
   idServicio smallint not null,
   cantidad smallint not null default 1,
+  precio decimal(9,2) not null,
   total decimal(9,2) not null,
   estado boolean default 1 not null,
   foreign key(idPedido) references pedido(idPedido),
@@ -704,6 +707,8 @@ CREATE TABLE pedidoServicio(
 
 CREATE TABLE abono(
   idAbono mediumint PRIMARY KEY AUTO_INCREMENT,
+  idUsuario smallint not null,
+  idCliente mediumint not null,
   idPedido int not null,
   cantidad decimal(9,2) not null,
   fecha datetime not null,
@@ -711,7 +716,9 @@ CREATE TABLE abono(
   numeroComprobante varchar(32),
   estado boolean default 1 not null,
   foreign key(tipoComprobante) references tipoComprobante(idTipo),
-  foreign key(idPedido) references pedido(idPedido)
+  foreign key(idPedido) references pedido(idPedido),
+  foreign key(idUsuario) references usuario(idUsuario),
+  foreign key(idCliente) references cliente(idCliente)
 );
 
 CREATE TABLE facturaVenta(
@@ -738,7 +745,7 @@ CREATE TABLE ventaProducto(
   idVentaProducto int PRIMARY KEY AUTO_INCREMENT,
   idFacturaVenta int not null,
   idProducto mediumint not null,
-  precio float not null,
+  precio decimal(9,2) not null,
   cantidad smallint not null,
   total decimal(9,2) not null,
   mantenimiento boolean not null default 0,
@@ -751,7 +758,7 @@ CREATE TABLE ventaServicio(
   idVentaServicio int PRIMARY KEY AUTO_INCREMENT,
   idFacturaVenta int not null,
   idServicio smallint not null,
-  precio float not null,
+  precio decimal(9,2) not null,
   cantidad smallint not null default 1,
   total decimal(9,2) not null,
   estado boolean default 1 not null,

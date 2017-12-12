@@ -102,7 +102,7 @@
 	<?php
 	}else{
 	?>
-		<div class="row">
+		<div class="col-md-12">
 			<h2>No hay productos</h2>
 			<div class="alert alert-warning">
 				No se han agregado productos a la base de datos, puedes agregar uno dando clic en el bot&oacute;n <strong>"Agregar Producto".</strong>

@@ -9,7 +9,7 @@
 	    			<i class="fa fa-download"></i> Descargar <span class="caret"></span>
 	  			</button>
 	  			<ul class="dropdown-menu" role="menu">
-	    			<li><a href="report/clientes.php">Excel(.xmlx)</a></li>
+	    			<li><a href="report/clientes.php">Excel(.xlsx)</a></li>
 	  			</ul>
 				</div>
 			<?php endif; ?>

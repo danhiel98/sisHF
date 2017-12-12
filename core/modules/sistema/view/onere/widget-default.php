@@ -10,6 +10,9 @@
 <h1>Resumen de Compra</h1>
 <?php if(isset($_GET["id"]) && $_GET["id"]!=""):
   $reab = ReabastecimientoData::getById($_GET["id"]);
+  if (is_null($reab)) {
+    @header("location: index.php?view=res");
+  }
   $reabMP = ReabastecimientoMPData::getAllByReabId($_GET["id"]);
   $total = 0;
 ?>

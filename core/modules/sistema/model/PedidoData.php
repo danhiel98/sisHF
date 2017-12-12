@@ -11,10 +11,12 @@ class PedidoData {
 		$this->fechaentrega = "";
 		$this->entregado = "";
 		$this->fechafinalizado = "";
+		$this->restante = ""; #Para saber cuanto dinero debe el cliente del pedido
 
 		$this->idproducto = "";
 		$this->idservicio = "";
 		$this->cantidad = "";
+		$this->precio = "";		
 		$this->mantenimiento = "";
 		$this->total = "";
 	}
@@ -25,25 +27,30 @@ class PedidoData {
 	public function getService(){ return ServiceData::getById($this->idservicio);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (idUsuario, idSucursal, idCliente, fechaPedido, fechaEntrega) ";
-		$sql .= "value ($this->idusuario,$this->idsucursal,$this->idcliente,$this->fechapedido,\"$this->fechaentrega\")";
+		$sql = "insert into ".self::$tablename." (idUsuario, idSucursal, idCliente, fechaPedido, fechaEntrega, restante) ";
+		$sql .= "value ($this->idusuario,$this->idsucursal,$this->idcliente,$this->fechapedido,\"$this->fechaentrega\",0)";
 		return Executor::doit($sql);
 	}
 
 	public function addProdPd(){
-		$sql = "insert into pedidoProducto (idPedido, idProducto, cantidad, mantenimiento, total)";
-		$sql .= "value ($this->idpedido,$this->idproducto,$this->cantidad,$this->mantenimiento,$this->total)";
+		$sql = "insert into pedidoProducto (idPedido, idProducto, cantidad, precio, mantenimiento, total)";
+		$sql .= "value ($this->idpedido,$this->idproducto,$this->cantidad,$this->precio,$this->mantenimiento,$this->total)";
 		return Executor::doit($sql);
 	}
 
 	public function addServPd(){
-		$sql = "insert into pedidoServicio(idPedido, idServicio, cantidad, total)";
-		$sql .= "value ($this->idpedido,$this->idservicio,$this->cantidad,$this->total)";
+		$sql = "insert into pedidoServicio(idPedido, idServicio, cantidad, precio, total)";
+		$sql .= "value ($this->idpedido,$this->idservicio,$this->cantidad,$this->precio,$this->total)";
 		return Executor::doit($sql);
 	}
 
 	public static function delById($id){
 		$sql = "update ".self::$tablename." set estado = 0 where idPedido=$id";
+		Executor::doit($sql);
+	}
+
+	public function updateRestante($id){
+		$sql = "update ".self::$tablename." set restante = $this->restante where idPedido=$id";
 		Executor::doit($sql);
 	}
 
@@ -71,6 +78,7 @@ class PedidoData {
 			$data->entregado = $r['entregado'];
 			$data->cancelado = $r['cancelado'];
 			$data->fechafinalizado = $r['fechaFinalizado'];
+			$data->restante = $r['restante'];
 			$data->estado = $r['estado'];
 			$found = $data;
 			break;
@@ -92,6 +100,7 @@ class PedidoData {
 			$array[$cnt]->fechaentrega = $r['fechaEntrega'];
 			$array[$cnt]->entregado = $r['entregado'];
 			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->restante = $r['restante'];
 			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
 			$array[$cnt]->estado = $r['estado'];
 			$cnt++;
@@ -113,6 +122,7 @@ class PedidoData {
 			$array[$cnt]->fechaentrega = $r['fechaEntrega'];
 			$array[$cnt]->entregado = $r['entregado'];
 			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->restante = $r['restante'];
 			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
 			$array[$cnt]->estado = $r['estado'];
 			$cnt++;
@@ -134,6 +144,7 @@ class PedidoData {
 			$array[$cnt]->fechaentrega = $r['fechaEntrega'];
 			$array[$cnt]->entregado = $r['entregado'];
 			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->restante = $r['restante'];
 			$array[$cnt]->estado = $r['estado'];
 			$cnt++;
 		}
@@ -154,6 +165,7 @@ class PedidoData {
 			$array[$cnt]->fechaentrega = $r['fechaEntrega'];
 			$array[$cnt]->entregado = $r['entregado'];
 			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->restante = $r['restante'];
 			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
 			$array[$cnt]->estado = $r['estado'];
 			$cnt++;
@@ -172,6 +184,7 @@ class PedidoData {
 			$array[$cnt]->idpedido = $r['idPedido'];
 			$array[$cnt]->idproducto = $r['idProducto'];
 			$array[$cnt]->cantidad = $r['cantidad'];
+			$array[$cnt]->precio = $r['precio'];			
 			$array[$cnt]->total = $r['total'];
 			$array[$cnt]->mantenimiento = $r['mantenimiento'];
 			$cnt++;
@@ -190,6 +203,7 @@ class PedidoData {
 			$array[$cnt]->idpedido = $r['idPedido'];
 			$array[$cnt]->idservicio = $r['idServicio'];
 			$array[$cnt]->cantidad = $r['cantidad'];
+			$array[$cnt]->precio = $r['precio'];
 			$array[$cnt]->total = $r['total'];
 			$cnt++;
 		}

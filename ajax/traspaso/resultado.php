@@ -35,7 +35,7 @@
 				<th>Nombre</th>
 				<th>Descripción</th>
 				<th>Existencias</th>
-				<th style="width: 210px;"></th>
+				<th style="width: 140px;"></th>
 			</thead>
 	<?php
 		foreach ($prodSuc as $pr):
@@ -55,11 +55,11 @@
 							<input type="hidden" name="product_id" value="<?php echo $pr->getProduct()->id; ?>">
 							<div class="form-group control-group">
 								<div class="controls">
-									<input type="text" name="cantidad" value="1" style="width:100px;" min="1" max="<?php echo $pr->cantidad; ?>" class="form-control" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
-									<button type="submit" id="<?php echo $pr->getProduct()->id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>Agregar</button>
+									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="max-width: 70px;" min="1" max="<?php echo $pr->cantidad; ?>" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
+									<button type="submit" class="btn btn-sm btn-success" id="<?php echo $pr->getProduct()->id; ?>"><i class="fa fa-cart-plus fa-fw"></i></button>
 									<p class="help-block"></p>
 								</div>
-	  					</div>
+	  						</div>
 						</form>
 					<?php endif; ?>
 					</td>

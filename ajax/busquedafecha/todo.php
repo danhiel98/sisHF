@@ -31,7 +31,7 @@
               <th>Cliente</th>
               <th>Vendedor</th>
               <th>Fecha</th>
-              <th>Tipo De Documento</th>
+              <th>Tipo De Comprobante</th>
               <th>Total</th>
             </thead>
             <tbody>
