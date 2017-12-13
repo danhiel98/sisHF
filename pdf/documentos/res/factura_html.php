@@ -111,18 +111,18 @@
 					</table>
 						<br>
 	
-					<table cellspacing="0" style="width: 10%; text-align: left; font-size: 10pt;">
+					<table cellspacing="0" style="width: 20%; text-align: left; font-size: 10pt;">
 					<tr>
-						<th>Cantidad</th><br>
-						<th>Nombre del Producto / Servicio</th><br>
-						<th>Precio Unitario</th>
-						<th>Total</th>
+						<th style="width: 100px;">Cantidad</th>
+						<th style="width: 250px;">Descripción</th>
+						<th style="width: 150px;">Precio Unitario</th>
+						<th style="width: 100px;">Total</th>
 					</tr>
 				<?php
 					foreach($pVend as $vend):
 						$prod = $vend->getProduct();
 				?>
-				<tr>
+				<tr style="margin-top: 5px; margin-bottom: 5px;">
 					
 					<td><?php echo $vend->cantidad ;?></td>
 					<td><?php echo $prod->nombre ;?></td>
@@ -142,10 +142,15 @@
 					<td><b>$ <?php echo number_format($vend->cantidad*$prod->precio,2,".",","); $total += $vend->cantidad*$prod->precio;?></b></td>
 					</tr>
 				<?php endforeach; ?>
-				
+						<?php if($sell->tipoComprobante == 2): ?>
+							<tr>
+								<td colspan="3" style="widtd: 85%; text-align: right;">IVA <?php echo $iva[0]->value * 100;?> %&#36; </td>
+								<td style="width: 15%; text-align: right;"> <?php echo number_format($iva[0]->value * $total,2,".",",");?></td>
+							</tr>
+						<?php endif; ?>
 						<tr>		
 							<td colspan="3" style="widtd: 85%; text-align: right;">SUBTOTAL &#36; </td>
-							<td style="widtd: 15%; text-align: right;"> <?php echo number_format($total,2);?></td>
+							<td style="width: 15%; text-align: right;"> <?php echo number_format($total,2,".",",");?></td>
 						</tr>
 						
 					</table>	
