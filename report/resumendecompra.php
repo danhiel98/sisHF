@@ -8,6 +8,8 @@ include "../core/modules/sistema/model/ServiceData.php";
 include "../core/modules/sistema/model/ReabastecimientoData.php";
 include "../core/modules/sistema/model/ReabastecimientoMPData.php";
 include "../core/modules/sistema/model/ProviderData.php";
+include "../core/modules/sistema/model/ComprobanteData.php";
+include "../core/modules/sistema/model/MateriaPrimaData.php";
 
 
 require_once '../ReporteExcel/functions/excel.php';
@@ -15,15 +17,8 @@ activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
-  $reab = ReabastecimientoData::getById($_GET["id"]);
-  $reabMP = ReabastecimientoMPData::getAllByReabId($_GET["id"]);
 
-$pVend = FacturaData::getAllSellsByFactId($_GET["id"]);
-$sVend = FacturaData::getAllServicesByFactId($_GET["id"]);
-$fact = FacturaData::getById($_GET["id"]);
-//$tVend = $pVend;
-//array_push($tVend,$sVend);
-$total = 0;
+
 
 // para que ponga el nombre y le agregue la fecha y hora
 date_default_timezone_set('America/El_Salvador');
@@ -76,52 +71,56 @@ $objPHPExcel->getActiveSheet()->getStyle('A9'.':F9')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
             //->mergeCells('A1:A5')
             ->setCellValue('A1', 'Resumen De Compra')
-            ->setCellValue('A3', 'No.')
-            ->setCellValue('A4', 'FECHA')
-            ->setCellValue('A5', 'CLIENTE')
-            ->setCellValue('A6', 'VENDEDOR');
+            ->setCellValue('A3', 'Proveedor')
+            ->setCellValue('A4', 'Tipo De Comprobante')
+            ->setCellValue('A5', 'Nº De Comprobante')
+            ->setCellValue('A6', 'Usuario');
 
+if(isset($_GET["id"]) && $_GET["id"]!=""){
+
+      $reab = ReabastecimientoData::getById($_GET["id"]);
+      $reabMP = ReabastecimientoMPData::getAllByReabId($_GET["id"]);
+      $total = 0;
+
+      if($reab->idproveedor!=""){
+    $prov = $reab->getProvider();
+
+  $objPHPExcel->setActiveSheetIndex(0)
+              ->setCellValue("B3", $prov->nombre)
+              ->setCellValue("B4", $reab->getComprobante()->nombre)
+              ->setCellValue("B5", $reab->comprobante)
+              ->setCellValue("B6", $reab->getUser()->name." ".$reab->getUser()->lastname);
+
+  }
 //for ($i = 3; $i<7; $i++)
-	$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue("B3", $fact->numerofactura)
-							->setCellValue("B4", $fact->fecha)
-              ->setCellValue("B5", $fact->getClient()->name." ".$fact->getClient()->lastname)
-              ->setCellValue("B6", $fact->getUser()->name." ".$fact->getUser()->lastname);
 cellColor('A8:F8','E2DFDF');
         $objPHPExcel->setActiveSheetIndex(0)
               ->setCellValue('A8', 'Codigo.')
-              ->setCellValue('B8', 'Cantidad')
-              ->setCellValue('C8', 'Nombre Producto')
+              ->setCellValue('B8', 'Nombre Producto')
+              ->setCellValue('C8', 'Cantidad')
               ->setCellValue('D8', 'Precio')
-              ->setCellValue('E8', 'Total')
-                ->setCellValue('F8', 'Total Final');
+              ->setCellValue('E8', 'Total');
 
-         $i=9;
-         foreach ($pVend as $rv) {
+ $i=9;
+      foreach($reabMP as $rb){
+          $mp = $rb->getMateriaPrima();
+
            $objPHPExcel->setActiveSheetIndex(0)
-             					->setCellValue("A$i", $rv->idproducto)
-                      ->setCellValue("B$i", $rv->cantidad)
-                      ->setCellValue("C$i", $rv->getProduct()->nombre)
-                      ->setCellValue("D$i","$ ". $rv->getProduct()->precioventa)
-                      ->setCellValue("E$i","$ ".$rv->total)
-                      ->setCellValue("F9","$ ".$total+=$rv->total);
-
+                      ->setCellValue("A$i", $mp->id)
+                      ->setCellValue("B$i", $mp->nombre)
+                      ->setCellValue("C$i", $rb->cantidad)
+                      ->setCellValue("D$i","$ ". $rb->precio)
+                      ->setCellValue("E$i","$ ".$rb->total);
+                    
           $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':F'.$i)->applyFromArray($borders);
            $i++;
-         }
-         $i=9;
-         foreach ($sVend as $rvs) {
-           $objPHPExcel->setActiveSheetIndex(0)
-             					->setCellValue("A$i", $rvs->idventa)
-                      ->setCellValue("B$i", $rvs->cantidad)
-                      ->setCellValue("C$i", $rvs->getService()->nombre)
-                      ->setCellValue("D$i","$ ". $rvs->getService()->precio)
-                      ->setCellValue("E$i","$ ".$rvs->total)
-                      ->setCellValue("F9","$ ".$total+=$rvs->total);
-
-          $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':F'.$i)->applyFromArray($borders);
-           $i++;
-         }
+           $total += $rb->total;
+       }
+       $i++;
+    $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue("A$i", "Total")
+                ->setCellValue("B$i","$ ". $total);
+  }
 
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
