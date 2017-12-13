@@ -7,7 +7,7 @@
 	$services = ServiceData::getAll();
 
 	if (count($services)>0):?>
-		<table class="table table-bordered table-hover table-responsive">
+		<table class="table table-bordered table-hover">
 			<thead>
 				<th style="width:45px;"></th>
 				<th>Servicio</th>

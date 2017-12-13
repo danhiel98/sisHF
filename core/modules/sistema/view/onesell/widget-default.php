@@ -56,13 +56,17 @@
 	   <td><?php echo $user->name." ".$user->lastname;?></td>
   </tr>
   <?php endif; ?>
+  <tr>
+    <td>Son</td>
+    <td><?php echo $sell->totalLetras; ?></td>
+  </tr>
 </table>
 <br>
 <table class="table table-bordered table-hover">
 	<thead>
 		<th>C&oacute;digo</th>
-		<th>Cantidad</th>
 		<th>Nombre del Producto / Servicio</th>
+		<th>Cantidad</th>
 		<th>Precio Unitario</th>
 		<th>Total</th>
 	</thead>
@@ -72,10 +76,10 @@
 ?>
   <tr>
     <td><?php echo $prod->id ;?></td>
-    <td><?php echo $vend->cantidad ;?></td>
 	  <td><?php echo $prod->nombre ;?></td>
-	  <td>$ <?php echo number_format($prod->precioventa,2,".",",") ;?></td>
-	  <td><b>$ <?php echo number_format($vend->cantidad*$prod->precioventa,2,".",","); $total += $vend->cantidad*$prod->precioventa;?></b></td>
+    <td><?php echo $vend->cantidad ;?></td>
+	  <td>$ <?php echo number_format($vend->precio,2,".",",") ;?></td>
+	  <td><b>$ <?php echo number_format($vend->total,2,".",","); $total += $vend->total;?></b></td>
   </tr>
   <?php	endforeach;	?>
   <?php
@@ -84,15 +88,28 @@
   ?>
     <tr>
       <td><?php echo $prod->id ;?></td>
-      <td><?php echo $vend->cantidad ;?></td>
   	  <td><?php echo $prod->nombre ;?></td>
-  	  <td>$ <?php echo number_format($prod->precio,2,".",",") ;?></td>
-  	  <td><b>$ <?php echo number_format($vend->cantidad*$prod->precio,2,".",","); $total += $vend->cantidad*$prod->precio;?></b></td>
+      <td><?php echo $vend->cantidad ;?></td>
+  	  <td>$ <?php echo number_format($vend->precio,2,".",",") ;?></td>
+  	  <td><b>$ <?php echo number_format($vend->total,2,".",","); $total += $vend->total;?></b></td>
     </tr>
   <?php endforeach; ?>
 </table>
 <br><br>
-<h1>Total: $ <?php echo number_format($total,2,'.',','); ?></h1>
+<div class="row">
+  <div class="col-md-5 pull-right">
+    <h1>Total: $ <?php echo number_format($total,2,'.',','); ?></h1>
+  </div>
+  <?php if ($sell->tipoComprobante == 2): ?>
+  <div class="col-md-5">
+    <?php
+      $iva = ConfigurationData::getByName("iva");
+      $valorIva = $iva[0]->value * $total;
+    ?>
+    <h1>IVA: $ <?php echo number_format($valorIva,2,".",","); ?></h1>
+  </div>
+  <?php endif; ?>
+</div>
 <?php else:?>
 	501 Internal Error
 <?php endif; ?>

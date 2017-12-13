@@ -13,7 +13,7 @@
 	<div class="col-md-12">
 	<h1>Editar Datos De Cliente</h1>
 	<br>
-	<form class="form-horizontal" method="post" action="index.php?view=updateclient" role="form" name="frmcliente";">
+	<form class="form-horizontal" method="post" action="index.php?view=updateclient" role="form" name="frmcliente">
 		<div class="form-group control-group">
 			<label for="txtDui" class="col-lg-2 control-label">DUI*</label>
 			<div class="col-md-6">
@@ -24,14 +24,14 @@
 		<div class="form-group control-group">
 			<label for="txtNit" class="col-lg-2 control-label">NIT</label>
 			<div class="col-md-6">
-				<input type="text" name="txtNit" class="form-control" id="txtNit" maxlength="17" data-validation-regex-regex="[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}" data-validation-regex-message="Introduzca un NIT válido" placeholder="N&uacute;mero De NIT" onkeyup="fnc(this,'-',nit,true)" onpaste="return false" required onKeyPress="return soloNumeros(event)" value="<?php echo $user->nit;?>">
+				<input type="text" name="txtNit" class="form-control" id="txtNit" maxlength="17" data-validation-regex-regex="[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}" data-validation-regex-message="Introduzca un NIT válido" placeholder="N&uacute;mero De NIT" onkeyup="fnc(this,'-',nit,true)" onpaste="return false" onKeyPress="return soloNumeros(event)" value="<?php echo $user->nit;?>">
 				<p class="help-block"></p>
 			</div>
 		</div>
 		<div class="form-group control-group">
 			<label for="txtNrc" class="col-lg-2 control-label">NRC</label>
 			<div class="col-md-6">
-				<input type="text" name="txtNrc" maxlength="17" class="form-control" id="txtNrc" placeholder="N&uacute;mero De Registro De Contribuyente" onkeyup="fnc(this,'-',nrc,true)" onpaste="return false" onkeypress="return soloNumeros(event)" data-validation-regex-regex="[0-9]{6}-[0-9]{1}" data-validation-regex-message="Introduzca un NCR válido" placeholder="N&uacute;mero De NCR" value="<?php echo $user->nrc;?>">
+				<input type="text" name="txtNrc" maxlength="8" class="form-control" id="txtNrc" placeholder="N&uacute;mero De Registro De Contribuyente" onkeyup="fnc(this,'-',nrc,true)" onpaste="return false" onkeypress="return soloNumeros(event)" data-validation-regex-regex="[0-9]{6}-[0-9]{1}" data-validation-regex-message="Introduzca un NCR válido" placeholder="N&uacute;mero De NCR" value="<?php echo $user->nrc;?>">
 				<p class="help-block"></p>
 			</div>
 		</div>
@@ -43,37 +43,41 @@
 			</div>
 		</div>
 		<div class="form-group control-group">
-			<label for="txtApellido" class="col-lg-2 control-label">Apellidos*</label>
+			<label for="txtApellido" class="col-lg-2 control-label">Apellidos</label>
 			<div class="col-md-6">
-				<input type="text" name="txtApellido" class="form-control" id="txtApellido" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un apellido válido"  placeholder="Apellidos" onkeypress="return vNom(event,this)" required value="<?php echo $user->lastname;?>">
+				<input type="text" name="txtApellido" class="form-control" id="txtApellido" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un apellido válido"  placeholder="Apellidos" onkeypress="return vNom(event,this)" value="<?php echo $user->lastname;?>">
 				<p class="help-block"></p>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="txtSexo" class="col-lg-2 control-label">Sexo*</label>
 			<div class="col-md-6">
-					<select class="form-control" name="txtSexo" required>
-						<?php if ($user->sexo == "Hombre"): ?>
-							<option selected>Hombre</option>
-			        <option>Mujer</option>
-						<?php elseif($user->sexo == "Mujer"): ?>
-							<option>Hombre</option>
-			        <option selected>Mujer</option>
-						<?php endif; ?>
-					</select>
+				<select class="form-control" name="txtSexo">
+					<option value="">--SELECCIONE--</option>
+					<?php if ($user->sexo == "Hombre"): ?>
+						<option selected>Hombre</option>
+						<option>Mujer</option>
+					<?php elseif($user->sexo == "Mujer"): ?>
+						<option>Hombre</option>
+						<option selected>Mujer</option>
+					<?php else: ?>
+						<option>Hombre</option>
+						<option>Mujer</option>
+					<?php endif; ?>
+				</select>
 			</div>
 		</div>
 		<?php
-			if (!is_null($user->birth)) {
+			if (!is_null($user->birth)):
 				$fecha = array_reverse(preg_split("[-]",$user->birth));
 				$user->birth = $fecha[0]."/".$fecha[1]."/".$fecha[2];
 		?>
 			<script type="text/javascript">
 				$(function () {
-						$("#birth").val("<?php echo $user->birth; ?>");
+					$("#birth").val("<?php echo $user->birth; ?>");
 				});
 			</script>
-		<?php } ?>
+		<?php endif; ?>
 		<div class="form-group control-group">
 			<label for="txtFechaNacimiento" class="col-lg-2 control-label">Fecha De Nacimiento</label>
 			<div class="col-md-6 controls">
@@ -94,7 +98,7 @@
 			</div>
 		</div>
 		<div class="form-group control-group">
-			<label for="txtEmail" class="col-lg-2 control-label">Email*</label>
+			<label for="txtEmail" class="col-lg-2 control-label">Email</label>
 			<div class="col-md-6 controls">
 				<input type="email" name="txtEmail" class="form-control" id="txtEmail" placeholder="Email" maxlength="100" value="<?php echo $user->email;?>">
 				<p class="help-block"></p>

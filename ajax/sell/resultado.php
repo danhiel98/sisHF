@@ -16,26 +16,26 @@
 		$nombreProd = $_POST['productos'];
 		$products = ProductData::getLike($nombreProd);
 
-		foreach ($products as $prd):
+		foreach ($products as $prd){
 			$prodSuc = ProductoSucursalData::getBySucursalProducto($idSucursal,$prd->id);
 			if (count($prodSuc) == 1){
 				array_push($productos,$prodSuc);
 			}
-		endforeach;
+		}
 	}else{
 		$productos = ProductoSucursalData::getAllBySucId($idSucursal);
 	}
 	
 	if (count($productos) > 0){
 		?>
-		<table class="table table-bordered table-hover table-responsive">
+		<table class="table table-bordered table-hover">
 			<thead>
-				<th style="width: 45px;"></th>
+				<th style="width: 45px;">No.</th>
 				<th>Producto</th>
 				<th style="width: 200px;">Disponibles</th>
 				<th style="width: 200px;">Precio Unitario</th>
-				<th style="width: 150px;">Mantenimiento</th>
-				<th style="width: 150px;"></th>
+				<th style="width: 120px;">Mantenimiento</th>
+				<th style="width: 120px;"></th>
 			</thead>
 	<?php
 		foreach($productos as $prod){
@@ -43,8 +43,20 @@
 			$mantto = false;
 			?>
 				<tr>
-					<?php if(isset($_SESSION["cart"])){ foreach ($_SESSION["cart"] as $c) {if($c["product_id"] == $prod->idproducto){ $found=true; if($c["mantenimiento"] == 1){ $mantto = true;} break; }}} ?>
-					<td></td>
+					<?php
+						if(isset($_SESSION["cart"])){
+							foreach ($_SESSION["cart"] as $c) {
+								if($c["product_id"] == $prod->idproducto){
+									$found=true;
+									if($c["mantenimiento"] == 1){
+										$mantto = true;
+									}
+									break;
+								}
+							}
+						}
+					?>
+					<td><?php echo $prod->getProduct()->id; ?></td>
 					<td><?php echo $prod->getProduct()->nombre; ?></td>
 					<td><?php echo $prod->cantidad; ?></td>
 					<td>$ <?php echo number_format($prod->getProduct()->precioventa,2,".",",") ?></td>
@@ -65,11 +77,11 @@
 							<input type="hidden" name="service_id" value="" required>
 							<div class="form-group control-group">
 								<div class="controls">
-									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="width:85px;" min="1" max="<?php echo $prod->cantidad; ?>" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
-									<button type="submit" class="btn btn-sm btn-primary"><i class="icon-cart"></i></button>
+									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="max-width:65px;" min="1" max="<?php echo $prod->cantidad; ?>" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
+									<button type="submit" class="btn btn-sm btn-success"><i class="fa fa-cart-plus"></i></button>
 									<p class="help-block"></p>
 								</div>
-	  					</div>
+	  						</div>
 						</form>
 					<?php endif; ?>
 					</td>
@@ -89,7 +101,7 @@
 
 				$(document).ready(function(){
 					$("form.enviar").submit(function(){
-						if($(this).attr("class") != "form-inline enviar has-error"){
+						if($(".input-sm",this).attr("aria-invalid") != "true"){
 							$.ajax({
 								url: $(this).attr("action"),
 								type: "POST",
@@ -111,9 +123,9 @@
 	?>
 		<div class="alert alert-danger">
 		<?php if ($prod): ?>
-				No se encontraron coincidencias con sus criterios de búsqueda.
+			No se encontraron coincidencias con sus criterios de búsqueda.
 		<?php else: ?>
-				No hay productos disponibles en esta sucursal.
+			No hay productos disponibles en esta sucursal.
 		<?php endif; ?>
 		</div>
 	<?php

@@ -8,33 +8,32 @@ class ConfigurationData {
 	}
 
 	public function add(){
-		$sql = "insert into configuracion (nambre,valor) ";
+		$sql = "insert into configuracion (nombre, valor) ";
 		$sql .= "value (\"$this->name\",\"$this->value)";
 		Executor::doit($sql);
 	}
 
 	public static function delById($id){
-		$sql = "delete from ".self::$tablename." where id=$id";
+		$sql = "delete from ".self::$tablename." where idConfig=$id";
 		Executor::doit($sql);
 	}
 	public function del(){
-		$sql = "delete from ".self::$tablename." where id=$this->id";
+		$sql = "delete from ".self::$tablename." where idConfig=$this->id";
 		Executor::doit($sql);
 	}
 
-// partiendo de que ya tenemos creado un objecto ConfigurationData previamente utilizamos el contexto
 	public function update(){
-		$sql = "update ".self::$tablename." set nombre=\"$this->name\" where id=$this->id";
+		$sql = "update ".self::$tablename." set nombre=\"$this->name\" where idConfig=$this->id";
 		Executor::doit($sql);
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where id=$id";
+		$sql = "select * from ".self::$tablename." where idConfig=$id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new ConfigurationData();
 		while($r = $query[0]->fetch_array()){
-			$data->id = $r['id'];
+			$data->id = $r['idConfig'];
 			$data->name = $r['nombre'];
 			$data->value = $r['valor'];
 			break;
@@ -42,21 +41,20 @@ class ConfigurationData {
 		return $found;
 	}
 
-	public static function getByMail($name){
+	public static function getByName($name){
 		$sql = "select * from ".self::$tablename." where nombre=\"$name\"";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new ConfigurationData();
-			$array[$cnt]->id = $r['id'];
-			$array[$cnt]->name = $r['name'];
+			$array[$cnt]->id = $r['idConfig'];
+			$array[$cnt]->name = $r['nombre'];
 			$array[$cnt]->value = $r['valor'];
 			$cnt++;
 		}
 		return $array;
 	}
-
 
 	public static function getAll(){
 		$sql = "select * from ".self::$tablename;
@@ -65,14 +63,13 @@ class ConfigurationData {
 		$cnt = 0;
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new ConfigurationData();
-			$array[$cnt]->id = $r['id'];
-			$array[$cnt]->name = $r['name'];
+			$array[$cnt]->id = $r['idConfig'];
+			$array[$cnt]->name = $r['nombre'];
 			$array[$cnt]->value = $r['valor'];
 			$cnt++;
 		}
 		return $array;
 	}
-
 
 	public static function getLike($q){
 		$base = new Database();
@@ -84,7 +81,7 @@ class ConfigurationData {
 		$cnt = 0;
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new ConfigurationData();
-			$array[$cnt]->id = $r['id'];
+			$array[$cnt]->id = $r['idConfig'];
 			$array[$cnt]->name = $r['nombre'];
 			$array[$cnt]->value = $r['valor'];
 			$cnt++;

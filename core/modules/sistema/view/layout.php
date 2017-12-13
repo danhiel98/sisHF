@@ -1,4 +1,5 @@
 <?php
+  
   if (isset($_GET["view"])) {
     $vista = $_GET["view"];
     switch ($vista) {
@@ -76,6 +77,7 @@
           if(Session::getUID()!="" && !isset($_GET["about"])):
             $u = UserData::getById(Session::getUID());
           ?>
+          
           <ul class="nav navbar-nav side-nav">
             <li><a href="index.php?view=home"><i class="fa fa-home"></i> Inicio</a></li>
             <?php if ($u->tipo == 1 || $u->tipo == 2): ?>
@@ -109,16 +111,14 @@
             <li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Compras</a></li>
             <li><a href="index.php?view=traspasos"><i class="fa fa-exchange"></i> Traspasos</a></li>
             <li><a href="index.php?view=pedidos"><i class="fa fa-list-alt"></i> Pedidos</a></li>
+            <li><a href="index.php?view=pagos"><i class="fa fa-credit-card"></i> Pagos</a></li>
             <li><a href="index.php?view=sells"><i class="fa fa-shopping-cart"></i> Ventas</a></li>
             <li><a href="index.php?view=box"><i class="fa fa-archive"></i> Caja</a></li>
-            <!--
-            <li><a href="index.php?view=devolucion"><i class="fa fa-glass"></i> Devoluci&oacute;n</a></li>
-            -->
+            <li><a href="index.php?view=devolucion"><i class="fa fa-reply"></i> Devoluciones</a></li>
             <li><a href="index.php?view=sbox"><i class="fa fa-archive"></i> Caja Chica </a></li>
             <div class="clearfix"></div>
             <br><br>
             <!--
-            <li><a href="index.php?view=compras"><i class="fa fa-refresh"></i> Compras</a></li>
             <li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Reabastecimientos <small><span class="label label-success">Nuevo</span></small></a></li>
             <li><a href="index.php?view=reports"><i class="fa fa-tasks"></i> Reportes</a></li>
             -->
@@ -130,23 +130,30 @@
             if(Session::getUID()!=""){
               $u = UserData::getById(Session::getUID());
               if ($u->idempleado == null || $u->idempleado == ""){
-                $user = $u->name." ".$u->lastname;
+                $nombreUsuario = $u->name." ".$u->lastname;
               }else{
-                $user = $u->getEmpleado()->nombre." ".$u->getEmpleado()->apellido;
+                $nombre = preg_split("[ ]", $u->getEmpleado()->nombre);
+                $apellido = preg_split("[ ]",$u->getEmpleado()->apellido);
+                $nombreUsuario = $nombre[0]." ".$apellido[0];
               }
             }
           ?>
-          <ul class="nav navbar-nav navbar-right navbar-user">
-            <li class="dropdown user-dropdown">
+          <ul class="nav navbar-nav navbar-right ">
+            <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <?php echo $user; ?> <b class="caret"></b>
+              <i class="fa fa-user fa-fw"></i>
+              <?php echo $nombreUsuario; ?> <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="index.php?view=configuration">Configuraci&oacute;n</a></li>
-                <li><a href="logout.php">Salir</a></li>
+                <li><a href="index.php?view=configuration"><i class="fa fa-cog fa-fw"></i> Configuraci&oacute;n</a></li>
+                <li><a target="_blank" href="about"><i class="fa fa-info fa-fw"></i> Acerca de</a></li>
+                <li><a href="logout.php"><i class="fa icon-exit fa-fw"></i> Salir</a></li>
               </ul>
             </li>
           </ul>
+          
+          <?php include "alertas.php"; ?>
+          
           <?php endif; ?>
         </div><!-- /.navbar-collapse -->
       </nav>
@@ -155,11 +162,8 @@
         if (isset($_GET["view"]) && Session::getUID() == "") {
           @header("location: index.php");
         }
-        if (isset($_GET["about"]) && $_GET["about"] == "true"){
-          View::load("fechas");          
-        }else{
-          View::load("login");
-        }
+        
+        View::load("login");
         
         ?>
       </div><!-- /#page-wrapper -->

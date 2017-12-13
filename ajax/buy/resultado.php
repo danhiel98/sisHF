@@ -28,7 +28,7 @@
 				<th>Precio Unitario</th>
 				<th style="width:50px;"></th>
 			</thead>
-			<?php	foreach ($matPrim as $mp): ?>
+			<?php foreach ($matPrim as $mp): ?>
 			<tr>
 				<td><?php echo $mp->id; ?></td>
 				<td style="max-width: 120px;"><?php echo $mp->nombre; ?></td>
@@ -81,17 +81,15 @@
 		</table>
 		<script type="text/javascript">
 			$(function(){
-				$.getScript("ajax/buy/funciones.js",function(data, textStatus, jqxhr){
-					//Acciones a realizar
-				});
+				$.getScript("ajax/buy/funciones.js");
 			});
 		</script>
 	<?php	else: ?>
-		<div class="alert alert-danger">
+		<div class="alert alert-warning">
 		<?php if ($prod): ?>
-				No se encontraron coincidencias con sus criterios de búsqueda.
+			No se encontraron coincidencias con sus criterios de búsqueda.
 		<?php else: ?>
-				No hay productos disponibles en esta sucursal.
+			No hay productos disponibles en esta sucursal.
 		<?php endif; ?>
 		</div>
 	<?php endif; ?>

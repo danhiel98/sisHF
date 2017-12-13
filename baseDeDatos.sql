@@ -410,7 +410,7 @@ CREATE TABLE tipoComprobante(
 insert into tipoComprobante values
 (null,"Factura"),
 (null,"Comprobante de Crédito Fiscal"),
-(null,"Ticket");
+(null,"Recibo");
 
 /*OK*/
 CREATE TABLE usuario(
@@ -501,9 +501,9 @@ CREATE TABLE facturaMateriaPrima(
   idFacturaMateriaPrima mediumint PRIMARY KEY AUTO_INCREMENT,
   idUsuario smallint not null,
   idProveedor smallint not null,
-  tipoComprobante tinyint not null, /* Factura, CCF, Ticket */
+  tipoComprobante tinyint, /* Factura, CCF, Ticket */
   tipoPago tinyint not null default 1,
-  numComprobante varchar(32) not null,
+  numComprobante varchar(32),
   fecha datetime not null default current_timestamp,
   total decimal(9,2) not null,
   estado boolean default 1 not null,
@@ -672,6 +672,7 @@ CREATE TABLE pedido(
   adelanto decimal(9,2) not null,
   tipoPago tinyint not null,
   */
+  restante decimal(9,2) not null,
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idCliente) references cliente(idCliente),
@@ -684,6 +685,7 @@ CREATE TABLE pedidoProducto(
   idPedido int not null,
   idProducto mediumint not null,
   cantidad int not null,
+  precio decimal(9,2) not null,
   total decimal(9,2) not null,
   mantenimiento boolean not null default 0,
   estado boolean default 1 not null,
@@ -696,6 +698,7 @@ CREATE TABLE pedidoServicio(
   idPedido int not null,
   idServicio smallint not null,
   cantidad smallint not null default 1,
+  precio decimal(9,2) not null,
   total decimal(9,2) not null,
   estado boolean default 1 not null,
   foreign key(idPedido) references pedido(idPedido),
@@ -704,14 +707,18 @@ CREATE TABLE pedidoServicio(
 
 CREATE TABLE abono(
   idAbono mediumint PRIMARY KEY AUTO_INCREMENT,
+  idUsuario smallint not null,
+  idCliente mediumint not null,
   idPedido int not null,
   cantidad decimal(9,2) not null,
   fecha datetime not null,
-  tipoPago tinyint not null default 1,
+  tipoComprobante tinyint not null default 1,
   numeroComprobante varchar(32),
   estado boolean default 1 not null,
-  foreign key(tipoPago) references tipoPago(idTipoPago),
-  foreign key(idPedido) references pedido(idPedido)
+  foreign key(tipoComprobante) references tipoComprobante(idTipo),
+  foreign key(idPedido) references pedido(idPedido),
+  foreign key(idUsuario) references usuario(idUsuario),
+  foreign key(idCliente) references cliente(idCliente)
 );
 
 CREATE TABLE facturaVenta(
@@ -720,11 +727,11 @@ CREATE TABLE facturaVenta(
   idSucursal tinyint not null,
   idCliente mediumint,
   idCierreCaja tinyint,
-  numeroFactura varchar(8) not null,
+  numeroFactura varchar(12) not null,
   fecha datetime default current_timestamp not null,
   tipoComprobante tinyint not null,
   tipoPago tinyint not null default 1,
-  numeroComprobante varchar(32),
+  totalLetras varchar(150),
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idSucursal) references sucursal(idSucursal),
@@ -738,6 +745,7 @@ CREATE TABLE ventaProducto(
   idVentaProducto int PRIMARY KEY AUTO_INCREMENT,
   idFacturaVenta int not null,
   idProducto mediumint not null,
+  precio decimal(9,2) not null,
   cantidad smallint not null,
   total decimal(9,2) not null,
   mantenimiento boolean not null default 0,
@@ -750,6 +758,7 @@ CREATE TABLE ventaServicio(
   idVentaServicio int PRIMARY KEY AUTO_INCREMENT,
   idFacturaVenta int not null,
   idServicio smallint not null,
+  precio decimal(9,2) not null,
   cantidad smallint not null default 1,
   total decimal(9,2) not null,
   estado boolean default 1 not null,

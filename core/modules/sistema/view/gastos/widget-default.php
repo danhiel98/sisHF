@@ -1,5 +1,5 @@
 <?php
-	$empleados = EmpleadoData::getAll();
+	$empleados = EmpleadoData::getAllBySucId($_SESSION["usr_suc"]);
 	include("modals/agregar.php");
 	include("modals/editar.php");
 	$gastos = GastoData::getAll();

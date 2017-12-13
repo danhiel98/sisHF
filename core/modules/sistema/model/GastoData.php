@@ -34,7 +34,7 @@ class GastoData {
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where idGasto=$id and estado = 1";
+		$sql = "select * from ".self::$tablename." where idGasto=$id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new GastoData();

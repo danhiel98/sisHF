@@ -1,5 +1,7 @@
 <?php
 
+include "loader.php";
+
 if(count($_POST)>0){
   $service = ServiceData::getById($_POST['idServicio']);
   $service->nombre = $_POST["nombre"];

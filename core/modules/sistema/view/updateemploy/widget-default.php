@@ -1,5 +1,7 @@
 <?php
 
+include("loader.php");
+
 if(count($_POST)>0){
 	$emp = EmpleadoData::getById($_POST["idEmpleado"]);
 	$emp->dui = $_POST["txtDui"];
@@ -19,7 +21,6 @@ if(count($_POST)>0){
 	$fecha = array_reverse(preg_split("[/]",$emp->fechanacimiento));
 	$emp->fechanacimiento = $fecha[0]."-".$fecha[1]."-".$fecha[2];
 	$emp->update();
-	include("loader.php");
 }
 print "<script>window.location='index.php?view=empleados';</script>";
 

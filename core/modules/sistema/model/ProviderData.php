@@ -31,7 +31,7 @@ class ProviderData {
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where idProveedor = $id and estado = 1";
+		$sql = "select * from ".self::$tablename." where idProveedor = $id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new ProviderData();

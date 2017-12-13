@@ -205,20 +205,6 @@ table.tablesorter thead tr th:hover {
     color: rgb(24, 92, 62);
 }
 
-.panel-purple {
-    border-color: #268690;
-}
-
-.panel-purple > .panel-heading {
-    border-color: #268690;
-    color: #fff;
-    background-color: #268690;
-}
-
-.panel-purple > a {
-    color: rgb(27, 5, 46);
-}
-
 .panel-yellow {
     border-color: #5179a2;
 }
@@ -247,34 +233,6 @@ table.tablesorter thead tr th:hover {
     color: rgb(54, 32, 32);
 }
 
-.panel-green-2 {
-    border-color: #113C4A;
-}
-
-.panel-green-2 > .panel-heading {
-    border-color: #113C4A;
-    color: #fff;
-    background-color: #113C4A;
-}
-
-.panel-green-2 > a {
-    color: rgb(8, 46, 58);
-}
-
-.panel-lightBlue {
-    border-color: #1FAD9F;
-}
-
-.panel-lightBlue > .panel-heading {
-    border-color: #1FAD9F;
-    color: #fff;
-    background-color: #1FAD9F;
-}
-
-.panel-lightBlue > a {
-    color: rgb(27, 129, 119);
-}
-
 .panel-blue {
     border-color: #000249;
 }
@@ -289,6 +247,8 @@ table.tablesorter thead tr th:hover {
     color: #020431;
 }
 
+
+
 .panel-azulGris {
     border-color: #476268;
 }
@@ -300,5 +260,47 @@ table.tablesorter thead tr th:hover {
 }
 
 .panel-azulGris > a {
-    color: #354a4e;
+    color: #374c50;
+}
+
+.panel-green-2 {
+    border-color: #666666;
+}
+
+.panel-green-2 > .panel-heading {
+    border-color: #666666;
+    color: #fff;
+    background-color: #666666;
+}
+
+.panel-green-2 > a {
+    color: rgb(101, 102, 102);
+}
+
+.panel-purple {
+    border-color: #78909C;
+}
+
+.panel-purple > .panel-heading {
+    border-color: #78909C;
+    color: #fff;
+    background-color: #78909C;
+}
+
+.panel-purple > a {
+    color: rgb(100, 109, 117);
+}
+
+.panel-lightBlue {
+    border-color: #827a88;
+}
+
+.panel-lightBlue > .panel-heading {
+    border-color: #827a88;
+    color: #fff;
+    background-color: #827a88;
+}
+
+.panel-lightBlue > a {
+    color: #67606d;
 }

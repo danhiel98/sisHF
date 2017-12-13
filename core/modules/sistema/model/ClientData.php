@@ -35,7 +35,6 @@ class ClientData {
 		Executor::doit($sql);
 	}
 
-// partiendo de que ya tenemos creado un objecto ClientData previamente utilizamos el contexto
 	public function update(){
 		if ($this->birth != "") {
 			$sql = "update ".self::$tablename." set dui=\"$this->dui\", nit=\"$this->nit\", nombre=\"$this->name\", apellido=\"$this->lastname\", fechaNacimiento=\"$this->birth\", email=\"$this->email\", direccion=\"$this->direccion\", sexo=\"$this->sexo\", telefono=\"$this->phone\", nrc=\"$this->nrc\" where idCliente = $this->id";
@@ -46,7 +45,7 @@ class ClientData {
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where idCliente = $id and estado = 1";
+		$sql = "select * from ".self::$tablename." where idCliente = $id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new ClientData();

@@ -40,7 +40,6 @@ class ProductData {
 
 	public function update(){
 		$sql = "update ".self::$tablename." set idCategoria=$this->idcategoria, nombre=\"$this->nombre\", descripcion=\"$this->descripcion\", mantenimiento=$this->mantenimiento, preciocosteo=$this->preciocosteo, precioventa=$this->precioventa, estado=$this->estado where idProducto=$this->id";
-		//return $sql;
 		return Executor::doit($sql);
 	}
 

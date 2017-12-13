@@ -49,8 +49,8 @@
 				<?php foreach($errorMP as $mp): ?>
 				<div class="list-group-item">
 					<?php $matPrim = MateriaPrimaData::getById($mp->idmateriaprima); ?>
-						<?php echo $matPrim->nombre; ?>
-						<div class="pull-right">
+					<?php echo $matPrim->nombre; ?>
+					<div class="pull-right">
 						<span data-toggle="tooltip" title="Existentes" class="label label-danger"><?php echo $matPrim->existencias; ?></span>
 						<span data-toggle="tooltip" title="Necesarios" class="label label-primary"><?php echo $mp->cantidad; ?></span>
 					</div>

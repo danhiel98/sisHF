@@ -1,32 +1,31 @@
 $(function(){
-
   $(".cmpCant").on("keypress",function(e){
     key = (window.Event) ? e.which : e.keyCode;
     return (key >= 48 && key <= 57 || key >= 8 && key <= 31 || key == 0);
   });
-
+  
   $(".cmpPrec").on("keypress",function(e){
     key = (window.Event) ? e.which : e.keyCode;
     return (key >= 48 && key <= 57 || key >= 8 && key <= 31 || key == 0 || key == 46);
   });
 
-  $(".cmpValid").on("change keyup leave", function(){
-    id = $(this).data("id");
-    objCant = $(".cmpCant[data-id="+id+"]");
-    objPrec = $(".cmpPrec[data-id="+id+"]");
-    objBtn = $(".btnEnviar[data-id="+id+"]");
-    validar(objCant,objPrec,objBtn);
+  $(".cmpValid").on("paste", function(){
+    return false;
   });
 
-  function validar(obj1,obj2,btn){
-    cnt = obj1.val();
-    prc = obj2.val();
-    if ((obj1.attr("aria-invalid")=="false" && cnt.length > 0) && (obj2.attr("aria-invalid")=="false" && prc.length > 0)) {
+  $(".cmpValid").on("change keypress leave", function(){
+    id = $(this).data("id");
+    cantidad = $(".cmpCant[data-id=" + id + "]").val();
+    precio = $(".cmpPrec[data-id=" + id + "]").val();
+    btn = $(".btnEnviar[data-id=" + id + "]")
+
+    if (cantidad > 0 && precio > 0){
       btn.removeAttr("disabled");
     }else{
-      btn.attr("disabled","true");
+      btn.attr("disabled", "true");
     }
-  }
+
+  });
 
   $(".btnEnviar").click(function(){
     idBoton = $(this).data("id");

@@ -5,8 +5,8 @@
 		public function ReabastecimientoData(){
 			$this->idusuario = "";
 			$this->idproveedor = "";
-			$this->tipoComprobante = ""; #Tipo de comprobante
-			$this->comprobante = ""; #No. de comprobante
+			$this->tipoComprobante = "null"; #Tipo de comprobante
+			$this->comprobante = "null"; #No. de comprobante
 			$this->total = 0;
 			$this->fecha = "NOW()";
 		}
@@ -37,7 +37,7 @@
 		}
 		
 		public static function getById($id){
-			$sql = "select * from ".self::$tablename." where idFacturaMateriaPrima = $id and estado = 1";
+			$sql = "select * from ".self::$tablename." where idFacturaMateriaPrima = $id";
 			$query = Executor::doit($sql);
 			$found = null;
 			$data = new ReabastecimientoData();

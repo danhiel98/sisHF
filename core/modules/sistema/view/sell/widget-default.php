@@ -37,7 +37,7 @@
 					</div>
 					<div class="clearfix"></div>
 					<br>
-					<div class="col-md-12">
+					<div class="col-md-12 table-responsive">
 						<div id="tabla_resultado">
 						</div>
 					</div>
@@ -47,7 +47,9 @@
 				<p><b>Agregar servicio a la venta</b></p>
 				<br>
 				<div class="row">
-					<div class="col-md-12" id="resultado_srv">
+					<div class="col-md-12 table-responsive">
+						<div id="resultado_srv">
+						</div>
 					</div>
 				</div>
 			</div>

@@ -53,7 +53,7 @@ class MateriaPrimaData {
 	}
 
 	public static function getArrayById($id){
-		$sql = "select * from ".self::$tablename." where idMateriaPrima=$id and estado = 1";
+		$sql = "select * from ".self::$tablename." where idMateriaPrima=$id";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

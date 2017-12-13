@@ -18,22 +18,20 @@
 		<input type="hidden" name="sOrigen" id="sOrigen" value="<?php echo $_SESSION["usr_suc"]; ?>">
 		<br>
 		<p><b>Buscar producto por nombre o por descripci&oacute;n:</b></p>
-		<form>
-			<div class="row">
-				<div class="col-md-5 col-sm-6 col-xs-10">
-					<div class="input-group">
-						<input type="hidden" name="view" value="newtraspaso">
-						<input type="text" name="product" id="busqueda" placeholder="Buscar producto" class="form-control" autofocus>
-						<span class="input-group-addon"><i class="fa fa-search fa-fw"></i>Buscar</span>
-					</div>
-				</div>
-				<div class="btn-group pull-right">
-					<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#resumen">
-						<i class="fa fa-list"></i> Ver Resumen</span>
-					</button>
+		<div class="row">
+			<div class="col-md-5 col-sm-6 col-xs-10">
+				<div class="input-group">
+					<input type="hidden" name="view" value="newtraspaso">
+					<input type="text" name="product" id="busqueda" placeholder="Buscar producto" class="form-control" autofocus>
+					<span class="input-group-addon"><i class="fa fa-search fa-fw"></i>Buscar</span>
 				</div>
 			</div>
-		</form>
+			<div class="btn-group pull-right">
+				<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#resumen">
+					<i class="fa fa-list"></i> Ver Resumen</span>
+				</button>
+			</div>
+		</div>
 	</div>
 	<div class="clearfix"></div>
 	<br>

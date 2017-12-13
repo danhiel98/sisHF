@@ -8,26 +8,23 @@
 			$found = false;
 			$cart = $_SESSION["reabastecerMP"];
 			$index = 0;
-		?>
-		<?php
+		
 			foreach($cart as $c){
 				if($c["idMateriaPrima"] == $_POST["idMP"]){
+					echo "Se ha encontrado un ID igual";
 					$found = true;
 					break;
 				}
 				$index++;
 			}
 
-			if($found == true){
+			if($found){
 				$cart[$index]["cantidad"] = $_POST["cantidadMP"];
 				$cart[$index]["precio"] = $_POST["precioMP"];
 				$_SESSION["reabastecerMP"] = $cart;
-			}
-
-			if($found == false){
-				$cnt = count($cart);
+			}else{
 				$matPrim = array("idMateriaPrima"=>$_POST["idMP"],"cantidad"=>$_POST["cantidadMP"],"precio"=>$_POST["precioMP"]);
-				$cart[$cnt] = $matPrim;
+				array_push($cart, $matPrim);
 				$_SESSION["reabastecerMP"] = $cart;
 			}
 		}

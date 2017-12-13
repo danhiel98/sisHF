@@ -5,6 +5,7 @@
 	include ("../../core/modules/sistema/model/UserData.php");
 	include ("../../core/modules/sistema/model/ClientData.php");
   include ("../../core/modules/sistema/model/ProductData.php");
+  include ("../../core/modules/sistema/model/ServiceData.php");
   include ("../../core/modules/sistema/model/FacturaData.php");
   include ("../../core/modules/sistema/model/ComprobanteData.php");
 
@@ -48,7 +49,7 @@
               <th>Cliente</th>
               <th>Vendedor</th>
               <th>Fecha</th>
-              <th>Tipo De Documento</th>
+              <th>Tipo De Comprobante</th>
               <th>Total</th>
             </thead>
             <tbody>
@@ -68,12 +69,10 @@
                     <?php
                       $total=0;
                       foreach($prodsx as $p){
-                        $prd = $p->getProduct();
-                        $total += $p->cantidad * $prd->precioventa;
+                        $total += $p->total;
                       }
                       foreach ($servsx as $s) {
-                        $srv = $s->getService();
-                        $total += $s->cantidad * $srv->precio;
+                        $total += $s->total;
                       }
                       echo "<b>$ ".number_format($total,2,'.',',')."</b>";
                     ?>

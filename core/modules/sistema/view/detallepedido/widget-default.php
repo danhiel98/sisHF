@@ -11,8 +11,8 @@
         $total = 0;
         $client = $pedido->getClient();
 ?>
-    <div class="row">
-        <a class="btn btn-default" href="index.php?view=pedidos"><i class="fa fa-arrow-left"></i> Regresar</a>
+    <div>
+        <a class="btn btn-default" href="<?php if (isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo 'index.php?view=pedidos';} ?>"><i class="fa fa-arrow-left"></i> Regresar</a>
         <div class="btn-group pull-right">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-download"></i> Descargar <span class="caret"></span>
@@ -59,6 +59,10 @@
                 <td><?php echo $user->name." ".$user->lastname;?></td>
             </tr>
             <?php endif; ?>
+            <tr>
+                <td>Pendiente</td>
+                <td><strong>$ <?php echo $pedido->restante; ?></strong></td>
+            </tr>
         </table>
 
         <table class="table table-bordered table-hover">
@@ -77,8 +81,8 @@
             <td><?php echo $prod->id ;?></td>
             <td><?php echo $pedid->cantidad ;?></td>
             <td><?php echo $prod->nombre ;?></td>
-            <td>$ <?php echo number_format($prod->precioventa,2,".",",") ;?></td>
-            <td><b>$ <?php echo number_format($pedid->cantidad*$prod->precioventa,2,".",","); $total += $pedid->cantidad*$prod->precioventa;?></b></td>
+            <td>$ <?php echo number_format($pedid->precio,2,".",",") ;?></td>
+            <td><b>$ <?php echo number_format($pedid->total,2,".",","); $total += $pedid->total;?></b></td>
         </tr>
         <?php	endforeach;	?>
         <?php
@@ -89,8 +93,8 @@
             <td><?php echo $prod->id ;?></td>
             <td><?php echo $pedid->cantidad ;?></td>
             <td><?php echo $prod->nombre ;?></td>
-            <td>$ <?php echo number_format($prod->precio,2,".",",") ;?></td>
-            <td><b>$ <?php echo number_format($pedid->cantidad*$prod->precio,2,".",","); $total += $pedid->cantidad*$prod->precio;?></b></td>
+            <td>$ <?php echo number_format($pedid->precio,2,".",",") ;?></td>
+            <td><b>$ <?php echo number_format($pedid->total,2,".",","); $total += $pedid->total;?></b></td>
             </tr>
         <?php endforeach; ?>
         </table>

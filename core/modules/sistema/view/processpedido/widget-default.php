@@ -12,6 +12,7 @@
 			$pdido->fechaentrega = date("Y-m-d",strtotime($_POST["fechaEntrega"]));
 			$r = $pdido->add();
 
+			$total = 0;
 			foreach($cart as $c){
 				$prodPd = new PedidoData();
 				$prodPd->idpedido = $r[1];
@@ -19,14 +20,29 @@
 				if ($c["product_id"] != "" && $c["service_id"] == "") {
 					$prodPd->idproducto = $c["product_id"];
 					$prodPd->mantenimiento = $c["mantenimiento"];
-					$prodPd->total = $c["cantidad"] * $prodPd->getProduct()->precioventa;
+					$prodPd->precio = $prodPd->getProduct()->precioventa;
+					$prodPd->total = $prodPd->cantidad * $prodPd->precio;
 					$prodPd->addProdPd();
 				}elseif($c["product_id"] == "" && $c["service_id"] != ""){
 					$prodPd->idservicio = $c["service_id"];
-					$prodPd->total = $c["cantidad"] * $prodPd->getService()->precio;
+					$prodPd->precio = $prodPd->getService()->precio;
+					$prodPd->total = $prodPd->cantidad * $prodPd->precio;
 					$prodPd->addServPd();
 				}
+				$total += $prodPd->total;
 			}
+
+			$abono = new AbonoData();
+			$abono->idusuario = Session::getUID();
+			$abono->idcliente = $_POST["cliente"];
+			$abono->idpedido = $r[1];
+			$abono->cantidad = $_POST["cantidad"];
+			$abono->tipocomprobante = $_POST["tipo"];
+			$abono->numerocomprobante = $_POST["numero"];
+			$abono->add();
+
+			$pdido->restante = $total - $abono->cantidad;
+			$pdido->updateRestante($r[1]);
 
 		}
 		unset($_SESSION["sucursal"]);

@@ -10,6 +10,9 @@
 <h1>Resumen de Compra</h1>
 <?php if(isset($_GET["id"]) && $_GET["id"]!=""):
   $reab = ReabastecimientoData::getById($_GET["id"]);
+  if (is_null($reab)) {
+    @header("location: index.php?view=res");
+  }
   $reabMP = ReabastecimientoMPData::getAllByReabId($_GET["id"]);
   $total = 0;
 ?>
@@ -23,7 +26,15 @@
     </tr>
     <tr>
     	<th style="width:150px;">Tipo Comprobante</th>
-    	<td><?php echo $reab->getComprobante()->nombre;?></td>
+    	<td>
+        <?php
+          if ($reab->tipoComprobante != null){
+            echo $reab->getComprobante()->nombre;
+          }else{
+            echo "NINGUNO";
+          }
+        ?>
+      </td>
     </tr>
     <tr>
     	<th style="width:150px;">No. Comprobante</th>

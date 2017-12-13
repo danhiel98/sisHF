@@ -3,6 +3,7 @@
 	include ("../../core/autoload.php");
 	include ("../../core/modules/sistema/model/ProductData.php");
 	include ("../../core/modules/sistema/model/ServiceData.php");
+	include ("../../core/modules/sistema/model/ConfigurationData.php");
 ?>
 	<?php if (isset($_SESSION["cart"]) && !empty($_SESSION["cart"])) { ?>
 		<table class="table table-bordered">
@@ -32,8 +33,6 @@
 					$total += $totalx;
 				?>
 
-
-
 				<input type="hidden" name="total" id="total" value="<?php echo $total; ?>">
 				<tr>
 					<td><?php echo $prod->nombre; ?></td>
@@ -47,7 +46,24 @@
 				</tr>
 			<?php endforeach; ?>
 			</table>
-			<h2>Total a pagar: <strong>$ <?php echo number_format($total,2,".",","); ?></strong></h2>
+			<div class="row">
+				<div class="col-md-5 pull-right">
+					<h3>
+						Total a pagar: <strong>$ <?php echo number_format($total,2,".",","); ?></strong>
+					</h3>
+				</div>
+				<?php  ?>
+				<div class="col-md-5 pull-right">
+					<?php
+						$iva = ConfigurationData::getByName("iva");
+						$valorIva = $iva[0]->value * $total;
+					?>
+					<h3>
+						IVA: <strong>$ <?php echo number_format($valorIva,2,".",","); ?></strong>
+					</h3>
+				</div>
+				<?php  ?>
+			</div>
 			<script type="text/javascript">
 				function resumen(){
 					datosResumen();
