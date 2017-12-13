@@ -147,9 +147,9 @@
 		$("#sucursal").on("change",function(){
 			var valor = $(this).val();
 			if (valor >= 1){
-				$("#reporteUSU").attr("href","report/usuario.php?idSuc="+ valor);
+				$("#reporteEPS").attr("href","report/usuario.php?idSuc="+ valor);
 			}else{
-				$("#reporteUSU").attr("href","#");
+				$("#reporteEPS").attr("href","#");
 			}
 		});
 	});
