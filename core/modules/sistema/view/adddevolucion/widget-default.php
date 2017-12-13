@@ -9,8 +9,7 @@ if(count($_POST)>0){
 	$user->phone1 = $_POST["phone1"];
 	$user->add_client();
 
-print "<script>window.location='index.php?view=devolucion';</script>";
-
+	print "<script>window.location='index.php?view=devolucion';</script>";
 
 }
 

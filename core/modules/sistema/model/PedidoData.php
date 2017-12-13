@@ -49,8 +49,8 @@ class PedidoData {
 		Executor::doit($sql);
 	}
 
-	public function updateRestante($id){
-		$sql = "update ".self::$tablename." set restante = $this->restante where idPedido=$id";
+	public function updateRestante(){
+		$sql = "update ".self::$tablename." set restante = $this->restante where idPedido=$this->id";
 		Executor::doit($sql);
 	}
 

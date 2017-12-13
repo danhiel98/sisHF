@@ -6,6 +6,7 @@
     }
 
     if (count($pedido) == 1):
+        include "modals/agregar.php";
         $prodP = PedidoData::getAllProductsByPedidoId($_GET["id"]);
         $servP = PedidoData::getAllServicesByPedidoId($_GET["id"]);
         $total = 0;
@@ -14,6 +15,10 @@
     <div>
         <a class="btn btn-default" href="<?php if (isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo 'index.php?view=pedidos';} ?>"><i class="fa fa-arrow-left"></i> Regresar</a>
         <div class="btn-group pull-right">
+            <a class="btn btn-default" href="index.php?view=pagos&idP=<?php echo $id; ?>"><i class="fa fa-credit-card"></i> Ver Pagos</a>
+            <?php if($pedido->restante > 0): ?>
+            <a class="btn btn-default" id="btnPago" data-toggle="modal" data-target="#agregar" href="#"><i class="fa fa-dollar"></i> Nuevo Pago</a>
+            <?php endif; ?>
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-download"></i> Descargar <span class="caret"></span>
             </button>

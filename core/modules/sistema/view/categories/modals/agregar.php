@@ -10,7 +10,7 @@
           <div class="form-group control-group">
             <label for="nombre" class="col-sm-3 control-label">Nombre:</label>
             <div class="col-sm-8 controls">
-              <input type="text" class="form-control" name="name" id="name" placeholder="Nombre de la categor&iacute;a">
+              <input type="text" class="form-control" name="name" id="name" placeholder="Nombre de la categor&iacute;a" required>
             </div>
           </div>
         </div>

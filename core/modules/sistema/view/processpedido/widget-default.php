@@ -41,8 +41,9 @@
 			$abono->numerocomprobante = $_POST["numero"];
 			$abono->add();
 
+			$pdido = PedidoData::getById($r[1]);
 			$pdido->restante = $total - $abono->cantidad;
-			$pdido->updateRestante($r[1]);
+			$pdido->updateRestante();
 
 		}
 		unset($_SESSION["sucursal"]);

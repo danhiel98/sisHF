@@ -11,7 +11,7 @@
             <input type="hidden" name="eid" id="eid">
             <label for="nombre" class="col-sm-3 control-label">Nombre:</label>
             <div class="col-sm-8 controls">
-              <input type="text" class="form-control" name="ename" id="ename" placeholder="Nombre de la categor&iacute;a">
+              <input type="text" class="form-control" name="ename" id="ename" placeholder="Nombre de la categor&iacute;a" required>
             </div>
           </div>
         </div>

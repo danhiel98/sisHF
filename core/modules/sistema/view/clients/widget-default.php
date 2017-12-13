@@ -18,7 +18,6 @@
 		<br>
 		<?php
 		if(count($users)>0){
-			// si hay usuarios
 			?>
 		<table class="table table-bordered table-hover">
 			<thead>

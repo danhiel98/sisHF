@@ -6,12 +6,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"><i class='fa fa-list'></i> Nuevo Pago</h4>
             </div>
-            <form action="" class="form-horizontal">
+            <form action="index.php?view=processpago" class="form-horizontal" method="POST">
                 <div class="modal-body">
                     <div class="form-group control-group">
                         <label for="idPedido" class="col-sm-3 control-label">No. Pedido</label>
                         <div class="col-sm-8 controls">
-                            <input type="text" name="idPedido" class="form-control" id="idPedido" placeholder="N&uacute;mero de pedido" onKeyPress="return soloNumeros(event)" maxlength="6" data-validation-regex-regex="[0-9]{1,6}" data-validation-regex-message="Introduzca un número de pedido válido" required>
+                            <input type="text" name="idPedido" class="form-control" id="idPedido" placeholder="N&uacute;mero de pedido" onKeyPress="return soloNumeros(event)" maxlength="6" data-validation-regex-regex="[0-9]{1,6}" data-validation-regex-message="Introduzca un número de pedido válido" required value="<?php echo $id; ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group control-group">
@@ -27,7 +27,7 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-fw fa-dollar"></i>
                                 </span>
-                                <input type="text" name="cantidad" class="form-control" id="cantidad" placeholder="Cantidad de dinero de pago" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="1" required>
+                                <input type="text" name="cantidad" class="form-control" id="cantidad" placeholder="Cantidad de dinero de pago" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="1" required readonly>
                             </div>
                         </div>
                     </div>
@@ -40,6 +40,18 @@
                                 </span>
                                 <input type="text" name="restante" class="form-control" id="restante" placeholder="Cantidad de dinero restante" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="0" readonly="readonly" required>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group control-group">
+                        <label for="tipoComprobante" class="col-sm-3 control-label">Tipo Comprobante</label>
+                        <div class="col-sm-8 controls">
+                            <select class="form-control" name="tipoComprobante" id="tipoComprobante" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group control-group">
+                        <label for="numComprobante" class="col-sm-3 control-label">No. Comprobante</label>
+                        <div class="col-sm-8 controls">
+                            <input type="text" class="form-control" name="numComprobante" id="numComprobante" maxlength="16">
                         </div>
                     </div>
                 </div>

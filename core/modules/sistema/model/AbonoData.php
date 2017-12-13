@@ -48,8 +48,28 @@ class AbonoData {
 		return $found;
 	}
 
+	public static function getAllByPedidoId($id){
+		$sql = "select * from ".self::$tablename." where idPedido = $id order by fecha desc";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new AbonoData();
+			$array[$cnt]->id = $r['idAbono'];
+            $array[$cnt]->idusuario = $r['idUsuario'];
+            $array[$cnt]->idcliente = $r['idCliente'];
+            $array[$cnt]->idpedido = $r['idPedido'];
+            $array[$cnt]->cantidad = $r['cantidad'];
+            $array[$cnt]->fecha = $r['fecha'];
+            $array[$cnt]->tipocomprobante = $r['tipoComprobante'];
+            $array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getAll(){
-		$sql = "select * from ".self::$tablename." where estado = 1";
+		$sql = "select * from ".self::$tablename." where estado = 1 order by fecha desc";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

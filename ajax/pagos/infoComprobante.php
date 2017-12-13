@@ -1,5 +1,6 @@
 <?php
-	include ("../../core/autoload.php");
+
+    include ("../../core/autoload.php");
 	include ("../../core/modules/sistema/model/ClientData.php");
 
 	if (isset($_POST["idCliente"]) && !empty($_POST["idCliente"])) {
@@ -20,4 +21,6 @@
 	}else{
 		echo '<option value="">--SELECCIONE UN CLIENTE--</option>';
 	}
+
+
 ?>

@@ -24,29 +24,38 @@
 				array_push($errorProd,$prd); #Agregar datos de los productos insuficiente encontrados
 			}
 		}
-
-		if (!$error){
-			foreach ($products as $prd){
-				$prod = ProductoSucursalData::getBySucursalProducto($_SESSION["usr_suc"],$prd->idproducto);
-				$prod->cantidad -= $prd->cantidad;
-				$prod->updateEx();
-			}
-			$pedido->finalizar($pedido->id);
-		}else{
+		
+		if($pedido->restante > 0){
 			?>
-			<div class="list-group">
-				<?php foreach($errorProd as $prd): ?>
-				<div class="list-group-item">
-					<?php $prod = ProductoSucursalData::getBySucursalProducto($_SESSION["usr_suc"],$prd->idproducto); ?>
-						<?php echo $prod->getProduct()->nombre; ?>
-						<div class="pull-right">
-						<span data-toggle="tooltip" title="Existentes" class="label label-danger"><?php echo $prod->cantidad; ?></span>
-						<span data-toggle="tooltip" title="Necesarios" class="label label-primary"><?php echo $prd->cantidad; ?></span>
-					</div>
-				</div>
-				<?php endforeach; ?>
-			</div>
+				<div class="alert alert-warning">Debe realizar el último pago para poder entregar el pedido.</div>
 			<?php
+		}else{
+			if (!$error){
+				foreach ($products as $prd){
+					$prod = ProductoSucursalData::getBySucursalProducto($_SESSION["usr_suc"],$prd->idproducto);
+					$prod->cantidad -= $prd->cantidad;
+					$prod->updateEx();
+				}
+				$pedido->finalizar($pedido->id);
+			}else{
+				?>
+				<div>
+					<p class="alert alert-warning">No se puede marcar como entregado el pedido porque no hay suficientes <a target="_blank" href="index.php?view=inventaryprod">productos.</a></p>
+				</div>
+				<div class="list-group">
+					<?php foreach($errorProd as $prd): ?>
+					<div class="list-group-item">
+						<?php $prod = ProductoSucursalData::getBySucursalProducto($_SESSION["usr_suc"],$prd->idproducto); ?>
+							<?php echo $prod->getProduct()->nombre; ?>
+							<div class="pull-right">
+							<span data-toggle="tooltip" title="Existentes" class="label label-danger"><?php echo $prod->cantidad; ?></span>
+							<span data-toggle="tooltip" title="Necesarios" class="label label-primary"><?php echo $prd->cantidad; ?></span>
+						</div>
+					</div>
+					<?php endforeach; ?>
+				</div>
+				<?php
+			}
 		}
 
 	}
