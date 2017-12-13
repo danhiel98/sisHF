@@ -13,8 +13,8 @@
 				<div class="col-md-6 controls">
 					<select name="txtSucursal" class="form-control" id="txtSucursal" required>
 						<option value="">-- SELECCIONE --</option>
-	 					<?php if (isset($_SESSION["user_suc"])): ?>
-	 						<?php $suc = SucursalData::getById($_SESSION["user_suc"]); ?>
+	 					<?php if (isset($_SESSION["usr_suc"]) && !isset($_SESSION["adm"])): ?>
+	 						<?php $suc = SucursalData::getById($_SESSION["usr_suc"]); ?>
 	 						<option value="<?php echo $suc->id; ?>"><?php echo $suc->nombre;?></option>
 	 					<?php else: ?>
 	 						<?php foreach($sucursales as $sucursal):?>

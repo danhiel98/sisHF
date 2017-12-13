@@ -34,7 +34,7 @@
     $sucursales = SucursalData::getAll();
     foreach ($sucursales as $sc){
       $prodSuc->idsucursal = $sc->id;
-      $prodSuc->minimo = 0;
+      $prodSuc->minimo = 5;
       if ($sc->id == 1) {
         $prodSuc->minimo = $_POST["minimo"];
       }

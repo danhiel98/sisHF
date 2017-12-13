@@ -12,7 +12,7 @@
       $ps = new ProductoSucursalData();
       $ps->idsucursal = $r[1];
       $ps->cantidad = 0;
-			$ps->minimo = 0;
+			$ps->minimo = 5;
       foreach ($products as $p) {
         $ps->idproducto = $p->id;
         $ps->add();

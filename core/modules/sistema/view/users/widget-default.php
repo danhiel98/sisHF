@@ -2,16 +2,18 @@
 	
 	$nemp = false; #Para validar si hay empleados disponibles para crearles cuenta de usuario
 	$empleados = EmpleadoData::getAllForUser();
+	$usrSuc = false;
 	
 	if (isset($_SESSION["usr_suc"]) &&  !isset($_SESSION["adm"])) {
 		$empleados = EmpleadoData::getAllForUserBySucId($_SESSION["usr_suc"]);
+		$usrSuc = true;
 	}
 
 	$u = UserData::getById(Session::getUID());
 	$sucursal = SucursalData::getAll();
 	
 	#Si el usuario NO es administrador:
-	if (!$u->tipo == 1 || !$u->tipo == 2):
+	if (!$u->tipo == 1):
 ?>
 		<script type="text/javascript">
 			window.location = "index.php?view=home";
@@ -50,7 +52,7 @@
 		
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#all">Todos</a></li>
-			<?php if (count($sucursal)>1): ?>
+			<?php if (count($sucursal)>1 && !$usrSuc): ?>
 				<li><a href="#suc">Por Sucursal</a></li>
 			<?php endif; ?>
 		</ul>

@@ -60,7 +60,7 @@
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <?php if (Session::getUID()!=""): ?>
+          <?php if (Session::getUID() != ""): ?>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
             <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
@@ -80,15 +80,18 @@
           
           <ul class="nav navbar-nav side-nav">
             <li><a href="index.php?view=home"><i class="fa fa-home"></i> Inicio</a></li>
-            <?php if ($u->tipo == 1 || $u->tipo == 2): ?>
+            <?php if ($u->tipo == 1): ?>
             <li><a href="index.php?view=sucursal"><i class="icon-office"></i> Sucursales</a></li>
+            <?php endif;?>
+            <?php if($u->tipo == 1 || $u->tipo == 2): ?>
             <li><a href="index.php?view=empleados"><i class="icon-users"></i> Empleados </a></li>
             <li><a href="index.php?view=users"><i class="fa fa-users"></i> Usuarios </a></li>
+            <?php endif; ?>
+            <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3): ?>
             <li><a href="index.php?view=providers"><i class="fa fa-truck"></i> Proveedores </a></li>
             <li><a href="index.php?view=clients"><i class="fa fa-user-o"></i> Clientes</a></li>
-            <!--<li><a href="index.php?view=settings"><i class="fa fa-cogs"></i> Configuraci&oacute;n <small><span class="label label-warning">Experimental</span></small></a></li>-->
+            <?php endif; ?>
             <div class="clearfix"></div>
-            <?php endif;?>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-bank"></i> Bancos<span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -107,13 +110,19 @@
                 <li><a href="index.php?view=inventaryprod"><i class="fa fa-area-chart"></i> Productos</a></li>
               </ul>
             </li>
+            <?php if ($_SESSION["usr_suc"] == 1): ?>
+            <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 4): ?>
             <li><a href="index.php?view=produccion"><i class="fa fa-glass"></i> Producci&oacute;n</a></li>
+            <?php endif; ?>
             <li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Compras</a></li>
+            <?php endif; ?>
             <li><a href="index.php?view=traspasos"><i class="fa fa-exchange"></i> Traspasos</a></li>
+            <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3): ?>
             <li><a href="index.php?view=pedidos"><i class="fa fa-list-alt"></i> Pedidos</a></li>
             <li><a href="index.php?view=pagos"><i class="fa fa-credit-card"></i> Pagos</a></li>
             <li><a href="index.php?view=sells"><i class="fa fa-shopping-cart"></i> Ventas</a></li>
             <li><a href="index.php?view=box"><i class="fa fa-archive"></i> Caja</a></li>
+            <?php endif; ?>
             <!--
             <li><a href="index.php?view=devolucion"><i class="fa fa-reply"></i> Devoluciones</a></li>
             -->

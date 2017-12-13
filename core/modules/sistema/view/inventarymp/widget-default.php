@@ -15,7 +15,7 @@
 	if (count($providers)>0){
 		$provs = true;
 	}
-
+	$u = UserData::getById(Session::getUID());
 ?>
 <script src="ajax/matprim/mpajax.js"></script>
 <div class="row">
@@ -24,7 +24,9 @@
 			
 			<a data-toggle="modal" data-target="#agregar" class="btn btn-default"><i class='fa fa-plus'></i> Agregar Materia Prima</a>
 			<?php if ($matP): ?>
+			<?php if ($_SESSION["usr_suc"] == 1 && ($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3)): ?>
 			<a href="index.php?view=re" class="btn btn-default"><i class='fa fa-shopping-cart'></i> Realizar Compra</a>
+			<?php endif; ?>  
 			<div class="btn-group pull-right">
   				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 					<i class="fa fa-download"></i> Descargar <span class="caret"></span>

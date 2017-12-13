@@ -1,5 +1,3 @@
-//$(obtener_registros());
-
 function obtener_registros(idSucursal,buscar){
 	$.ajax({
 		url : 'ajax/traspaso/resultado.php',

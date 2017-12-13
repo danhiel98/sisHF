@@ -10,7 +10,7 @@
 	$prod = false;
 
 	$productos = array();
-	
+	$productos = ProductoSucursalData::getAllBySucId($idSucursal);
 	if(isset($_POST['productos'])){
 		$prod = true;
 		$nombreProd = $_POST['productos'];
@@ -22,8 +22,6 @@
 				array_push($productos,$prodSuc);
 			}
 		endforeach;
-	}else{
-		$productos = ProductoSucursalData::getAllBySucId($idSucursal);
 	}
 	
 	if (count($productos) > 0){

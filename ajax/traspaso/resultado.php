@@ -10,7 +10,7 @@
 	$idSucursal = $_POST["sucursal"];
 	$prod = false;
 
-	$prodSuc = ProductoSucursalData::getAllBySucId($idSucursal);
+	$prodSuc = ProductoSucursalData::getAllForSell($idSucursal);
 
 	if(isset($_POST['productos'])){
 		$prod = true;

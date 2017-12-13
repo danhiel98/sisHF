@@ -1,8 +1,10 @@
 <?php
 	$sucursal = SucursalData::getAll();
 	$empleados = EmpleadoData::getAll();
+	$usrSuc = false;
 	if (isset($_SESSION["usr_suc"]) && !isset($_SESSION["adm"])) {
 		$empleados = EmpleadoData::getAllBySucId($_SESSION["usr_suc"]);
+		$usrSuc = true;
 	}
 ?>
 <div class="row">
@@ -25,7 +27,7 @@
 	<?php if(count($empleados)>0): ?>
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#all">Todos</a></li>
-			<?php if (count($sucursal)>1): ?>
+			<?php if (count($sucursal)>1 && !$usrSuc): ?>
 				<li><a href="#suc">Por Sucursal</a></li>
 			<?php endif; ?>
 		</ul>
