@@ -68,6 +68,26 @@ class ProviderData {
 		return $array;
 	}
 
+	public static function getByPage($start,$limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new ProviderData();
+			$array[$cnt]->id = $r['idProveedor'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->nombre = $r['nombre'];
+			$array[$cnt]->tipoprovee = $r['tipoProvee'];
+			$array[$cnt]->direccion = $r['direccion'];
+			$array[$cnt]->telefono = $r['telefono'];
+			$array[$cnt]->correo = $r['correo'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getLike($q){
 		$base = new Database();
 		$cnx = $base->connect();

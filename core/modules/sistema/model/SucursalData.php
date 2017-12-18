@@ -45,7 +45,31 @@ class SucursalData {
 	}
 
 	public static function getAll(){
-		$sql = "select * from ".self::$tablename;
+		$sql = "select * from ".self::$tablename." where estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new SucursalData();
+			$array[$cnt]->id = $r['idSucursal'];
+			$array[$cnt]->nombre = $r['nombre'];
+			$array[$cnt]->direccion = $r['direccion'];
+			$array[$cnt]->telefono = $r['telefono'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	/**
+	 * Obtener los registros según un rango
+	 * @param $inicio es la posición desde donde se van a obtener los registros (empieza desde 0) 
+	 * @param $cantidad es la cantidad de regitros a obtener
+	 * @return $array es el arreglo con los registros encontrados
+	 */
+
+	public static function getByPage($inicio,$cantidad){
+		$inicio = $inicio - 1;
+		$sql = "select * from ".self::$tablename." where estado = 1 limit $inicio,$cantidad";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

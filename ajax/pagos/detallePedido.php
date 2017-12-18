@@ -1,31 +1,25 @@
 <?php
+    
+    include ("../../core/autoload.php");
+    include ("../../core/modules/sistema/model/ClientData.php");
+    include ("../../core/modules/sistema/model/UserData.php");
+    include ("../../core/modules/sistema/model/ProductData.php");
+    include ("../../core/modules/sistema/model/ServiceData.php");
+    include ("../../core/modules/sistema/model/PedidoData.php");
+    
     $pedido = array();
-    if (isset($_GET["id"]) && $_GET["id"] != ""){
-        $id = $_GET["id"];
+    if (isset($_REQUEST["id"]) && $_REQUEST["id"] != ""){
+        $id = $_REQUEST["id"];
         $pedido = PedidoData::getById($id);
     }
 
     if (count($pedido) == 1):
-        include "core/modules/sistema/view/agregarPago.php";
-        $prodP = PedidoData::getAllProductsByPedidoId($_GET["id"]);
-        $servP = PedidoData::getAllServicesByPedidoId($_GET["id"]);
+        $prodP = PedidoData::getAllProductsByPedidoId($id);
+        $servP = PedidoData::getAllServicesByPedidoId($id);
         $total = 0;
         $client = $pedido->getClient();
 ?>
     <div>
-        <a class="btn btn-default" href="<?php if (isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo 'index.php?view=pedidos';} ?>"><i class="fa fa-arrow-left"></i> Regresar</a>
-        <div class="btn-group pull-right">
-            <a class="btn btn-default" href="index.php?view=pagos&idP=<?php echo $id; ?>"><i class="fa fa-credit-card"></i> Ver Pagos</a>
-            <?php if($pedido->restante > 0): ?>
-            <a class="btn btn-default" id="btnPago" data-toggle="modal" data-target="#agregar" href="#"><i class="fa fa-dollar"></i> Nuevo Pago</a>
-            <?php endif; ?>
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-download"></i> Descargar <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="report/pedidodetalle.php?id=<?php echo $_GET["id"];?>">Excel (.xlsx)</a></li>
-            </ul>
-        </div>
         <h1>Resumen de Pedido</h1>
         <table class="table table-bordered">
             <tr>
@@ -107,5 +101,6 @@
         </table>
         <h1>Total: $ <?php echo number_format($total,2,'.',','); ?></h1>
     </div>
-    <?php else: @header("Location: index.php?view=pedidos"); ?>
-<?php endif; ?>
+    <?php else: ?>
+        Error 501: Internal Error.
+    <?php endif; ?>

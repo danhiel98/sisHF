@@ -14,6 +14,7 @@
 <div class="row">
 	<?php include("modals/resumen.php"); ?>
 	<div class="col-md-12">
+		<a class="btn btn-default" href="index.php?view=pedidos"><i class="fa fa-arrow-left"></i> Regresar</a>
 		<h1>Pedido</h1>
 		<div class="btn-group pull-right">
 			<button type="button" id="btnResumen" class="btn btn-default" data-toggle="modal" data-target="#resumen">

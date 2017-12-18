@@ -78,8 +78,8 @@
                 <div class="list-group-item">
                     <?php echo $prod->getProduct()->nombre; ?>
                     <div class="pull-right">
-                        <span data-toggle="tooltip" title="Mínimo" class="label label-warning"><?php echo $prod->minimo; ?></span>
-                        <span data-toggle="tooltip" title="Exsistencias" class="label label-primary"><?php echo $prod->cantidad; ?></span>
+                        <span data-toggle="tooltip" title="Mínimo" class="label label-primary"><?php echo $prod->minimo; ?></span>
+                        <span data-toggle="tooltip" title="Exsistencias" class="label label-warning"><?php echo $prod->cantidad; ?></span>
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -112,8 +112,8 @@
                 <div class="list-group-item">
                     <?php echo $mp->nombre; ?>
                     <div class="pull-right">
-                        <span data-toggle="tooltip" title="Mínimo" class="label label-warning"><?php echo $mp->minimo; ?></span>
-                        <span data-toggle="tooltip" title="Exsistencias" class="label label-primary"><?php echo $mp->existencias; ?></span>
+                        <span data-toggle="tooltip" title="Mínimo" class="label label-primary"><?php echo $mp->minimo; ?></span>
+                        <span data-toggle="tooltip" title="Exsistencias" class="label label-warning"><?php echo $mp->existencias; ?></span>
                     </div>
                 </div>
                 <?php endforeach; ?>

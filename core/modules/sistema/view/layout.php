@@ -123,9 +123,7 @@
             <li><a href="index.php?view=sells"><i class="fa fa-shopping-cart"></i> Ventas</a></li>
             <li><a href="index.php?view=box"><i class="fa fa-archive"></i> Caja</a></li>
             <?php endif; ?>
-            <!--
             <li><a href="index.php?view=devolucion"><i class="fa fa-reply"></i> Devoluciones</a></li>
-            -->
             <li><a href="index.php?view=sbox"><i class="fa fa-archive"></i> Caja Chica </a></li>
             <div class="clearfix"></div>
             <br><br>

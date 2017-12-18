@@ -72,8 +72,9 @@ class GastoData {
 	}
 
 
-	public static function getAllByPage($start_from, $limit){
-		$sql = "select * from ".self::$tablename." where idGasto>=$start_from and estado = 1 limit $limit";
+	public static function getByPage($start, $limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

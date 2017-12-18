@@ -96,3 +96,6 @@ var tel = new Array(4,4)
     return (key >= 48 && key <= 57 || key >= 8 && key <= 31 || key == 0 || key == 46);
   }
  
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });

@@ -95,6 +95,34 @@ class EmpleadoData {
 		return $array;
 	}
 
+	public static function getAllByPage($inicio,$cantidad){
+		$inicio = $inicio - 1;
+		$sql = "select * from ".self::$tablename." where activo = 1 limit $inicio,$cantidad";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new EmpleadoData();
+			$array[$cnt]->id = $r['idEmpleado'];
+			$array[$cnt]->dui = $r['dui'];
+			$array[$cnt]->nit = $r['nit'];
+			$array[$cnt]->nombre = $r['nombre'];
+			$array[$cnt]->apellido = $r['apellido'];
+			$array[$cnt]->sexo = $r['sexo'];
+			$array[$cnt]->estadocivil = $r['estadoCivil'];
+			$array[$cnt]->fechanacimiento = $r['fechaNacimiento'];
+			$array[$cnt]->nivelacademico = $r['nivelAcademico'];
+			$array[$cnt]->direccion = $r['direccion'];
+			$array[$cnt]->idMunic = $r['idMunic'];
+			$array[$cnt]->idDepto = $r['idDepto'];
+			$array[$cnt]->area = $r['area'];
+			$array[$cnt]->telefono = $r['telefono'];
+			$array[$cnt]->idsucursal = $r['idSucursal'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getAllForUser(){
 		$sql = "select * from ".self::$tablename." where idEmpleado not in (select idEmpleado from usuario where idEmpleado is not null)";
 		$query = Executor::doit($sql);
@@ -150,7 +178,35 @@ class EmpleadoData {
 	}
 
 	public static function getAllBySucId($id){
-		$sql = "select * from ".self::$tablename." where idSucursal = $id";
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and activo = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new EmpleadoData();
+			$array[$cnt]->id = $r['idEmpleado'];
+			$array[$cnt]->dui = $r['dui'];
+			$array[$cnt]->nit = $r['nit'];
+			$array[$cnt]->nombre = $r['nombre'];
+			$array[$cnt]->apellido = $r['apellido'];
+			$array[$cnt]->sexo = $r['sexo'];
+			$array[$cnt]->estadocivil = $r['estadoCivil'];
+			$array[$cnt]->fechanacimiento = $r['fechaNacimiento'];
+			$array[$cnt]->nivelacademico = $r['nivelAcademico'];
+			$array[$cnt]->direccion = $r['direccion'];
+			$array[$cnt]->idMunic = $r['idMunic'];
+			$array[$cnt]->idDepto = $r['idDepto'];
+			$array[$cnt]->area = $r['area'];
+			$array[$cnt]->telefono = $r['telefono'];
+			$array[$cnt]->idsucursal = $r['idSucursal'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getAllBySucPage($id,$inicio,$cantidad){
+		$inicio = $inicio - 1;
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and activo = 1 limit $inicio,$cantidad";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

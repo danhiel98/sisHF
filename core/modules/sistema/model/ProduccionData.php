@@ -101,8 +101,48 @@ class ProduccionData {
 		return $array;
 	}
 
+	public static function getFinishedByPage($start,$limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where terminado = 1 limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new ProduccionData();
+			$array[$cnt]->id = $r['idProduccion'];
+			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->fechainicio = $r['fechaInicio'];
+			$array[$cnt]->fechafin = $r['fechaFin'];
+			$array[$cnt]->cantidad = $r['cantidadProducto'];
+			$array[$cnt]->terminado = $r['terminado'];
+			$array[$cnt]->fecharegistro = $r['fechaRegistro'];
+			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getActive(){
 		$sql = "select * from ".self::$tablename." where terminado = 0 and cancelado = 0";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new ProduccionData();
+			$array[$cnt]->id = $r['idProduccion'];
+			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->fechainicio = $r['fechaInicio'];
+			$array[$cnt]->fechafin = $r['fechaFin'];
+			$array[$cnt]->cantidad = $r['cantidadProducto'];
+			$array[$cnt]->fecharegistro = $r['fechaRegistro'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getActiveByPage($start,$limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where terminado = 0 and cancelado = 0 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

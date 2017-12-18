@@ -28,7 +28,6 @@ class EnvioData {
 		Executor::doit($sql);
 	}
 
-	
 	public function update(){
 		$sql = "update ".self::$tablename." set idBanco=\"$this->idBanco\", cantidad=\"$this->cantidad\", numComprobante=\"$this->comprobante\" where idEnvioBanco = $this->id";
 		Executor::doit($sql);
@@ -54,6 +53,25 @@ class EnvioData {
 
 	public static function getAll(){
 		$sql = "select * from ".self::$tablename." where estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new EnvioData();
+			$array[$cnt]->id = $r['idEnvioBanco'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idbanco = $r['idBanco'];
+			$array[$cnt]->cantidad = $r['cantidad'];
+			$array[$cnt]->comprobante = $r['numComprobante'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getByPage($start,$limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

@@ -145,6 +145,69 @@ class UserData {
 		return $array;
 	}
 
+	public static function getAllByPage($start,$limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where idEmpleado is not null limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new UserData();
+			$array[$cnt]->id = $r['idUsuario'];
+			$array[$cnt]->idempleado = $r['idEmpleado'];
+			$array[$cnt]->name = $r['nombre'];
+			$array[$cnt]->lastname = $r['apellido'];
+			$array[$cnt]->username = $r['usuario'];
+			$array[$cnt]->email = $r['email'];
+			$array[$cnt]->password = $r['clave'];
+			$array[$cnt]->activo = $r['activo'];
+			$array[$cnt]->tipo = $r['tipo'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getAllBySucId($id){
+		$sql = "select idUsuario, usuario.idEmpleado, usuario, email, clave, tipo, fechaCreacion, usuario.activo, empleado.idSucursal";
+		$sql .= " from usuario inner join empleado on empleado.idEmpleado = usuario.idEmpleado where empleado.idSucursal = $id";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new UserData();
+			$array[$cnt]->id = $r['idUsuario'];
+			$array[$cnt]->idempleado = $r['idEmpleado'];
+			$array[$cnt]->username = $r['usuario'];
+			$array[$cnt]->email = $r['email'];
+			$array[$cnt]->password = $r['clave'];
+			$array[$cnt]->activo = $r['activo'];
+			$array[$cnt]->tipo = $r['tipo'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getAllBySucPage($id,$start,$limit){
+		$start = $start - 1;
+		$sql = "select idUsuario, usuario.idEmpleado, usuario, email, clave, tipo, fechaCreacion, usuario.activo, empleado.idSucursal";
+		$sql .= " from usuario inner join empleado on empleado.idEmpleado = usuario.idEmpleado where empleado.idSucursal = $id limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new UserData();
+			$array[$cnt]->id = $r['idUsuario'];
+			$array[$cnt]->idempleado = $r['idEmpleado'];
+			$array[$cnt]->username = $r['usuario'];
+			$array[$cnt]->email = $r['email'];
+			$array[$cnt]->password = $r['clave'];
+			$array[$cnt]->activo = $r['activo'];
+			$array[$cnt]->tipo = $r['tipo'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getByUsername($usuario){
 		$sql = "select * from ".self::$tablename." where usuario = '$usuario'";
 		$query = Executor::doit($sql);

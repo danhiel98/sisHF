@@ -45,7 +45,24 @@ class CategoryData {
 	}
 
 	public static function getAll(){
-		$sql = "select * from ".self::$tablename;
+		$sql = "select * from ".self::$tablename." where estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new CategoryData();
+			$array[$cnt]->id = $r['idCategoria'];
+			$array[$cnt]->nombre = $r['nombre'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getByPage($start,$limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

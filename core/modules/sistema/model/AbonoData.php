@@ -86,6 +86,27 @@ class AbonoData {
 			$cnt++;
 		}
 		return $array;
+	}
+	
+	public static function getByPage($start,$limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where estado = 1 order by fecha desc limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new AbonoData();
+			$array[$cnt]->id = $r['idAbono'];
+            $array[$cnt]->idusuario = $r['idUsuario'];
+            $array[$cnt]->idcliente = $r['idCliente'];
+            $array[$cnt]->idpedido = $r['idPedido'];
+            $array[$cnt]->cantidad = $r['cantidad'];
+            $array[$cnt]->fecha = $r['fecha'];
+            $array[$cnt]->tipocomprobante = $r['tipoComprobante'];
+            $array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$cnt++;
+		}
+		return $array;
     }
     
 }

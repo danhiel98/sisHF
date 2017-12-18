@@ -26,7 +26,7 @@
 			<?php if ($matP): ?>
 			<?php if ($_SESSION["usr_suc"] == 1 && ($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3)): ?>
 			<a href="index.php?view=re" class="btn btn-default"><i class='fa fa-shopping-cart'></i> Realizar Compra</a>
-			<?php endif; ?>  
+			<?php endif; ?>
 			<div class="btn-group pull-right">
   				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 					<i class="fa fa-download"></i> Descargar <span class="caret"></span>
@@ -93,15 +93,15 @@
 					<th style="width: 30px;">Existencias</th>
 					<th></th>
 				</thead>
-				<?php foreach($curr_products as $product):?>
-				<tr class="">
-					<td><?php echo $product->id; ?></td>
-					<td style="max-width: 120px;"><?php echo $product->nombre; ?></td>
-					<td style="max-width: 250px;"><?php echo $product->descripcion; ?></td>
-					<td><?php echo $product->minimo; ?></td>
-					<td style="text-align: center;"><?php echo $product->existencias; ?></td>
+				<?php foreach($curr_products as $prod):?>
+				<tr class="<?php if($prod->existencias <= $prod->minimo){echo 'danger';} ?>">
+					<td><?php echo $prod->id; ?></td>
+					<td style="max-width: 120px;"><?php echo $prod->nombre; ?></td>
+					<td style="max-width: 250px;"><?php echo $prod->descripcion; ?></td>
+					<td><?php echo $prod->minimo; ?></td>
+					<td style="text-align: center;"><?php echo $prod->existencias; ?></td>
 					<td style="width:40px;">
-						<a id="<?php echo $product->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"> Editar</a>
+						<a id="<?php echo $prod->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"> Editar</a>
 					</td>
 				</tr>
 				<?php endforeach;?>

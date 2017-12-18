@@ -264,43 +264,43 @@ table.tablesorter thead tr th:hover {
 }
 
 .panel-green-2 {
-    border-color: #666666;
+    border-color: #5bb194;
 }
 
 .panel-green-2 > .panel-heading {
-    border-color: #666666;
+    border-color: #5bb194;
     color: #fff;
-    background-color: #666666;
+    background-color: #5bb194;
 }
 
 .panel-green-2 > a {
-    color: rgb(101, 102, 102);
+    color: #45836d;
 }
 
 .panel-purple {
-    border-color: #78909C;
+    border-color: rgb(100, 142, 163);
 }
 
 .panel-purple > .panel-heading {
-    border-color: #78909C;
+    border-color: rgb(100, 142, 163);
     color: #fff;
-    background-color: #78909C;
+    background-color: rgb(100, 142, 163);
 }
 
 .panel-purple > a {
-    color: rgb(100, 109, 117);
+    color: rgb(78, 112, 128);
 }
 
 .panel-lightBlue {
-    border-color: #827a88;
+    border-color: #348da3;
 }
 
 .panel-lightBlue > .panel-heading {
-    border-color: #827a88;
+    border-color: #348da3;
     color: #fff;
-    background-color: #827a88;
+    background-color: #348da3;
 }
 
 .panel-lightBlue > a {
-    color: #67606d;
+    color: #2f6d7a;
 }

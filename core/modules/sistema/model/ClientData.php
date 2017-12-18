@@ -90,6 +90,30 @@ class ClientData {
 		return $array;
 	}
 
+	public static function getByPage($start,$limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new ClientData();
+			$array[$cnt]->id = $r['idCliente'];
+			$array[$cnt]->dui = $r['dui'];
+			$array[$cnt]->nit = $r['nit'];
+			$array[$cnt]->name = $r['nombre'];
+			$array[$cnt]->lastname = $r['apellido'];
+			$array[$cnt]->sexo = $r['sexo'];
+			$array[$cnt]->birth = $r['fechaNacimiento'];
+			$array[$cnt]->phone = $r['telefono'];
+			$array[$cnt]->direccion = $r['direccion'];
+			$array[$cnt]->email = $r['email'];
+			$array[$cnt]->nrc = $r['nrc'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getAllWithNRC(){
 		$sql = "select * from ".self::$tablename." where estado = 1 and nrc is not null or nrc <> ''";
 		$query = Executor::doit($sql);

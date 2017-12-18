@@ -28,6 +28,9 @@
 		if($pedido->restante > 0){
 			?>
 				<div class="alert alert-warning">Debe realizar el último pago para poder entregar el pedido.</div>
+				<script>
+					$("#agregar").modal("show");
+				</script>
 			<?php
 		}else{
 			if (!$error){

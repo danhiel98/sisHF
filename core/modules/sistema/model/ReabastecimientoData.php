@@ -55,8 +55,9 @@
 			return $found;
 		}
 
-		public static function getAllByPage($start_from, $limit){
-			$sql = "select * from ".self::$tablename." where idFacturaMateriaPrima<=$start_from limit $limit";
+		public static function getByPage($start, $limit){
+			$start = $start - 1;
+			$sql = "select * from ".self::$tablename." limit $start,$limit";
 			$query = Executor::doit($sql);
 			$array = array();
 			$cnt = 0;

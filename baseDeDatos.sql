@@ -769,6 +769,7 @@ CREATE TABLE ventaServicio(
 CREATE TABLE causasDevolucion(
   idCausa tinyint PRIMARY KEY,
   idUsuario smallint not null,
+  fecha datetime not null default current_timestamp,
   descripcion varchar(150) not null,
   foreign key(idUsuario) references usuario(idUsuario)
 );
@@ -777,7 +778,7 @@ CREATE TABLE devolucion(
   idDevolucion smallint PRIMARY KEY AUTO_INCREMENT,
   idUsuario smallint not null,
   idFacturaVenta int not null,
-  idProducto mediumint not null,
+  idProducto mediumint,
   idMotivo tinyint not null,
   fecha date not null,
   reembolso decimal(9,2) not null,
