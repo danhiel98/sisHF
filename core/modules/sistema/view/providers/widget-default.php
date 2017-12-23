@@ -46,6 +46,40 @@
 			$providers = ProviderData::getByPage($start,$limit);
 		
 		?>
+		
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Provee</th>
+					<th>Direcci&oacute;n</th>
+					<th>Tel&eacute;fono</th>
+					<th>Correo Electr&oacute;nico</th>
+					<th></th>
+				</thead>
+				<tbody>
+				<?php
+				foreach($providers as $prov):
+					?>
+					<tr>
+						<td><?php echo $prov->id; ?></td>
+						<td><?php echo $prov->nombre; ?></td>
+						<td><?php echo $prov->tipoprovee; ?></td>
+						<td><?php echo $prov->direccion; ?></td>
+						<td style="width:90px;"><?php echo $prov->telefono; ?></td>
+						<td><?php echo $prov->correo; ?></td>
+						<td style="width:40px;">
+							<a id="<?php echo $prov->id;?>" data-toggle="modal" data-target="#editar" class="btn btn-warning btn-xs btn-edit">Editar</a>
+						</td>
+					</tr>
+				</tbody>
+					<?php
+				endforeach;
+			?>
+			</table>
+		</div>
+
 		<div class="container-fluid">
 			<div class="pull-right">
 				<ul class="pagination">
@@ -85,42 +119,11 @@
 				</ul>
 			</div>
 		</div>
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
-				<thead>
-					<th>ID</th>
-					<th>Nombre</th>
-					<th>Provee</th>
-					<th>Direcci&oacute;n</th>
-					<th>Tel&eacute;fono</th>
-					<th>Correo Electr&oacute;nico</th>
-					<th></th>
-				</thead>
-				<tbody>
-				<?php
-				foreach($providers as $prov):
-					?>
-					<tr>
-						<td><?php echo $prov->id; ?></td>
-						<td><?php echo $prov->nombre; ?></td>
-						<td><?php echo $prov->tipoprovee; ?></td>
-						<td><?php echo $prov->direccion; ?></td>
-						<td><?php echo $prov->telefono; ?></td>
-						<td><?php echo $prov->correo; ?></td>
-						<td style="width:40px;">
-							<a id="<?php echo $prov->id;?>" data-toggle="modal" data-target="#editar" class="btn btn-warning btn-xs btn-edit">Editar</a>
-						</td>
-					</tr>
-				</tbody>
-					<?php
-				endforeach;
-			?>
-			</table>
-		</div>
+
 		<?php
 		else:
 		?>
-			<p class='alert alert-danger'>No hay proveedores registrados</p>
+			<p class='alert alert-warning'>No hay proveedores registrados</p>
 		<?php
 		endif;
 		?>

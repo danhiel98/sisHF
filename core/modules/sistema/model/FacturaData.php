@@ -224,6 +224,43 @@ class FacturaData {
 
 	}
 
+	public static function getByNumber($num){
+		$sql = "select * from ".self::$tablename." where numeroFactura = $num";
+		$query = Executor::doit($sql);
+		$found = null;
+		$data = new FacturaData();
+		while($r = $query[0]->fetch_array()){
+			$data->id = $r['idFacturaVenta'];
+			$data->numerofactura = $r['numeroFactura'];
+			$data->idusuario = $r['idUsuario'];
+			$data->idcliente = $r['idCliente'];
+			$data->tipoComprobante = $r['tipoComprobante'];
+			$data->totalLetras = $r['totalLetras'];
+			$data->fecha = $r['fecha'];
+			$found = $data;
+			break;
+		}
+		return $found;
+	}
+
+	public static function getByFactProduct($idFact,$idProd){
+		$sql = "select * from ventaproducto where idFacturaVenta = $idFact AND idProducto = $idProd";
+		$query = Executor::doit($sql);
+		$found = null;
+		$data = new FacturaData();
+		while($r = $query[0]->fetch_array()){
+			$data->idventa = $r['idVentaProducto'];
+			$data->idfactura = $r['idFacturaVenta'];
+			$data->idproducto = $r['idProducto'];
+			$data->precio = $r['precio'];
+			$data->cantidad = $r['cantidad'];
+			$data->total = $r['total'];
+			$found = $data;
+			break;
+		}
+		return $found;
+	}
+
 }
 
 ?>

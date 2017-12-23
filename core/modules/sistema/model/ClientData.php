@@ -55,6 +55,7 @@ class ClientData {
 			$data->nit = $r['nit'];
 			$data->name = $r['nombre'];
 			$data->lastname = $r['apellido'];
+			$data->fullname = $data->name." ".$data->lastname;
 			$data->sexo = $r['sexo'];
 			$data->birth = $r['fechaNacimiento'];
 			$data->phone = $r['telefono'];

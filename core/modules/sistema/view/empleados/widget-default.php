@@ -160,7 +160,7 @@
 			<?php endif; ?>
 		</div>
 		<?php else: ?>
-			<p class='alert alert-danger'>No hay empleados registrados</p>
+			<p class='alert alert-warning'>No hay empleados registrados</p>
 		<?php endif; ?>
 	</div>
 </div>

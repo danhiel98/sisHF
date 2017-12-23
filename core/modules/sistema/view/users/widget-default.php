@@ -1,7 +1,12 @@
 <?php
 	
-	$nemp = false; #Para validar si hay empleados disponibles para crearles cuenta de usuario
+	$emps = false; #Para validar si hay empleados disponibles para crearles cuenta de usuario
 	$empleados = EmpleadoData::getAllForUser();
+
+	if($empleados >= 0){
+		$emps = true; #Sí hay empleados disponibles
+	}
+
 	$usrSuc = false;
 	
 	if (isset($_SESSION["usr_suc"]) &&  !isset($_SESSION["adm"])) {
@@ -11,7 +16,7 @@
 
 	$u = UserData::getById(Session::getUID());
 	$sucursal = SucursalData::getAll();
-	
+	$users = UserData::getAll();
 	#Si el usuario NO es administrador:
 	if (!$u->tipo == 1):
 ?>
@@ -28,25 +33,23 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
-			<a class="btn btn-default" <?php 
-			if (count($empleados)<=0){
-				echo "disabled onclick='return false'"; $nemp = true;
-			} ?> 
-			href="<?php if($nemp){echo "#";}else{
-					echo 'index.php?view=newuser&emp=true';} ?>"><i class="icon-user-plus"></i> Nuevo Usuario</a>
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    					<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-  					</button>
-  					<ul class="dropdown-menu" role="menu">
-    					<li><a href="report/users.php ">Excel (.xlsx)</a></li>
-  					</ul>
+			<?php if($emps): ?>
+			<a class="btn btn-default" href="index.php?view=newuser&emp=true"><i class="icon-user-plus"></i> Nuevo Usuario</a>
+			<?php endif; ?>
+			<?php if (count($users) > 0): ?>
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<i class="fa fa-download"></i> Descargar <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="report/users.php ">Excel (.xlsx)</a></li>
+			</ul>
+			<?php endif; ?>
 		</div>
 
 		<h1>Lista de Usuarios</h1>
 		<br>
 		
-		<?php	
-		$users = UserData::getAll();
+		<?php
 		if(count($users)>0):
 		?>
 		
@@ -179,15 +182,18 @@
 		<?php
 		else:
 		?>
-			<div class="jumbotron">
-				<div class="container">
-					<?php if ($nemp): ?>
-						<h2>No se han registrado usuarios. Para ello debe haber empleados registrados y después dar clic en <strong>"Nuevo Usuario".</strong></h2>
-					<?php else: ?>
-						<h2>No se han registrado usuarios. Para ello debe dar clic en <strong>"Nuevo Usuario".</strong></h2>
-					<?php endif; ?>
-				</div>
-			</div>
+				<?php if ($emps): ?>
+					<h2>No se han registrado usuarios.</h2>
+					<div class="alert alert-warning">
+						Para ello debe dar clic en <strong>"Nuevo Usuario".</strong>
+					</div>
+				<?php else: ?>
+					<h2>No se han registrado usuarios.</h2>
+					<div class="alert alert-warning">
+						Para ello primero debe registrar um empleado. <a href="index.php?view=empleados">Ir a empleados</a>
+					</div>
+				<?php endif; ?>
+			
 		<?php
 		endif;
 		?>

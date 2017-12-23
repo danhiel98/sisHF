@@ -39,6 +39,36 @@
 			if($spaginas>0){$paginas++;}
 			$banco = BancoData::getByPage($start,$limit);
 		?>
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Direcci&oacute;n</th>
+					<th>Tel&eacute;fono</th>
+					<th>Número de cuenta</th>
+					<th></th>
+				</thead>
+				<tbody>
+					<?php
+					foreach($banco  as $bac):
+					?>
+					<tr>
+						<td><?php echo $bac->id; ?></td>
+						<td><?php echo $bac->nombre; ?></td>
+						<td><?php echo $bac->direccion; ?></td>
+						<td><?php echo $bac->telefono; ?></td>
+						<td><?php echo $bac->numCuenta; ?></td>
+						<td style="width:40px;">
+							<a id="<?php echo $bac->id;?>" data-toggle="modal" data-target="#editar" class="btn btn-warning btn-xs btn-edit">Editar</a>
+						</td>
+					</tr>
+					<?php
+					endforeach;
+					?>
+				</tbody>
+			</table>
+		</div>
 		<div class="container-fluid">
 			<div class="pull-right">
 				<ul class="pagination">
@@ -78,40 +108,10 @@
 				</ul>
 			</div>
 		</div>
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
-				<thead>
-					<th>ID</th>
-					<th>Nombre</th>
-					<th>Direcci&oacute;n</th>
-					<th>Tel&eacute;fono</th>
-					<th>Número de cuenta</th>
-					<th></th>
-				</thead>
-				<tbody>
-					<?php
-					foreach($banco  as $bac):
-					?>
-					<tr>
-						<td><?php echo $bac->id; ?></td>
-						<td><?php echo $bac->nombre; ?></td>
-						<td><?php echo $bac->direccion; ?></td>
-						<td><?php echo $bac->telefono; ?></td>
-						<td><?php echo $bac->numCuenta; ?></td>
-						<td style="width:40px;">
-							<a id="<?php echo $bac->id;?>" data-toggle="modal" data-target="#editar" class="btn btn-warning btn-xs btn-edit">Editar</a>
-						</td>
-					</tr>
-					<?php
-					endforeach;
-					?>
-				</tbody>
-			</table>
-		</div>
 	<?php
 	else:
 	?>
-		<p class='alert alert-danger'>No hay bancos registrados</p>
+		<p class='alert alert-warning'>No hay bancos registrados</p>
 	<?php
 	endif;
 	?>

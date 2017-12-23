@@ -34,45 +34,7 @@
 			if($spaginas>0){$paginas++;}
 			$clientes = ClientData::getByPage($start,$limit);
 		?>
-		<div class="container-fluid">
-			<div class="pull-right">
-				<ul class="pagination">
-					<?php if($start != 1):?>
-					<?php
-						$prev = "#";
-						if($start != 1){
-							$prev = "&start=".($start-$limit)."&limit=".$limit;
-						}
-					?>
-					<li class="previous"><a href="index.php?view=clients<?php echo $prev; ?>">&laquo;</a></li>
-					<?php endif; ?>
-					<?php 
-						$anterior = 1;
-						for($i=1; $i<=$paginas; $i++):
-							$inicio = 1;
-							if ($i != 1){
-								$inicio = $limit + $anterior;
-								$anterior = $inicio;
-							}
-						?>
-						<li <?php if($start == $inicio){echo "class='active'";} ?>>
-							<a href="index.php?view=clients&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
-						</li>
-						<?php
-						endfor;
-					?>
-					<?php if($start != $anterior): ?>
-					<?php 
-						$next = "#";
-						if($start != $anterior){
-							$next = "&start=".($start + $limit)."&limit=".$limit;
-						}
-					?>
-					<li class="previous"><a href="index.php?view=clients<?php echo $next; ?>">&raquo;</a></li>
-					<?php endif; ?>
-				</ul>
-			</div>
-		</div>
+	
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
@@ -113,6 +75,47 @@
 				?>
 			</table>
 		</div>
+		
+		<div class="container-fluid">
+			<div class="pull-right">
+				<ul class="pagination">
+					<?php if($start != 1):?>
+					<?php
+						$prev = "#";
+						if($start != 1){
+							$prev = "&start=".($start-$limit)."&limit=".$limit;
+						}
+					?>
+					<li class="previous"><a href="index.php?view=clients<?php echo $prev; ?>">&laquo;</a></li>
+					<?php endif; ?>
+					<?php 
+						$anterior = 1;
+						for($i=1; $i<=$paginas; $i++):
+							$inicio = 1;
+							if ($i != 1){
+								$inicio = $limit + $anterior;
+								$anterior = $inicio;
+							}
+						?>
+						<li <?php if($start == $inicio){echo "class='active'";} ?>>
+							<a href="index.php?view=clients&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
+						</li>
+						<?php
+						endfor;
+					?>
+					<?php if($start != $anterior): ?>
+					<?php 
+						$next = "#";
+						if($start != $anterior){
+							$next = "&start=".($start + $limit)."&limit=".$limit;
+						}
+					?>
+					<li class="previous"><a href="index.php?view=clients<?php echo $next; ?>">&raquo;</a></li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
+
 		<?php
 		else:
 		?>

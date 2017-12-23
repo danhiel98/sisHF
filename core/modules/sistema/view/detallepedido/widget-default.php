@@ -13,7 +13,7 @@
         $client = $pedido->getClient();
 ?>
     <div>
-        <a class="btn btn-default" href="<?php if (isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo 'index.php?view=pedidos';} ?>"><i class="fa fa-arrow-left"></i> Regresar</a>
+        <a class="btn btn-default" href="index.php?view=pedidos"><i class="fa fa-arrow-left"></i> Regresar</a>
         <div class="btn-group pull-right">
             <a class="btn btn-default" href="index.php?view=pagos&idP=<?php echo $id; ?>"><i class="fa fa-credit-card"></i> Ver Pagos</a>
             <?php if($pedido->restante > 0): ?>

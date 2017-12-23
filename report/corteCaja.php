@@ -95,7 +95,7 @@ if (count($facturas)>0) {
       $objPHPExcel->setActiveSheetIndex(0)
                   ->setCellValue("A$i", $fact->getComprobante()->nombre)
                   ->setCellValue("B$i", $fact->numerofactura)
-                  ->setCellValue("C$i", $fact->getClient()->name." ".$fact->getClient()->lastname)
+                  ->setCellValue("C$i", $fact->getClient()->fullname)
                   ->setCellValue("D$i", "$ ".$total);
 
                   $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':D'.$i)->applyFromArray($borders);

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
-		<a class="btn btn-default" href="<?php echo $_SERVER['HTTP_REFERER']; ?>"><i class="fa fa-arrow-left"></i>Regresar</a>
+		<a class="btn btn-default" href="<?php if(isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo "index.php?view=box";} ?>"><i class="fa fa-arrow-left"></i>Regresar</a>
 		<div class="btn-group pull-right">
   		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     		<i class="fa fa-download"></i> Descargar <span class="caret"></span>

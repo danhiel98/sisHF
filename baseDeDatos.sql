@@ -766,27 +766,40 @@ CREATE TABLE ventaServicio(
   foreign key(idServicio) references servicio(idServicio)
 );
 
-CREATE TABLE causasDevolucion(
-  idCausa tinyint PRIMARY KEY,
+CREATE TABLE causaDevolucion(
+  idCausa tinyint PRIMARY KEY AUTO_INCREMENT,
   idUsuario smallint not null,
   fecha datetime not null default current_timestamp,
   descripcion varchar(150) not null,
+  estado boolean not null default 1,
   foreign key(idUsuario) references usuario(idUsuario)
 );
+
+insert into causaDevolucion values
+(null,1,NOW(),"Producto dañado de fabrica",1),
+(null,1,NOW(),"Mala atención al cliente",1),
+(null,1,NOW(),"Entrega tardía",1);
 
 CREATE TABLE devolucion(
   idDevolucion smallint PRIMARY KEY AUTO_INCREMENT,
   idUsuario smallint not null,
   idFacturaVenta int not null,
-  idProducto mediumint,
-  idMotivo tinyint not null,
+  idCausa tinyint not null,
   fecha date not null,
   reembolso decimal(9,2) not null,
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idFacturaVenta) references facturaVenta(idFacturaVenta),
-  foreign key(idProducto) references producto(idProducto),
-  foreign key(idMotivo) references causasDevolucion(idCausa)
+  foreign key(idCausa) references causaDevolucion(idCausa)
+);
+
+CREATE TABLE productoDevolucion(
+  idProdDev tinyint primary key AUTO_INCREMENT,
+  idDevolucion smallint not null,
+  idProducto mediumint not null,
+  cantidad smallint not null,
+  foreign key(idDevolucion) references devolucion(idDevolucion),
+  foreign key(idProducto) references producto(idProducto)
 );
 
 CREATE TABLE cajaChica(

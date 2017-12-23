@@ -40,6 +40,46 @@
 			if($spaginas>0){$paginas++;}
 			$gastos = GastoData::getByPage($start,$limit);
 		?>
+		
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<th style="width:40px;">No.</th>
+					<th>Responsable</th>
+					<th>Descripci&oacute;n</th>
+					<th>Valor</th>
+					<th>No. Comprobante</th>
+					<th>Fecha</th>
+					<th></th>
+				</thead>
+				<tbody>
+					<?php
+					foreach($gastos as $gasto):
+					?>
+					<tr>
+						<td><?php echo $gasto->id; ?></td>
+						<td>
+							<?php
+								if ($gasto->idempleado != ""){
+									echo $gasto->getEmpleado()->nombre." ".$gasto->getEmpleado()->apellido;
+								}
+							?>
+						</td>
+						<td><?php echo $gasto->descripcion; ?></td>
+						<td style="min-width: 80px;">$ <?php echo $gasto->pago; ?></td>
+						<td><?php echo $gasto->comprobante; ?></td>
+						<td style="min-width: 100px;"><?php echo $gasto->fecha; ?></td>
+						<td style="width:60px;">
+							<a data-toggle="modal" data-target="#editar" id="<?php echo $gasto->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
+						</td>
+					</tr>
+						<?php
+					endforeach;
+					?>
+				</tbody>
+			</table>
+		</div>
+
 		<div class="container-fluid">
 			<div class="pull-right">
 				<ul class="pagination">
@@ -79,44 +119,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
-				<thead>
-					<th style="width:40px;">No.</th>
-					<th>Responsable</th>
-					<th>Descripci&oacute;n</th>
-					<th>Valor</th>
-					<th>No. Comprobante</th>
-					<th>Fecha</th>
-					<th></th>
-				</thead>
-				<tbody>
-					<?php
-					foreach($gastos as $gasto):
-					?>
-					<tr>
-						<td><?php echo $gasto->id; ?></td>
-						<td>
-							<?php
-								if ($gasto->idempleado != ""){
-									echo $gasto->getEmpleado()->nombre." ".$gasto->getEmpleado()->apellido;
-								}
-							?>
-						</td>
-						<td><?php echo $gasto->descripcion; ?></td>
-						<td>$ <?php echo $gasto->pago; ?></td>
-						<td><?php echo $gasto->comprobante; ?></td>
-						<td><?php echo $gasto->fecha; ?></td>
-						<td style="width:60px;">
-							<a data-toggle="modal" data-target="#editar" id="<?php echo $gasto->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
-						</td>
-					</tr>
-						<?php
-					endforeach;
-					?>
-				</tbody>
-			</table>
-		</div>
+
 		<?php
 		else:
 		?>

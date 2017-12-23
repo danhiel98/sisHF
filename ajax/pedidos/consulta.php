@@ -77,7 +77,7 @@
                 <tr>
                   <td><a href="index.php?view=detallepedido&id=<?php echo $pdo->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
                   <td><?php echo $pdo->id; ?></td>
-                  <td><?php echo $pdo->getClient()->name." ".$pdo->getClient()->lastname; ?></td>
+                  <td><?php echo $pdo->getClient()->fullname; ?></td>
                   <td><?php echo $pdo->fechapedido; ?></td>
                   <td><?php echo $pdo->fechaentrega; ?></td>
                   <td>

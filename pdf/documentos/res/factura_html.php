@@ -80,7 +80,7 @@
 						</tr>
 						<tr>
 						<td style="width:50%;" >
-								<?php echo $sell->getClient()->name." ".$sell->getClient()->lastname; ?>
+								<?php echo $sell->getClient()->fullname; ?>
 								<br>
 								<?php echo $sell->getClient()->direccion; ?>
 								<br>

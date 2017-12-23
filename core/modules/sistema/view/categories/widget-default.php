@@ -31,6 +31,32 @@
 			if($spaginas>0){$paginas++;}
 			$cats = CategoryData::getByPage($start,$limit);
 			?>
+			
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<th style="width:45px;">No.</th>
+						<th>Nombre</th>
+						<th></th>
+					</thead>
+					<tbody>
+						<?php
+						foreach($cats as $c):
+						?>
+							<tr>
+								<td><?php echo $c->id; ?></td>
+								<td><?php echo $c->nombre; ?></td>
+								<td style="width:60px;">
+									<a data-toggle="modal" data-target="#editar" id="<?php echo $c->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
+								</td>
+							</tr>
+							<?php
+						endforeach;
+						?>
+					</tbody>
+				</table>
+			</div>
+
 			<div class="container-fluid">
 				<div class="pull-right">
 					<ul class="pagination">
@@ -70,30 +96,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="table-responsive">
-				<table class="table table-bordered table-hover">
-					<thead>
-						<th style="width:45px;">No.</th>
-						<th>Nombre</th>
-						<th></th>
-					</thead>
-					<tbody>
-						<?php
-						foreach($cats as $c):
-						?>
-							<tr>
-								<td><?php echo $c->id; ?></td>
-								<td><?php echo $c->nombre; ?></td>
-								<td style="width:60px;">
-									<a data-toggle="modal" data-target="#editar" id="<?php echo $c->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
-								</td>
-							</tr>
-							<?php
-						endforeach;
-						?>
-					</tbody>
-				</table>
-			</div>
+
 			<?php
 		else:
 		?>

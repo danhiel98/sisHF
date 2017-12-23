@@ -76,7 +76,7 @@ $objPHPExcel->setActiveSheetIndex(0)
               ->setCellValue("B3", $pedido->fechapedido)
               ->setCellValue("B4", $pedido->fechaentrega)
               ->setCellValue("B5", $pedido->entregado)
-              ->setCellValue("B6", $pedido->getClient()->name." ".$pedido->getClient()->lastname)
+              ->setCellValue("B6", $pedido->getClient()->fullname)
               ->setCellValue("B7", $pedido->getUser()->name." ".$pedido->getUser()->lastname);
 
 cellColor('A8:E8','E2DFDF');

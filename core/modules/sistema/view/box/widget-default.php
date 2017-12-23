@@ -42,7 +42,7 @@
 					<?php echo $sell->id; ?>
 				</td>
 				<td>
-					<?php if($sell->idcliente != ""){echo $sell->getClient()->name." ".$sell->getClient()->lastname;}else{echo "----";} ?>
+					<?php if($sell->idcliente != ""){echo $sell->getClient()->fullname;}else{echo "----";} ?>
 				</td>
 				<td><?php echo $sell->fecha; ?></td>
 				<td><?php echo $sell->getComprobante()->nombre; ?></td>

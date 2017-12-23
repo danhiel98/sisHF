@@ -47,6 +47,42 @@
 				if($spaginas>0){$paginas++;}
 				$envio = EnvioData::getByPage($start,$limit);
 		?>
+			
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<th>No.</th>
+						<th>Banco</th>
+						<th>No. Cuenta</th>
+						<th>Cantidad</th>
+						<th>No. Comprobante</th>
+						<th>Fecha</th>
+						<th>Registrado por</th>
+						<th></th>
+					</thead>
+					<tbody>
+						<?php
+						foreach($envio as $env):
+						?>
+							<tr>
+								<td><?php echo $env->id; ?></td>
+								<td><?php echo $env->getBanco()->nombre; ?></td>
+								<td><?php echo $env->getBanco()->numCuenta; ?></td>
+								<td>$ <?php echo number_format($env->cantidad,2,'.',','); ?></td>
+								<td><?php echo $env->comprobante; ?></td>
+								<td><?php echo $env->fecha; ?></td>
+								<td><?php echo $env->getUsuario()->name." ".$env->getUsuario()->lastname; ?></td>
+								<td style="width:60px;">
+									<a id="<?php echo $env->id;?>" data-toggle="modal" data-target="#editar" class="btn btn-warning btn-xs btn-edit">Editar</a>
+								</td>
+							</tr>
+						<?php
+						endforeach;
+						?>
+					</tbody>
+				</table>
+			</div>
+			
 			<div class="container-fluid">
 				<div class="pull-right">
 					<ul class="pagination">
@@ -86,50 +122,17 @@
 					</ul>
 				</div>
 			</div>
-			<div class="table-responsive">
-				<table class="table table-bordered table-hover">
-					<thead>
-						<th>No.</th>
-						<th>Banco</th>
-						<th>No. Cuenta</th>
-						<th>Cantidad</th>
-						<th>No. Comprobante</th>
-						<th>Fecha</th>
-						<th>Registrado por</th>
-						<th></th>
-					</thead>
-					<tbody>
-						<?php
-						foreach($envio as $env):
-						?>
-							<tr>
-								<td><?php echo $env->id; ?></td>
-								<td><?php echo $env->getBanco()->nombre; ?></td>
-								<td><?php echo $env->getBanco()->numCuenta; ?></td>
-								<td>$ <?php echo number_format($env->cantidad,2,'.',','); ?></td>
-								<td><?php echo $env->comprobante; ?></td>
-								<td><?php echo $env->fecha; ?></td>
-								<td><?php echo $env->getUsuario()->name." ".$env->getUsuario()->lastname; ?></td>
-								<td style="width:60px;">
-									<a id="<?php echo $env->id;?>" data-toggle="modal" data-target="#editar" class="btn btn-warning btn-xs btn-edit">Editar</a>
-								</td>
-							</tr>
-						<?php
-						endforeach;
-						?>
-					</tbody>
-				</table>
-			</div>
+
 		<?php
 		else:
 		?>
-			<p class='alert alert-danger'>A&uacute;n no se ha realizado ning&uacute;n env&iacute;o</p>
+			<p class='alert alert-warning'>A&uacute;n no se ha realizado ning&uacute;n env&iacute;o</p>
 		<?php
 		endif;
 		?>
 		<?php else: ?>
 			<h1>No se pueden realizar env&iacute;os</h1>
-			<p class="alert alert-danger">Debe registrar un banco para poder realizar env&iacute;os! <a href="index.php?view=banco">Ir a bancos</a></p>
+			<p class="alert alert-warning">Debe registrar un banco para poder realizar env&iacute;os! <a href="index.php?view=banco">Ir a bancos</a></p>
 		<?php endif; ?>
 
 	</div>

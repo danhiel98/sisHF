@@ -52,6 +52,34 @@
 		$sucursal = SucursalData::getByPage($start,$limit);
 		
 		?>
+		
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<th style="text-align: center; width: 45px;">No.</th>
+					<th>Nombre</th>
+					<th>Direcci&oacute;n</th>
+					<th style="width: 100px;">Tel&eacute;fono</th>
+					<th></th>
+				</thead>
+				
+				<?php foreach($sucursal as $suc): ?>
+				
+				<tr>
+					<td style="text-align: center;"><?php echo $suc->id; ?></td>
+					<td><?php echo $suc->nombre; ?></td>
+					<td><?php echo $suc->direccion; ?></td>
+					<td style="min-width:90px;"><?php echo $suc->telefono; ?></td>
+					<td style="width:40px;">
+						<a data-toggle="modal" data-target="#editar" id="<?php echo $suc->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
+					</td>
+				</tr>
+				
+				<?php endforeach; ?>
+
+			</table>
+		</div>
+
 		<div class="container-fluid">
 			<div class="pull-right">
 				<ul class="pagination">
@@ -90,32 +118,6 @@
 					<?php endif; ?>
 				</ul>
 			</div>
-		</div>
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
-				<thead>
-					<th style="text-align: center; width: 45px;">No.</th>
-					<th>Nombre</th>
-					<th>Direcci&oacute;n</th>
-					<th style="width: 100px;">Tel&eacute;fono</th>
-					<th></th>
-				</thead>
-				
-				<?php foreach($sucursal as $suc): ?>
-				
-				<tr>
-					<td style="text-align: center;"><?php echo $suc->id; ?></td>
-					<td><?php echo $suc->nombre; ?></td>
-					<td><?php echo $suc->direccion; ?></td>
-					<td style="min-width:90px;"><?php echo $suc->telefono; ?></td>
-					<td style="width:40px;">
-						<a data-toggle="modal" data-target="#editar" id="<?php echo $suc->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
-					</td>
-				</tr>
-				
-				<?php endforeach; ?>
-
-			</table>
 		</div>
 		<?php
 		else:

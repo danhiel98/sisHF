@@ -55,7 +55,7 @@
 				<td><?php echo $sell->getComprobante()->nombre; ?></td>
 				<td><?php echo $sell->numerofactura; ?></td>
 				<td>
-					<?php if($sell->idcliente != ""){echo $sell->getClient()->name." ".$sell->getClient()->lastname;}else{echo "----";} ?>
+					<?php if($sell->idcliente != ""){echo $sell->getClient()->fullname;}else{echo "----";} ?>
 				</td>
 				<td>
 					<?php

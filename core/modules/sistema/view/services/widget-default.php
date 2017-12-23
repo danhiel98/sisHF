@@ -40,6 +40,36 @@
 				if($spaginas>0){$paginas++;}
 				$services = ServiceData::getByPage($start,$limit);
 		?>
+		
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<th style="width: 45px;">No.</th>
+					<th>Nombre</th>
+					<th>Descripci&oacute;n</th>
+					<th style="width: 90px;">Precio</th>
+					<th></th>
+				</thead>
+				<tbody>
+					<?php
+					foreach($services as $service):
+						?>
+						<tr>
+							<td><?php echo $service->id; ?></td>
+							<td><?php echo $service->nombre; ?></td>
+							<td><?php echo $service->descripcion; ?></td>
+							<td style="width: 90px;"><strong>$ <?php echo $service->precio; ?></strong></td>
+							<td style="width:40px;">
+								<a data-toggle="modal" data-target="#editar" id="<?php echo $service->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>				
+							</td>
+						</tr>
+						<?php
+					endforeach;
+					?>
+				</tbody>
+			</table>
+		</div>
+
 		<div class="container-fluid">
 			<div class="pull-right">
 				<ul class="pagination">
@@ -78,34 +108,6 @@
 					<?php endif; ?>
 				</ul>
 			</div>
-		</div>
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
-				<thead>
-					<th style="width: 45px;">No.</th>
-					<th>Nombre</th>
-					<th>Descripci&oacute;n</th>
-					<th style="width: 90px;">Precio</th>
-					<th></th>
-				</thead>
-				<tbody>
-					<?php
-					foreach($services as $service):
-						?>
-						<tr>
-							<td><?php echo $service->id; ?></td>
-							<td><?php echo $service->nombre; ?></td>
-							<td><?php echo $service->descripcion; ?></td>
-							<td style="width: 90px;"><strong>$ <?php echo $service->precio; ?></strong></td>
-							<td style="width:40px;">
-								<a data-toggle="modal" data-target="#editar" id="<?php echo $service->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>				
-							</td>
-						</tr>
-						<?php
-					endforeach;
-					?>
-				</tbody>
-			</table>
 		</div>
 		<?php
 		else:
