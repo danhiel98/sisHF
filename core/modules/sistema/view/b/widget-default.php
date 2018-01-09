@@ -16,12 +16,21 @@
 		if (!isset($_GET["id"]) || (isset($_GET["id"]) && empty($_GET["id"]))) {
 			@header("location: index.php?view=box");
 		}
+		$idSuc = $_SESSION["usr_suc"];
+		$boxes = BoxData::getAllBySuc($idSuc);
+		$num = count($boxes);
+		
 		$box = BoxData::getById($_GET["id"]);
 		$products = FacturaData::getByBoxId($_GET["id"]);
+		
+		
+		if (isset($_GET["no"]) && is_numeric($_GET["no"])){
+			$num = $_GET["no"];
+		}
 		if(count($products)>0){
 			$total_total = 0;
 			?>
-		<h1><i class='fa fa-archive'></i> Corte de Caja #<?php echo $_GET["id"]; ?></h1>
+		<h1><i class='fa fa-archive'></i> Corte de Caja #<?php echo $num; ?></h1>
 		<table class="table table-bordered">
 			<tr>
 				<td>Fecha</td>
@@ -41,7 +50,6 @@
 				<th>No.</th>
 				<th>Cliente</th>
 				<th>Total</th>
-				<th></th>
 			</thead>
 			<?php foreach($products as $sell):?>
 			<tr>
@@ -72,7 +80,6 @@
 						echo "<b>$ ".number_format($total,2,'.',',')."</b>";
 					?>
 				</td>
-				<td style="width:30px;"><!--<a onclick="return confirm('¿Seguro que desea eliminar el registro?');" href="index.php?view=delsell&id=<?php #echo $sell->id; ?>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>--></td>
 			</tr>
 			<?php endforeach; ?>
 		</table>

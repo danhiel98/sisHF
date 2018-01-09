@@ -45,13 +45,18 @@
     </table>
     <script>
         $(".btn-sm").click(function(event){
+            
+            inputCant = $("#cantProds"); 
+            cantidad = inputCant.val();
+            
             btn = $(this);
             id = $(this).data("id");
             opcion = $(this).attr("data-option");
+            
             $.ajax({
                 url: $(this).attr("href"),
                 type: "POST",
-                data:{
+                data: {
                     id: id, //Envía el id del producto
                     opc: opcion //Sirve para controlar si se va a agregar o quitar el producto
                 },
@@ -61,11 +66,18 @@
                             btn.attr("class","btn btn-primary btn-sm");
                             btn.attr("data-option","quit");
                             btn.html("Quitar");
+                            inputCant.val(++cantidad);
                         }else if(opcion == "quit"){
                             btn.attr("class","btn btn-warning btn-sm");
                             btn.attr("data-option","add");
                             btn.html("Devolver");
+                            inputCant.val(--cantidad);
                         }
+                    }
+                    if (cantidad > 0){
+                        $("#btnOk").removeAttr("disabled");           
+                    }else{
+                        $("#btnOk").attr("disabled","disabled");
                     }
                 }
             });

@@ -3,27 +3,24 @@
 	$emps = false; #Para validar si hay empleados disponibles para crearles cuenta de usuario
 	$empleados = EmpleadoData::getAllForUser();
 
-	if($empleados >= 0){
+	if (count($empleados) > 0) {
 		$emps = true; #Sí hay empleados disponibles
 	}
 
 	$usrSuc = false;
 	
-	if (isset($_SESSION["usr_suc"]) &&  !isset($_SESSION["adm"])) {
+	if (isset($_SESSION["usr_suc"]) && !isset($_SESSION["adm"])) {
 		$empleados = EmpleadoData::getAllForUserBySucId($_SESSION["usr_suc"]);
 		$usrSuc = true;
 	}
 
 	$u = UserData::getById(Session::getUID());
+
 	$sucursal = SucursalData::getAll();
 	$users = UserData::getAll();
 	#Si el usuario NO es administrador:
-	if (!$u->tipo == 1):
-?>
-		<script type="text/javascript">
-			window.location = "index.php?view=home";
-		</script>
-<?php
+	if ($u->tipo != 1 && $u->tipo != 2):
+		@header("location: index.php?view=home");
 	endif;
 ?>
 <!-- x-editable (bootstrap 3) -->
@@ -63,7 +60,7 @@
 		<div class="tab-content">
 			<div id="all" class="tab-pane fade in active">
 				<?php
-				$start = 1; $limit = 5;
+				$start = 1; $limit = 10;
 				if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
 					$start = $_REQUEST["start"];
 					$limit = $_REQUEST["limit"];
@@ -92,7 +89,10 @@
 							<th style="text-align:center;">Tipo</th>
 						</thead>
 						<?php foreach($users as $user): ?>
-							<?php if((isset($_SESSION["usr_suc"]) && ($user->getEmpleado()->getSucursal()->id == $_SESSION["usr_suc"])) || isset($_SESSION["adm"])): ?>
+							<?php 
+							$idSuc = $user->getEmpleado()->getSucursal()->id;
+							if((isset($_SESSION["usr_suc"]) && ($idSuc == $_SESSION["usr_suc"])) || isset($_SESSION["adm"])):
+							?>
 							<tr>
 								<td><?php echo $user->getEmpleado()->nombre; ?></td>
 								<td><?php echo $user->getEmpleado()->apellido; ?></td>
@@ -103,7 +103,7 @@
 									<a href="#" id="estado" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->activo; ?>" data-source="ajax/users/estados.php" title="Estado"></a>
 								</td>
 								<td class="tipo" style="text-align:center;">
-									<a href="#" id="tipo" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->tipo; ?>" data-source="ajax/users/tipos.php" title="Tipo"></a>
+									<a href="#" id="tipo" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->tipo; ?>" data-source="ajax/users/tipos.php<?php if($idSuc != 1){echo "?X";} ?>" title="Tipo"></a>
 								</td>
 							</tr>
 						<?php
@@ -182,17 +182,17 @@
 		<?php
 		else:
 		?>
-				<?php if ($emps): ?>
-					<h2>No se han registrado usuarios.</h2>
-					<div class="alert alert-warning">
-						Para ello debe dar clic en <strong>"Nuevo Usuario".</strong>
-					</div>
-				<?php else: ?>
-					<h2>No se han registrado usuarios.</h2>
-					<div class="alert alert-warning">
-						Para ello primero debe registrar um empleado. <a href="index.php?view=empleados">Ir a empleados</a>
-					</div>
-				<?php endif; ?>
+			<?php if ($emps): ?>
+				<h2>No se han registrado usuarios.</h2>
+				<div class="alert alert-warning">
+					Para ello debe dar clic en <strong>"Nuevo Usuario".</strong>
+				</div>
+			<?php else: ?>
+				<h2>No se han registrado usuarios.</h2>
+				<div class="alert alert-warning">
+					Para ello primero debe registrar um empleado. <a href="index.php?view=empleados">Ir a empleados</a>
+				</div>
+			<?php endif; ?>
 			
 		<?php
 		endif;

@@ -25,6 +25,11 @@ class ProductoSucursalData {
 		return Executor::doit($sql);
 	}
 
+	public function updateMin(){
+		$sql = "update ".self::$tablename." set minimo = $this->minimo where idProductoSucursal = $this->id";
+		return Executor::doit($sql);
+	}
+
 	public static function delById($id){
 		$sql = "update ".self::$tablename." set estado = 0 where idProductoSucursal = $id";
 		Executor::doit($sql);

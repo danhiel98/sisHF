@@ -16,4 +16,8 @@
     array_push($tipos,$datos);
   }
 
+  if (isset($_GET["X"])){
+    array_pop($tipos);
+  }
+
   echo json_encode($tipos);

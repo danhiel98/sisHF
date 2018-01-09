@@ -1,12 +1,12 @@
 <?php
-
+	$idSuc = $_SESSION["usr_suc"];
 	$sucs = false;
 	$sucursales = SucursalData::getAll();
-	$prodSuc = ProductoSucursalData::getAllBySucId($_SESSION["usr_suc"]);
+	$prodSuc = ProductoSucursalData::getAllForSell($idSuc);
 	if (count($sucursales)>1) {
 		$sucs = true;
 	}
-	$traspasos = TraspasoData::getAll();
+	$traspasos = TraspasoData::getAllBySuc($idSuc);
 ?>
 <div class="row">
 	<div class="col-md-12">
@@ -31,40 +31,24 @@
 		?>
 		<div class="clearfix"></div>
 		<?php
-			$page = 1;
-			if(isset($_GET["page"])){
-				$page=$_GET["page"];
+			$start = 1; $limit = 10;
+			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
+				$start = $_REQUEST["start"];
+				$limit = $_REQUEST["limit"];
+				#Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
+				if ($start <= 0 ){
+					$start = 1;
+				}
+				if ($limit <= 0 ){
+					$limit = 1;
+				}
 			}
-			$limit=10;
-			if(isset($_GET["limit"]) && $_GET["limit"]!="" && $_GET["limit"]!=$limit){
-				$limit=$_GET["limit"];
-			}
-			if($page==1){
-				$curr_traspasos = TraspasoData::getAllByPage($traspasos[0]->id,$limit);
-			}else{
-				$curr_traspasos = TraspasoData::getAllByPage($traspasos[($page-1)*$limit]->id,$limit);
-			}
-			$npaginas = floor(count($traspasos)/$limit);
- 			$spaginas = count($traspasos)%$limit;
-			if($spaginas>0){ $npaginas++;}
+			$paginas = floor(count($traspasos)/$limit);
+			$spaginas = count($traspasos)%$limit;
+			if($spaginas>0){$paginas++;}
+			$traspasos = TraspasoData::getAllBySucPage($idSuc,$start,$limit);
 		?>
-			<h3>P&aacute;gina <?php echo $page." de ".$npaginas; ?></h3>
-			<div class="btn-group pull-right">
-			<?php
-				$px=$page-1;
-				if($px>0):
-			?>
-				<a class="btn btn-sm btn-default" href="<?php echo "index.php?view=traspasos&limit=$limit&page=".($px); ?>"><i class="glyphicon glyphicon-chevron-left"></i> Atr&aacute;s </a>
-				<?php endif; ?>
-				<?php
-				$px=$page+1;
-				if($px<=$npaginas):
-				?>
-					<a class="btn btn-sm btn-default" href="<?php echo "index.php?view=traspasos&limit=$limit&page=".($px); ?>">Adelante <i class="glyphicon glyphicon-chevron-right"></i></a>
-				<?php endif; ?>
-			</div>
-			<div class="clearfix"></div>
-			<br>
+			<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
 					<th></th>
@@ -74,7 +58,7 @@
 					<th>Fecha</th>
 					<th>Registrado Por</th>
 				</thead>
-				<?php foreach($curr_traspasos as $trasp):?>
+				<?php foreach($traspasos as $trasp):?>
 					<tr>
 						<td style="width:30px;">
 							<a href="index.php?view=tradex&id=<?php echo $trasp->id; ?>" title="Detalles de traspaso" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
@@ -88,29 +72,50 @@
 						</td>
 						<td><?php echo $trasp->fecha; ?></td>
 						<td><?php echo $trasp->getUser()->name." ".$trasp->getUser()->lastname; ?></td>
-						<!--<td style="width:70px;">
-							<a href="index.php?view=editproduct&id=<?php #echo $trasp->id; ?>" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
-							<a onclick="return confirm('¿Seguro que desea eliminar el registro?');" href="index.php?view=delproduct&id=<?php echo $trasp->id; ?>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
-							</td>
-						-->
 					</tr>
 				<?php endforeach;?>
 				</table>
-				<div class="btn-group pull-right">
-				<?php
-				for($i=0;$i<$npaginas;$i++){
-					echo "<a href='index.php?view=traspasos&limit=$limit&page=".($i+1)."' class='btn btn-default btn-sm'>".($i+1)."</a> ";
-				}
-				?>
+			</div>
+			<div class="container-fluid">
+				<div class="pull-right">
+					<ul class="pagination">
+						<?php if($start != 1):?>
+						<?php
+							$prev = "#";
+							if($start != 1){
+								$prev = "&start=".($start-$limit)."&limit=".$limit;
+							}
+						?>
+						<li class="previous"><a href="index.php?view=traspasos<?php echo $prev; ?>">&laquo;</a></li>
+						<?php endif; ?>
+						<?php 
+							$anterior = 1;
+							for($i=1; $i<=$paginas; $i++):
+								$inicio = 1;
+								if ($i != 1){
+									$inicio = $limit + $anterior;
+									$anterior = $inicio;
+								}
+							?>
+							<li <?php if($start == $inicio){echo "class='active'";} ?>>
+								<a href="index.php?view=traspasos&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
+							</li>
+							<?php
+							endfor;
+						?>
+						<?php if($start != $anterior): ?>
+						<?php 
+							$next = "#";
+							if($start != $anterior){
+								$next = "&start=".($start + $limit)."&limit=".$limit;
+							}
+						?>
+						<li class="previous"><a href="index.php?view=traspasos<?php echo $next; ?>">&raquo;</a></li>
+						<?php endif; ?>
+					</ul>
 				</div>
-				<form class="form-inline control-group">
-					<div class="controls">
-						<label for="limit">L&iacute;mite</label>
-						<input type="hidden" name="view" value="traspasos">
-						<input type="number" value=<?php echo $limit?> name="limit" style="width:60px;" class="form-control" min="1" maxlength="6" onkeypress="return soloNumeros(event);">
-					</div>
-				</form>
-				<div class="clearfix"></div>
+			</div>
+			<div class="clearfix"></div>
 			<?php
 			}else{
 			?>
@@ -118,7 +123,11 @@
 				<div class="container">
 					<?php if ($sucs): ?>
 						<h2>No se han registrado traspasos</h2>
+						<?php if(count($prodSuc) > 0): ?>
 						Puede registrar uno dando click en el boton <b>"Registrar Traspaso"</b>
+						<?php else: ?>
+						No hay productos disponobles para realizar el traspaso.
+						<?php endif; ?>
 					<?php else: ?>
 						<h2>No se puede registrar traspasos</h2>
 						Para ello debe haber m&aacute;s de una sucursal registrada.

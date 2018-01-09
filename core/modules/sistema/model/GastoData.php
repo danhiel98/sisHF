@@ -3,6 +3,7 @@ class GastoData {
 	public static $tablename = "gasto";
 
 	public function GastoData(){
+		$this->idsucursal = ""; #La sucursal donde se hizo
 		$this->idusuario = ""; #Quien registra el gasto
 		$this->idempleado = "null"; #Responsable del gasto
 		$this->descripcion = "";
@@ -14,8 +15,8 @@ class GastoData {
 	public function getEmpleado(){ return EmpleadoData::getById($this->idempleado);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (idUsuario, idEmpleado, descripcion, pago, numeroComprobante, fecha)";
-		$sql .= " value ($this->idusuario,$this->idempleado,\"$this->descripcion\",\"$this->pago\", \"$this->comprobante\", NOW())";
+		$sql = "insert into ".self::$tablename." (idSucursal, idUsuario, idEmpleado, descripcion, pago, numeroComprobante, fecha)";
+		$sql .= " value ($this->idsucursal,$this->idusuario,$this->idempleado,\"$this->descripcion\",\"$this->pago\", \"$this->comprobante\", NOW())";
 		return Executor::doit($sql);
 	}
 
@@ -71,7 +72,6 @@ class GastoData {
 		return $array;
 	}
 
-
 	public static function getByPage($start, $limit){
 		$start = $start - 1;
 		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
@@ -81,6 +81,45 @@ class GastoData {
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new GastoData();
 			$array[$cnt]->id = $r['idGasto'];
+			$array[$cnt]->idempleado = $r['idEmpleado'];
+			$array[$cnt]->descripcion = $r['descripcion'];
+			$array[$cnt]->pago = $r['pago'];
+			$array[$cnt]->comprobante = $r['numeroComprobante'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getAllBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursal = $id AND estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new GastoData();
+			$array[$cnt]->id = $r['idGasto'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idempleado = $r['idEmpleado'];
+			$array[$cnt]->descripcion = $r['descripcion'];
+			$array[$cnt]->pago = $r['pago'];
+			$array[$cnt]->comprobante = $r['numeroComprobante'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getAllBySucPage($id, $start, $limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where idSucursal = $id AND estado = 1 limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new GastoData();
+			$array[$cnt]->id = $r['idGasto'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->idempleado = $r['idEmpleado'];
 			$array[$cnt]->descripcion = $r['descripcion'];
 			$array[$cnt]->pago = $r['pago'];

@@ -11,7 +11,7 @@
 	</script>
 <?php endif; ?>
 <script src="ajax/produccion/ajax.js"></script>
-<a class="btn btn-default" href="<?php if(isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo "index.php?view=produccion";} ?>"><i class="fa fa-arrow-left"></i>Regresar</a>
+<a class="btn btn-default" href="<?php if(isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo "index.php?view=produccion";} ?>"><i class="fa fa-arrow-left"></i> Regresar</a>
 <div class="row">
 <?php if (count($prods)>0): ?>
 	<h1>Registrar Producci&oacute;n De Productos</h1>

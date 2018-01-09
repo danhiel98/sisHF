@@ -42,7 +42,7 @@
 
     <?php if ($prodxs): ?>
         <?php 
-            $start = 1; $limit = 5;
+            $start = 1; $limit = 10;
             if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
                 $start = $_REQUEST["start"];
                 $limit = $_REQUEST["limit"];
@@ -90,6 +90,7 @@
                                 <td><?php echo $pa->fechainicio; ?></td>
                                 <td><?php echo $pa->fechafin; ?></td>
                                 <td>
+                                    <a href=""></a>
                                     <a title="Finalizar" href="#" class="btn btn-xs btn-success finalizar" id="<?php echo $pa->id; ?>"
                                         data-toggle="confirmation-popout" data-popout="true" data-placement="left"
                                         data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
@@ -256,8 +257,8 @@
         </div>
     <?php else: ?>
 
-        <div class="alert alert-info" style="font-size: 1.2em;">
-            No hay datos.
+        <div class="alert alert-warning">
+            ¡Vaya! Aún no se han registrado producciones.
         </div>
       
         <?php if (count($matp) <= 0 && count($prods) <= 0): ?>

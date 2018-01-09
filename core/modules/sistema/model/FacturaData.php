@@ -61,7 +61,7 @@ class FacturaData {
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where idFacturaVenta=$id";
+		$sql = "select * from ".self::$tablename." where idFacturaVenta = $id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new FacturaData();
@@ -73,6 +73,7 @@ class FacturaData {
 			$data->tipoComprobante = $r['tipoComprobante'];
 			$data->totalLetras = $r['totalLetras'];
 			$data->fecha = $r['fecha'];
+			$data->estado = $r['estado'];
 			$found = $data;
 			break;
 		}
@@ -115,8 +116,26 @@ class FacturaData {
 		return $array;
 	}
 
+	public static function getAllByService($id){
+		$sql = "select * from ventaServicio where idServicio = $id";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new FacturaData();
+			$array[$cnt]->idventa = $r['idVentaServicio'];
+			$array[$cnt]->idfactura = $r['idFacturaVenta'];
+			$array[$cnt]->idservicio = $r['idServicio'];
+			$array[$cnt]->precio = $r['precio'];
+			$array[$cnt]->cantidad = $r['cantidad'];
+			$array[$cnt]->total = $r['total'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getFacturas(){
-		$sql = "select * from ".self::$tablename." order by fecha desc";
+		$sql = "select * from ".self::$tablename." where estado = 1 order by fecha desc";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -133,8 +152,8 @@ class FacturaData {
 		return $array;
 	}
 
-	public static function getBetweenDates($start,$end){
-		$sql = "select * from ".self::$tablename." where date(fecha) between '$start' and '$end' order by fecha desc";
+	public static function getSellsBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and estado = 1 order by fecha desc";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -151,8 +170,64 @@ class FacturaData {
 		return $array;
 	}
 
-	public static function getSellsUnBoxed(){
-		$sql = "select * from ".self::$tablename." where idCierreCaja IS NULL";
+	public static function getSellsBySucPage($idSuc,$start,$limit){
+		$start--;
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc order by fecha desc limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new FacturaData();
+			$array[$cnt]->id = $r['idFacturaVenta'];
+			$array[$cnt]->numerofactura = $r['numeroFactura'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idcliente = $r['idCliente'];
+			$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getBetweenDates($idSuc,$start,$end){
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and (date(fecha) between '$start' and '$end') order by fecha desc";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new FacturaData();
+			$array[$cnt]->id = $r['idFacturaVenta'];
+			$array[$cnt]->numerofactura = $r['numeroFactura'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idcliente = $r['idCliente'];
+			$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getSellsUnBoxedBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and idCierreCaja IS NULL";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new FacturaData();
+			$array[$cnt]->id = $r['idFacturaVenta'];
+			$array[$cnt]->numerofactura = $r['numeroFactura'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idcliente = $r['idCliente'];
+			$array[$cnt]->tipoComprobante = $r['tipoComprobante'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getSellsUnBoxedBySucPage($idSuc,$start,$limit){
+		$start--;
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and idCierreCaja IS NULL limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -205,15 +280,15 @@ class FacturaData {
 		return $array;
 	}
 
-	public static function getLastRecibo(){
-		$sqlVenta = "select max(numeroFactura) as lastRecibo from facturaventa where tipoComprobante = 3";
+	public static function getLastRecibo($idSuc){
+		$sqlVenta = "select max(numeroFactura) as lastRecibo from facturaventa where idSucursal = $idSuc and tipoComprobante = 3";
 		$query = Executor::doit($sqlVenta);
 		while($r = $query[0]->fetch_array()){
 			$reciboVenta = $r['lastRecibo'];
 			break;
 		}
 
-		$sqlAbono = "select max(numeroComprobante) as lastRecibo from abono where tipoComprobante = 3";
+		$sqlAbono = "select max(numeroComprobante) as lastRecibo from abono where idSucursal = $idSuc and tipoComprobante = 3";
 		$query = Executor::doit($sqlAbono);
 		while($r = $query[0]->fetch_array()){
 			$reciboAbono = $r['lastRecibo'];
@@ -226,6 +301,25 @@ class FacturaData {
 
 	public static function getByNumber($num){
 		$sql = "select * from ".self::$tablename." where numeroFactura = $num";
+		$query = Executor::doit($sql);
+		$found = null;
+		$data = new FacturaData();
+		while($r = $query[0]->fetch_array()){
+			$data->id = $r['idFacturaVenta'];
+			$data->numerofactura = $r['numeroFactura'];
+			$data->idusuario = $r['idUsuario'];
+			$data->idcliente = $r['idCliente'];
+			$data->tipoComprobante = $r['tipoComprobante'];
+			$data->totalLetras = $r['totalLetras'];
+			$data->fecha = $r['fecha'];
+			$found = $data;
+			break;
+		}
+		return $found;
+	}
+
+	public static function getBySucAndNumber($idSuc,$num){
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and numeroFactura = $num";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new FacturaData();

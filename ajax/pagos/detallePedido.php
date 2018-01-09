@@ -20,7 +20,6 @@
         $client = $pedido->getClient();
 ?>
     <div>
-        <h1>Resumen de Pedido</h1>
         <table class="table table-bordered">
             <tr>
                 <td>Fecha De Pedido</td>

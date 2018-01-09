@@ -10,7 +10,7 @@
 		$empleados = EmpleadoData::getAllBySucId($idSuc);
 		
 		if (count($empleados)>0):
-			$start = 1; $limit = 5;
+			$start = 1; $limit = 10;
 			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
 				$start = $_REQUEST["start"];
 				$limit = $_REQUEST["limit"];

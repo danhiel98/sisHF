@@ -6,23 +6,29 @@
 	include ("../../core/modules/sistema/model/ClientData.php");
 	include ("../../core/modules/sistema/model/ProductData.php");
 
-    $pedidosT = PedidoData::getEntregado();
-    $start = 1; $limit = 5;
+    $idSuc = $_SESSION["usr_suc"];
+
+    if (isset($_REQUEST["sucursal"]) && !empty($_REQUEST["sucursal"])){
+		$idSuc = $_REQUEST["sucursal"];
+	}
+
+    $pedidosT = PedidoData::getEntregadoBySuc($idSuc);
+    $start = 1; $limit = 10;
     if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
         $start = $_REQUEST["start"];
         $limit = $_REQUEST["limit"];
         #Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
         if ($start <= 0 ){
-        $start = 1;
+            $start = 1;
         }
         if ($limit <= 0 ){
-        $limit = 1;
+            $limit = 1;
         }
     }
     $paginas = floor(count($pedidosT)/$limit);
     $spaginas = count($pedidosT)%$limit;
     if($spaginas>0){$paginas++;}
-    $pedidosT = PedidoData::getEntregadoByPage($start,$limit);
+    $pedidosT = PedidoData::getEntregadoByPage($idSuc,$start,$limit);
 
 ?>
     <div class="table-responsive">
@@ -55,7 +61,7 @@
                 <?php
                 $prev = "#";
                 if($start != 1){
-                    $prev = "?start=".($start-$limit)."&limit=".$limit;
+                    $prev = "?start=".($start-$limit)."&limit=".$limit."&sucursal=".$idSuc;
                 }
                 ?>
                 <li class="previous"><a class="pagF" href="ajax/pedidos/consultaFinished.php<?php echo $prev; ?>">&laquo;</a></li>
@@ -70,7 +76,7 @@
                     }
                 ?>
                 <li <?php if($start == $inicio){echo "class='active'";} ?>>
-                    <a class="pagF" href="ajax/pedidos/consultaFinished.php?start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
+                    <a class="pagF" href="ajax/pedidos/consultaFinished.php?start=<?php echo $inicio; ?>&limit=<?php echo $limit."&sucursal=".$idSuc; ?>"><?php echo $i; ?></a>
                 </li>
                 <?php
                 endfor;
@@ -79,7 +85,7 @@
                 <?php 
                 $next = "#";
                 if($start != $anterior){
-                    $next = "?start=".($start + $limit)."&limit=".$limit;
+                    $next = "?start=".($start + $limit)."&limit=".$limit."&sucursal=".$idSuc;
                 }
                 ?>
                 <li class="previous"><a class="pagF" href="ajax/pedidos/consultaFinished.php<?php echo $next; ?>">&raquo;</a></li>

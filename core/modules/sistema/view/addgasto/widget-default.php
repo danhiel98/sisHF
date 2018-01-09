@@ -1,7 +1,8 @@
 <?php
 	include("loader.php");
   if (isset($_POST["addGasto"])) {
-    $data = new GastoData();
+		$data = new GastoData();
+		$data->idsucursal = $_SESSION["usr_suc"];
 		$data->idusuario = $_SESSION["user_id"];
 		if (isset($_POST["responsable"]) && $_POST["responsable"] !=""){
 			$data->idempleado = $_POST["responsable"];

@@ -1,7 +1,6 @@
 <?php
 	$sucursal = SucursalData::getAll();
 	include("modals/resumen.php");
-	$sucursal = SucursalData::getAll();
 ?>
 <?php if(isset($_SESSION["trasp"]) && count($_SESSION["trasp"])>0 && isset($_GET["x"])):?>
 	<script type="text/javascript">

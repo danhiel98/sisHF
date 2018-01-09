@@ -1,7 +1,6 @@
 <?php
 
 
-// 13 de Abril del 2014
 // View.php
 // @brief Una vista corresponde a cada componente visual dentro de un modulo.
 
@@ -18,14 +17,11 @@ class View {
 			include "core/modules/".Module::$module."/view/".$view."/widget-default.php";
 		}else{
 
-
 			if(View::isValid()){
 				include "core/modules/".Module::$module."/view/".$_GET['view']."/widget-default.php";
 			}else{
 				View::Error("<b>404 NOT FOUND</b> View <b>".$_GET['view']."</b> folder  !!");
 			}
-
-
 
 		}
 	}

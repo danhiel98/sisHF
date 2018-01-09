@@ -61,7 +61,15 @@
             ?>
             <tr>
                 <td>Atendido por</td>
-                <td><?php echo $user->name." ".$user->lastname;?></td>
+                <td>
+                <?php
+                    if ($user->idempleado == null){
+                        echo $user->fullname;
+                    }else{
+                        echo $user->getEmpleado()->nombrecompleto;
+                    }
+                ?>
+                </td>
             </tr>
             <?php endif; ?>
             <tr>

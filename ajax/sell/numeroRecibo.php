@@ -6,7 +6,7 @@
 	include ("../../core/autoload.php");
     include ("../../core/modules/sistema/model/FacturaData.php");
 
-    $numero = FacturaData::getLastRecibo();
+    $numero = FacturaData::getLastRecibo($_SESSION["usr_suc"]);
     $numero += 1;
 
     echo json_encode($numero);

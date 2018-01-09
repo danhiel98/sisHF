@@ -40,6 +40,30 @@
 		</div>
 
 		<h1><i class="glyphicon glyphicon-stats"></i> Inventario De Materia Prima</h1>
+		<div class="container-fluid">
+			<?php
+			if (isset($_COOKIE["errorMatPrim"]) && !empty($_COOKIE["errorMatPrim"])):
+			?>
+				<div class="alert alert-warning alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorMatPrim"]; ?></p>
+				</div>
+			<?php
+				setcookie("errorMatPrim","",time()-18600);
+			endif;
+			?>
+			<?php
+			if (isset($_COOKIE["okMatPrim"]) && !empty($_COOKIE["okMatPrim"])):
+			?>
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okMatPrim"]; ?></p>
+				</div>
+			<?php
+				setcookie("okMatPrim","",time()-18600);
+			endif;
+			?>
+		</div>
 		<div class="clearfix"></div>
 		<?php
 		
@@ -54,36 +78,27 @@
 		}
 		
 		if($matP){
-
-			if($page == 1){
-				$curr_products = MateriaPrimaData::getAllByPage($materiaP[0]->id,$limit);
-			}else{
-				$curr_products = MateriaPrimaData::getAllByPage($materiaP[($page-1)*$limit]->id,$limit);
+			$start = 1; $limit = 10;
+			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
+				$start = $_REQUEST["start"];
+				$limit = $_REQUEST["limit"];
+				#Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
+				if ($start <= 0 ){
+					$start = 1;
+				}
+				if ($limit <= 0 ){
+					$limit = 1;
+				}
 			}
-
-			$npaginas = floor(count($materiaP)/$limit);
-			$spaginas = count($materiaP) % $limit;
-
-			if($spaginas>0){ $npaginas++;}
+			$paginas = floor(count($materiaP)/$limit);
+			$spaginas = count($materiaP)%$limit;
+			if($spaginas>0){$paginas++;}
+			$materiaP = MateriaPrimaData::getAllByPage($start,$limit);
+			$num = $start;
 		?>
-
-		<h3>P&aacute;gina <?php echo $page." de ".$npaginas; ?></h3>
-		<div class="btn-group pull-right">
-		<?php
-			$px = $page-1;
-			if($px>0):
-		?>
-			<a class="btn btn-sm btn-default" href="<?php echo "index.php?view=inventarymp&limit=$limit&page=".($px); ?>"><i class="glyphicon glyphicon-chevron-left"></i> Atr&aacute;s </a>
-		<?php endif; ?>
-		<?php
-			$px=$page+1;
-			if($px<=$npaginas):
-		?>
-			<a class="btn btn-sm btn-default" href="<?php echo "index.php?view=inventarymp&limit=$limit&page=".($px); ?>">Adelante <i class="glyphicon glyphicon-chevron-right"></i></a>
-			<?php endif; ?>
-		</div>
 		<div class="clearfix"></div>
-			<br>
+		<br>
+		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
 					<th style="width:30px;">No.</th>
@@ -93,39 +108,75 @@
 					<th style="width: 30px;">Existencias</th>
 					<th></th>
 				</thead>
-				<?php foreach($curr_products as $prod):?>
-				<tr class="<?php if($prod->existencias <= $prod->minimo){echo 'danger';} ?>">
-					<td><?php echo $prod->id; ?></td>
-					<td style="max-width: 120px;"><?php echo $prod->nombre; ?></td>
-					<td style="max-width: 250px;"><?php echo $prod->descripcion; ?></td>
+				<?php foreach($materiaP as $prod):?>
+				<tr class="<?php if($prod->existencias <= $prod->minimo){echo 'warning';} ?>">
+					<td><?php echo $num++; ?></td>
+					<td style="width: 120px;"><?php echo $prod->nombre; ?></td>
+					<td style="width: 250px;"><?php echo $prod->descripcion; ?></td>
 					<td><?php echo $prod->minimo; ?></td>
 					<td style="text-align: center;"><?php echo $prod->existencias; ?></td>
-					<td style="width:40px;">
-						<a id="<?php echo $prod->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"> Editar</a>
+					<td style="width: 80px;">
+						<a id="<?php echo $prod->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"><i class="fa fa-edit fa-fw"></i></a>
+						<a title="¿Eliminar?" href="index.php?view=delmp&id=<?php echo $prod->id;?>" class="btn btn-danger btn-xs"
+							data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+							data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+							data-btn-ok-class="btn-success btn-xs"
+							data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+							data-btn-cancel-class="btn-danger btn-xs"
+							>
+								<i class="fa fa-trash fa-fw"></i>
+						</a>
 					</td>
 				</tr>
 				<?php endforeach;?>
 			</table>
-			<div class="btn-group pull-right">
-			<?php
-			for($i=0;$i<$npaginas;$i++){
-				echo "<a href='index.php?view=inventarymp&limit=$limit&page=".($i+1)."' class='btn btn-default btn-sm'>".($i+1)."</a> ";
-			}
-			?>
+		</div>
+		<div class="container-fluid">
+			<div class="pull-right">
+				<ul class="pagination">
+					<?php if($start != 1):?>
+					<?php
+						$prev = "#";
+						if($start != 1){
+							$prev = "&start=".($start-$limit)."&limit=".$limit;
+						}
+					?>
+					<li class="previous"><a href="index.php?view=inventarymp<?php echo $prev; ?>">&laquo;</a></li>
+					<?php endif; ?>
+					<?php 
+						$anterior = 1;
+						for($i=1; $i<=$paginas; $i++):
+							$inicio = 1;
+							if ($i != 1){
+								$inicio = $limit + $anterior;
+								$anterior = $inicio;
+							}
+						?>
+						<li <?php if($start == $inicio){echo "class='active'";} ?>>
+							<a href="index.php?view=inventarymp&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
+						</li>
+						<?php
+						endfor;
+					?>
+					<?php if($start != $anterior): ?>
+					<?php 
+						$next = "#";
+						if($start != $anterior){
+							$next = "&start=".($start + $limit)."&limit=".$limit;
+						}
+					?>
+					<li class="previous"><a href="index.php?view=inventarymp<?php echo $next; ?>">&raquo;</a></li>
+					<?php endif; ?>
+				</ul>
 			</div>
-			<form class="form-inline">
-				<label for="limit">Límite</label>
-				<input type="hidden" name="view" value="inventarymp">
-				<input type="number" min="1" value=<?php echo $limit?> name="limit" style="width:60px;" class="form-control">
-			</form>
-			<div class="clearfix"></div>
+		</div>
 		<?php
 		}else{
 		?>
 		<div class="jumbotron">
 			<div class="container">
 				<h2>No hay productos</h2>
-				<p>No se ha agregado materia prima, puede agregar dando click en el botón <b>"Agregar Materia Prima"</b>.</p>
+				No se ha agregado materia prima, puede agregar dando click en el botón <b>"Agregar Materia Prima"</b>.
 			</div>
 		</div>
 		<?php

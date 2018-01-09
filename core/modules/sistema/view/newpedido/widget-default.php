@@ -28,7 +28,7 @@
 		</ul>
 		<div class="tab-content">
 			<div id="prods" class="tab-pane fade in active">
-				<p><b>Buscar producto por nombre o por descripci&oacute;n:</b></p>
+				<p><b>Buscar producto por nombre:</b></p>
 				<div class="row">
 					<div class="col-md-5 col-sm-6 col-xs-10">
 						<div class="input-group">
@@ -45,7 +45,7 @@
 				</div>
 			</div>
 			<div id="servs" class="tab-pane fade">
-				<p><b>Agregar servicio a la venta</b></p>
+				<p><b>Agregar servicio al pedido</b></p>
 				<br>
 				<div class="row">
 					<div class="col-md-12" id="resultado_srv">

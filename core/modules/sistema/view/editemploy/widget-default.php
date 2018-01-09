@@ -8,7 +8,7 @@
 		</script>
 <?php
 	endif;
-	$sc = false; #Para ver si se encentran mas de 0 sucursales
+	$sc = false; #Para ver si se encentran más de 0 sucursales
 	$empleado = EmpleadoData::getById($_GET["id"]);
 	if (is_null($empleado)) {
 		@header("location: index.php?view=empleados");
@@ -28,15 +28,18 @@
 			<div class="form-group control-group">
  		    <label for="txtSucursal" class="col-lg-2 control-label">Sucursal*</label>
  		    <div class="col-md-6 controls">
- 		      <select name="txtSucursal" class="form-control" id="txtSucursal" required>
- 						<option value="<?php echo $empleado->getSucursal()->id; ?>"><?php echo $empleado->getSucursal()->nombre; ?></option>
- 						<?php if ($sc): ?>
- 							<?php foreach($sucursales as $sucursal):?>
- 					      <?php if ($empleado->getSucursal()->id != $sucursal->id): ?>
- 					      	<option value="<?php echo $sucursal->id; ?>"><?php echo $sucursal->nombre;?></option>
- 					      <?php endif; ?>
- 					    <?php endforeach;?>
- 						<?php endif; ?>
+ 		    	<select name="txtSucursal" class="form-control" id="txtSucursal" required>
+					<option value="">--SELECCIONE--</option>
+					<?php if (isset($_SESSION["usr_suc"]) && !isset($_SESSION["adm"])): ?>
+						<?php $suc = SucursalData::getById($_SESSION["usr_suc"]); ?>
+						<option selected value="<?php echo $suc->id; ?>"><?php echo $suc->nombre;?></option>
+					<?php else: ?>
+						<?php if ($sc): ?>
+						<?php foreach($sucursales as $sucursal):?>
+						<option <?php if ($empleado->getSucursal()->id == $sucursal->id){echo 'selected';} ?> value="<?php echo $sucursal->id; ?>"><?php echo $sucursal->nombre;?></option>
+						<?php endforeach;?>
+						<?php endif; ?>
+					<?php endif; ?>						
  		      </select>
  		    </div>
  		  </div>

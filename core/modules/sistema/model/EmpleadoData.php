@@ -52,6 +52,7 @@ class EmpleadoData {
 			$data->nit = $r['nit'];
 			$data->nombre = $r['nombre'];
 			$data->apellido = $r['apellido'];
+			$data->nombrecompleto = $r['nombre']." ".$r['apellido'];
 			$data->sexo = $r['sexo'];
 			$data->estadocivil = $r['estadoCivil'];
 			$data->fechanacimiento = $r['fechaNacimiento'];

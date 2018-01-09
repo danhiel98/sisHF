@@ -70,6 +70,22 @@ class BoxData {
 		return $array;
 	}
 
+	public static function getAllBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new BoxData();
+			$array[$cnt]->id = $r['idCierreCaja'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idsucursal = $r['idSucursal'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getLike($q){
 		$sql = "select * from ".self::$tablename." where name like '%$q%'";
 		$query = Executor::doit($sql);

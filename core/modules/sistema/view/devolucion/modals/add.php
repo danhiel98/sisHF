@@ -41,6 +41,18 @@
                     </select>
 				</div>
 			</div>
+			<div class="form-group control-group">
+				<label for="reembolso" class="col-lg-2 control-label">Reembolso:</label>
+				<div class="col-lg-8 controls">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="fa fa-fw fa-dollar"></i>
+						</span>
+						<input type="text" name="reembolso" onkeypress="return precio(event)" required class="form-control" id="reembolso" placeholder="Cantidad a reembolsar" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="1" required>
+					</div>
+					<p class="help-block"></p>
+				</div>
+			</div>
 			<div class="form-group">
                 <div class="col-md-12">
                     <h2>Productos <small>Seleccione los productos que se van a devolver</small></h2>
@@ -48,9 +60,10 @@
                 </div>
 			</div>
         </div>
+		<input type="hidden" name="cantProds" id="cantProds" value="0">
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-md btn-primary" title="Registrar Devoluci&oacute;n" ><span class="glyphicon glyphicon-floppy-saved"></span> Continuar</button>
+          <button id="btnOk" disabled type="submit" class="btn btn-md btn-primary" title="Registrar Devoluci&oacute;n"><span class="glyphicon glyphicon-floppy-saved"></span> Continuar</button>
         </div>
       </form>
     </div>

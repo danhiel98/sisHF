@@ -132,6 +132,41 @@ class TraspasoData {
 		return $array;
 	}
 
+	public static function getAllBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursalOrigen = $id or idSucursalDestino = $id";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new TraspasoData();
+			$array[$cnt]->id = $r['idTraspaso'];
+			$array[$cnt]->idorigen = $r['idSucursalOrigen'];
+			$array[$cnt]->iddestino = $r['idSucursalDestino'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getAllBySucPage($idSuc,$start,$limit){
+		$start--;
+		$sql = "select * from ".self::$tablename." where idSucursalOrigen = $idSuc or idSucursalDestino = $idSuc limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new TraspasoData();
+			$array[$cnt]->id = $r['idTraspaso'];
+			$array[$cnt]->idorigen = $r['idSucursalOrigen'];
+			$array[$cnt]->iddestino = $r['idSucursalDestino'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getLike($q){
 		$base = new Database();
 		$cnx = $base->connect();

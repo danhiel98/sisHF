@@ -63,3 +63,37 @@
         </div>
     </div>
 </div>
+<script>
+    $("#tipoComprobante").on("change", function(){
+		tipo = $(this).val();
+		comprobante = $("#numComprobante");
+		groupLetras = $("#groupLetras");
+		iva = $("#groupIva");
+		totLetras = $("#totalLetras");
+		
+		iva.hide();
+		totLetras.attr("required","required");
+
+		if (tipo == 3){
+			totLetras.removeAttr("required");
+			totLetras.val("");
+			groupLetras.hide();
+			$.ajax({
+				url: "ajax/sell/numeroRecibo.php",
+				type: "POST",
+				dataType: "json",
+				success: function(data){
+					comprobante.attr("readonly","readonly");
+					comprobante.val(data);
+				}
+			});
+		}else{
+			if (tipo == 2){
+				iva.show();
+			}
+			groupLetras.show();	
+			comprobante.removeAttr("readonly");
+			comprobante.val("");
+		}
+	});
+</script>

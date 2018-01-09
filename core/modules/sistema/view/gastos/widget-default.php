@@ -23,7 +23,7 @@
 		<h1>Gastos Realizados</h1>
 		<?php
 		if(count($gastos)>0):
-			$start = 1; $limit = 5;
+			$start = 1; $limit = 10;
 			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
 				$start = $_REQUEST["start"];
 				$limit = $_REQUEST["limit"];
@@ -39,6 +39,7 @@
 			$spaginas = count($gastos)%$limit;
 			if($spaginas>0){$paginas++;}
 			$gastos = GastoData::getByPage($start,$limit);
+			$count = $start;
 		?>
 		
 		<div class="table-responsive">
@@ -57,7 +58,7 @@
 					foreach($gastos as $gasto):
 					?>
 					<tr>
-						<td><?php echo $gasto->id; ?></td>
+						<td><?php echo $count++; ?></td>
 						<td>
 							<?php
 								if ($gasto->idempleado != ""){
@@ -69,8 +70,17 @@
 						<td style="min-width: 80px;">$ <?php echo $gasto->pago; ?></td>
 						<td><?php echo $gasto->comprobante; ?></td>
 						<td style="min-width: 100px;"><?php echo $gasto->fecha; ?></td>
-						<td style="width:60px;">
-							<a data-toggle="modal" data-target="#editar" id="<?php echo $gasto->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
+						<td style="width: 80px;">
+							<a data-toggle="modal" data-target="#editar" id="<?php echo $gasto->id;?>" class="btn btn-warning btn-xs btn-edit"><i class="fa fa-edit fa-fw"></i></a>
+							<a title="¿Eliminar?" href="index.php?view=delgasto&id=<?php echo $gasto->id;?>" class="btn btn-danger btn-xs"
+							data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+							data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+							data-btn-ok-class="btn-success btn-xs"
+							data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+							data-btn-cancel-class="btn-danger btn-xs"
+							>
+								<i class="fa fa-trash fa-fw"></i>
+							</a>
 						</td>
 					</tr>
 						<?php

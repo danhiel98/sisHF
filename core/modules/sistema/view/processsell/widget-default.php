@@ -17,7 +17,7 @@
 			$fact->tipoComprobante = $_POST["tipo"];
 
 			if ($_POST["tipo"] == 3){
-				$fact->numerofactura = $fact->getLastRecibo() + 1;
+				$fact->numerofactura = $fact->getLastRecibo($fact->idsucursal) + 1;
 			}else{
 				$fact->numerofactura = $_POST["numero"];				
 			}
@@ -47,7 +47,6 @@
 			}
 		}
 	}
-	unset($_SESSION["sucursal"]);
 	unset($_SESSION["cart"]);
 	@header("location: index.php?view=onesell&id=$r[1]");
 ?>

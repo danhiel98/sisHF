@@ -3,6 +3,7 @@ class AbonoData {
 	public static $tablename = "abono";
 
 	public function AbonoData(){
+		$this->idsucursal = "";
         $this->idusuario = "";
         $this->idcliente = "";
         $this->idpedido = "";
@@ -18,8 +19,8 @@ class AbonoData {
 	public function getComprobante(){return ComprobanteData::getById($this->tipocomprobante);}
 
 	public function add(){
-		$sql = "insert into abono (idUsuario, idCliente, idPedido, cantidad, fecha, tipoComprobante, numeroComprobante) ";
-		$sql .= "values ($this->idusuario,$this->idcliente,\"$this->idpedido\",\"$this->cantidad\",$this->fecha,\"$this->tipocomprobante\",\"$this->numerocomprobante\")";
+		$sql = "insert into abono (idSucursal, idUsuario, idCliente, idPedido, cantidad, fecha, tipoComprobante, numeroComprobante) ";
+		$sql .= "values ($this->idsucursal,$this->idusuario,$this->idcliente,\"$this->idpedido\",\"$this->cantidad\",$this->fecha,\"$this->tipocomprobante\",\"$this->numerocomprobante\")";
 		Executor::doit($sql);
 	}
 
@@ -87,10 +88,30 @@ class AbonoData {
 		}
 		return $array;
 	}
+
+	public static function getAllBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and estado = 1 order by fecha desc";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new AbonoData();
+			$array[$cnt]->id = $r['idAbono'];
+            $array[$cnt]->idusuario = $r['idUsuario'];
+            $array[$cnt]->idcliente = $r['idCliente'];
+            $array[$cnt]->idpedido = $r['idPedido'];
+            $array[$cnt]->cantidad = $r['cantidad'];
+            $array[$cnt]->fecha = $r['fecha'];
+            $array[$cnt]->tipocomprobante = $r['tipoComprobante'];
+            $array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$cnt++;
+		}
+		return $array;
+	}
 	
-	public static function getByPage($start,$limit){
+	public static function getByPage($idSuc,$start,$limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where estado = 1 order by fecha desc limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and estado = 1 order by fecha desc limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

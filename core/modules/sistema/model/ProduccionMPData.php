@@ -43,6 +43,22 @@
 			return $found;
 		}
 
+		public static function getAllByMP($id){
+			$sql = "select * from ".self::$tablename." where idMateriaPrima = $id";
+			$query = Executor::doit($sql);
+			$array = array();
+			$cnt = 0;
+			while($r = $query[0]->fetch_array()){
+				$array[$cnt] = new ProduccionMPData();
+				$array[$cnt]->id = $r['idMateriaPrimaProduccion'];
+				$array[$cnt]->idproduccion = $r['idProduccion'];
+				$array[$cnt]->idmateriaprima = $r['idMateriaPrima'];
+				$array[$cnt]->cantidad = $r['cantidad'];
+				$cnt++;
+			}
+			return $array;
+		}
+
 		public static function getAllByProdId($id){
 			$sql = "select * from ".self::$tablename." where idProduccion = $id";
 			$query = Executor::doit($sql);

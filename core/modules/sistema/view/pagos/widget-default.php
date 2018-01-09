@@ -1,14 +1,19 @@
 <?php
     include "modals/pedido.php";
     $todos = false;
-    $id = "";
-    if (isset($_REQUEST["idP"]) && $_REQUEST["idP"] != ""){
-        $id = $_REQUEST["idP"];
-        $pagos = AbonoData::getAllByPedidoId($id);
+    $idPedido = "";
+    $idSuc = $_SESSION["usr_suc"];
+    if (isset($_REQUEST["idP"]) && is_numeric($_REQUEST["idP"])){
+        $idPedido = $_REQUEST["idP"];
+        $pagos = AbonoData::getAllByPedidoId($idPedido);
     }else{
-        $pagos = AbonoData::getAll();
+        $pagos = AbonoData::getAllBySuc($idSuc);
         $todos = true;
     }
+    
+    $user = UserData::getById(Session::getUID());
+    $sucursales = SucursalData::getAll();
+
     $total = 0;
 ?>
 <script src="ajax/pagos/ajax.js"></script>
@@ -19,13 +24,48 @@
     </div>
     -->
     <div class="col-md-12">
-        <?php if($id != ""): ?>
-        <a class="btn btn-default" href="index.php?view=detallepedido&id=<?php echo $id; ?>"><i class="fa fa-arrow-left"></i> Regresar</a>
+        <?php if($idPedido != ""): ?>
+        <a class="btn btn-default" href="index.php?view=detallepedido&id=<?php echo $idPedido; ?>"><i class="fa fa-arrow-left"></i> Regresar</a>
         <?php endif; ?>
-        <h1>Pagos Realizados <?php if(!$todos){echo "[Pedido #$id]";} ?></h1>
+        <h1>Pagos Realizados <?php if(!$todos){echo "[Pedido #$idPedido]";} ?></h1>
+
+        <?php if (count($sucursales) > 1 && $user->id == 1 && $idPedido == ""): ?>
+        <div class="container-fluid">
+            <div class="form-horizontal">
+                <label for="sucursal" class="col-md-2 col-sm-2 col-xs-2 control-label">Sucursal</label>
+                <div class="col-md-4 col-sm-6 col-xs-8">
+                    <select name="sucursal" id="sucursal" class="form-control">
+                        <?php foreach($sucursales as $suc): ?>
+                            <option <?php if($suc->id == $idSuc){echo 'selected';} ?> value="<?php echo $suc->id; ?>"><?php echo $suc->nombre; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <script>
+                $("#sucursal").on("change", function(){
+                    $.ajax({
+                        url: "ajax/pagos/resultadoSucursal.php",
+                        type: "POST",
+                        data: {
+                            sucursal: $(this).val()
+                        },
+                        dataType: "html",
+                        success: function(res){
+                            $("#resultado").html(res);
+                        }
+                    });
+                });
+            </script>
+        </div>
+        <?php endif; ?>
+
+        <div class="clearfix"></div>
+        <br>
         <?php if (count($pagos) > 0):
-            if ($id == ""){
-                $start = 1; $limit = 5;
+            $num = 1;
+            if ($idPedido == ""){
+                $start = 1; $limit = 10;
                 if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
                     $start = $_REQUEST["start"];
                     $limit = $_REQUEST["limit"];
@@ -40,11 +80,13 @@
                 $paginas = floor(count($pagos)/$limit);
                 $spaginas = count($pagos)%$limit;
                 if($spaginas>0){$paginas++;}
-                $pagos = AbonoData::getByPage($start,$limit);
+                $pagos = AbonoData::getByPage($idSuc,$start,$limit);
                 
+                $num = $start; #Contador
             }
-            $num = 0; #Contador
+            
         ?>
+        <div id="resultado">
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">
                     <thead>
@@ -64,7 +106,7 @@
                     <tbody>
                         <?php foreach($pagos as $p): ?>
                         <tr>
-                            <td><?php echo ++$num; ?></td>
+                            <td><?php echo $num++; ?></td>
                             <?php if($todos): ?>
                             <td><a data-toggle="modal" data-target="#detalleP" class="btn btn-default btn-xs btn-detail" id="<?php echo $p->idpedido; ?>"><i class="fa fa-list"></i> Detalles</a></td>
                             <?php endif; ?>
@@ -77,10 +119,10 @@
                                 <?php
                                     $usuario = $p->getUser();
                                     if ($usuario->idempleado == null){
-                                        echo $usuario->name." ".$usuario->lastname;
+                                        echo $usuario->fullname;
                                     }else{
                                         $empleado = $p->getUser()->getEmpleado();
-                                        echo $empleado->name." ".$empleado->lastname;
+                                        echo $empleado->nombrecompleto;
                                     }
                                 ?>
                             </td>
@@ -92,7 +134,7 @@
                 <h2>Total: <strong>$ <?php echo number_format($total,2,".",","); ?></strong></h2>
                 <?php endif; ?>
             </div>
-            <?php if ($id == ""): ?>
+            <?php if ($idPedido == ""): ?>
             <div class="container-fluid">
                 <div class="pull-right">
                     <ul class="pagination">
@@ -117,11 +159,11 @@
                             <li <?php if($start == $inicio){echo "class='active'";} ?>>
                                 <a href="index.php?view=pagos&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
                             </li>
-                            <?php
+                        <?php
                             endfor;
                         ?>
                         <?php if($start != $anterior): ?>
-                        <?php 
+                        <?php
                             $next = "#";
                             if($start != $anterior){
                                 $next = "&start=".($start + $limit)."&limit=".$limit;
@@ -133,8 +175,9 @@
                 </div>
             </div>
             <?php endif; ?>
+        </div>
         <?php else: ?>
-        <div class="alert alert-info">
+        <div class="alert alert-warning">
             No se han reaizado pagos.
         </div>
         <?php endif; ?>

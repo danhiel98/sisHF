@@ -22,11 +22,11 @@ class MateriaPrimaData {
 	}
 
 	public static function delById($id){
-		$sql = "update ".self::$tablename." set estado = 0 where id=$id";
+		$sql = "update ".self::$tablename." set estado = 0 where idMateriaPrima = $id";
 		Executor::doit($sql);
 	}
 	public function del(){
-		$sql = "update ".self::$tablename." set estado = 0 where id=$this->id";
+		$sql = "update ".self::$tablename." set estado = 0 where idMateriaPrima = $this->id";
 		Executor::doit($sql);
 	}
 
@@ -87,8 +87,9 @@ class MateriaPrimaData {
 		return $array;
 	}
 
-	public static function getAllByPage($start_from, $limit){
-		$sql = "select * from ".self::$tablename." where idMateriaPrima>=$start_from and estado = 1 limit $limit";
+	public static function getAllByPage($start, $limit){
+		$start--;
+		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

@@ -21,7 +21,7 @@ $(function(){
                         data: { id: dato.id },
                         success: function(res){
                             resultado.html(res);
-                        }                
+                        }   
                     });
                 }else{
                     cliente.val("");

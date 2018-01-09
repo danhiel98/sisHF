@@ -9,19 +9,22 @@
 	$idSucursal = $_POST["sucursal"];
 	$prod = false;
 
-	$productos = array();
 	$productos = ProductoSucursalData::getAllBySucId($idSucursal);
+
 	if(isset($_POST['productos'])){
+		
+		$productos = array();
 		$prod = true;
+		
 		$nombreProd = $_POST['productos'];
 		$products = ProductData::getLike($nombreProd);
 
-		foreach ($products as $prd):
+		foreach ($products as $prd){
 			$prodSuc = ProductoSucursalData::getBySucursalProducto($idSucursal,$prd->id);
 			if (count($prodSuc) == 1){
 				array_push($productos,$prodSuc);
 			}
-		endforeach;
+		}
 	}
 	
 	if (count($productos) > 0){

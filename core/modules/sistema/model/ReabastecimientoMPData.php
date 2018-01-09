@@ -39,6 +39,7 @@
 				$data->cantidad = $r['cantidad'];
 				$data->precio = $r['precioUnitario'];
 				$data->total = $r['total'];
+				$data->estado = $r['estado'];			
 				$found = $data;
 				break;
 			}
@@ -71,6 +72,24 @@
 			while($r = $query[0]->fetch_array()){
 				$array[$cnt] = new ReabastecimientoMPData();
 				$array[$cnt]->id = $r['idMateriaPrima'];
+				$array[$cnt]->idfacturamp = $r['idFacturaMateriaPrima'];
+				$array[$cnt]->idmateriaprima = $r['idMateriaPrima'];
+				$array[$cnt]->cantidad = $r['cantidad'];
+				$array[$cnt]->precio = $r['precioUnitario'];
+				$array[$cnt]->total = $r['total'];
+				$cnt++;
+			}
+			return $array;
+		}
+
+		public static function getAllByMP($id){
+			$sql = "select * from ".self::$tablename." where idMateriaPrima = $id";
+			$query = Executor::doit($sql);
+			$array = array();
+			$cnt = 0;
+			while($r = $query[0]->fetch_array()){
+				$array[$cnt] = new ReabastecimientoMPData();
+				$array[$cnt]->id = $r['idCompraMateriaPrima'];
 				$array[$cnt]->idfacturamp = $r['idFacturaMateriaPrima'];
 				$array[$cnt]->idmateriaprima = $r['idMateriaPrima'];
 				$array[$cnt]->cantidad = $r['cantidad'];

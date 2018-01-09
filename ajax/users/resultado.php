@@ -9,7 +9,7 @@
 		$id = $_REQUEST["sucursal"];
 		$usuarios = UserData::getAllBySucId($id);
 		if (count($usuarios)>0):
-			$start = 1; $limit = 1;
+			$start = 1; $limit = 10;
 			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
 				$start = $_REQUEST["start"];
 				$limit = $_REQUEST["limit"];

@@ -29,17 +29,17 @@ class ProductData {
 	}
 
 	public static function delById($id){
-		$sql = "delete from ".self::$tablename." where id=$id";
+		$sql = "update ".self::$tablename." set estado = 0 where idProducto =$id";
 		Executor::doit($sql);
 	}
 
 	public function del(){
-		$sql = "delete from ".self::$tablename." where id=$this->id";
+		$sql = "update ".self::$tablename." set estado = 0 where idProducto = $this->id";
 		Executor::doit($sql);
 	}
 
 	public function update(){
-		$sql = "update ".self::$tablename." set idCategoria=$this->idcategoria, nombre=\"$this->nombre\", descripcion=\"$this->descripcion\", mantenimiento=$this->mantenimiento, preciocosteo=$this->preciocosteo, precioventa=$this->precioventa, estado=$this->estado where idProducto=$this->id";
+		$sql = "update ".self::$tablename." set idCategoria=$this->idcategoria, nombre=\"$this->nombre\", descripcion=\"$this->descripcion\", mantenimiento=$this->mantenimiento, preciocosteo=$this->preciocosteo, precioventa=$this->precioventa where idProducto=$this->id";
 		return Executor::doit($sql);
 	}
 
@@ -131,7 +131,7 @@ class ProductData {
 		$base = new Database();
 		$cnx = $base->connect();
 		$p = $cnx->real_escape_string($p);
-		$sql = "select * from ".self::$tablename." where nombre like '%$p%' or descripcion like '%$p%'";
+		$sql = "select * from ".self::$tablename." where nombre like '%$p%' and estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -153,31 +153,8 @@ class ProductData {
 		return $array;
 	}
 
-	public static function getAllByUserId($user_id){
-		$sql = "select * from ".self::$tablename." where user_id=$user_id order by created_at desc";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new ProductData();
-			$array[$cnt]->id = $r['idProducto'];
-			$array[$cnt]->idcategoria = $r['idCategoria'];
-			$array[$cnt]->nombre = $r['nombre'];
-			$array[$cnt]->descripcion = $r['descripcion'];
-			$array[$cnt]->preciocosteo = $r['precioCosteo'];
-			$array[$cnt]->precioventa = $r['precioVenta'];
-			$array[$cnt]->existencias = $r['existencias'];
-			$array[$cnt]->mantenimiento = $r['mantenimiento'];
-			$array[$cnt]->imagen = $r['imagen'];
-			$array[$cnt]->fecha = $r['fechaRegistro'];
-			$array[$cnt]->estado = $r['estado'];
-			$cnt++;
-		}
-		return $array;
-	}
-
-	public static function getAllByCategoryId($category_id){
-		$sql = "select * from ".self::$tablename." where category_id=$category_id order by created_at desc";
+	public static function getAllByCategory($id){
+		$sql = "select * from ".self::$tablename." where idCategoria = $id and estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

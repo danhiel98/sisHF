@@ -95,6 +95,7 @@ class UserData {
 			$data->idempleado = $r['idEmpleado'];
 			$data->name = $r['nombre'];
 			$data->lastname = $r['apellido'];
+			$data->fullname = $r['nombre']." ".$r['apellido'];
 			$data->username = $r['usuario'];
 			$data->email = $r['email'];
 			$data->password = $r['clave'];

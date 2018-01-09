@@ -47,30 +47,35 @@
 			</div>
 		</div>
 		<div class="form-group control-group">
-			<label for="numero" class="col-sm-4 control-label">Pago</label>
+			<label for="cantidad" class="col-sm-4 control-label">Pago</label>
 			<div class="controls col-sm-8">
 				<div class="input-group">
 					<span class="input-group-addon">
 						<i class="fa fa-fw fa-dollar"></i>
 					</span>
-					<input type="text" name="cantidad" class="form-control" id="cantidad" placeholder="Pago" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="5" required>
+					<input type="text" name="cantidad" class="form-control" id="cantidad" placeholder="Pago" data-validation-regex-regex="([+-]?\d+(\.\d*)?([eE][+-]?[0-9]+)?)?" data-validation-regex-message="Introduzca una cantidad v&aacute;lida" maxlength="9" min="5" readonly required>
 				</div>
 			</div>
 		</div>
 		<div class="form-group control-group">
-			<label for="numero" class="col-sm-4 control-label">No. Comprobante</label>
+			<label for="numComprobante" class="col-sm-4 control-label">No. Comprobante</label>
 			<div class="controls col-sm-8">
-				<input type="text" class="form-control" name="numero" pattern="[0-9]{2,8}" data-validation-pattern-message="Introduzca un valor válido" maxlength="8" required>
+				<input type="text" class="form-control" name="numComprobante" id="numComprobante" pattern="[0-9]{1,10}" data-validation-pattern-message="Introduzca un valor válido" maxlength="8" required>
+			</div>
+		</div>
+		<div class="form-group control-group" id="groupLetras">
+			<label for="totalLetras" class="col-sm-4 control-label">Son</label>
+			<div class="controls col-sm-8">
+				<textarea class="form-control" name="totalLetras" id="totalLetras" cols="10" rows="2" maxlenght="150"></textarea>
 			</div>
 		</div>
 	</div>
-	<input type="hidden" name="origen" value="<?php echo $_SESSION["usr_suc"]; ?>">
 	<div id="resumenX">
 	</div>
 	<?php if ($found): ?>
 		<script type="text/javascript">
 			$(function(){
-				var html = '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button><a href="index.php?view=newpedido&delAll" class="btn btn-danger">Cancelar</a><button name="addTraspaso" type="submit" class="btn btn-md btn-primary" title="Registrar Traspaso" ><span class="glyphicon glyphicon-floppy-saved"></span> Guardar</button>';
+				var html = '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button><a href="index.php?view=newpedido&delAll" class="btn btn-danger">Cancelar</a><button type="submit" class="btn btn-md btn-primary" title="Registrar Traspaso" ><span class="glyphicon glyphicon-floppy-saved"></span> Guardar</button>';
 				$("#modal-footer").html(html);
 			});
 		</script>
@@ -95,8 +100,10 @@
 		var idCliente = $(this).val();
 		obtenerComprobante(idCliente);
 	});
+
 	$(function(){
 		obtenerComprobante();
+		datosResumen();
 	});
 
 	$(function () {
@@ -105,6 +112,39 @@
 			format: "DD-MM-YYYY",
 			minDate: new Date()
 		});
+	});
+
+	$("#tipo").on("change", function(){
+		tipo = $(this).val();
+		comprobante = $("#numComprobante");
+		groupLetras = $("#groupLetras");
+		iva = $("#groupIva");
+		totLetras = $("#totalLetras");
+		
+		iva.hide();
+		totLetras.attr("required","required");
+
+		if (tipo == 3){
+			totLetras.removeAttr("required");
+			totLetras.val("");
+			groupLetras.hide();
+			$.ajax({
+				url: "ajax/sell/numeroRecibo.php",
+				type: "POST",
+				dataType: "json",
+				success: function(data){
+					comprobante.attr("readonly","readonly");
+					comprobante.val(data);
+				}
+			});
+		}else{
+			if (tipo == 2){
+				iva.show();
+			}
+			groupLetras.show();	
+			comprobante.removeAttr("readonly");
+			comprobante.val("");
+		}
 	});
 
 </script>

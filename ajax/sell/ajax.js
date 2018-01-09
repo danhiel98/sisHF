@@ -18,16 +18,15 @@
     }
 	});
 
-	function obtener_registros(idSucursal,buscar){
+	function obtener_registros(buscar){
 		$.ajax({
 			url : 'ajax/sell/resultado.php',
 			type : 'POST',
 			dataType : 'html',
 			data : {
-				productos: buscar,
-				sucursal: idSucursal
+				productos: buscar
 			},
-			})
+		})
 		.done(function(resultado){
 			$.getScript("js/jqBootstrapValidation.js", function (data, textStatus, jqxhr) {
 				//Acciones a realizar
@@ -38,14 +37,12 @@
 
 	$(document).on('keyup focus', '#busqueda', function(){
 		var valorBusqueda = $(this).val();
-		var idSucursal = $("#sOrigen").val();
 		if (valorBusqueda != "") {
-			obtener_registros(idSucursal,valorBusqueda);
-		}else {
-			obtener_registros(idSucursal);
+			obtener_registros(valorBusqueda);
 		}
 	});
 
+	/*
 	function obtenerDatosDeSucursal(idSucursal){
 		$.ajax({
 			url : 'ajax/sell/resultado.php',
@@ -57,14 +54,18 @@
 			$.getScript("js/jqBootstrapValidation.js", function (data, textStatus, jqxhr) {
 				//Acciones a realizar
 			});
+			obtenerInfo();
 			$("#tabla_resultado").html(resultado);
 		})
 	}
+	*/
 
+	/*
 	$(document).on('load change', '#sOrigen', function(){
 		var idSuc = $(this).val();
 		obtenerDatosDeSucursal(idSuc);
 	});
+	*/
 
 	function obtenerServ(){
 		$.ajax({
@@ -96,8 +97,13 @@
 		});
 	}
 
-	$(document).ready(function(){
+	function obtenerInfo(){
+		obtenerServ();
 		datosModal();
 		datosResumen();
-		obtenerServ();
+	}
+
+	$(document).ready(function(){
+		obtener_registros();
+		obtenerInfo();
 	});

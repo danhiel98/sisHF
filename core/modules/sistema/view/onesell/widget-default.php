@@ -25,6 +25,7 @@
   $pVend = FacturaData::getAllSellsByFactId($_GET["id"]);
   $sVend = FacturaData::getAllServicesByFactId($_GET["id"]);
   $total = 0;
+  $comprobante = $sell->getComprobante();
 ?>
 <?php
   if(isset($_COOKIE["selled"])){
@@ -33,7 +34,7 @@
 ?>
 <table class="table table-bordered">
   <tr>
-    <td>No. <?php echo $sell->getComprobante()->nombre; ?></td>
+    <td>No. <?php echo $comprobante->nombre; ?></td>
     <td><?php echo $sell->numerofactura; ?></td>
   </tr>
   <tr>
@@ -56,10 +57,12 @@
 	   <td><?php echo $user->name." ".$user->lastname;?></td>
   </tr>
   <?php endif; ?>
+  <?php if ($comprobante->id == 1 || $comprobante->id == 2): ?>
   <tr>
     <td>Son</td>
     <td><?php echo $sell->totalLetras; ?></td>
   </tr>
+  <?php endif; ?>
 </table>
 <br>
 <table class="table table-bordered table-hover">

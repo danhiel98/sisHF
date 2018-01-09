@@ -9,7 +9,7 @@
 	if (count($services)>0):?>
 		<table class="table table-bordered table-hover">
 			<thead>
-				<th style="width:45px;"></th>
+				<th style="width:45px;">ID</th>
 				<th>Servicio</th>
 				<th>Precio</th>
 				<th style="width: 140px;"></th>
@@ -17,7 +17,7 @@
 			<tbody>
 			<?php foreach ($services as $srv): $found = false;?>
 				<tr>
-					<td></td>
+					<td><?php echo $srv->id; ?></td>
 					<td><?php echo $srv->nombre; ?></td>
 					<td>$ <?php echo $srv->precio; ?></td>
 					<td>
@@ -50,9 +50,7 @@
 						type: "POST",
 						data: $(this).serialize(),
 						success: function(){
-							datosModal();
-							datosResumen();
-							obtenerServ();
+							obtenerInfo();
 						}
 					});
 					return false;

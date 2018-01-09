@@ -49,6 +49,7 @@
 				$data->comprobante = $r['numComprobante'];
 				$data->fecha = $r['fecha'];
 				$data->total = $r['total'];
+				$data->estado = $r['estado'];
 				$found = $data;
 				break;
 			}

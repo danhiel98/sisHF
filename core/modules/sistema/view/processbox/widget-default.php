@@ -1,17 +1,19 @@
 <?php
-$ventas = FacturaData::getSellsUnBoxed();
+	
+	$idSuc = $_SESSION["usr_suc"];
+	$ventas = FacturaData::getSellsUnBoxedBySuc($idSuc);
 
-if(count($ventas)){
-	$box = new BoxData();
-	$box->idusuario = $_SESSION["user_id"];
-	$box->idsucursal = $_SESSION["usr_suc"];
-	$b = $box->add();
+	if(count($ventas)){
+		$box = new BoxData();
+		$box->idusuario = $_SESSION["user_id"];
+		$box->idsucursal = $_SESSION["usr_suc"];
+		$b = $box->add();
 
-	foreach($ventas as $v){
-		$v->idcierrecaja = $b[1];
-		$v->update_box();
+		foreach($ventas as $v){
+			$v->idcierrecaja = $b[1];
+			$v->update_box();
+		}
+		Core::redir("./index.php?view=b&id=".$b[1]);
 	}
-	Core::redir("./index.php?view=b&id=".$b[1]);
-}
 
 ?>

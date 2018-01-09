@@ -20,7 +20,7 @@ if (isset($_GET["val"]) && $_GET["val"] == "ent" || $_GET["val"] == "sal") {
     		<li><a href="report/cajaChicaIngreso.php">Excel (.xlsx)</a></li>
   		</ul>
 		</div>
-		<h1><i class='fa fa-archive'></i> Entradas De Dinero En Caja Chica</h1>
+		<h1><i class='fa fa-archive'></i> Entradas (Caja Chica)</h1>
 		<?php
 			$ingresos = CajaChicaData::getIngresos();
 			if (count($ingresos) > 0) {
@@ -31,7 +31,9 @@ if (isset($_GET["val"]) && $_GET["val"] == "ent" || $_GET["val"] == "sal") {
 				<th>Ingresada Por</th>
 				<th>Cantidad</th>
 				<th>Fecha</th>
+				<!--
 				<th></th>
+				-->
 			</thead>
 			<?php foreach ($ingresos as $ing): ?>
 			<tr>
@@ -39,7 +41,9 @@ if (isset($_GET["val"]) && $_GET["val"] == "ent" || $_GET["val"] == "sal") {
 				<td><?php echo $ing->getUsuario()->name." ".$ing->getUsuario()->lastname; ?></td>
 				<td><strong>$ <?php echo number_format($ing->cantidad, 2,'.',','); ?></strong></td>
 				<td><?php echo $ing->fecha; ?></td>
+				<!--
 				<td style="width:40px;"><a class="btn btn-warning btn-xs">Editar</a></td>
+				-->
 			</tr>
 			<?php endforeach; ?>
 		</table>
@@ -60,42 +64,50 @@ if (isset($_GET["val"]) && $_GET["val"] == "ent" || $_GET["val"] == "sal") {
   		</ul>
 		</div>
 		
-		<h1><i class='fa fa-archive'></i> Salidas De Dinero De Caja Chica</h1>
+		<h1><i class='fa fa-archive'></i> Salidas (Caja Chica)</h1>
 		<?php
 			$salidas = CajaChicaData::getSalidas();
 			if (count($salidas) > 0){
 		?>
 		<table class="table table-bordered table-hover">
 			<thead>
-				<th>No.</th>
-				<th>Registrada Por</th>
-				<th>Realizada Por</th>
-				<th>Cantidad</th>
-				<th>Descripci&oacute;n</th>
-				<th>Fecha</th>
-				<th></th>
+				<tr>
+					<th>No.</th>
+					<th>Registrada Por</th>
+					<th>Realizada Por</th>
+					<th>Cantidad</th>
+					<th>Descripci&oacute;n</th>
+					<th>Fecha</th>
+					<!--
+					<th></th>
+					-->
+				</tr>
 			</thead>
-			<?php foreach ($salidas as $sal): ?>
-			<tr>
-				<td><?php echo $sal->id; ?></td>
-				<td><?php echo $sal->getUsuario()->name." ".$sal->getUsuario()->lastname; ?></td>
-				<td>
-					<?php if ($sal->idempleado != null){ echo $sal->getEmpleado()->nombre." ".$sal->getEmpleado()->apellido;}; ?>
-				</td>
-				<td><strong>$ <?php echo number_format($sal->cantidad,2,".",","); ?></strong></td>
-				<td><?php echo $sal->descripcion; ?></td>
-				<td><?php echo $sal->fecha; ?></td>
-				<td style="width:40px;"><a class="btn btn-warning btn-xs">Editar</a></td>
-			</tr>
-			<?php endforeach; ?>
-			<?php
+			<tbody>
+				<?php foreach ($salidas as $sal): ?>
+				<tr>
+					<td><?php echo $sal->id; ?></td>
+					<td><?php echo $sal->getUsuario()->name." ".$sal->getUsuario()->lastname; ?></td>
+					<td>
+						<?php if ($sal->idempleado != null){ echo $sal->getEmpleado()->nombre." ".$sal->getEmpleado()->apellido;}; ?>
+					</td>
+					<td><strong>$ <?php echo number_format($sal->cantidad,2,".",","); ?></strong></td>
+					<td><?php echo $sal->descripcion; ?></td>
+					<td><?php echo $sal->fecha; ?></td>
+					<!--
+					<td style="width:40px;"><a class="btn btn-warning btn-xs">Editar</a></td>
+					-->
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+	<?php
 		}else{
 			echo "<div class='alert alert-warning'>No se han realizado salidas de la caja chica</div>";
 		}
-			?>
-		</table>
-		<?php endif; ?>
+	?>
+	<?php endif; ?>
 		<div class="clearfix"></div>
-		<br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br>
 	</div>
 </div>

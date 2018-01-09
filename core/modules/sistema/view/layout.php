@@ -1,5 +1,4 @@
 <?php
-  
   if (isset($_GET["view"])) {
     $vista = $_GET["view"];
     switch ($vista) {
@@ -48,11 +47,13 @@
     <script src="res/initializr/js/vendor/jquery-1.11.2.min.js"></script>
     <script src="res/initializr/js/vendor/bootstrap.min.js"></script>
     <script src="res/initializr/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="res/initializr/js/main.js"></script>
     <script src="js/moment.js"></script>
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/jqBootstrapValidation.js"></script>
     <script src="res/select/js/bootstrap-select.js"></script>
-    <script type="text/javascript" src="js/validaciones.js"></script>
+    <script src="js/bootstrap-confirmation.js"></script>
+    <script src="js/validaciones.js"></script>
   </head>
   <body>
     <div id="wrapper">
@@ -74,7 +75,8 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <?php
           $u=null;
-          if(Session::getUID()!="" && !isset($_GET["about"])):
+          if(Session::getUID() != "" && UserData::getById(Session::getUID())):
+            $idSuc = $_SESSION["usr_suc"];
             $u = UserData::getById(Session::getUID());
           ?>
           
@@ -87,8 +89,10 @@
             <li><a href="index.php?view=empleados"><i class="icon-users"></i> Empleados </a></li>
             <li><a href="index.php?view=users"><i class="fa fa-users"></i> Usuarios </a></li>
             <?php endif; ?>
-            <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3): ?>
+            <?php if($idSuc == 1): ?>
             <li><a href="index.php?view=providers"><i class="fa fa-truck"></i> Proveedores </a></li>
+            <?php endif; ?>
+            <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3): ?>
             <li><a href="index.php?view=clients"><i class="fa fa-user-o"></i> Clientes</a></li>
             <?php endif; ?>
             <div class="clearfix"></div>
@@ -99,14 +103,20 @@
                 <li><a href="index.php?view=envios"><i class="fa fa-send-o"></i> Env&iacute;os</a></li>
               </ul>
             </li>
-            <li><a href="index.php?view=gastos"><i class="fa fa-usd"></i> Gastos</a></li>
+            <?php if($idSuc == 1): ?> <!-- Solamente se pueden registrar gastos en la sucursal principal -->
+            <li><a href="index.php?view=gastos"><i class="fa fa-usd"></i> Gastos</a></li>       
+            <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 4): ?>
             <li><a href="index.php?view=categories"><i class="fa fa-th-list"></i> Categor&iacute;as </a></li>
+            <?php endif; ?>
+            <?php endif;?>
             <li><a href="index.php?view=services"><i class="fa fa-th"></i> Servicios</a></li>
             <li><a href="index.php?view=products"><i class="fa fa-glass"></i> Productos </a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-area-chart"></i> Inventario <span class="caret"></span></a>
               <ul class="dropdown-menu">
+                <?php if($idSuc == 1): ?>
                 <li><a href="index.php?view=inventarymp"><i class="fa fa-area-chart"></i> Materia Prima</a></li>
+                <?php endif; ?>
                 <li><a href="index.php?view=inventaryprod"><i class="fa fa-area-chart"></i> Productos</a></li>
               </ul>
             </li>
@@ -116,36 +126,34 @@
             <?php endif; ?>
             <li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Compras</a></li>
             <?php endif; ?>
+            <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 4): ?>
             <li><a href="index.php?view=traspasos"><i class="fa fa-exchange"></i> Traspasos</a></li>
+            <?php endif; ?>
             <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3): ?>
             <li><a href="index.php?view=pedidos"><i class="fa fa-list-alt"></i> Pedidos</a></li>
             <li><a href="index.php?view=pagos"><i class="fa fa-credit-card"></i> Pagos</a></li>
             <li><a href="index.php?view=sells"><i class="fa fa-shopping-cart"></i> Ventas</a></li>
             <li><a href="index.php?view=box"><i class="fa fa-archive"></i> Caja</a></li>
             <?php endif; ?>
+            <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3): ?>            
             <li><a href="index.php?view=devolucion"><i class="fa fa-reply"></i> Devoluciones</a></li>
+            <?php endif; ?>
+            <?php if($idSuc == 1): ?>
             <li><a href="index.php?view=sbox"><i class="fa fa-archive"></i> Caja Chica </a></li>
+            <?php endif; ?>
             <div class="clearfix"></div>
             <br><br>
-            <!--
-            <li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Reabastecimientos <small><span class="label label-success">Nuevo</span></small></a></li>
-            <li><a href="index.php?view=reports"><i class="fa fa-tasks"></i> Reportes</a></li>
-            -->
           </ul>
-          <?php endif;?>
-          <?php if(Session::getUID()!=""):?>
           <?php
-            $u=null;
-            if(Session::getUID()!=""){
-              $u = UserData::getById(Session::getUID());
-              if ($u->idempleado == null || $u->idempleado == ""){
-                $nombreUsuario = $u->name." ".$u->lastname;
-              }else{
-                $nombre = preg_split("[ ]", $u->getEmpleado()->nombre);
-                $apellido = preg_split("[ ]",$u->getEmpleado()->apellido);
-                $nombreUsuario = $nombre[0]." ".$apellido[0];
-              }
+          
+            if ($u->idempleado == null || $u->idempleado == ""){
+              $nombreUsuario = $u->name." ".$u->lastname;
+            }else{
+              $nombre = preg_split("[ ]", $u->getEmpleado()->nombre);
+              $apellido = preg_split("[ ]",$u->getEmpleado()->apellido);
+              $nombreUsuario = $nombre[0]." ".$apellido[0];
             }
+           
           ?>
           <ul class="nav navbar-nav navbar-right ">
             <li class="dropdown">
@@ -160,9 +168,15 @@
               </ul>
             </li>
           </ul>
-          
-          <?php include "alertas.php"; ?>
-          
+          <?php
+            if($idSuc == 1){
+              include "alertas.php";
+            }
+          ?>
+          <?php 
+          else:
+            Session::unsetUID();
+          ?>
           <?php endif; ?>
         </div><!-- /.navbar-collapse -->
       </nav>

@@ -2,7 +2,7 @@
 	$sucursal = SucursalData::getAll();
 	$empleados = EmpleadoData::getAll();
 	$usrSuc = false;
-	if (isset($_SESSION["usr_suc"]) && !isset($_SESSION["adm"])) {
+	if (!isset($_SESSION["adm"])) {
 		$empleados = EmpleadoData::getAllBySucId($_SESSION["usr_suc"]);
 		$usrSuc = true;
 	}
@@ -35,7 +35,7 @@
 		<div class="tab-content">
 			<div id="all" class="tab-pane fade in active">
 				<?php
-				$start = 1; $limit = 5;
+				$start = 1; $limit = 10;
 				if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
 					$start = $_REQUEST["start"];
 					$limit = $_REQUEST["limit"];
@@ -50,7 +50,9 @@
 				$paginas = floor(count($empleados)/$limit);
 				$spaginas = count($empleados)%$limit;
 				if($spaginas>0){$paginas++;}
-				$empleados = EmpleadoData::getAllByPage($start,$limit);
+				if ($usrSuc){
+					$empleados = EmpleadoData::getAllBySucPage($_SESSION["usr_suc"],$start,$limit);
+				}
 				?>
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover">

@@ -11,6 +11,12 @@
         }
     }
 
+    $num = $_GET["num"];
+
+    if (!is_numeric($num)){
+        $error = true;
+    }
+
     if ($error){
         @header("location: index.php?view=devolucion");
     }
@@ -18,7 +24,7 @@
 <div class="row">
    <div class="col-md-12">
         <a class="btn btn-default" href="index.php?view=devolucion"><i class="fa fa-arrow-left fa-fw"></i>Regresar</a>
-        <h1>Devolución No. <?php echo $id; ?></h1>
+        <h1>Devolución No. <?php echo $num; ?></h1>
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tr>
@@ -52,12 +58,14 @@
             <table class="table table-bordered table-dashed">
                 <thead>
                     <th>Producto</th>
+                    <th>Precio</th>
                     <th>Cantidad</th>
                 </thead>
                 <tbody>
                 <?php foreach($prods as $prd): ?>
                     <tr>
                         <td><?php echo $prd->getProduct()->nombre; ?></td>
+                        <td>$ <?php echo $prd->precio; ?></td>                        
                         <td style="width: 50px;"><?php echo $prd->cantidad; ?></td>
                     </tr>
                 <?php endforeach; ?>

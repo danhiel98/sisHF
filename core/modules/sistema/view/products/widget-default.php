@@ -1,8 +1,13 @@
-<?php $products = ProductData::getAll(); ?>
+<?php 
+	$idSuc = $_SESSION["usr_suc"];
+	$products = ProductData::getAll();
+?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="btn-group  pull-right">
+			<?php if ($idSuc == 1): ?>
 			<a href="index.php?view=newproduct" class="btn btn-default">Agregar Producto</a>
+			<?php endif; ?>
 			<?php if (count($products)>0): ?>
 				<div class="btn-group pull-right">
 		  			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -63,7 +68,9 @@
 					<th style="width: 120px;">Precio Costeo</th>
 					<th style="width: 110px;">Precio Venta</th>
 					<th style="width: 100px;">Req. Mantto</th>
+					<?php if ($idSuc == 1): ?>
 					<th></th>
+					<?php endif; ?>
 				</thead>
 				<?php foreach($curr_products as $product):?>
 				<tr>
@@ -79,9 +86,11 @@
 					<td>$ <?php echo number_format($product->preciocosteo,2,'.',','); ?></td>
 					<td>$ <?php echo number_format($product->precioventa,2,'.',','); ?></td>
 					<td style="text-align: center;"><span class="fa <?php if($product->mantenimiento){echo "fa-check";}else{echo "fa-times";} ?>"></span></td>
+					<?php if ($idSuc == 1): ?>
 					<td style="width:30px;">
 						<a href="index.php?view=editproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
 					</td>
+					<?php endif; ?>
 				</tr>
 				<?php endforeach;?>
 			</table>
@@ -103,9 +112,11 @@
 	}else{
 	?>
 		<div class="col-md-12">
-			<h2>No hay productos</h2>
 			<div class="alert alert-warning">
-				No se han agregado productos a la base de datos, puedes agregar uno dando clic en el bot&oacute;n <strong>"Agregar Producto".</strong>
+				No hay productos.
+			</div>
+			<div class="alert alert-info">
+				No se han agregado productos a la base de datos<?php if($idSuc == 1): ?>, puede agregar uno dando clic en el bot&oacute;n <strong>"Agregar Producto"</strong><?php endif; ?>.
 			</div>
 		</div>
 	<?php

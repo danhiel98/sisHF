@@ -4,6 +4,7 @@ class DevolucionData {
 	public static $tablename = "devolucion";
 
 	public function DevolucionData(){
+		$this->idsucursal = "";
 		$this->idusuaio = "";
 		$this->idfactura = "";
 		$this->idcausa = "";
@@ -17,14 +18,14 @@ class DevolucionData {
 	public function getProduct(){return ProductData::getById($this->idproducto);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (idUsuario,idFacturaVenta,idCausa,fecha,reembolso) ";
-		$sql .= "values ($this->idusuario,\"$this->idfactura\",\"$this->idcausa\",$this->fecha,\"$this->reembolso\")";
+		$sql = "insert into ".self::$tablename." (idSucursal,idUsuario,idFacturaVenta,idCausa,fecha,reembolso) ";
+		$sql .= "values ($this->idsucursal,$this->idusuario,\"$this->idfactura\",\"$this->idcausa\",$this->fecha,\"$this->reembolso\")";
 		return Executor::doit($sql);
 	}
 
 	public function addProds(){
-		$sql = "insert into productodevolucion (idDevolucion,idProducto,cantidad) ";
-		$sql .= "values ($this->iddevolucion,\"$this->idproducto\",\"$this->cantidad\")";
+		$sql = "insert into productodevolucion (idDevolucion,idProducto,cantidad,precio) ";
+		$sql .= "values ($this->iddevolucion,\"$this->idproducto\",\"$this->cantidad\",$this->precio)";
 		Executor::doit($sql);
 	}
 
@@ -40,6 +41,7 @@ class DevolucionData {
 		$data = new DevolucionData();
 		while($r = $query[0]->fetch_array()){
 			$data->id = $r['idDevolucion'];
+			$data->idsucursal = $r['idSucursal'];
 			$data->idusuario = $r['idUsuario'];
 			$data->idfactura = $r['idFacturaVenta'];
 			$data->idcausa = $r['idCausa'];
@@ -59,6 +61,7 @@ class DevolucionData {
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new DevolucionData();
 			$array[$cnt]->id = $r['idDevolucion'];
+			$array[$cnt]->idsucursal = $r['idSucursal'];
 			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->idfactura = $r['idFacturaVenta'];
 			$array[$cnt]->idcausa = $r['idCausa'];
@@ -69,15 +72,35 @@ class DevolucionData {
 		return $array;
 	}
 
-	public static function getByPage($start,$limit){
-		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
+	public static function getAllBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new DevolucionData();
 			$array[$cnt]->id = $r['idDevolucion'];
+			$array[$cnt]->idsucursal = $r['idSucursal'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idfactura = $r['idFacturaVenta'];
+			$array[$cnt]->idcausa = $r['idCausa'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$array[$cnt]->reembolso = $r['reembolso'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getByPage($idSuc,$start,$limit){
+		$start = $start - 1;
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and estado = 1 limit $start,$limit";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new DevolucionData();
+			$array[$cnt]->id = $r['idDevolucion'];
+			$array[$cnt]->idsucursal = $r['idSucursal'];
 			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->idfactura = $r['idFacturaVenta'];
 			$array[$cnt]->idcausa = $r['idCausa'];
@@ -98,6 +121,7 @@ class DevolucionData {
 			$array[$cnt]->idproddev = $r['idProdDev'];
 			$array[$cnt]->iddevolucion = $r['idDevolucion'];
 			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->precio = $r['precio'];
 			$array[$cnt]->cantidad = $r['cantidad'];
 			$cnt++;
 		}

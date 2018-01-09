@@ -69,6 +69,24 @@ class EnvioData {
 		return $array;
 	}
 
+	public static function getByBanco($id){
+		$sql = "select * from ".self::$tablename." where idBanco=$id and estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new EnvioData();
+			$array[$cnt]->id = $r['idEnvioBanco'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idbanco = $r['idBanco'];
+			$array[$cnt]->cantidad = $r['cantidad'];
+			$array[$cnt]->comprobante = $r['numComprobante'];
+			$array[$cnt]->fecha = $r['fecha'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getByPage($start,$limit){
 		$start = $start - 1;
 		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";

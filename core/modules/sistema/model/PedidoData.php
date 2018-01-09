@@ -25,6 +25,7 @@ class PedidoData {
 	public function getClient(){ return ClientData::getById($this->idcliente);}
 	public function getProduct(){ return ProductData::getById($this->idproducto);}
 	public function getService(){ return ServiceData::getById($this->idservicio);}
+	public function getReq(){ return PedidoData::getById($this->idpedido);}
 
 	public function add(){
 		$sql = "insert into ".self::$tablename." (idUsuario, idSucursal, idCliente, fechaPedido, fechaEntrega, restante) ";
@@ -108,6 +109,28 @@ class PedidoData {
 		return $array;
 	}
 
+	public static function getAllBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new PedidoData();
+			$array[$cnt]->id = $r['idPedido'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idcliente = $r['idCliente'];
+			$array[$cnt]->fechapedido = $r['fechaPedido'];
+			$array[$cnt]->fechaentrega = $r['fechaEntrega'];
+			$array[$cnt]->entregado = $r['entregado'];
+			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->restante = $r['restante'];
+			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
+			$array[$cnt]->estado = $r['estado'];
+			$cnt++;
+		}
+		return $array;
+	}
+
 	public static function getEntregado(){
 		$sql = "select * from ".self::$tablename." where entregado = 1 AND estado = 1";
 		$query = Executor::doit($sql);
@@ -130,9 +153,31 @@ class PedidoData {
 		return $array;
 	}
 
-	public static function getEntregadoByPage($start,$limit){
+	public static function getEntregadoBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and entregado = 1 AND estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new PedidoData();
+			$array[$cnt]->id = $r['idPedido'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idcliente = $r['idCliente'];
+			$array[$cnt]->fechapedido = $r['fechaPedido'];
+			$array[$cnt]->fechaentrega = $r['fechaEntrega'];
+			$array[$cnt]->entregado = $r['entregado'];
+			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->restante = $r['restante'];
+			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
+			$array[$cnt]->estado = $r['estado'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getEntregadoByPage($idSuc,$start,$limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where entregado = 1 AND estado = 1 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and entregado = 1 AND estado = 1 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -174,9 +219,30 @@ class PedidoData {
 		return $array;
 	}
 
-	public static function getPendienteByPage($start, $limit){
+	public static function getPendienteBySuc($id){
+		$sql = "select * from ".self::$tablename." where idSucursal = $id and entregado = 0 AND estado = 1";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new PedidoData();
+			$array[$cnt]->id = $r['idPedido'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
+			$array[$cnt]->idcliente = $r['idCliente'];
+			$array[$cnt]->fechapedido = $r['fechaPedido'];
+			$array[$cnt]->fechaentrega = $r['fechaEntrega'];
+			$array[$cnt]->entregado = $r['entregado'];
+			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->restante = $r['restante'];
+			$array[$cnt]->estado = $r['estado'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getPendienteByPage($idSuc, $start, $limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where entregado = 0 AND estado = 1 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and entregado = 0 AND estado = 1 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -239,6 +305,24 @@ class PedidoData {
 
 	public static function getAllServicesByPedidoId($id){
 		$sql = "select * from pedidoServicio where idPedido = $id";
+		$query = Executor::doit($sql);
+		$array = array();
+		$cnt = 0;
+		while($r = $query[0]->fetch_array()){
+			$array[$cnt] = new PedidoData();
+			$array[$cnt]->idpedidoservicio = $r['idPedidoServicio'];
+			$array[$cnt]->idpedido = $r['idPedido'];
+			$array[$cnt]->idservicio = $r['idServicio'];
+			$array[$cnt]->cantidad = $r['cantidad'];
+			$array[$cnt]->precio = $r['precio'];
+			$array[$cnt]->total = $r['total'];
+			$cnt++;
+		}
+		return $array;
+	}
+
+	public static function getAllByService($id){
+		$sql = "select * from pedidoServicio where idServicio = $id";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

@@ -1,6 +1,9 @@
 <?php
-	$devs = DevolucionData::getAll();
-	$sells = FacturaData::getFacturas();
+	$idSuc = $_SESSION["usr_suc"];
+	$devs = DevolucionData::getAllBySuc($idSuc);
+	$sells = FacturaData:: getSellsBySuc($idSuc);
+	$sucursales = SucursalData::getAll();
+	$user = UserData::getById(Session::getUID());
     include 'modals/add.php';
 ?>
 <div class="row">
@@ -12,9 +15,43 @@
         </div>
         <h1>Devoluciones</h1>
         
-        <?php if (count($devs) > 0): ?>
+		<?php if(count($sucursales) > 1 && $user->id == 1): ?>
+
+		<div class="container-fluid">
+			<div class="form-horizontal">
+				<label for="sucursal" class="col-md-2 col-sm-2 col-xs-2 control-label">Sucursal</label>
+				<div class="col-md-4 col-sm-6 col-xs-8">
+					<select name="sucursal" id="sucursal" class="form-control">
+						<?php foreach($sucursales as $suc): ?>
+							<option <?php if($suc->id == $idSuc){echo 'selected';} ?> value="<?php echo $suc->id; ?>"><?php echo $suc->nombre; ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+			</div>
+
+			<script>
+				$("#sucursal").on("change", function(){
+					$.ajax({
+						url: "ajax/devolucion/sucursalDevs.php",
+						type: "POST",
+						data: {
+							id: $(this).val()
+						},
+						dataType: "html",
+						success: function(res){
+							$("#resultado").html(res);
+						}
+					});
+				});
+			</script>
+			<div class="clearfix"></div>
+			<br>
+		</div>
+		<?php endif; ?>
+        
+		<?php if (count($devs) > 0): ?>
             <?php
-                $start = 1; $limit = 5;
+                $start = 1; $limit = 10;
 				if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
 					$start = $_REQUEST["start"];
 					$limit = $_REQUEST["limit"];
@@ -29,77 +66,85 @@
 				$paginas = floor(count($devs)/$limit);
 				$spaginas = count($devs)%$limit;
 				if($spaginas>0){$paginas++;}
-				$devs = DevolucionData::getByPage($start,$limit);
+				$devs = DevolucionData::getByPage($idSuc,$start,$limit);
+				$count = $start;
             ?>
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <th></th>
-                        <th>No.</th>
-                        <th style="width: 140px;">No. Comprobante</th>
-                        <th>Motivo</th>
-                        <th>Fecha</th>
-                        <th>Reembolso</th>
-                        <th>Registrado Por</th>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($devs as $dev): ?>
-                            <tr>
-                                <td style="width: 40px;"><a class="btn btn-default btn-xs" href="index.php?view=detalledev&id=<?php echo $dev->id; ?>"><i class="fa fa-eye"></i></a></td>
-                                <td><?php echo $dev->id; ?></td>
-                                <td><?php echo $dev->getFactura()->numerofactura; ?></td>
-                                <td><?php echo $dev->getCausa()->descripcion; ?></td>
-                                <td><?php echo $dev->fecha; ?></td>
-                                <td>$ <?php echo $dev->reembolso; ?></td>
-                                <td><?php echo $dev->getUser()->name." ".$dev->getUser()->lastname; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="container-fluid">
-				<div class="pull-right">
-					<ul class="pagination">
-						<?php if($start != 1):?>
-						<?php
-							$prev = "#";
-							if($start != 1){
-								$prev = "&start=".($start-$limit)."&limit=".$limit;
-							}
-						?>
-						<li class="previous"><a href="index.php?view=devolucion<?php echo $prev; ?>">&laquo;</a></li>
-						<?php endif; ?>
-						<?php 
-							$anterior = 1;
-							for($i=1; $i<=$paginas; $i++):
-								$inicio = 1;
-								if ($i != 1){
-									$inicio = $limit + $anterior;
-									$anterior = $inicio;
+			<div id="resultado">
+				<div class="table-responsive">
+					<table class="table table-hover table-bordered">
+						<thead>
+							<th></th>
+							<th>No.</th>
+							<th style="width: 140px;">No. Comprobante</th>
+							<th>Motivo</th>
+							<th>Fecha</th>
+							<th>Reembolso</th>
+							<th>Registrado Por</th>
+						</thead>
+						<tbody>
+							<?php foreach ($devs as $dev): ?>
+								<tr>
+									<td style="width: 40px;"><a class="btn btn-default btn-xs" href="index.php?view=detalledev&id=<?php echo $dev->id."&num=".$count; ?>"><i class="fa fa-eye"></i></a></td>
+									<td><?php echo $count++; ?></td>
+									<td><?php echo $dev->getFactura()->numerofactura; ?></td>
+									<td><?php echo $dev->getCausa()->descripcion; ?></td>
+									<td><?php echo $dev->fecha; ?></td>
+									<td>$ <?php echo $dev->reembolso; ?></td>
+									<td><?php echo $dev->getUser()->name." ".$dev->getUser()->lastname; ?></td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+				<div class="container-fluid">
+					<div class="pull-right">
+						<ul class="pagination">
+							<?php if($start != 1):?>
+							<?php
+								$prev = "#";
+								if($start != 1){
+									$prev = "&start=".($start-$limit)."&limit=".$limit;
 								}
 							?>
-							<li <?php if($start == $inicio){echo "class='active'";} ?>>
-								<a href="index.php?view=devolucion&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
-							</li>
-							<?php
-							endfor;
-						?>
-						<?php if($start != $anterior): ?>
-						<?php 
-							$next = "#";
-							if($start != $anterior){
-								$next = "&start=".($start + $limit)."&limit=".$limit;
-							}
-						?>
-						<li class="previous"><a href="index.php?view=devolucion<?php echo $next; ?>">&raquo;</a></li>
-						<?php endif; ?>
-					</ul>
+							<li class="previous"><a href="index.php?view=devolucion<?php echo $prev; ?>">&laquo;</a></li>
+							<?php endif; ?>
+							<?php 
+								$anterior = 1;
+								for($i=1; $i<=$paginas; $i++):
+									$inicio = 1;
+									if ($i != 1){
+										$inicio = $limit + $anterior;
+										$anterior = $inicio;
+									}
+								?>
+								<li <?php if($start == $inicio){echo "class='active'";} ?>>
+									<a href="index.php?view=devolucion&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
+								</li>
+								<?php
+								endfor;
+							?>
+							<?php if($start != $anterior): ?>
+							<?php 
+								$next = "#";
+								if($start != $anterior){
+									$next = "&start=".($start + $limit)."&limit=".$limit;
+								}
+							?>
+							<li class="previous"><a href="index.php?view=devolucion<?php echo $next; ?>">&raquo;</a></li>
+							<?php endif; ?>
+						</ul>
+					</div>
 				</div>
 			</div>
         <?php else: ?>
             <div class="alert alert-warning">
                 No hay devoluciones.
             </div>
+			<?php if (count($sells) <= 0): ?>
+			<div class="alert alert-warning">
+				Para registrar una devolución debe haber <a href="index.php?view=sells">ventas</a> registradas.
+			</div>
+			<?php endif; ?>
         <?php endif; ?>
 
     </div>

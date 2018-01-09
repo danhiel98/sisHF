@@ -18,6 +18,7 @@ class SucursalData {
 		$sql = "update ".self::$tablename." set estado = 0 where idSucursal = $id";
 		Executor::doit($sql);
 	}
+	
 	public function del(){
 		$sql = "update ".self::$tablename." set estado = 0 where idSucursal = $this->id";
 		Executor::doit($sql);

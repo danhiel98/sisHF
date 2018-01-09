@@ -1,4 +1,5 @@
 <?php
+	$idSuc = $_SESSION["usr_suc"];
 	$products = ProductData::getAll();
 	$matPrim = MateriaPrimaData::getAll();
 ?>
@@ -7,7 +8,9 @@
 		<!-- Single button -->
 		<?php if (count($products)>0 && count($matPrim) >0): ?>
 		<div class="btn-group pull-right" >
+			<?php if ($idSuc == 1): ?>
 			<a href="index.php?view=newproducn" class="btn btn-default"><i class="icon-plus"></i> Agregar a producción</a>
+			<?php endif; ?>
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 			<i class="fa fa-download"></i> Descargar <span class="caret"></span>
 			</button>
@@ -57,39 +60,47 @@
 	<?php endif; ?>
 	</div>
 	<div class="clearfix"></div>
-		<br><table class="table table-bordered table-hover">
-		<thead>
-			<th>No.</th>
-			<th>Nombre</th>
-			<th>Descripci&oacute;n</th>
-			<th>Mínimo</th>
-			<th>Existencias</th>
-			<th>Total Existencias</th>
-			<th></th>
-		</thead>
-		<?php foreach($curr_products as $product):?>
-			<?php
-				$prodSuc = new ProductoSucursalData();
-				$productoSucursal = $prodSuc->getBySucursalProducto($_SESSION["usr_suc"],$product->id);
-				$prods = $prodSuc->getAllByProductId($product->id);
-				$total = 0;
-				foreach ($prods as $p) {
-					$total += $p->cantidad;
-				}
-			?>
-		<tr>
-			<td><?php echo $product->id; ?></td>
-			<td><?php echo $product->nombre; ?></td>
-			<td><?php echo $product->descripcion; ?></td>
-			<td><?php echo $productoSucursal->minimo; ?></td>
-			<td><?php echo $productoSucursal->cantidad; ?></td>
-			<td><?php echo $total; ?></td>
-			<td style="width:40px;">
-				<a href="index.php?view=detailprod&idProd=<?php echo $product->id; ?>" class="btn btn-default btn-sm"><i class="fa fa-bars fa-fw"></i> Detalles</a>
-			</td>
-		</tr>
-		<?php endforeach;?>
-	</table>
+	<br>
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<th>No.</th>
+				<th>Nombre</th>
+				<th>Descripci&oacute;n</th>
+				<?php if ($idSuc == 1): ?>
+				<th>Mínimo</th>
+				<?php endif; ?>
+				<th>Existencias</th>
+				<th>Total Existencias</th>
+				<th></th>
+			</thead>
+			<?php foreach($curr_products as $product):?>
+				<?php
+					$prodSuc = new ProductoSucursalData();
+					$productoSucursal = $prodSuc->getBySucursalProducto($_SESSION["usr_suc"],$product->id);
+					$prods = $prodSuc->getAllByProductId($product->id);
+					$total = 0;
+					foreach ($prods as $p) {
+						$total += $p->cantidad;
+					}
+				?>
+			<tr>
+				<td><?php echo $product->id; ?></td>
+				<td><?php echo $product->nombre; ?></td>
+				<td><?php echo $product->descripcion; ?></td>
+				<?php if ($idSuc == 1): ?>
+				<td><?php echo $productoSucursal->minimo; ?></td>
+				<?php endif; ?>
+				<td><?php echo $productoSucursal->cantidad; ?></td>
+				<td><?php echo $total; ?></td>
+				<td style="width:40px;">
+					<a href="index.php?view=detailprod&idProd=<?php echo $product->id; ?>" class="btn btn-default btn-sm"><i class="fa fa-bars fa-fw"></i> Detalles</a>
+				</td>
+			</tr>
+			<?php endforeach;?>
+		</table>
+	</div>	
+
 	<div class="btn-group pull-right">
 	<?php
 
@@ -111,11 +122,11 @@
 		<?php
 	}else{
 		?>
-		<div class="jumbotron">
-			<div class="container">
-				<h2>No hay productos</h2>
-				No se han agregado productos, puede agregar uno <a href="index.php?view=products">aqu&iacute;</a>.
-			</div>
+		<div class="alert alert-warning">
+			No hay productos.
+		</div>
+		<div class="alert alert-info">
+			No se han agregado productos<?php if($idSuc == 1): ?>, puede agregar uno <a href="index.php?view=products">aqu&iacute;</a><?php endif; ?>.
 		</div>
 		<?php
 	}

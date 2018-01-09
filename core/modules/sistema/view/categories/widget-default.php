@@ -14,7 +14,7 @@
 		<?php
 		$cats = CategoryData::getAll();
 		if(count($cats)>0):
-			$start = 1; $limit = 5;
+			$start = 1; $limit = 10;
 			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
 				$start = $_REQUEST["start"];
 				$limit = $_REQUEST["limit"];
@@ -31,7 +31,30 @@
 			if($spaginas>0){$paginas++;}
 			$cats = CategoryData::getByPage($start,$limit);
 			?>
-			
+			<div class="container-fluid">
+				<?php
+				if (isset($_COOKIE["errorCategory"]) && !empty($_COOKIE["errorCategory"])):
+				?>
+					<div class="alert alert-warning alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorCategory"]; ?></p>
+					</div>
+				<?php
+					setcookie("errorCategory","",time()-18600);
+				endif;
+				?>
+				<?php
+				if (isset($_COOKIE["okCategory"]) && !empty($_COOKIE["okCategory"])):
+				?>
+					<div class="alert alert-success alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okCategory"]; ?></p>
+					</div>
+				<?php
+					setcookie("okCategory","",time()-18600);
+				endif;
+				?>
+			</div>
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 					<thead>
@@ -46,8 +69,17 @@
 							<tr>
 								<td><?php echo $c->id; ?></td>
 								<td><?php echo $c->nombre; ?></td>
-								<td style="width:60px;">
-									<a data-toggle="modal" data-target="#editar" id="<?php echo $c->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
+								<td style="width: 80px;">
+									<a data-toggle="modal" data-target="#editar" id="<?php echo $c->id;?>" class="btn btn-warning btn-xs btn-edit"><i class="fa fa-edit fa-fw"></i></a>
+									<a title="¿Eliminar?" href="index.php?view=delcategory&id=<?php echo $c->id;?>" class="btn btn-danger btn-xs"
+									data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+									data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+									data-btn-ok-class="btn-success btn-xs"
+									data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+									data-btn-cancel-class="btn-danger btn-xs"
+									>
+										<i class="fa fa-trash fa-fw"></i>
+									</a>
 								</td>
 							</tr>
 							<?php

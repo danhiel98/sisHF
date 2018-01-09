@@ -1,9 +1,9 @@
 <script type="text/javascript" src="ajax/sell/ajax.js"></script>
 <?php
 	$clientes = ClientData::getAll();
-	include("modals/resumen.php");
 	$sucursal = SucursalData::getAll();
 	$servicios = ServiceData::getAll();
+	include("modals/resumen.php");
 ?>
 <?php if(isset($_SESSION["cart"]) && count($_SESSION["cart"])>0 && isset($_GET["x"])):?>
 	<script type="text/javascript">
@@ -13,6 +13,7 @@
 	</script>
 <?php endif; ?>
 <div class="row">
+	<a href="index.php?view=sells" class="btn btn-default"><i class="fa fa-arrow-left fa-fw"></i>Regresar</a>
 	<div class="col-md-12">
 		<h1>Venta</h1>
 		<div class="btn-group pull-right">
@@ -20,14 +21,13 @@
 				<i class="fa fa-list"></i> Ver Resumen</span>
 			</button>
 		</div>
-		<input type="hidden" name="sOrigen" id="sOrigen" value="<?php echo $_SESSION["usr_suc"]; ?>">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#prods">Productos</a></li>
 			<li><a href="#servs">Servicios</a></li>
 		</ul>
 		<div class="tab-content">
 			<div id="prods" class="tab-pane fade in active">
-				<p><b>Buscar producto por nombre o por descripci&oacute;n:</b></p>
+				<p><b>Buscar producto por nombre:</b></p>
 				<div class="row">
 					<div class="col-md-5 col-sm-6 col-xs-10">
 						<div class="input-group">

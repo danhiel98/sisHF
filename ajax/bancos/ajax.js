@@ -1,5 +1,4 @@
 var banco = (function (banco, undefined) {
-  var _disabled = true;
   banco.llenarModalEditar = function () {
     $(".btn-edit").on("click", function (e) {
       e.preventDefault();

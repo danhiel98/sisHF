@@ -444,6 +444,7 @@ CREATE TABLE banco(
 /*OK*/
 CREATE TABLE gasto(
   idGasto mediumint PRIMARY KEY AUTO_INCREMENT,
+  idSucursal tinyint not null, 
   idUsuario smallint not null,
   idEmpleado mediumint,
   descripcion varchar(100) not null,
@@ -451,6 +452,7 @@ CREATE TABLE gasto(
   pago decimal(9,2) not null,
   fecha date not null,
   estado boolean default 1 not null,
+  foreign key(idSucursal) references sucursal(idSucursal),
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idEmpleado) references empleado(idEmpleado)
 );
@@ -626,8 +628,8 @@ CREATE TABLE produccion(
   foreign key(idProducto) references producto(idProducto)
 );
 /*
-  fechaInicio y fechaFin: Desde cuando empieza la produccion y hasta cuando es el liimite...
-  fechaRegistro y fechaFinalizado: cuando se registroo y cuando ya estaa realizado el producto o se canceloo...
+  fechaInicio y fechaFin: Desde cuando empieza la producción y hasta cuando es el límite...
+  fechaRegistro y fechaFinalizado: Cuando se registró y cuando ya está realizado el producto o se canceló...
 */
 
 CREATE TABLE materiaPrimaProduccion(
@@ -707,6 +709,7 @@ CREATE TABLE pedidoServicio(
 
 CREATE TABLE abono(
   idAbono mediumint PRIMARY KEY AUTO_INCREMENT,
+  idSucursal tinyint not null,
   idUsuario smallint not null,
   idCliente mediumint not null,
   idPedido int not null,
@@ -715,6 +718,7 @@ CREATE TABLE abono(
   tipoComprobante tinyint not null default 1,
   numeroComprobante varchar(32),
   estado boolean default 1 not null,
+  foreign key(idSucursal) references sucursal(idSucursal),
   foreign key(tipoComprobante) references tipoComprobante(idTipo),
   foreign key(idPedido) references pedido(idPedido),
   foreign key(idUsuario) references usuario(idUsuario),
@@ -782,12 +786,14 @@ insert into causaDevolucion values
 
 CREATE TABLE devolucion(
   idDevolucion smallint PRIMARY KEY AUTO_INCREMENT,
+  idSucursal tinyint not null,
   idUsuario smallint not null,
   idFacturaVenta int not null,
   idCausa tinyint not null,
   fecha date not null,
   reembolso decimal(9,2) not null,
   estado boolean default 1 not null,
+  foreign key(idSucursal) references sucursal(idSucursal),
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idFacturaVenta) references facturaVenta(idFacturaVenta),
   foreign key(idCausa) references causaDevolucion(idCausa)
@@ -798,6 +804,7 @@ CREATE TABLE productoDevolucion(
   idDevolucion smallint not null,
   idProducto mediumint not null,
   cantidad smallint not null,
+  precio decimal(9,2) not null,
   foreign key(idDevolucion) references devolucion(idDevolucion),
   foreign key(idProducto) references producto(idProducto)
 );

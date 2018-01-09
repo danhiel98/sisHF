@@ -39,7 +39,7 @@
 				<div class="form-group">
 			    <label for="employ" class="col-lg-2 control-label">Empleado*</label>
 			    <div class="col-md-6">
-			      <select name="employ" class="form-control selectpicker" data-live-search="true" data-size="5" required>
+			      <select name="employ" id="employ" class="form-control selectpicker" data-live-search="true" data-size="5" required>
 							<option value="">--SELECCIONE--</option>
 							<?php foreach ($empleados as $emp): ?>
 								<option value="<?php echo $emp->id; ?>"><?php echo $emp->nombre." ".$emp->apellido; ?></option>
@@ -80,7 +80,7 @@
 		  <div class="form-group">
 		    <label for="tipo" class="col-lg-2 control-label">Tipo</label>
 		    <div class="col-md-6">
-					<select name="tipo" class="form-control" required>
+					<select name="tipo" id="tipo" class="form-control" required>
 						<option value="">--SELECCIONE--</option>
 						<?php foreach ($tipos as $tipo): ?>
 							<option value="<?php echo $tipo->id; ?>"><?php echo $tipo->nombre; ?></option>

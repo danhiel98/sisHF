@@ -6,14 +6,16 @@
 	include ("../../core/modules/sistema/model/ProductoSucursalData.php");
 	include ("../../core/modules/sistema/model/SucursalData.php");
 	
-	$idSucursal = $_POST["sucursal"];
+	$idSucursal = $_SESSION["usr_suc"];
 	$prod = false;
 
-	$productos = array();
-	
 	$productos = ProductoSucursalData::getAllForSell($idSucursal);
+	
 	if(isset($_POST['productos'])){
+		
+		$productos = array();
 		$prod = true;
+		
 		$nombreProd = $_POST['productos'];
 		$products = ProductData::getLike($nombreProd);
 
@@ -29,18 +31,19 @@
 		?>
 		<table class="table table-bordered table-hover">
 			<thead>
-				<th style="width: 45px;">No.</th>
+				<th style="width: 45px;">ID</th>
 				<th>Producto</th>
 				<th style="width: 200px;">Disponibles</th>
 				<th style="width: 200px;">Precio Unitario</th>
 				<th style="width: 120px;">Mantenimiento</th>
 				<th style="width: 120px;"></th>
 			</thead>
-	<?php
-		foreach($productos as $prod){
-			$found = false;
-			$mantto = false;
-			?>
+			<tbody>
+			<?php
+			foreach($productos as $prod){
+				$found = false;
+				$mantto = false;
+				?>
 				<tr>
 					<?php
 						if(isset($_SESSION["cart"])){
@@ -80,46 +83,46 @@
 									<button type="submit" class="btn btn-sm btn-success"><i class="fa fa-cart-plus"></i></button>
 									<p class="help-block"></p>
 								</div>
-	  						</div>
+							</div>
 						</form>
 					<?php endif; ?>
 					</td>
 				</tr>
-		<?php
-			}
-		?>
-			</table>
-			<script type="text/javascript">
-				$(".mantto").on("change", function(){
-					if (this.checked) {
-						$("#m"+this.id).val("1");
-					}else{
-						$("#m"+this.id).val("0");
-					}
-				});
+			<?php
+				}
+			?>
+			
+			</tbody>
+		</table>
+		<script type="text/javascript">
+			$(".mantto").on("change", function(){
+				if (this.checked) {
+					$("#m"+this.id).val("1");
+				}else{
+					$("#m"+this.id).val("0");
+				}
+			});
 
-				$(document).ready(function(){
-					$("form.enviar").submit(function(){
-						if($(".input-sm",this).attr("aria-invalid") != "true"){
-							$.ajax({
-								url: $(this).attr("action"),
-								type: "POST",
-								data: $(this).serialize(),
-								success: function(){
-									datosModal();
-									datosResumen();
-									var idSuc = $("#sOrigen").val();
-									obtenerDatosDeSucursal(idSuc);
-								}
-							});
-						}
-						return false;
-					});
+			$(document).ready(function(){
+				$("form.enviar").submit(function(){
+					if($(".input-sm",this).attr("aria-invalid") != "true"){
+						$.ajax({
+							url: $(this).attr("action"),
+							type: "POST",
+							data: $(this).serialize(),
+							success: function(){
+								obtener_registros();
+								obtenerInfo();
+							}
+						});
+					}
+					return false;
 				});
-			</script>
+			});
+		</script>
 		<?php
 		}else{
-	?>
+		?>
 		<div class="alert alert-danger">
 		<?php if ($prod): ?>
 			No se encontraron coincidencias con sus criterios de búsqueda.

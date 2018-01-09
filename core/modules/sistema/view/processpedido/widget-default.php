@@ -33,12 +33,13 @@
 			}
 
 			$abono = new AbonoData();
+			$abono->idsucursal = $_SESSION["usr_suc"];
 			$abono->idusuario = Session::getUID();
 			$abono->idcliente = $_POST["cliente"];
 			$abono->idpedido = $r[1];
 			$abono->cantidad = $_POST["cantidad"];
+			$abono->numerocomprobante = $_POST["numComprobante"];
 			$abono->tipocomprobante = $_POST["tipo"];
-			$abono->numerocomprobante = $_POST["numero"];
 			$abono->add();
 
 			$pdido = PedidoData::getById($r[1]);
@@ -46,7 +47,6 @@
 			$pdido->updateRestante();
 
 		}
-		unset($_SESSION["sucursal"]);
 		unset($_SESSION["cartp"]);
 		@header("location: index.php?view=detallepedido&id=$r[1]");
 	}else{

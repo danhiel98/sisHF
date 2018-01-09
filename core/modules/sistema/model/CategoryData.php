@@ -15,11 +15,12 @@ class CategoryData {
 	}
 
 	public static function delById($id){
-		$sql = "delete from ".self::$tablename." where id=$id";
+		$sql = "update ".self::$tablename." set estado = 0 where idCategoria = $id";
 		Executor::doit($sql);
 	}
+	
 	public function del(){
-		$sql = "delete from ".self::$tablename." where id=$this->id";
+		$sql = "update ".self::$tablename." set estado = 0 where idCategoria = $this->id";
 		Executor::doit($sql);
 	}
 
