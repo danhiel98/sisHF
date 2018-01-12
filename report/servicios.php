@@ -61,24 +61,28 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->mergeCells('A1:C1')
             ->setCellValue('A1', 'SERVICIOS REGISTRADOS')
             ->setCellValue('A3', 'Nombre')
-            ->setCellValue('B3', 'Descripciòn')
+            ->setCellValue('B3', 'Descripción')
             ->setCellValue('C3', 'Precio');
 
 $servicios = ServiceData::getAll();
 $i = 4;
+$cant = count($servicios);
+$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':C'.(--$cant+$i))->applyFromArray($borders);
+
 foreach ($servicios as $srvi) {
 	$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue("A$i", $srvi->nombre)
-							->setCellValue("B$i", $srvi->descripcion)
-							->setCellValue("C$i","$ ". $srvi->precio);
-              
- $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':C'.$i)->applyFromArray($borders);
+        ->setCellValue("A$i", $srvi->nombre)
+        ->setCellValue("B$i", $srvi->descripcion)
+        ->setCellValue("C$i", $srvi->precio);
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->getStyle("A$i:C$i")->getAlignment()->setWrapText(true);
+        $sheet->getStyle("C$i")->getNumberFormat()->setFormatCode("$#,##0.00;-$#,##0.00");
 	$i++;
 }
 
-$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(25);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(50);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10);
 
 $objPHPExcel->getActiveSheet()->setTitle('Reporte de Servicios');
 

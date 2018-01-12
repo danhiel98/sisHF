@@ -28,24 +28,26 @@
 ?>
     <table class="table table-hover table-bordered">
         <thead>
-        <th></th>
-        <th>No.</th>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Fecha Inicio</th>
-        <th>Fecha Fin</th>
-        <th>Finalizado</th>
+            <tr>
+                <th></th>
+                <th>ID.</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Finalizado</th>
+            </tr>
         </thead>
         <tbody>
         <?php foreach ($productnsT as $pt): ?>
             <tr>
-            <td style="width:40px;"><a href="index.php?view=oneprod&id=<?php echo $pt->id; ?>" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Detalles"></i></a></td>
-            <td><?php echo $pt->id; ?></td>
-            <td><?php echo $pt->getProduct()->nombre; ?></td>
-            <td><?php echo $pt->cantidad; ?></td>
-            <td><?php echo $pt->fechainicio; ?></td>
-            <td><?php echo $pt->fechafin; ?></td>
-            <td><?php echo $pt->fechafinalizado; ?></td>
+                <td style="width:40px;"><a href="index.php?view=oneprod&id=<?php echo $pt->id; ?>" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Detalles"></i></a></td>
+                <td><?php echo $pt->id; ?></td>
+                <td><?php echo $pt->getProduct()->nombre; ?></td>
+                <td><?php echo $pt->cantidad; ?></td>
+                <td><?php echo $pt->fechainicio; ?></td>
+                <td><?php echo $pt->fechafin; ?></td>
+                <td><?php echo $pt->fechafinalizado; ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

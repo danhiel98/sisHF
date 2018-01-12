@@ -62,8 +62,8 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A3', 'Nombre')
             ->setCellValue('B3', 'Provee')
             ->setCellValue('C3', 'Direciòn')
-            ->setCellValue('D3', 'Telèfono')
-            ->setCellValue('E3', 'Correo Electronico');
+            ->setCellValue('D3', 'Teléfono')
+            ->setCellValue('E3', 'Correo Electrónico');
 
 $Proveedores = ProviderData::getAll();
 $i = 4;

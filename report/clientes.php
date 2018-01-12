@@ -1,6 +1,7 @@
 <?php
 include "../core/autoload.php";
 include "../core/modules/sistema/model/ClientData.php";
+include "../core/modules/sistema/model/DireccionData.php";
 
 date_default_timezone_set('America/El_Salvador');
 $hora= date('m/d/y g:ia');
@@ -46,40 +47,38 @@ function cellColor($cells,$color){
 
 $sheet = $objPHPExcel->getActiveSheet();
 $sheet->setCellValueByColumnAndRow(0, 1, "test");
-$sheet->mergeCells('A1:H1');
+$sheet->mergeCells('A1:G1');
 $sheet->getStyle('A1')->getAlignment()->applyFromArray(
     array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
 );
 
-cellColor('A1:H1','A7B6F8');
-cellColor('A3:H3','E2DFDF');
-$objPHPExcel->getActiveSheet()->getStyle('A1'.':H1')->applyFromArray($borders);
-$objPHPExcel->getActiveSheet()->getStyle('A3'.':H3')->applyFromArray($borders);
+cellColor('A1:G1','A7B6F8');
+cellColor('A3:G3','E2DFDF');
+$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->applyFromArray($borders);
+$objPHPExcel->getActiveSheet()->getStyle('A3:G3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
-            ->mergeCells('A1:H1')
-            ->setCellValue('A1', 'CLIENTES REGISTRADOS')
-            ->setCellValue('A3', 'DUI')
-            ->setCellValue('B3', 'NIT')
-            ->setCellValue('C3', 'NRC')
-            ->setCellValue('D3', 'Nombres')
-            ->setCellValue('E3', 'Apellidos')
-            ->setCellValue('F3', 'Sexo')
-            ->setCellValue('G3', 'Correo Electronico')
-            ->setCellValue('H3', 'Telèfono');
+        ->mergeCells('A1:G1')
+        ->setCellValue('A1', 'CLIENTES REGISTRADOS')
+        ->setCellValue('A3', 'DUI')
+        ->setCellValue('B3', 'NIT')
+        ->setCellValue('C3', 'NRC')
+        ->setCellValue('D3', 'Nombres')
+        ->setCellValue('E3', 'Departamento')
+        ->setCellValue('F3', 'Correo Electrónico')
+        ->setCellValue('G3', 'Teléfono');
 
 $clientes = ClientData::getAll();
 $i = 4;
 foreach ($clientes as $client) {
 	$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue("A$i", $client->dui)
-							->setCellValue("B$i", $client->nit)
-							->setCellValue("C$i", $client->nrc)
-							->setCellValue("D$i", $client->name)
-              ->setCellValue("E$i", $client->lastname)
-              ->setCellValue("F$i", $client->sexo)
-              ->setCellValue("G$i", $client->email)
-              ->setCellValue("H$i", $client->phone);
- $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':H'.$i)->applyFromArray($borders);
+        ->setCellValue("A$i", $client->dui)
+        ->setCellValue("B$i", $client->nit)
+        ->setCellValue("C$i", $client->nrc)
+        ->setCellValue("D$i", $client->name)
+        ->setCellValue("E$i", $client->getDepto()->nombreDepto)
+        ->setCellValue("F$i", $client->email)
+        ->setCellValue("G$i", $client->phone);
+        $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':G'.$i)->applyFromArray($borders);
 	$i++;
 }
 
@@ -90,7 +89,6 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
 
 $objPHPExcel->getActiveSheet()->setTitle('Reporte de Clientes');
 

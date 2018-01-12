@@ -51,7 +51,7 @@
 						<th>Proveedor</th>
 						<th>Fecha</th>
 						<th>Total</th>
-						<th></th>
+						<!--<th></th>-->
 					</thead>
 					<tbody>
 					<?php foreach($reabs as $re):?>
@@ -78,7 +78,7 @@
 								<?php echo number_format($total,2,'.',','); ?>
 								</strong>
 							</td>
-							<td></td>
+							<!--<td></td>-->
 						</tr>
 					<?php endforeach; ?>
 					</tbody>

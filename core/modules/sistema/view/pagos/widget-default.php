@@ -18,20 +18,20 @@
 ?>
 <script src="ajax/pagos/ajax.js"></script>
 <div class="row">
-    <!--
-    <div class="btn-group pull-right">
-        <a data-toggle="modal" data-target="#agregar" class="btn btn-default"><i class='fa fa-credit-card'></i> Registrar Pago </a>
-    </div>
-    -->
+    
+    
     <div class="col-md-12">
         <?php if($idPedido != ""): ?>
         <a class="btn btn-default" href="index.php?view=detallepedido&id=<?php echo $idPedido; ?>"><i class="fa fa-arrow-left"></i> Regresar</a>
+        <div class="btn-group pull-right">
+            <a href="report/pagos.php?idPedido=<?php echo $idPedido; ?>" class="btn btn-default"><i class='fa fa-download fa-fw'></i>Reporte </a>
+        </div>
         <?php endif; ?>
         <h1>Pagos Realizados <?php if(!$todos){echo "[Pedido #$idPedido]";} ?></h1>
 
         <?php if (count($sucursales) > 1 && $user->id == 1 && $idPedido == ""): ?>
-        <div class="container-fluid">
             <div class="form-horizontal">
+        <div class="container-fluid">
                 <label for="sucursal" class="col-md-2 col-sm-2 col-xs-2 control-label">Sucursal</label>
                 <div class="col-md-4 col-sm-6 col-xs-8">
                     <select name="sucursal" id="sucursal" class="form-control">
@@ -110,7 +110,7 @@
                             <?php if($todos): ?>
                             <td><a data-toggle="modal" data-target="#detalleP" class="btn btn-default btn-xs btn-detail" id="<?php echo $p->idpedido; ?>"><i class="fa fa-list"></i> Detalles</a></td>
                             <?php endif; ?>
-                            <td><?php echo $p->getClient()->fullname; ?></td>
+                            <td><?php echo $p->getClient()->name; ?></td>
                             <td>$ <?php echo number_format($p->cantidad,2,".",","); $total += $p->cantidad; ?></td>                            
                             <td><?php echo date("d/m/Y", strtotime($p->fecha)); ?></td>
                             <td><?php echo $p->getComprobante()->nombre; ?></td>

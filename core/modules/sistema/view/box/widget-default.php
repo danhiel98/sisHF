@@ -1,10 +1,12 @@
 <?php
+	
 	$idSuc = $_SESSION["usr_suc"];
 
     $user = UserData::getById(Session::getUID());
     $sucursales = SucursalData::getAll();
 	$boxes = BoxData::getAllBySuc($idSuc);
 	$caja = FacturaData::getSellsUnBoxedBySuc($idSuc);
+	
 ?>
 <div class="row">
 	<div class="col-md-12">
@@ -98,7 +100,7 @@
 							<?php echo $count++; ?>
 						</td>
 						<td>
-							<?php if($sell->idcliente != ""){echo $sell->getClient()->fullname;}else{echo "----";} ?>
+							<?php if($sell->idcliente != ""){echo $sell->getClient()->name;}else{echo "----";} ?>
 						</td>
 						<td><?php echo $sell->fecha; ?></td>
 						<td><?php echo $sell->getComprobante()->nombre; ?></td>

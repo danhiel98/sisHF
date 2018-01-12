@@ -1,4 +1,5 @@
 <?php
+@session_start();
 include "../core/autoload.php";
 include "../core/modules/sistema/model/BoxData.php";
 include "../core/modules/sistema/model/UserData.php";
@@ -13,6 +14,8 @@ require_once '../ReporteExcel/functions/excel.php';
 activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
+
+$idSuc = $_SESSION["usr_suc"];
 
 date_default_timezone_set('America/El_Salvador');
 $hora= date('m/d/y g:ia');
@@ -72,14 +75,15 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('C3', 'Fecha');
 
             $i = 4;
-            $factu = BoxData::getAll();
+            $factu = BoxData::getAllBySuc($idSuc);
             if(count($factu)>0){
-      				$total_total = 0;
+					  $total_total = 0;
+					  $num = 0;
               foreach ($factu as  $facid) {
                   $facturas = FacturaData::getByBoxId($facid->id);
             
                       $objPHPExcel->setActiveSheetIndex(0)
-                                      ->setCellValue("A$i", $facid->id);
+                                      ->setCellValue("A$i", ++$num);
 
               $total=0;
                 foreach ($facturas as $fact) {

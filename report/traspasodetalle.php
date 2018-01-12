@@ -3,6 +3,7 @@ include "../core/autoload.php";
 include "../core/modules/sistema/model/TraspasoData.php";
 include "../core/modules/sistema/model/SucursalData.php";
 include "../core/modules/sistema/model/UserData.php";
+include "../core/modules/sistema/model/EmpleadoData.php";
 include "../core/modules/sistema/model/ProductData.php";
 
 require_once '../ReporteExcel/functions/excel.php';
@@ -12,6 +13,12 @@ require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
 //$traspasode = TraspasoData::getAllProductsByTraspasoId($_GET["id"]);
 $traspasoDatos = TraspasoData::getById($_GET["id"]);
+
+$nombreUsuario = $traspasoDatos->getUser()->fullname;
+
+if (!is_null($traspasoDatos->getUser()->idempleado)){
+  $nombreUsuario = $traspasoDatos->getUser()->getEmpleado()->nombrecompleto;
+}
 
 $prodtrasp = TraspasoData::getAllProductsByTraspasoId($_GET["id"]);
 /*$tras = TraspasoData::getAllProductsByTraspasoId();
@@ -82,7 +89,7 @@ $objPHPExcel->setActiveSheetIndex(0)
               ->setCellValue("B3", $traspasoDatos->getSucursalO()->nombre)
               ->setCellValue("B4", $traspasoDatos->getSucursalD()->nombre)
               ->setCellValue("B5", $traspasoDatos->fecha)
-              ->setCellValue("B6", $traspasoDatos->getUser()->name);
+              ->setCellValue("B6", $nombreUsuario);
 
 cellColor('A8:C8','E2DFDF');
 $objPHPExcel->getActiveSheet()->getStyle('A8'.':C8')->applyFromArray($borders);

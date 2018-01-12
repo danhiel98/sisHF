@@ -1,4 +1,5 @@
 <?php
+@session_start();
 include "../core/autoload.php";
 include "../core/modules/sistema/model/BoxData.php";
 include "../core/modules/sistema/model/UserData.php";
@@ -8,12 +9,14 @@ include "../core/modules/sistema/model/FacturaData.php";
 include "../core/modules/sistema/model/EmpleadoData.php";
 include "../core/modules/sistema/model/ClientData.php";
 include "../core/modules/sistema/model/ProductData.php";
+include "../core/modules/sistema/model/ComprobanteData.php";
 
 require_once '../ReporteExcel/functions/excel.php';
 activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
+$idSuc = $_SESSION["usr_suc"];
 $box = BoxData::getById($_GET["id"]);
 
 
@@ -95,7 +98,7 @@ if (count($facturas)>0) {
       $objPHPExcel->setActiveSheetIndex(0)
                   ->setCellValue("A$i", $fact->getComprobante()->nombre)
                   ->setCellValue("B$i", $fact->numerofactura)
-                  ->setCellValue("C$i", $fact->getClient()->fullname)
+                  ->setCellValue("C$i", $fact->getClient()->name)
                   ->setCellValue("D$i", "$ ".$total);
 
                   $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':D'.$i)->applyFromArray($borders);

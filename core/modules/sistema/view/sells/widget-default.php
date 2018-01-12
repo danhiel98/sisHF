@@ -35,7 +35,8 @@
             <?php if(($services || $products) && $clientes): ?>
             <a class="btn btn-default" href="index.php?view=sell"><i class="fa fa-usd"></i> Vender</a>
             <?php endif; ?>
-
+            
+            <!--
             <?php if($ventas): ?>
             <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-download"></i> Descargar <span class="caret"></span>
@@ -44,6 +45,7 @@
                 <li><a id="btn_envio" target="_blank" href="#">Excel (.xlsx)</a></li>
             </ul>
             <?php endif; ?>
+            -->
 
         </div>
 		

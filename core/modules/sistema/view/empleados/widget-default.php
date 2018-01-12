@@ -1,9 +1,10 @@
 <?php
+	$idSuc = $_SESSION["usr_suc"];
 	$sucursal = SucursalData::getAll();
 	$empleados = EmpleadoData::getAll();
 	$usrSuc = false;
 	if (!isset($_SESSION["adm"])) {
-		$empleados = EmpleadoData::getAllBySucId($_SESSION["usr_suc"]);
+		$empleados = EmpleadoData::getAllBySucId($idSuc);
 		$usrSuc = true;
 	}
 ?>
@@ -22,50 +23,53 @@
 				</div>
 			<?php endif; ?>
 		</div>
-	<h1>Lista De Empleados</h1>
-	<br>
-	<?php if(count($empleados)>0): ?>
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="#all">Todos</a></li>
-			<?php if (count($sucursal)>1 && !$usrSuc): ?>
-				<li><a href="#suc">Por Sucursal</a></li>
-			<?php endif; ?>
-		</ul>
+		<h1>Lista De Empleados</h1>
 		<br>
-		<div class="tab-content">
-			<div id="all" class="tab-pane fade in active">
+		<?php if(count($empleados)>0): ?>
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#all">Todos</a></li>
+				<?php if (count($sucursal)>1 && !$usrSuc): ?>
+				<li><a href="#suc">Por Sucursal</a></li>
+				<?php endif; ?>
+			</ul>
+			<br>
+			<div class="tab-content">
+				<div id="all" class="tab-pane fade in active">
 				<?php
-				$start = 1; $limit = 10;
-				if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
-					$start = $_REQUEST["start"];
-					$limit = $_REQUEST["limit"];
-					#Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
-					if ($start <= 0 ){
-						$start = 1;
+					$start = 1; $limit = 10;
+					if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
+						$start = $_REQUEST["start"];
+						$limit = $_REQUEST["limit"];
+						#Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
+						if ($start <= 0 ){
+							$start = 1;
+						}
+						if ($limit <= 0 ){
+							$limit = 1;
+						}
 					}
-					if ($limit <= 0 ){
-						$limit = 1;
+						$idSuc = $_SESSION["usr_suc"];
+					$paginas = floor(count($empleados)/$limit);
+					$spaginas = count($empleados)%$limit;
+					if($spaginas>0){$paginas++;}
+					if ($usrSuc){
+						$empleados = EmpleadoData::getAllBySucPage($idSuc,$start,$limit);
 					}
-				}
-				$paginas = floor(count($empleados)/$limit);
-				$spaginas = count($empleados)%$limit;
-				if($spaginas>0){$paginas++;}
-				if ($usrSuc){
-					$empleados = EmpleadoData::getAllBySucPage($_SESSION["usr_suc"],$start,$limit);
-				}
 				?>
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover">
 						<thead>
-							<th>DUI</th>
-							<th>NIT</th>
-							<th>Apellidos</th>
-							<th>Nombres</th>
-							<th>Sexo</th>
-							<th>Tel&eacute;fono</th>
-							<th>&Aacute;rea</th>
-							<th>Sucursal</th>
-							<th></th>
+							<tr>
+								<th>DUI</th>
+								<th>NIT</th>
+								<th>Apellidos</th>
+								<th>Nombres</th>
+								<th>Sexo</th>
+								<th>Tel&eacute;fono</th>
+								<th>&Aacute;rea</th>
+								<th>Sucursal</th>
+								<th></th>
+							</tr>
 						</thead>
 						<?php
 						foreach($empleados as $empleado):

@@ -1,5 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
+		<a href="index.php?view=boxhistory" class="btn btn-default"><i class="fa fa-arrow-left fa-fw"></i>Regresar</a>
 		<!-- Single button -->
 		<div class="btn-group pull-right">
 			<a href="./index.php?view=boxhistory" class="btn btn-default"><i class="fa fa-clock-o"></i> Historial</a>
@@ -22,7 +23,6 @@
 		
 		$box = BoxData::getById($_GET["id"]);
 		$products = FacturaData::getByBoxId($_GET["id"]);
-		
 		
 		if (isset($_GET["no"]) && is_numeric($_GET["no"])){
 			$num = $_GET["no"];
@@ -63,7 +63,7 @@
 				<td><?php echo $sell->getComprobante()->nombre; ?></td>
 				<td><?php echo $sell->numerofactura; ?></td>
 				<td>
-					<?php if($sell->idcliente != ""){echo $sell->getClient()->fullname;}else{echo "----";} ?>
+					<?php if($sell->idcliente != ""){echo $sell->getClient()->name;}else{echo "----";} ?>
 				</td>
 				<td>
 					<?php

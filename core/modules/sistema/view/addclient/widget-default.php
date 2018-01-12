@@ -3,10 +3,11 @@
 	if(count($_POST)>0){
 		$client = new ClientData();
 		$client->idusuario = $_SESSION["user_id"];
+		$client->iddepto = $_POST["departamento"];
+		$client->giro = $_POST["giro"];
 		$client->dui = $_POST["txtDui"];
 		$client->nit = $_POST["txtNit"];
 		$client->name = $_POST["txtNombre"];
-		$client->lastname = $_POST["txtApellido"];
 		$client->sexo = $_POST["txtSexo"];
 		$client->direccion = $_POST["txtDireccion"];
 		$client->birth = $_POST["txtFechaNacimiento"];

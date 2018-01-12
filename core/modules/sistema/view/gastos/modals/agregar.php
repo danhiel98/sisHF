@@ -11,7 +11,7 @@
             <label for="responsable" class="col-sm-3 control-label">Responsable:</label>
             <div class="col-sm-8 controls">
               <select name="responsable" class="form-control" id="responsable">
-    						<option value="">--SELECCIONE--</option>
+    						<option value="">--NINGUNO--</option>
     						<?php foreach($empleados as $emp):?>
     							<option value="<?php echo $emp->id; ?>"><?php echo $emp->nombre." ".$emp->apellido;?></option>
     						<?php endforeach;?>

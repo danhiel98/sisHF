@@ -13,7 +13,7 @@
 				<select name="cliente" id="cliente" class="form-control <?php if(count($clientes)>0){echo 'selectpicker'; } ?>" data-live-search="true" data-size="5">
 					<option value="">--NINGUNO--</option>
 					<?php foreach ($clientes as $cl):?>
-						<option value="<?php echo $cl->id; ?>"><?php echo $cl->name." ".$cl->lastname; ?></option>
+						<option value="<?php echo $cl->id; ?>"><?php echo $cl->name; ?></option>
 					<?php endforeach; ?>
 					<script type="text/javascript">
 						$(function(){

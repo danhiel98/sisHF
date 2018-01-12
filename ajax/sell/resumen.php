@@ -55,7 +55,6 @@
 					Total a pagar: <strong>$ <?php echo number_format($total,2,".",","); ?></strong>
 				</h3>
 			</div>
-			<?php  ?>
 			<div class="col-md-5 pull-right" id="groupIva">
 				<?php
 					$iva = ConfigurationData::getByName("iva");
@@ -65,7 +64,6 @@
 					IVA: <strong>$ <?php echo number_format($valorIva,2,".",","); ?></strong>
 				</h3>
 			</div>
-			<?php  ?>
 		</div>
 		<script type="text/javascript">
 			/*

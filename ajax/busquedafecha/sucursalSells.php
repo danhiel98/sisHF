@@ -61,7 +61,7 @@
 						<td><?php echo $count++; ?></td>
 						<td><?php echo $fa->numerofactura; ?></td>
 						<td><?php echo $fa->getComprobante()->nombre; ?></td>
-						<td><?php echo $fa->getClient()->fullname; ?></td>
+						<td><?php echo $fa->getClient()->name; ?></td>
 						<td><?php echo $fa->getUser()->name." ".$fa->getUser()->lastname; ?></td>
 						<td><?php echo $fa->fecha; ?></td>
 						<td>

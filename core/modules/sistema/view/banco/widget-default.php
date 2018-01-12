@@ -20,25 +20,6 @@
 			<?php endif; ?>
 		</div>
 		<h1>Bancos Registrados</h1>
-		<?php
-		if(count($banco)>0):
-			$start = 1; $limit = 10;
-			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
-				$start = $_REQUEST["start"];
-				$limit = $_REQUEST["limit"];
-				#Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
-				if ($start <= 0 ){
-					$start = 1;
-				}
-				if ($limit <= 0 ){
-					$limit = 1;
-				}
-			}
-			$paginas = floor(count($banco)/$limit);
-			$spaginas = count($banco)%$limit;
-			if($spaginas>0){$paginas++;}
-			$banco = BancoData::getByPage($start,$limit);
-		?>
 		<div class="container-fluid">
 			<?php
 			if (isset($_COOKIE["errorBanco"]) && !empty($_COOKIE["errorBanco"])):
@@ -63,6 +44,26 @@
 			endif;
 			?>
 		</div>
+		<?php
+		if(count($banco)>0):
+			$start = 1; $limit = 10;
+			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
+				$start = $_REQUEST["start"];
+				$limit = $_REQUEST["limit"];
+				#Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
+				if ($start <= 0 ){
+					$start = 1;
+				}
+				if ($limit <= 0 ){
+					$limit = 1;
+				}
+			}
+			$paginas = floor(count($banco)/$limit);
+			$spaginas = count($banco)%$limit;
+			if($spaginas>0){$paginas++;}
+			$banco = BancoData::getByPage($start,$limit);
+		?>
+		
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>

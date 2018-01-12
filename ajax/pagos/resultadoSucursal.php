@@ -57,7 +57,7 @@
                     <tr>
                         <td><?php echo $num++; ?></td>
                         <td><a data-toggle="modal" data-target="#detalleP" class="btn btn-default btn-xs btn-detail" id="<?php echo $p->idpedido; ?>"><i class="fa fa-list"></i> Detalles</a></td>
-                        <td><?php echo $p->getClient()->fullname; ?></td>
+                        <td><?php echo $p->getClient()->name; ?></td>
                         <td>$ <?php echo number_format($p->cantidad,2,".",","); $total += $p->cantidad; ?></td>                            
                         <td><?php echo date("d/m/Y", strtotime($p->fecha)); ?></td>
                         <td><?php echo $p->getComprobante()->nombre; ?></td>

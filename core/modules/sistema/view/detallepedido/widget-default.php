@@ -54,7 +54,7 @@
             <?php endif; ?>
             <tr>
                 <td style="width:150px;">Cliente</td>
-                <td><?php echo $client->name." ".$client->lastname;?></td>
+                <td><?php echo $client->name;?></td>
             </tr>
             <?php if($pedido->idusuario != ""):
                 $user = $pedido->getUser();
@@ -80,7 +80,6 @@
 
         <table class="table table-bordered table-hover">
             <thead>
-                <th>C&oacute;digo</th>
                 <th>Cantidad</th>
                 <th>Nombre del Producto / Servicio</th>
                 <th>Precio Unitario</th>
@@ -92,7 +91,6 @@
                     $prod = $pedid->getProduct();
                 ?>
                 <tr>
-                    <td><?php echo $prod->id ;?></td>
                     <td><?php echo $pedid->cantidad ;?></td>
                     <td><?php echo $prod->nombre ;?></td>
                     <td>$ <?php echo number_format($pedid->precio,2,".",",") ;?></td>
@@ -104,7 +102,6 @@
                     $prod = $pedid->getService();
                 ?>
                 <tr>
-                    <td><?php echo $prod->id ;?></td>
                     <td><?php echo $pedid->cantidad ;?></td>
                     <td><?php echo $prod->nombre ;?></td>
                     <td>$ <?php echo number_format($pedid->precio,2,".",",") ;?></td>

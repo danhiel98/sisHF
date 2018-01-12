@@ -66,6 +66,7 @@
 				$spaginas = count($services)%$limit;
 				if($spaginas>0){$paginas++;}
 				$services = ServiceData::getByPage($start,$limit);
+				$num = $start;
 		?>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
@@ -81,7 +82,7 @@
 					foreach($services as $service):
 						?>
 						<tr>
-							<td><?php echo $service->id; ?></td>
+							<td><?php echo $num++; ?></td>
 							<td><?php echo $service->nombre; ?></td>
 							<td><?php echo $service->descripcion; ?></td>
 							<td style="width: 90px;"><strong>$ <?php echo $service->precio; ?></strong></td>

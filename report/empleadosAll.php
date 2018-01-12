@@ -56,8 +56,8 @@ $sheet->getStyle('A1')->getAlignment()->applyFromArray(
 
 cellColor('A1:H1','A7B6F8');
 cellColor('A3:H3','E2DFDF');
-$objPHPExcel->getActiveSheet()->getStyle('A1'.':H1')->applyFromArray($borders);
-$objPHPExcel->getActiveSheet()->getStyle('A3'.':H3')->applyFromArray($borders);
+$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->applyFromArray($borders);
+$objPHPExcel->getActiveSheet()->getStyle('A3:H3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
             ->mergeCells('A1:H1')
             ->setCellValue('A1', 'EMPLEADOS REGISTRADOS')
@@ -66,8 +66,8 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('C3', 'Nombre')
             ->setCellValue('D3', 'Apellido')
             ->setCellValue('E3', 'Sexo')
-            ->setCellValue('F3', 'Telèfono')
-            ->setCellValue('G3', 'Àrea')
+            ->setCellValue('F3', 'Teléfono')
+            ->setCellValue('G3', 'Área')
             ->setCellValue('H3', 'Sucursal');
 
 $empleadoxd = EmpleadoData::getAll();
@@ -82,18 +82,20 @@ foreach ($empleadoxd as $empledosall) {
               ->setCellValue("F$i", $empledosall->telefono)
               ->setCellValue("G$i", $empledosall->area)
               ->setCellValue("H$i", $empledosall->getSucursal()->nombre);
-  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':H'.$i)->applyFromArray($borders);
-  $i++;
+    $obj = $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':H'.$i);
+    $obj->getAlignment()->setWrapText(true);
+    $obj->applyFromArray($borders);
+  	$i++;
 }
 
-$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth('15');
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth('20');
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth('30');
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth('30');
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth('9');
+$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth('10');
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth('20');
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth('20');
 
 $objPHPExcel->getActiveSheet()->setTitle('Reporte de Empleados');
 

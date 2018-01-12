@@ -1,5 +1,6 @@
 <?php
 
+	$categorias = CategoryData::getAll();
 	include("modals/agregar.php");
 	include("modals/editar.php");
 
@@ -9,11 +10,13 @@
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
 			<a data-toggle="modal" data-target="#agregar" class="btn btn-default"><i class='fa fa-th-list'></i> Nueva Categor&iacute;a</a>
+			<?php if(count($categorias) > 0): ?>
+				<a href="report/category.php" class="btn btn-default"><i class='fa fa-download fa-fw'></i> Reporte</a>
+			<?php endif; ?>
 		</div>
 		<h1>Categorías</h1>
 		<?php
-		$cats = CategoryData::getAll();
-		if(count($cats)>0):
+		if(count($categorias)>0):
 			$start = 1; $limit = 10;
 			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
 				$start = $_REQUEST["start"];
@@ -26,10 +29,11 @@
 					$limit = 1;
 				}
 			}
-			$paginas = floor(count($cats)/$limit);
-			$spaginas = count($cats)%$limit;
+			$num = $start;
+			$paginas = floor(count($categorias)/$limit);
+			$spaginas = count($categorias)%$limit;
 			if($spaginas>0){$paginas++;}
-			$cats = CategoryData::getByPage($start,$limit);
+			$categorias = CategoryData::getByPage($start,$limit);
 			?>
 			<div class="container-fluid">
 				<?php
@@ -64,10 +68,10 @@
 					</thead>
 					<tbody>
 						<?php
-						foreach($cats as $c):
+						foreach($categorias as $c):
 						?>
 							<tr>
-								<td><?php echo $c->id; ?></td>
+								<td><?php echo $num++; ?></td>
 								<td><?php echo $c->nombre; ?></td>
 								<td style="width: 80px;">
 									<a data-toggle="modal" data-target="#editar" id="<?php echo $c->id;?>" class="btn btn-warning btn-xs btn-edit"><i class="fa fa-edit fa-fw"></i></a>

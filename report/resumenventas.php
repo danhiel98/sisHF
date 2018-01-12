@@ -112,7 +112,7 @@ foreach ($fact as $fa) {
       }
   $objPHPExcel->setActiveSheetIndex(0)
               ->setCellValue("A$i", $fa->numerofactura)
-              ->setCellValue("B$i", $fa->getClient()->fullname)
+              ->setCellValue("B$i", $fa->getClient()->name)
               ->setCellValue("C$i", $fa->getUser()->name." ".$fa->getUser()->lastname)
               ->setCellValue("D$i", $fa->fecha)
               ->setCellValue("E$i", $fa->getComprobante()->nombre)

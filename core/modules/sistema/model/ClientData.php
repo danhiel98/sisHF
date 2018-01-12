@@ -3,9 +3,11 @@ class ClientData {
 	public static $tablename = "cliente";
 
 	public function ClientData(){
+		$this->idusuario = "";
+		$this->iddepto = "";
+		$this->giro = "";
 		$this->dui = "";
 		$this->name = "";
-		$this->lastname = "";
 		$this->sexo = "";
 		$this->birth = "";
 		$this->direccion = "";
@@ -15,12 +17,14 @@ class ClientData {
 		$this->nrc = "";
 	}
 
+	public function getDepto(){return DireccionData::getDeptoById($this->iddepto);}
+
 	public function add(){
-		$sql = "insert into cliente (idUsuario, dui, nombre, apellido, sexo, fechaNacimiento, direccion, telefono, nit, email, nrc) ";
+		$sql = "insert into cliente (idUsuario, idDepto, giro, dui, nombre, sexo, fechaNacimiento, direccion, telefono, nit, email, nrc) ";
 		if ($this->birth != "") {
-			$sql .= "values ($this->idusuario,\"$this->dui\",\"$this->name\",\"$this->lastname\",\"$this->sexo\",\"$this->birth\",\"$this->direccion\",\"$this->phone\",\"$this->nit\",\"$this->email\",\"$this->nrc\")";
+			$sql .= "values ($this->idusuario,$this->iddepto,\"$this->giro\",\"$this->dui\",\"$this->name\",\"$this->sexo\",\"$this->birth\",\"$this->direccion\",\"$this->phone\",\"$this->nit\",\"$this->email\",\"$this->nrc\")";
 		}else{
-			$sql .= "values ($this->idusuario,\"$this->dui\",\"$this->name\",\"$this->lastname\",\"$this->sexo\",NULL,\"$this->direccion\",\"$this->phone\",\"$this->nit\",\"$this->email\",\"$this->nrc\")";
+			$sql .= "values ($this->idusuario,$this->iddepto,\"$this->giro\",\"$this->dui\",\"$this->name\",\"$this->sexo\",NULL,\"$this->direccion\",\"$this->phone\",\"$this->nit\",\"$this->email\",\"$this->nrc\")";
 		}
 		Executor::doit($sql);
 	}
@@ -37,10 +41,11 @@ class ClientData {
 
 	public function update(){
 		if ($this->birth != "") {
-			$sql = "update ".self::$tablename." set dui=\"$this->dui\", nit=\"$this->nit\", nombre=\"$this->name\", apellido=\"$this->lastname\", fechaNacimiento=\"$this->birth\", email=\"$this->email\", direccion=\"$this->direccion\", sexo=\"$this->sexo\", telefono=\"$this->phone\", nrc=\"$this->nrc\" where idCliente = $this->id";
+			$sql = "update ".self::$tablename." set idDepto=$this->iddepto, giro=\"$this->giro\", dui=\"$this->dui\", nit=\"$this->nit\", nombre=\"$this->name\", fechaNacimiento=\"$this->birth\", email=\"$this->email\", direccion=\"$this->direccion\", sexo=\"$this->sexo\", telefono=\"$this->phone\", nrc=\"$this->nrc\" where idCliente = $this->id";
 		}else{
-			$sql = "update ".self::$tablename." set dui=\"$this->dui\", nit=\"$this->nit\", nombre=\"$this->name\", apellido=\"$this->lastname\", fechaNacimiento=NULL, email=\"$this->email\", direccion=\"$this->direccion\", sexo=\"$this->sexo\", telefono=\"$this->phone\", nrc=\"$this->nrc\" where idCliente = $this->id";
+			$sql = "update ".self::$tablename." set idDepto=$this->iddepto, giro=\"$this->giro\", dui=\"$this->dui\", nit=\"$this->nit\", nombre=\"$this->name\", fechaNacimiento=NULL, email=\"$this->email\", direccion=\"$this->direccion\", sexo=\"$this->sexo\", telefono=\"$this->phone\", nrc=\"$this->nrc\" where idCliente = $this->id";
 		}
+		#return $sql;
 		Executor::doit($sql);
 	}
 
@@ -51,15 +56,15 @@ class ClientData {
 		$data = new ClientData();
 		while($r = $query[0]->fetch_array()){
 			$data->id = $r['idCliente'];
+			$data->iddepto = $r['idDepto'];
+			$data->giro = $r['giro'];
 			$data->dui = $r['dui'];
-			$data->nit = $r['nit'];
 			$data->name = $r['nombre'];
-			$data->lastname = $r['apellido'];
-			$data->fullname = $data->name." ".$data->lastname;
 			$data->sexo = $r['sexo'];
 			$data->birth = $r['fechaNacimiento'];
-			$data->phone = $r['telefono'];
 			$data->direccion = $r['direccion'];
+			$data->phone = $r['telefono'];
+			$data->nit = $r['nit'];
 			$data->email = $r['email'];
 			$data->nrc = $r['nrc'];
 			$found = $data;
@@ -76,14 +81,15 @@ class ClientData {
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new ClientData();
 			$array[$cnt]->id = $r['idCliente'];
+			$array[$cnt]->iddepto = $r['idDepto'];
+			$array[$cnt]->giro = $r['giro'];
 			$array[$cnt]->dui = $r['dui'];
-			$array[$cnt]->nit = $r['nit'];
 			$array[$cnt]->name = $r['nombre'];
-			$array[$cnt]->lastname = $r['apellido'];
 			$array[$cnt]->sexo = $r['sexo'];
 			$array[$cnt]->birth = $r['fechaNacimiento'];
-			$array[$cnt]->phone = $r['telefono'];
 			$array[$cnt]->direccion = $r['direccion'];
+			$array[$cnt]->phone = $r['telefono'];
+			$array[$cnt]->nit = $r['nit'];
 			$array[$cnt]->email = $r['email'];
 			$array[$cnt]->nrc = $r['nrc'];
 			$cnt++;
@@ -100,14 +106,15 @@ class ClientData {
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new ClientData();
 			$array[$cnt]->id = $r['idCliente'];
+			$array[$cnt]->iddepto = $r['idDepto'];
+			$array[$cnt]->giro = $r['giro'];
 			$array[$cnt]->dui = $r['dui'];
-			$array[$cnt]->nit = $r['nit'];
 			$array[$cnt]->name = $r['nombre'];
-			$array[$cnt]->lastname = $r['apellido'];
 			$array[$cnt]->sexo = $r['sexo'];
 			$array[$cnt]->birth = $r['fechaNacimiento'];
-			$array[$cnt]->phone = $r['telefono'];
 			$array[$cnt]->direccion = $r['direccion'];
+			$array[$cnt]->phone = $r['telefono'];
+			$array[$cnt]->nit = $r['nit'];
 			$array[$cnt]->email = $r['email'];
 			$array[$cnt]->nrc = $r['nrc'];
 			$cnt++;
@@ -123,14 +130,16 @@ class ClientData {
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new ClientData();
 			$array[$cnt]->id = $r['idCliente'];
+			$array[$cnt]->iddepto = $r['idDepto'];
+			$array[$cnt]->giro = $r['giro'];
 			$array[$cnt]->dui = $r['dui'];
-			$array[$cnt]->nit = $r['nit'];
 			$array[$cnt]->name = $r['nombre'];
-			$array[$cnt]->lastname = $r['apellido'];
 			$array[$cnt]->sexo = $r['sexo'];
+			$array[$cnt]->birth = $r['fechaNacimiento'];
 			$array[$cnt]->direccion = $r['direccion'];
-			$array[$cnt]->email = $r['email'];
 			$array[$cnt]->phone = $r['telefono'];
+			$array[$cnt]->nit = $r['nit'];
+			$array[$cnt]->email = $r['email'];
 			$array[$cnt]->nrc = $r['nrc'];
 			$cnt++;
 		}
@@ -147,10 +156,18 @@ class ClientData {
 		$cnt = 0;
 		while($r = $query[0]->fetch_array()){
 			$array[$cnt] = new ClientData();
-			$array[$cnt]->id = $r['id'];
+			$array[$cnt]->id = $r['idCliente'];
+			$array[$cnt]->iddepto = $r['idDepto'];
+			$array[$cnt]->giro = $r['giro'];
+			$array[$cnt]->dui = $r['dui'];
 			$array[$cnt]->name = $r['nombre'];
-			$array[$cnt]->lastname = $r['apellido'];
+			$array[$cnt]->sexo = $r['sexo'];
+			$array[$cnt]->birth = $r['fechaNacimiento'];
+			$array[$cnt]->direccion = $r['direccion'];
+			$array[$cnt]->phone = $r['telefono'];
+			$array[$cnt]->nit = $r['nit'];
 			$array[$cnt]->email = $r['email'];
+			$array[$cnt]->nrc = $r['nrc'];
 			$cnt++;
 		}
 		return $array;

@@ -21,6 +21,30 @@
 			<?php endif; ?>
 		</div>
 		<h1>Gastos Realizados</h1>
+		<div class="container-fluid">
+			<?php
+				if (isset($_COOKIE["errorGasto"]) && !empty($_COOKIE["errorGasto"])):
+			?>
+					<div class="alert alert-warning alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorGasto"]; ?></p>
+					</div>
+			<?php
+					setcookie("errorGasto","",time()-18600);
+				endif;
+			?>
+			<?php
+				if (isset($_COOKIE["okGasto"]) && !empty($_COOKIE["okGasto"])):
+			?>
+					<div class="alert alert-success alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okGasto"]; ?></p>
+					</div>
+			<?php
+					setcookie("okGasto","",time()-18600);
+				endif;
+			?>
+		</div>
 		<?php
 		if(count($gastos)>0):
 			$start = 1; $limit = 10;

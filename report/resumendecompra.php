@@ -17,9 +17,6 @@ activeErrorReporting();
 noCli();
 require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
-
-
-
 // para que ponga el nombre y le agregue la fecha y hora
 date_default_timezone_set('America/El_Salvador');
 $hora= date('m/d/y g:ia');
@@ -31,12 +28,12 @@ $objPHPExcel = new PHPExcel();
 
 // Set document properties
 $objPHPExcel->getProperties()->setCreator("Hierro Forjado")
-               ->setLastModifiedBy("Administrador")
-               ->setTitle("Reporte de Resumen De Compras")
-               ->setSubject("Resumen De Compras activas")
-               ->setDescription("Reporte de los Resumen De Compras")
-               ->setKeywords("excel php reporte Resumen De Compras")
-               ->setCategory("Resumen De Compras");
+			->setLastModifiedBy("Administrador")
+			->setTitle("Reporte de Resumen De Compras")
+			->setSubject("Resumen De Compras activas")
+			->setDescription("Reporte de los Resumen De Compras")
+			->setKeywords("excel php reporte Resumen De Compras")
+			->setCategory("Resumen De Compras");
 
 $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')
                                           ->setSize(10);
@@ -61,13 +58,13 @@ function cellColor($cells,$color){
 
 $sheet = $objPHPExcel->getActiveSheet();
 $sheet->setCellValueByColumnAndRow(0, 1, "test");
-$sheet->mergeCells('A1:F1');
+$sheet->mergeCells('A1:E1');
 $sheet->getStyle('A1')->getAlignment()->applyFromArray(
     array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
 );
 
-cellColor('A1:F1','A7B6F8');
-$objPHPExcel->getActiveSheet()->getStyle('A9'.':F9')->applyFromArray($borders);
+cellColor('A1:E1','A7B6F8');
+$objPHPExcel->getActiveSheet()->getStyle('A9:E9')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
             //->mergeCells('A1:A5')
             ->setCellValue('A1', 'Resumen De Compra')
@@ -93,7 +90,7 @@ if(isset($_GET["id"]) && $_GET["id"]!=""){
 
   }
 //for ($i = 3; $i<7; $i++)
-cellColor('A8:F8','E2DFDF');
+cellColor('A8:E8','E2DFDF');
         $objPHPExcel->setActiveSheetIndex(0)
               ->setCellValue('A8', 'Codigo.')
               ->setCellValue('B8', 'Nombre Producto')
@@ -109,17 +106,22 @@ cellColor('A8:F8','E2DFDF');
                       ->setCellValue("A$i", $mp->id)
                       ->setCellValue("B$i", $mp->nombre)
                       ->setCellValue("C$i", $rb->cantidad)
-                      ->setCellValue("D$i","$ ". $rb->precio)
-                      ->setCellValue("E$i","$ ".$rb->total);
+                      ->setCellValue("D$i", $rb->precio)
+                      ->setCellValue("E$i", $rb->total);
                     
-          $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':F'.$i)->applyFromArray($borders);
-           $i++;
-           $total += $rb->total;
+		  $sheet = $objPHPExcel->getActiveSheet();
+		  $sheet->getStyle('A'.$i.':E'.$i)->applyFromArray($borders);
+		  $sheet->getStyle('D'.$i.':E'.$i)->getNumberFormat()->setFormatCode("$#,##0.00;-$#,##0.00");
+		  
+		  $i++;
+          $total += $rb->total;
        }
-       $i++;
-    $objPHPExcel->setActiveSheetIndex(0)
-                ->setCellValue("A$i", "Total")
-                ->setCellValue("B$i","$ ". $total);
+	   $i++;
+	   
+	   $sheet = $objPHPExcel->setActiveSheetIndex(0);
+	   $sheet->setCellValue("A$i", "Total");
+	   $sheet->setCellValue("B$i", $total);
+	   $sheet->getStyle("B$i")->getNumberFormat()->setFormatCode("$#,##0.00;-$#,##0.00");
   }
 
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
@@ -127,7 +129,6 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
 
 $objPHPExcel->getActiveSheet()->setTitle('Resumen Ventas');
 

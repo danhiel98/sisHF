@@ -60,7 +60,7 @@
 						<?php echo $count++; ?>
 					</td>
 					<td>
-						<?php if($sell->idcliente != ""){echo $sell->getClient()->fullname;}else{echo "----";} ?>
+						<?php if($sell->idcliente != ""){echo $sell->getClient()->name;}else{echo "----";} ?>
 					</td>
 					<td><?php echo $sell->fecha; ?></td>
 					<td><?php echo $sell->getComprobante()->nombre; ?></td>

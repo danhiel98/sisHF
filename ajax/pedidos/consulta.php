@@ -5,6 +5,9 @@
 	include ("../../core/modules/sistema/model/PedidoData.php");
 	include ("../../core/modules/sistema/model/ClientData.php");
 	include ("../../core/modules/sistema/model/ProductData.php");
+	include ("../../core/modules/sistema/model/ProductoSucursalData.php");
+	include ("../../core/modules/sistema/model/ServiceData.php");
+	include ("../../core/modules/sistema/model/DireccionData.php");
 
 	#Variables booleanas que sirven para determinar que tipo de consulta se ha realizado.
 	#Ej. Se quieren ver todos los datos, solamente los pedidos entregados o solamente los pendientes
@@ -35,8 +38,20 @@
 	}
 
 	$clientes = ClientData::getAll();
-	$prods = ProductData::getAll();
-  
+	$productos = ProductoSucursalData::getAllForSell($idSuc);
+	$servicios = ServiceData::getAll();
+	
+	$clients = false;
+	$prods = false;
+	$servs = false;
+
+	$prodsMsg = "<a href='index.php?view=inventaryprod'>productos</a> o <a href='index.php?view=services'>servicios</a> disponibles";
+    $clientsMsg = "<a href='index.php?view=clients'>clientes</a> registrados";
+
+	if(count($clientes)>0){$clients = true;}
+	if(count($productos)>0){$prods = true;}
+	if(count($servicios)>0){$servs = true;}
+
 ?>
   	<?php include "detallesError.php"; ?>
 		<script src="js/bootstrap-confirmation.js"></script>
@@ -85,7 +100,7 @@
 						<tr>
 							<td><a href="index.php?view=detallepedido&id=<?php echo $pdo->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
 							<td><?php echo $count++; ?></td>
-							<td><?php echo $pdo->getClient()->fullname; ?></td>
+							<td><?php echo $pdo->getClient()->name; ?></td>
 							<td><?php echo $pdo->fechapedido; ?></td>
 							<td><?php echo $pdo->fechaentrega; ?></td>
 							<td>
@@ -245,7 +260,7 @@
         </div>
         <?php else: ?>
         <div class="alert alert-info">
-          No hay pedidos entregados.
+        	No hay pedidos entregados.
         </div>
         <?php endif; ?>
       </div>
@@ -254,19 +269,11 @@
       <div class="alert alert-warning">
 			!Vaya! Aún no se han realizado pedidos<?php if ($suc): ?> en esta sucursal<?php endif; ?>.
       </div>
-      <?php if (count($clientes) <= 0 && count($prods) <= 0): ?>
-        <div class="alert alert-warning">
-          Para registrar un pedido debe haber <a href="index.php?view=products">productos</a> y <a href="index.php?view=clients">clientes</a> registrados en el sistema.
-        </div>
-			<?php elseif(count($clientes) <= 0): ?>
-				<div class="alert alert-warning">
-          Para registrar un pedido debe haber clientes registrados. <a href="index.php?view=clients">Ir a clientes.</a>
-        </div>
-			<?php elseif(count($prods) <= 0): ?>
-				<div class="alert alert-warning">
-          Para registrar un pedido debe haber productos en el sistema. <a href="index.php?view=products">Ir a productos.</a>
-        </div>
-      <?php endif; ?>
+      <?php if ((!$servs && !$prods) || !$clients): ?>
+		<div class="alert alert-warning">
+			<p>Para poder realizar pedidos debe haber <?php if(!$prods && !$servs){echo $prodsMsg;} if(!$prods && !$clients){echo " y ";} if(!$clients){echo $clientsMsg;} ?> en el sistema.</p>
+		</div>
+		<?php endif; ?>
     <?php endif; ?>
 
   <script>

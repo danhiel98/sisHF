@@ -546,7 +546,7 @@ CREATE TABLE categoria(
   fecha datetime default current_timestamp,
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario)
-);
+)DEFAULT CHARSET=utf8;
 insert into categoria values
 (null,1,"Cerrajerí­a Ornamental",NOW(),1),
 (null,1,"Artesaní­a",NOW(),1),
@@ -646,18 +646,20 @@ CREATE TABLE materiaPrimaProduccion(
 CREATE TABLE cliente(
   idCliente mediumint PRIMARY KEY AUTO_INCREMENT,
   idUsuario smallint not null,
-  dui varchar(10) not null,
-  nombre varchar(30) not null,
-  apellido varchar(30) not null,
-  sexo enum("Hombre","Mujer") not null,
+  idDepto int not null,
+  giro varchar(50),
+  dui varchar(10),
+  nombre varchar(60) not null,
+  sexo enum("Hombre","Mujer"),
   fechaNacimiento date,
-  direccion varchar(200) not null,
+  direccion varchar(100) not null,
   telefono varchar(10) not null,
   nit varchar(20),
   email varchar(50),
   nrc varchar(20), /* No. De Registro De Contribuyente */
   estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario)
+  foreign key(idUsuario) references usuario(idUsuario),
+  foreign key(idDepto) references depsv(ID)
 );
 
 CREATE TABLE pedido(

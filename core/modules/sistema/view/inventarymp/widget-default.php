@@ -115,7 +115,7 @@
 					<td style="width: 250px;"><?php echo $prod->descripcion; ?></td>
 					<td><?php echo $prod->minimo; ?></td>
 					<td style="text-align: center;"><?php echo $prod->existencias; ?></td>
-					<td style="width: 80px;">
+					<td style="width: 40px;">
 						<a id="<?php echo $prod->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"><i class="fa fa-edit fa-fw"></i></a>
 						<a title="¿Eliminar?" href="index.php?view=delmp&id=<?php echo $prod->id;?>" class="btn btn-danger btn-xs"
 							data-toggle="confirmation-popout" data-popout="true" data-placement="left"

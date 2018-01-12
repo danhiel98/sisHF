@@ -27,7 +27,30 @@
 				<?php endif; ?>
 			</div>
 		<h1>Env&iacute;os De Dinero Realizados</h1>
-		<br>
+		<div class="container-fluid">
+			<?php
+			if (isset($_COOKIE["errorEnvio"]) && !empty($_COOKIE["errorEnvio"])):
+			?>
+				<div class="alert alert-warning alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorEnvio"]; ?></p>
+				</div>
+			<?php
+				setcookie("errorEnvio","",time()-18600);
+			endif;
+			?>
+			<?php
+			if (isset($_COOKIE["okEnvio"]) && !empty($_COOKIE["okEnvio"])):
+			?>
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okEnvio"]; ?></p>
+				</div>
+			<?php
+				setcookie("okEnvio","",time()-18600);
+			endif;
+			?>
+		</div>
 		<?php
 			if(count($envio)>0):
 				$start = 1; $limit = 10;
@@ -47,30 +70,7 @@
 				if($spaginas>0){$paginas++;}
 				$envio = EnvioData::getByPage($start,$limit);
 		?>
-			<div class="container-fluid">
-				<?php
-				if (isset($_COOKIE["errorEnvio"]) && !empty($_COOKIE["errorEnvio"])):
-				?>
-					<div class="alert alert-warning alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorEnvio"]; ?></p>
-					</div>
-				<?php
-					setcookie("errorEnvio","",time()-18600);
-				endif;
-				?>
-				<?php
-				if (isset($_COOKIE["okEnvio"]) && !empty($_COOKIE["okEnvio"])):
-				?>
-					<div class="alert alert-success alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okEnvio"]; ?></p>
-					</div>
-				<?php
-					setcookie("okEnvio","",time()-18600);
-				endif;
-				?>
-			</div>
+			
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 					<thead>

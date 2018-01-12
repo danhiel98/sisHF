@@ -27,11 +27,8 @@
     $clientsMsg = "<a href='index.php?view=clients'>clientes</a> registrados";
 
 	if (count($fact)>0){$ventas = true;}
-
-    if (count($clients)>0){$clientes = true;}
-
+  if (count($clients)>0){$clientes = true;}
 	if (count($prods)>0){$products = true;}
-	
 	if (count($servs)>0){$services = true;}
   
 ?>
@@ -66,7 +63,7 @@
           <table class="table table-hover table-bordered">
             <thead>
               <th></th>
-			  <th>No.</th>
+			  			<th>No.</th>
               <th>No. Comprobante</th>
               <th>Tipo De Comprobante</th>
               <th>Cliente</th>
@@ -82,14 +79,14 @@
                   $servsx = FacturaData::getAllServicesByFactId($fa->id); #Servicios vendidos en la factura
                 ?>
                 <tr>
-                  <td style="width:40px;"><a href="index.php?view=onesell&id=<?php echo $fa->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
-									<td><?php echo $count++; ?></td>
-                  <td><?php echo $fa->numerofactura; ?></td>
-                  <td><?php echo $fa->getComprobante()->nombre; ?></td>
-                  <td><?php echo $fa->getClient()->fullname; ?></td>
-                  <td><?php echo $fa->getUser()->name." ".$fa->getUser()->lastname; ?></td>
-                  <td><?php echo $fa->fecha; ?></td>
-                  <td>
+                  	<td style="width:40px;"><a href="index.php?view=onesell&id=<?php echo $fa->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+					<td><?php echo $count++; ?></td>
+					<td><?php echo $fa->numerofactura; ?></td>
+					<td><?php echo $fa->getComprobante()->nombre; ?></td>
+					<td><?php echo $fa->getClient()->name; ?></td>
+					<td><?php echo $fa->getUser()->name." ".$fa->getUser()->lastname; ?></td>
+					<td><?php echo $fa->fecha; ?></td>
+					<td>
                     <?php
                       $total=0;
                       foreach($prodsx as $p){

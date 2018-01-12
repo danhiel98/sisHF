@@ -58,10 +58,10 @@ $objPHPExcel->getActiveSheet()->getStyle('A3'.':D3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
             ->mergeCells('A1:D1')
             ->setCellValue('A1', 'BANCOS REGISTRADOS')
-            ->setCellValue('A3', 'Nº')
+            ->setCellValue('A3', 'ID')
             ->setCellValue('B3', 'Nombre')
             ->setCellValue('C3', 'Dirección')
-            ->setCellValue('D3', 'Telèfono');
+            ->setCellValue('D3', 'Teléfono');
 
 $bancos = BancoData::getAll();
 $i = 4;

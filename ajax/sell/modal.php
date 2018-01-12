@@ -14,7 +14,7 @@
 			<select name="cliente" id="cliente" class="form-control <?php if(count($clientes)>0){echo 'selectpicker'; } ?>" data-live-search="true" data-size="5">
 				<option value="">--NINGUNO--</option>
 				<?php foreach ($clientes as $cl):?>
-					<option value="<?php echo $cl->id; ?>"><?php echo $cl->name." ".$cl->lastname; ?></option>
+					<option value="<?php echo $cl->id; ?>"><?php echo $cl->name; ?></option>
 				<?php endforeach; ?>
 				<script type="text/javascript">
 					$(function(){
@@ -22,12 +22,6 @@
 					});
 				</script>
 			</select>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="dui" class="col-sm-4 control-label">DUI</label>
-		<div class="col-sm-8">
-			<input name="dui" id="dui" type="text" class="form-control" disabled>
 		</div>
 	</div>
 	<div class="form-group control-group">
@@ -84,19 +78,6 @@
 	$("#cliente").on("load change",function(){
 		var idCliente = $(this).val();
 		obtenerComprobante(idCliente);
-		$.ajax({
-			url: "ajax/sell/dui.php",
-			type: "POST",
-			data: {idCli: idCliente},
-			success: function (data) {
-				if (data){
-					var oDato = JSON.parse(data);
-					$('#dui').val(oDato.dui);
-				}else{
-					$('#dui').val("");					
-				}
-			}
-		});
 	});
 	
 	$(function(){

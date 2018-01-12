@@ -56,40 +56,47 @@ $sheet->getStyle('A1')->getAlignment()->applyFromArray(
 
 cellColor('A1:F1','A7B6F8');
 cellColor('A3:F3','E2DFDF');
-$objPHPExcel->getActiveSheet()->getStyle('A1'.':F1')->applyFromArray($borders);
-$objPHPExcel->getActiveSheet()->getStyle('A3'.':F3')->applyFromArray($borders);
+$objPHPExcel->getActiveSheet()->getStyle('A1:F1')->applyFromArray($borders);
+$objPHPExcel->getActiveSheet()->getStyle('A3:F3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
             ->mergeCells('A1:F1')
             ->setCellValue('A1', 'PRODUCTOS REGISTRADOS')
             ->setCellValue('A3', 'Nombre')
-            ->setCellValue('B3', 'Descripciòn')
-            ->setCellValue('C3', 'Categoria')
+            ->setCellValue('B3', 'Descripción')
+            ->setCellValue('C3', 'Categoría')
             ->setCellValue('D3', 'Precio Entrada')
             ->setCellValue('E3', 'Precio Salida')
-            ->setCellValue('F3', 'Total Existencias');
+            ->setCellValue('F3', 'Req. Mantenimiento');
 
 $productos = ProductData::getAll();
 $i = 4;
 foreach ($productos as $produc) {
+    $mantto = "No";
+    if ($produc->mantenimiento == 1){
+        $mantto = "Sí";
+    }
 	$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue("A$i", $produc->nombre)
-							->setCellValue("B$i", $produc->descripcion)
-							->setCellValue("C$i", $produc->getCategory()->nombre)
-              ->setCellValue("D$i","$ ". $produc->preciocosteo)
-              ->setCellValue("E$i","$ ". $produc->precioventa)
-              ->setCellValue("F$i", $produc->existencias);
- $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':F'.$i)->applyFromArray($borders);
+        ->setCellValue("A$i", $produc->nombre)
+        ->setCellValue("B$i", $produc->descripcion)
+        ->setCellValue("C$i", $produc->getCategory()->nombre)
+        ->setCellValue("D$i", $produc->preciocosteo)
+        ->setCellValue("E$i", $produc->precioventa)
+        ->setCellValue("F$i", $mantto);
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->getStyle('A'.$i.':F'.$i)->applyFromArray($borders);
+        $sheet->getStyle("D$i:E$i")->getNumberFormat()->setFormatCode("$#,##0.00;-$#,##0.00");
 	$i++;
 }
 
-$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->getColumnDimension('A')->setAutoSize(true);
+$sheet->getColumnDimension('B')->setAutoSize(true);
+$sheet->getColumnDimension('C')->setAutoSize(true);
+$sheet->getColumnDimension('D')->setAutoSize(true);
+$sheet->getColumnDimension('E')->setAutoSize(true);
+$sheet->getColumnDimension('F')->setAutoSize(true);
 
-$objPHPExcel->getActiveSheet()->setTitle('Reporte de Productos');
+$sheet->setTitle('Reporte de Productos');
 
 $objPHPExcel->setActiveSheetIndex(0);
 

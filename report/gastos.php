@@ -69,17 +69,21 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 $gastos = GastoData::getAll();
 $i = 4;
+$cant = count($gastos);
+
+$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':E'.(--$cant + $i))->applyFromArray($borders); #XD
 foreach ($gastos as $gast) {
 	$objPHPExcel->setActiveSheetIndex(0)
 							->setCellValue("A$i", $gast->descripcion)
 							->setCellValue("B$i", $gast->pago)
 							->setCellValue("C$i", $gast->comprobante)
 							->setCellValue("D$i", $gast->fecha)
-              ->setCellValue("E$i", $gast->getUsuario()->name);
-
- $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':E'.$i)->applyFromArray($borders);
+                            ->setCellValue("E$i", $gast->getUsuario()->name);
+            $sheet = $objPHPExcel->getActiveSheet();
+            $sheet->getStyle('B'.$i)->getNumberFormat()->setFormatCode("$#,##0.00;-$#,##0.00");
 	$i++;
 }
+
 
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);

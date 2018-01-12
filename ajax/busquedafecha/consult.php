@@ -59,7 +59,7 @@
                 <tr>
                   <td style="width:40px;"><a href="index.php?view=onesell&id=<?php echo $fa->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
                   <td><?php echo $fa->numerofactura; ?></td>
-                  <td><?php echo $fa->getClient()->fullname; ?></td>
+                  <td><?php echo $fa->getClient()->name; ?></td>
                   <td><?php echo $fa->getUser()->name." ".$fa->getUser()->lastname; ?></td>
                   <td><?php echo $fa->fecha; ?></td>
                   <td><?php echo $fa->getComprobante()->nombre; ?></td>

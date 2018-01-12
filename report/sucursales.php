@@ -63,8 +63,8 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', 'SUCURSALES REGISTRADAS')
             ->setCellValue('A3', 'Nº')
             ->setCellValue('B3', 'Nombre')
-            ->setCellValue('C3', 'Direcciòn')
-            ->setCellValue('D3', 'Telèfono');
+            ->setCellValue('C3', 'Dirección')
+            ->setCellValue('D3', 'Teléfono');
 
 $sucursales = SucursalData::getAll();
 $i = 4;

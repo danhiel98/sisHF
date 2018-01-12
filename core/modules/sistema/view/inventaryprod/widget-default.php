@@ -6,19 +6,21 @@
 <div class="row">
 	<div class="col-md-12">
 		<!-- Single button -->
-		<?php if (count($products)>0 && count($matPrim) >0): ?>
 		<div class="btn-group pull-right" >
-			<?php if ($idSuc == 1): ?>
-			<a href="index.php?view=newproducn" class="btn btn-default"><i class="icon-plus"></i> Agregar a producción</a>
+			<?php if (count($products)>0 && count($matPrim) >0): ?>
+				<?php if ($idSuc == 1): ?>
+				<a href="index.php?view=newproducn" class="btn btn-default"><i class="icon-plus"></i> Agregar a producción</a>
+				<?php endif; ?>
 			<?php endif; ?>
+			<?php if (count($products)>0): ?>
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-			<i class="fa fa-download"></i> Descargar <span class="caret"></span>
+				<i class="fa fa-download"></i> Descargar <span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu" role="menu">
 				<li><a href="report/inventarioproducto.php">Excel (.xlsx)</a></li>
 			</ul>
+			<?php endif; ?>
 		</div>
-		<?php endif; ?>
 		<h1><i class="glyphicon glyphicon-stats"></i> Inventario De Productos</h1>
 		<div class="clearfix"></div>
 		<?php

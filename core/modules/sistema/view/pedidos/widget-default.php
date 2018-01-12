@@ -4,13 +4,13 @@
 	$user = UserData::getById(Session::getUID());
 	$clientes = ClientData::getAll();
 	$prods = ProductData::getAll();
+	$servs = ServiceData::getAll();
 	$sucursales = SucursalData::getAll();
-	$pedidos = PedidoData::getAllBySuc($idSuc);
 ?>
 <script type="text/javascript" src="ajax/pedidos/ajax.js"></script>
 <div class="row">
   <div class="col-md-12">
-    <?php if (count($prods)>0 && count($clientes)>0): ?>
+    <?php if ((count($prods)>0 || count($servs)>0) && count($clientes)>0): ?>
 		<div class="btn-group  pull-right">
 			<a href="index.php?view=newpedido" class="btn btn-default"><i class="fa fa-list-alt"></i> Registrar Pedido</a>
 		</div>

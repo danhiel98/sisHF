@@ -10,12 +10,17 @@ require_once '../ReporteExcel/PHPExcel/Classes/PHPExcel.php';
 
 $usuarios = UserData::getAll();
 $users = array();
- $nameSucu="";
+$nameSucu = "";
 foreach ($usuarios as $usr) {
   if ($usr->getEmpleado()->idsucursal == $_GET["idSuc"]) {
     array_push($users, $usr);
     $nameSucu= $usr->getEmpleado()->getSucursal()->nombre;
   }
+}
+
+$msgSuc = "";
+if ($nameSucu != ""){
+    $msgSuc = "[Sucursal: $nameSucu]";
 }
 
 // para que ponga el nombre y le agregue la fecha y hora
@@ -59,23 +64,22 @@ function cellColor($cells,$color){
 
 $sheet = $objPHPExcel->getActiveSheet();
 $sheet->setCellValueByColumnAndRow(0, 1, "test");
-$sheet->mergeCells('A1:E1');
+$sheet->mergeCells('A1:D1');
 $sheet->getStyle('A1')->getAlignment()->applyFromArray(
     array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,)
 );
 
-cellColor('A1:E1','A7B6F8');
-cellColor('A3:E3','E2DFDF');
-$objPHPExcel->getActiveSheet()->getStyle('A1:E1')->applyFromArray($borders);
-$objPHPExcel->getActiveSheet()->getStyle('A3'.':E3')->applyFromArray($borders);
+cellColor('A1:D1','A7B6F8');
+cellColor('A3:D3','E2DFDF');
+$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->applyFromArray($borders);
+$objPHPExcel->getActiveSheet()->getStyle('A3:D3')->applyFromArray($borders);
 $objPHPExcel->setActiveSheetIndex(0)
-            ->mergeCells('A1:E1')
-            ->setCellValue('A1', 'USUARIOS REGISTRADOS')
+            ->mergeCells('A1:D1')
+            ->setCellValue('A1', 'USUARIOS REGISTRADOS '.$msgSuc)
             ->setCellValue('A3', 'Nombre')
             ->setCellValue('B3', 'Apellido')
             ->setCellValue('C3', 'Usuario')
-            ->setCellValue('D3', 'Correo Electronico')
-            ->setCellValue('E3', 'Sucursal');
+            ->setCellValue('D3', 'Correo Electrónico');
 
 $i = 4;
 foreach ($users as $xdusuario) {
@@ -83,10 +87,9 @@ foreach ($users as $xdusuario) {
 							->setCellValue("A$i", $xdusuario->getEmpleado()->nombre)
 							->setCellValue("B$i", $xdusuario->getEmpleado()->apellido)
 							->setCellValue("C$i", $xdusuario->username)
-							->setCellValue("D$i", $xdusuario->email)
-              ->setCellValue("E$i", $xdusuario->getEmpleado()->getSucursal()->nombre);
+							->setCellValue("D$i", $xdusuario->email);
 
-  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':E'.$i)->applyFromArray($borders);
+  $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':D'.$i)->applyFromArray($borders);
 	$i++;
 }
 
@@ -94,7 +97,6 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
 
 $objPHPExcel->getActiveSheet()->setTitle('Reporte de Usuarios');
 

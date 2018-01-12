@@ -47,7 +47,7 @@
             <?php endif; ?>
             <tr>
                 <td style="width:150px;">Cliente</td>
-                <td><?php echo $client->name." ".$client->lastname;?></td>
+                <td><?php echo $client->name;?></td>
             </tr>
             <?php if($pedido->idusuario != ""):
                 $user = $pedido->getUser();

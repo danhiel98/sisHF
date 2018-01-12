@@ -37,7 +37,7 @@
                 </tr>
                 <tr>
                     <th>Cliente</th>
-                    <td><?php echo $dev->getFactura()->getClient()->fullname; ?></td>
+                    <td><?php echo $dev->getFactura()->getClient()->name; ?></td>
                 </tr>
                 <tr>
                     <th>Causa</th>

@@ -50,7 +50,7 @@ class AbonoData {
 	}
 
 	public static function getAllByPedidoId($id){
-		$sql = "select * from ".self::$tablename." where idPedido = $id order by fecha desc";
+		$sql = "select * from ".self::$tablename." where idPedido = $id order by fecha";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

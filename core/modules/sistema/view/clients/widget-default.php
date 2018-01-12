@@ -42,8 +42,7 @@
 					<th>DUI</th>
 					<th>NIT</th>
 					<th>NRC</th>
-					<th>Apellidos</th>
-					<th>Nombres</th>
+					<th>Nombre</th>
 					<th>Correo Electr&oacute;nico</th>
 					<th>Tel&eacute;fono</th>
 					<th></th>
@@ -56,7 +55,6 @@
 					<td><?php echo $user->dui; ?></td>
 					<td><?php echo $user->nit; ?></td>
 					<td><?php echo $user->nrc;?></td>
-					<td><?php echo $user->lastname; ?></td>
 					<td><?php echo $user->name; ?></td>
 					<td><?php echo $user->email; ?></td>
 					<?php

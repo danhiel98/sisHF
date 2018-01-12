@@ -10,7 +10,6 @@
         $pedido = PedidoData::getById($id);
         if ($pedido){
             $pedido->nombreC = $pedido->getClient()->name;
-            $pedido->apellidoC = $pedido->getClient()->lastname;
             echo json_encode($pedido);
         }
     }

@@ -68,27 +68,31 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('D3', 'Fecha')
             ->setCellValue('E3', 'Registrado Por');
 
-$clientes = EnvioData::getAll();
+$envios = EnvioData::getAll();
 $i = 4;
-foreach ($clientes as $envi) {
+foreach ($envios as $envi) {
 	$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue("A$i", $envi->getBanco()->nombre)
-							->setCellValue("B$i","$ ". $envi->cantidad)
-							->setCellValue("C$i", $envi->comprobante)
-							->setCellValue("D$i", $envi->fecha)
-              ->setCellValue("E$i", $envi->getUsuario()->name);
-	cellColor('A'.$i.':E'.$i, 'E0FCFD');
- $objPHPExcel->getActiveSheet()->getStyle('A'.$i.':E'.$i)->applyFromArray($borders);
+        ->setCellValue("A$i", $envi->getBanco()->nombre)
+        ->setCellValue("B$i", $envi->cantidad)
+        ->setCellValue("C$i", $envi->comprobante)
+        ->setCellValue("D$i", $envi->fecha)
+        ->setCellValue("E$i", $envi->getUsuario()->name);
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->getStyle('A'.$i.':E'.$i)->applyFromArray($borders);
+        $sheet->getStyle('B'.$i)->getNumberFormat()->setFormatCode("$#,##0.00;-$#,##0.00");
+    
 	$i++;
 }
 
-$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+$sheet = $objPHPExcel->getActiveSheet();
+$sheet->getColumnDimension('A')->setAutoSize(true);
+$sheet->getColumnDimension('B')->setAutoSize(true);
+$sheet->getColumnDimension('C')->setAutoSize(true);
+$sheet->getColumnDimension('D')->setAutoSize(true);
+$sheet->getColumnDimension('E')->setAutoSize(true);
 
-$objPHPExcel->getActiveSheet()->setTitle('Reporte de Envios');
+
+$sheet->setTitle('Reporte de Envios');
 
 $objPHPExcel->setActiveSheetIndex(0);
 
