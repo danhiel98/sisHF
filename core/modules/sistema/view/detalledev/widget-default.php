@@ -10,13 +10,7 @@
             $error = false;
         }
     }
-
-    $num = $_GET["num"];
-
-    if (!is_numeric($num)){
-        $error = true;
-    }
-
+    
     if ($error){
         @header("location: index.php?view=devolucion");
     }
@@ -24,7 +18,10 @@
 <div class="row">
    <div class="col-md-12">
         <a class="btn btn-default" href="index.php?view=devolucion"><i class="fa fa-arrow-left fa-fw"></i>Regresar</a>
-        <h1>Devolución No. <?php echo $num; ?></h1>
+        <div class="pull-right">
+            <a class="btn btn-default" href="report/detalleDev.php?id=<?php echo $id; ?>"><i class="fa fa-download fa-fw"></i>Reporte</a>
+        </div>
+        <h1>Devolución</h1>
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tr>

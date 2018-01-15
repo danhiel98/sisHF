@@ -31,7 +31,7 @@
 				</div>
 			</div>
 		  <div class="form-group control-group">
-		    <label for="txtNit" class="col-lg-2 control-label">NIT</label>
+		    <label for="txtNit" class="col-lg-2 control-label">NIT*</label>
 		    <div class="col-md-6 controls">
 		      <input type="text" name="txtNit" class="form-control" id="txtNit" maxlength="17" data-validation-regex-regex="[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}" data-validation-regex-message="Introduzca un NIT válido" placeholder="N&uacute;mero De NIT" onkeyup="fnc(this,'-',nit,true)" onpaste="return false" onKeyPress="return soloNumeros(event)" data-validation-ajax-ajax="ajax/empleados/nit.php" required>
 				</div>
@@ -70,7 +70,7 @@
 		    </div>
 		  </div>
 			<div class="form-group control-group">
-				<label for="txtFechaNacimiento" class="col-lg-2 control-label">Fecha De Nacimiento</label>
+				<label for="txtFechaNacimiento" class="col-lg-2 control-label">Fecha De Nacimiento*</label>
 				<div class="col-md-6 controls">
 					<div class='input-group date' id='datetimepicker1'>
 						<input type="text" name="txtFechaNacimiento" id="birth" class="form-control" data-validation-regex-regex="[0-9]{1,2}(-|/)[0-9]{1,2}(-|/)[0-9]{4}" data-validation-regex-message="Utilice un formato válido" required/>
@@ -98,14 +98,14 @@
 					</select>
 				</div>
 			</div>
-		  <div class="form-group control-group">
-		    <label for="txtMunicipio" class="col-lg-2 control-label">Municipio*</label>
-		    <div class="col-md-6 controls">
+		  	<div class="form-group control-group">
+				<label for="txtMunicipio" class="col-lg-2 control-label">Municipio*</label>
+				<div class="col-md-6 controls">
 					<select disabled class="form-control selectpickerX" id="municipio" name="txtMunicipio" data-live-search="true" data-size="5" required>
 						<option value="">--SELECCIONE--</option>
 					</select>
-		    </div>
-		  </div>
+				</div>
+			</div>
 			<div class="form-group control-group">
 				<label for="txtDireccion" class="col-lg-2 control-label">Direcci&oacute;n*</label>
 				<div class="col-md-6 controls">

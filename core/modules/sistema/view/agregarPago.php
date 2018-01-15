@@ -54,6 +54,12 @@
                             <input type="text" class="form-control" name="numComprobante" id="numComprobante" maxlength="16">
                         </div>
                     </div>
+                    <div class="form-group control-group">
+                        <label for="totalLetras" class="col-sm-3 control-label">Son</label>
+                        <div class="col-sm-8 controls">
+                            <textarea class="form-control" name="totalLetras" id="totalLetras" cols="30" rows="3" placeholder="Valor del pago en letras" maxlength="140" required></textarea>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

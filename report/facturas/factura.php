@@ -8,20 +8,37 @@ include "../../core/modules/sistema/model/UserData.php";
 include "../../core/modules/sistema/model/EmpleadoData.php";
 include "../../core/modules/sistema/model/ProductData.php";
 include "../../core/modules/sistema/model/ServiceData.php";
+include "../../core/modules/sistema/model/AbonoData.php";
+include "../../core/modules/sistema/model/PedidoData.php";
 
 $idFact = $_GET["id"];
+$abono = false;
+$tipo = "";
+if (!isset($_REQUEST["abono"])){
+    
+    $factura = FacturaData::getById($idFact);
+    
+    $pVend = FacturaData::getAllSellsByFactId($idFact);
+    $sVend = FacturaData::getAllServicesByFactId($idFact);
+    $tipo = "venta";
+}else{
+    $abono = true;
+    $factura = AbonoData::getById($idFact);
+    $pVend = PedidoData::getAllProductsByPedidoId($factura->idpedido);
+    $sVend = PedidoData::getAllServicesByPedidoId($factura->idpedido);
 
-$factura = FacturaData::getById($idFact);
+    $numeroComprobante = $factura->numerocomprobante;
+    $totalSumasP = $factura->cantidad;
+    
+    $tipo = "abono";
+}
 
-$pVend = FacturaData::getAllSellsByFactId($idFact);
-$sVend = FacturaData::getAllServicesByFactId($idFact);
-$totalResistros = count($pVend) + count($sVend);
+$totalRegistros = count($pVend) + count($sVend);
 $totalSumas = 0;
-
 $fecha = new DateTime($factura->fecha);
 $direccion = utf8_decode($factura->getClient()->direccion);
 //Variable que guarda el nombre del archivo PDF
-$archivo="factura-venta.pdf";
+$archivo="factura-$tipo.pdf";
 
 //Llamada al script fpdf
 require('fpdf.php');
@@ -70,37 +87,91 @@ $pdf->setXY(123,70);
 $pdf->MultiCell(18,4,""/*,"VENTAS GRAVADAS"*/);
 
 $y = 78;
+$cant = 0;
 foreach($pVend as $vend){
+    $cant++;
     $prod = $vend->getProduct();
     $pdf->setXY(5,$y);
-    $pdf->Cell(10,5.5,$vend->cantidad);
+  
+    if(!$abono){
+        $pdf->Cell(10,5.5,$vend->cantidad);
+    }else{
+        $pdf->Cell(10,5.5,"");
+    }
     $pdf->setXY(15,$y);
-    $pdf->MultiCell(57,5.5,$prod->nombre);
+
+    if(!$abono){
+        $pdf->MultiCell(57,5.5,utf8_decode($prod->nombre));
+    }else{
+        $pdf->MultiCell(57,5.5,utf8_decode("$vend->cantidad $prod->nombre"));
+    }
+    
     $pdf->setXY(72,$y);
-    $pdf->Cell(17,5.5,"$".number_format($vend->precio,2,".",","));
+    
+    if(!$abono){
+        $pdf->Cell(17,5.5,"$".number_format($vend->precio,2,".",","));
+    }else{
+        $pdf->Cell(17,5.5,"");
+    }
+
     $pdf->Cell(17,5.5,"");
     $pdf->Cell(17,5.5,"");
-    $pdf->Cell(18,5.5,"$".number_format($vend->total,2,".",","));
+
+    if(!$abono){
+        $pdf->Cell(18,5.5,"$".number_format($vend->total,2,".",","));
+    }else{
+        if($cant == $totalRegistros){
+            $pdf->Cell(18,5.5,"$".number_format($totalSumasP,2,".",","));
+        }
+    }
     $y += 5.5;
     $totalSumas += $vend->total;
 }
 
 foreach($sVend as $vend){
+    $cant++;
     $serv = $vend->getService();
     $pdf->setXY(5,$y);
-    $pdf->Cell(10,5.5,$vend->cantidad);
+
+    if(!$abono){
+        $pdf->Cell(10,5.5,$vend->cantidad);
+    }else{
+        $pdf->Cell(10,5.5,"");
+    }
+
     $pdf->setXY(15,$y);
-    $pdf->MultiCell(57,5.5,$serv->nombre);
+
+    if(!$abono){
+        $pdf->MultiCell(57,5.5,utf8_decode($prod->nombre));
+    }else{
+        $pdf->MultiCell(57,5.5,utf8_decode("$vend->cantidad $serv->nombre"));
+    }
+    
     $pdf->setXY(72,$y);
-    $pdf->Cell(17,5.5,"$".number_format($vend->precio,2,".",","));
+    
+    if(!$abono){
+        $pdf->Cell(17,5.5,"$".number_format($vend->precio,2,".",","));
+    }else{
+        $pdf->Cell(17,5.5,"");
+    }
+
     $pdf->Cell(17,5.5,"");
+    
     $pdf->Cell(17,5.5,"");
-    $pdf->Cell(18,5.5,"$".number_format($vend->total,2,".",","));
+    
+    if(!$abono){
+        $pdf->Cell(18,5.5,"$".number_format($vend->total,2,".",","));
+    }else{
+        if($cant == $totalRegistros){
+            $pdf->Cell(18,5.5,"$".number_format($totalSumasP,2,".",","));
+        }
+    }
+
     $y += 5.5;
     $totalSumas += $vend->total;
 }
 
-for ($i = $totalResistros; $i <= 16; $i++){
+for ($i = $totalRegistros; $i <= 16; $i++){
     $pdf->setXY(5,$y);
     $pdf->Cell(10,5.5,"");
     $pdf->setXY(15,$y);
@@ -124,7 +195,11 @@ $pdf->MultiCell(51,4,""/*"IVA RETENIDO"*/);
 $pdf->setXY(106,$y);
 $pdf->MultiCell(17,4,""); #Espacio en blanco solamente
 $pdf->setXY(123,$y);
-$pdf->MultiCell(18,4,"$".number_format($totalSumas,2,".",",")); #Aquí debe ir el valor de las sumas
+if(!$abono){
+    $pdf->MultiCell(18,4,"$".number_format($totalSumas,2,".",",")); #Aquí debe ir el valor de las sumas
+}else{
+    $pdf->MultiCell(18,4,"$".number_format($totalSumasP,2,".",",")); #Aquí debe ir el valor de las sumas    
+}
 $pdf->setXY(123,$y+4);
 $pdf->MultiCell(18,4,""); #Valor del iva retenido
 
@@ -142,7 +217,11 @@ $pdf->MultiCell(18,4,""); #Ventas no sujetas
 $pdf->setXY(123,$y+4);
 $pdf->MultiCell(18,4,""); #Ventas exentas
 $pdf->setXY(123,$y+8);
-$pdf->MultiCell(18,4,"$".number_format($totalSumas,2,".",",")); #Venta total
+if(!$abono){
+    $pdf->MultiCell(18,4,"$".number_format($totalSumas,2,".",","));
+}else{
+    $pdf->MultiCell(18,4,"$".number_format($totalSumasP,2,".",","));    
+}
 
 
 $pdf->Output($archivoSalida);//cierra el objeto pdf

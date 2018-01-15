@@ -35,6 +35,6 @@
 		
 	}
 
-	@header("location: index.php?view=devolucion")
+	@header("location: index.php?view=detalledev&id=".$r[1]);
 
 ?>

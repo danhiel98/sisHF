@@ -62,12 +62,13 @@
 			$spaginas = count($banco)%$limit;
 			if($spaginas>0){$paginas++;}
 			$banco = BancoData::getByPage($start,$limit);
+			$num = $start;
 		?>
 		
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th>ID</th>
+					<th>No.</th>
 					<th>Nombre</th>
 					<th>Direcci&oacute;n</th>
 					<th>Tel&eacute;fono</th>
@@ -79,7 +80,7 @@
 					foreach($banco  as $bac):
 					?>
 					<tr>
-						<td><?php echo $bac->id; ?></td>
+						<td><?php echo $num++; ?></td>
 						<td><?php echo $bac->nombre; ?></td>
 						<td><?php echo $bac->direccion; ?></td>
 						<td><?php echo $bac->telefono; ?></td>

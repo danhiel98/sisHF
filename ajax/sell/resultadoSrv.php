@@ -58,7 +58,7 @@
 			});
 		</script>
 	<?php else: ?>
-		<div class="alert alert-danger">
+		<div class="alert alert-warning">
 			No se encontraron servicios
 		</div>
 	<?php endif; ?>

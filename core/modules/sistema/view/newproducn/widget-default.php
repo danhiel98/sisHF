@@ -2,6 +2,13 @@
 	include("modals/resumen.php");
 	$prods = ProductData::getAll();
 	$matp = MateriaPrimaData::getAll();
+
+	$ok = false;
+
+	if(count($prods) > 0 && count($matp) > 0 ){
+		$ok = true;
+	}
+
 ?>
 <?php if(isset($_SESSION["productn"]) && count($_SESSION["productn"])>0 && isset($_GET["x"])):?>
 	<script type="text/javascript">
@@ -16,6 +23,13 @@
 <?php if (count($prods)>0): ?>
 	<h1>Registrar Producci&oacute;n De Productos</h1>
 	<?php if (count($matp)>0): ?>
+	<?php if (!isset($_SESSION["productn"])): ?>
+		<script type="text/javascript">
+			$(function(){
+				$("#resumen").modal("show");
+			});
+		</script>
+	<?php endif; ?>
 	<div class="col-md-12">
 		<p><b>Buscar Materia Prima:</b></p>
 		<div class="row">
@@ -60,10 +74,3 @@
 	</div>
 <?php endif; ?>
 </div>
-<?php if (!isset($_SESSION["productn"])): ?>
-	<script type="text/javascript">
-		$(function(){
-			$("#resumen").modal("show");
-		});
-	</script>
-<?php endif; ?>

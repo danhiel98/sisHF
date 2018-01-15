@@ -29,7 +29,31 @@
 		</div>
 	
 		<h1>Lista De Sucursales</h1>
-
+		<div class="container-fluid">
+			<?php
+			if (isset($_COOKIE["errorSuc"]) && !empty($_COOKIE["errorSuc"])):
+			?>
+				<div class="alert alert-warning alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorSuc"]; ?></p>
+				</div>
+			<?php
+				setcookie("errorSuc","",time()-18600);
+			endif;
+			?>
+			<?php
+			if (isset($_COOKIE["okSuc"]) && !empty($_COOKIE["okSuc"])):
+			?>
+				<br>
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okSuc"]; ?></p>
+				</div>
+			<?php
+				setcookie("okSuc","",time()-18600);
+			endif;
+			?>
+		</div>
 		<!-- Si hay más de 0 sucursales: -->
 		<?php if(count($sucursal)>0): ?>
 		<?php
@@ -50,32 +74,42 @@
 		$spaginas = count($sucursal)%$limit;
 		if($spaginas>0){$paginas++;}
 		$sucursal = SucursalData::getByPage($start,$limit);
-		
+		$num = $start;
 		?>
 		
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th style="text-align: center; width: 45px;">No.</th>
-					<th>Nombre</th>
-					<th>Direcci&oacute;n</th>
-					<th style="width: 100px;">Tel&eacute;fono</th>
-					<th></th>
+					<tr>
+						<th style="text-align: center; width: 45px;">No.</th>
+						<th>Nombre</th>
+						<th>Direcci&oacute;n</th>
+						<th style="width: 100px;">Tel&eacute;fono</th>
+						<th></th>
+					</tr>
 				</thead>
-				
-				<?php foreach($sucursal as $suc): ?>
-				
-				<tr>
-					<td style="text-align: center;"><?php echo $suc->id; ?></td>
-					<td><?php echo $suc->nombre; ?></td>
-					<td><?php echo $suc->direccion; ?></td>
-					<td style="min-width:90px;"><?php echo $suc->telefono; ?></td>
-					<td style="width:40px;">
-						<a data-toggle="modal" data-target="#editar" id="<?php echo $suc->id;?>" class="btn btn-warning btn-xs btn-edit">Editar</a>
-					</td>
-				</tr>
-				
-				<?php endforeach; ?>
+				<tbody>
+					<?php foreach($sucursal as $suc): ?>
+					<tr>
+						<td style="text-align: center;"><?php echo $num++; ?></td>
+						<td><?php echo $suc->nombre; ?></td>
+						<td><?php echo $suc->direccion; ?></td>
+						<td style="min-width:90px;"><?php echo $suc->telefono; ?></td>
+						<td style="width: 80px;">
+							<a data-toggle="modal" data-target="#editar" id="<?php echo $suc->id;?>" class="btn btn-warning btn-xs btn-edit"><i class="fa fa-edit fa-fw"></i></a>
+							<a <?php if($suc->id == 1){echo "disabled";} ?> title="¿Eliminar?" href="index.php?view=delsuc&id=<?php echo $suc->id;?>" class="btn btn-danger btn-xs"
+								data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+								data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+								data-btn-ok-class="btn-success btn-xs"
+								data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+								data-btn-cancel-class="btn-danger btn-xs"
+								>
+								<i class="fa fa-trash fa-fw"></i>
+							</a>
+						</td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
 
 			</table>
 		</div>

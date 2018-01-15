@@ -125,7 +125,7 @@ class EmpleadoData {
 	}
 
 	public static function getAllForUser(){
-		$sql = "select * from ".self::$tablename." where idEmpleado not in (select idEmpleado from usuario where idEmpleado is not null)";
+		$sql = "select * from ".self::$tablename." where idEmpleado not in (select idEmpleado from usuario where idEmpleado is not null) and activo = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -152,7 +152,7 @@ class EmpleadoData {
 	}
 
 	public static function getAllForUserBySucId($id){
-		$sql = "select * from ".self::$tablename." where idEmpleado not in (select idEmpleado from usuario where idEmpleado is not null) and idSucursal = $id";
+		$sql = "select * from ".self::$tablename." where idEmpleado not in (select idEmpleado from usuario where idEmpleado is not null) and idSucursal = $id and activo = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

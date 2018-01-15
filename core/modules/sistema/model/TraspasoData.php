@@ -99,7 +99,7 @@ class TraspasoData {
 	}
 
 	public static function getAll(){
-		$sql = "select * from ".self::$tablename;
+		$sql = "select * from ".self::$tablename." where estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -133,7 +133,7 @@ class TraspasoData {
 	}
 
 	public static function getAllBySuc($id){
-		$sql = "select * from ".self::$tablename." where idSucursalOrigen = $id or idSucursalDestino = $id";
+		$sql = "select * from ".self::$tablename." where (idSucursalOrigen = $id or idSucursalDestino = $id) and estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -151,7 +151,7 @@ class TraspasoData {
 
 	public static function getAllBySucPage($idSuc,$start,$limit){
 		$start--;
-		$sql = "select * from ".self::$tablename." where idSucursalOrigen = $idSuc or idSucursalDestino = $idSuc limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where (idSucursalOrigen = $idSuc or idSucursalDestino = $idSuc) and estado = 1 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -167,25 +167,6 @@ class TraspasoData {
 		return $array;
 	}
 
-	public static function getLike($q){
-		$base = new Database();
-		$cnx = $base->connect();
-		$p = $cnx->real_escape_string($q);
-		$sql = "select * from ".self::$tablename." where fecha like '%$q%' and estado = 1";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new TraspasoData();
-			$array[$cnt]->id = $r['idTraspaso'];
-			$array[$cnt]->idorigen = $r['idSucursalOrigen'];
-			$array[$cnt]->iddestino = $r['idSucursalDestino'];
-			$array[$cnt]->idusuario = $r['idUsuario'];
-			$array[$cnt]->fecha = $r['fecha'];
-			$cnt++;
-		}
-		return $array;
-	}
 }
 
 ?>

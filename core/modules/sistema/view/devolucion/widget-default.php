@@ -48,7 +48,33 @@
 			<br>
 		</div>
 		<?php endif; ?>
-        
+
+		<div class="container-fluid">
+			<?php
+			if (isset($_COOKIE["errorDevolucion"]) && !empty($_COOKIE["errorDevolucion"])):
+			?>
+				<div class="alert alert-warning alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorDevolucion"]; ?></p>
+				</div>
+			<?php
+				setcookie("errorDevolucion","",time()-18600);
+			endif;
+			?>
+			<?php
+			if (isset($_COOKIE["okDevolucion"]) && !empty($_COOKIE["okDevolucion"])):
+			?>
+				<br>
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okDevolucion"]; ?></p>
+				</div>
+			<?php
+				setcookie("okDevolucion","",time()-18600);
+			endif;
+			?>
+		</div>
+        <div id="resultado">
 		<?php if (count($devs) > 0): ?>
             <?php
                 $start = 1; $limit = 10;
@@ -69,17 +95,19 @@
 				$devs = DevolucionData::getByPage($idSuc,$start,$limit);
 				$count = $start;
             ?>
-			<div id="resultado">
 				<div class="table-responsive">
 					<table class="table table-hover table-bordered">
 						<thead>
-							<th></th>
-							<th>No.</th>
-							<th style="width: 140px;">No. Comprobante</th>
-							<th>Motivo</th>
-							<th>Fecha</th>
-							<th>Reembolso</th>
-							<th>Registrado Por</th>
+							<tr>
+								<th></th>
+								<th>No.</th>
+								<th style="width: 140px;">No. Comprobante</th>
+								<th>Motivo</th>
+								<th>Fecha</th>
+								<th>Reembolso</th>
+								<th>Registrado Por</th>
+								<th></th>
+							</tr>
 						</thead>
 						<tbody>
 							<?php foreach ($devs as $dev): ?>
@@ -91,6 +119,17 @@
 									<td><?php echo $dev->fecha; ?></td>
 									<td>$ <?php echo $dev->reembolso; ?></td>
 									<td><?php echo $dev->getUser()->name." ".$dev->getUser()->lastname; ?></td>
+									<td style="width:40px;">
+										<a title="¿Eliminar?" href="index.php?view=deldev&id=<?php echo $dev->id;?>" class="btn btn-danger btn-xs"
+										data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+										data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+										data-btn-ok-class="btn-success btn-xs"
+										data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+										data-btn-cancel-class="btn-danger btn-xs"
+										>
+											<i class="fa fa-trash fa-fw"></i>
+										</a>
+									</td>
 								</tr>
 							<?php endforeach; ?>
 						</tbody>
@@ -135,8 +174,7 @@
 						</ul>
 					</div>
 				</div>
-			</div>
-        <?php else: ?>
+        	<?php else: ?>
             <div class="alert alert-warning">
                 No hay devoluciones.
             </div>
@@ -145,7 +183,7 @@
 				Para registrar una devolución debe haber <a href="index.php?view=sells">ventas</a> registradas.
 			</div>
 			<?php endif; ?>
-        <?php endif; ?>
-
+		<?php endif; ?>
+		</div>
     </div>
 </div>

@@ -1,4 +1,5 @@
 <?php
+	$user = UserData::getById(Session::getUID());
 	$idSuc = $_SESSION["usr_suc"];
 	$products = ProductData::getAll();
 	$matPrim = MateriaPrimaData::getAll();
@@ -6,9 +7,9 @@
 <div class="row">
 	<div class="col-md-12">
 		<!-- Single button -->
-		<div class="btn-group pull-right" >
-			<?php if (count($products)>0 && count($matPrim) >0): ?>
-				<?php if ($idSuc == 1): ?>
+		<div class="btn-group pull-right">
+			<?php if(count($products) > 0): ?>
+				<?php if ($idSuc == 1 && $user->getUserType()->id != 3): ?>
 				<a href="index.php?view=newproducn" class="btn btn-default"><i class="icon-plus"></i> Agregar a producción</a>
 				<?php endif; ?>
 			<?php endif; ?>

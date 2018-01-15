@@ -91,6 +91,7 @@
 						<?php foreach($users as $user): ?>
 							<?php 
 							$idSuc = $user->getEmpleado()->getSucursal()->id;
+							//Si los datos que se solicitan son de la sucursal en la que nos encontramos o si es el administrdor principal quien solicita los datos
 							if((isset($_SESSION["usr_suc"]) && ($idSuc == $_SESSION["usr_suc"])) || isset($_SESSION["adm"])):
 							?>
 							<tr>
@@ -100,10 +101,18 @@
 								<td><?php echo $user->email; ?></td>
 								<td><?php echo $user->getEmpleado()->getSucursal()->nombre; ?></td>
 								<td class="estado" style="text-align:center;">
-									<a href="#" id="estado" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->activo; ?>" data-source="ajax/users/estados.php" title="Estado"></a>
+									<?php if($u->id != $user->id): ?>
+										<a href="#" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->activo; ?>" data-source="ajax/users/estados.php" title="Estado"></a>
+									<?php else: ?>
+										<span class="notready"><?php if($user->activo){echo "Activo";}else{echo "Inactivo";} ?></span>
+									<?php endif; ?>
 								</td>
 								<td class="tipo" style="text-align:center;">
-									<a href="#" id="tipo" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->tipo; ?>" data-source="ajax/users/tipos.php<?php if($idSuc != 1){echo "?X";} ?>" title="Tipo"></a>
+									<?php if($u->id != $user->id): ?>
+										<a href="#" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->tipo; ?>" data-source="ajax/users/tipos.php<?php if($idSuc != 1){echo "?X";} ?>" title="Tipo"></a>
+									<?php else: ?>
+										<span class="notready"><?php echo $user->getUserType()->nombre; ?></span>
+									<?php endif; ?>
 								</td>
 							</tr>
 						<?php
@@ -182,15 +191,16 @@
 		<?php
 		else:
 		?>
+			<div class="alert alert-warning">
+				No se han registrado usuarios.
+			</div>
 			<?php if ($emps): ?>
-				<h2>No se han registrado usuarios.</h2>
 				<div class="alert alert-warning">
 					Para ello debe dar clic en <strong>"Nuevo Usuario".</strong>
 				</div>
 			<?php else: ?>
-				<h2>No se han registrado usuarios.</h2>
 				<div class="alert alert-warning">
-					Para ello primero debe registrar um empleado. <a href="index.php?view=empleados">Ir a empleados</a>
+					Para ello primero debe registrar un empleado. <a href="index.php?view=empleados">Ir a empleados</a>
 				</div>
 			<?php endif; ?>
 			

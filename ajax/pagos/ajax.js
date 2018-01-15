@@ -12,7 +12,7 @@ $(function(){
             success: function (data) {
                 if (data != "") {
                     var dato = JSON.parse(data);
-                    cliente.val(dato.nombreC + " " + dato.apellidoC);
+                    cliente.val(dato.nombreC);
                     cantidad.val(dato.restante);
                     restante.val(cantidad.val() - dato.restante);
                     $.ajax({
@@ -32,6 +32,7 @@ $(function(){
             }
         });
     }
+
     $("#btnPago").on("click",function(){
         id = $("#idPedido").val();
         obtenerDatos(id);
@@ -49,11 +50,21 @@ $(function(){
             }
         });
     });
+    
+    //Al dar clic en "Sí" en el popup de confirmación
+    $(".finalizar").on("confirmed.bs.confirmation", function () {
+        var id = this.id;
+        var opc = $(this).data("opc");
+        $("#idPedido").val(id);
+        obtenerDatos(id);
+        finalizar(id, opc);
+    });
 
+    /*
     $(".finalizar").on("click", function () {
         id = this.id;
         $("#idPedido").val(id);
         obtenerDatos(id);
     });
-
+    */
 });

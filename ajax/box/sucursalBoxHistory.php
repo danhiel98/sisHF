@@ -119,10 +119,12 @@
 		</div>
 	</div>
 	<?php else: ?>
-	<div class="jumbotron">
-		<div class="container">
-			<h2>No hay datos.</h2>
-			No se ha realizado ning&uacute;n corte de caja.
-		</div>
+	<div class="clearfix"></div>
+	<br>
+	<div class="alert alert-info">
+		No hay datos.
+	</div>
+	<div class="alert alert-warning">
+		No se ha realizado ning&uacute;n corte de caja en esta sucursal.
 	</div>
 	<?php endif; ?>

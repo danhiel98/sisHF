@@ -17,11 +17,16 @@
 
 	$idSuc = $_SESSION["usr_suc"];
 	$suc = false;
+    $actualSuc = false;
 
 	if (isset($_REQUEST["sucursal"]) && !empty($_REQUEST["sucursal"])){
 		$idSuc = $_REQUEST["sucursal"];
-		$suc = true;
+        $suc = true;
 	}
+    
+    if($idSuc == $_SESSION["usr_suc"]){
+        $actualSuc = true;
+    }
 
 	$pedidos = PedidoData::getAllBySuc($idSuc);
 	if (count($pedidos)>0) {
@@ -34,7 +39,6 @@
 	$pedidosA = PedidoData::getPendienteBySuc($idSuc);
 	if (count($pedidosA)>0) {
 		$pdidsA = true;
-		include "../../core/modules/sistema/view/agregarPago.php";
 	}
 
 	$clientes = ClientData::getAll();
@@ -54,8 +58,33 @@
 
 ?>
   	<?php include "detallesError.php"; ?>
-		<script src="js/bootstrap-confirmation.js"></script>
-  	<?php if ($pdids): ?>
+	<script src="js/bootstrap-confirmation.js"></script>
+    
+    <?php
+		if (isset($_COOKIE["okPdido"]) && !empty($_COOKIE["okPdido"])):
+	?>
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okPdido"]; ?></p>
+        </div>
+    <?php
+        setcookie("okPdido","",time()-18600);
+        endif;
+    ?>
+
+    <?php
+		if (isset($_COOKIE["errorPdido"]) && !empty($_COOKIE["errorPdido"])):
+	?>
+        <div class="alert alert-warning alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["errorPdido"]; ?></p>
+        </div>
+    <?php
+        setcookie("errorPdido","",time()-18600);
+        endif;
+    ?>
+     
+    <?php if ($pdids): ?>
     <?php 
         $start = 1; $limit = 10;
         if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
@@ -78,7 +107,8 @@
     <div class="tab-content">
 		<div id="process" class="tab-pane fade in active">
         	<h2>Pedidos Pendientes</h2>
-        	<?php if ($pdidsA): ?>
+            <?php if ($pdidsA): ?>
+            <?php include "../../core/modules/sistema/view/agregarPago.php"; ?>
         	<?php 
 				$paginas = floor(count($pedidosA)/$limit);
 				$spaginas = count($pedidosA)%$limit;
@@ -92,8 +122,10 @@
 						<th style="width: 45px;">No.</th>
 						<th>Cliente</th>
 						<th>Fecha de Solicitud</th>
-						<th>Fecha de Entrega</th>
-						<th style="width: 50px;"></th>
+                        <th>Fecha de Entrega</th>
+                        <?php if($actualSuc): ?>
+                        <th style="width: 80px;"></th>
+                        <?php endif; ?>
 					</thead>
 					<tbody>
 					<?php foreach ($pedidosA as $pdo): ?>
@@ -102,18 +134,28 @@
 							<td><?php echo $count++; ?></td>
 							<td><?php echo $pdo->getClient()->name; ?></td>
 							<td><?php echo $pdo->fechapedido; ?></td>
-							<td><?php echo $pdo->fechaentrega; ?></td>
+                            <td><?php echo $pdo->fechaentrega; ?></td>
+                            <?php if($actualSuc): ?>
 							<td>
-								<a title="Finalizar" href="#" class="btn btn-xs btn-success finalizar" id="<?php echo $pdo->id; ?>"
-								data-toggle="confirmation-popout" data-popout="true" data-placement="left"
-								data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
-								data-btn-ok-class="btn-success btn-xs"
-								data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
-								data-btn-cancel-class="btn-danger btn-xs"
-								data-title="¿Finalizar?">
-								<i class="fa fa-check"></i>
-								</a>
-							</td>
+								<a title="Finalizar" href="#" class="btn btn-xs btn-success finalizar" id="<?php echo $pdo->id; ?>" data-opc="terminar"
+                                    data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+                                    data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+                                    data-btn-ok-class="btn-success btn-xs"
+                                    data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+                                    data-btn-cancel-class="btn-danger btn-xs"
+                                    data-title="¿Finalizar?">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                                 <a title="¿Eliminar?" href="#" class="btn btn-danger btn-xs finalizar" id="<?php echo $pdo->id; ?>" data-opc="eliminar"
+                                    data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+                                    data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+                                    data-btn-ok-class="btn-success btn-xs"
+                                    data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+                                    data-btn-cancel-class="btn-danger btn-xs">
+                                        <i class="fa fa-trash fa-fw"></i>
+                                    </a>
+                            </td>
+                            <?php endif; ?>
 						</tr>
 					<?php endforeach; ?>
 					</tbody>
@@ -297,29 +339,26 @@
       selector: 'button'
     });
 
-    function finalizar(id){
+    function finalizar(id,opc){
       $.ajax({
         url: "ajax/pedidos/procesos.php",
         type: "POST",
         dataType: "html",
         data: {
-          idFin: id
+            idFin: id,
+            option: opc
         }
       }).done(function(res){
-        //Esta función se encarga de obtener todos los datos de los pedidos, se encuentra en el archivo ajax.js
-        if (res != ""){
-          $("#detallesProd").html(res); //Cargar los detalles de la materia prima insuficiente
-          $("#detalles").modal().show(); //Mostrar el modal
-        }else{
-		  pedidos();
-        }
-      });
+          var detalleProds = $("#detallesProd");
+          var detalles = $("#detalles");
+          //Esta función se encarga de obtener todos los datos de los pedidos, se encuentra en el archivo ajax.js
+          if (res != ""){ 
+                detalleProds.html(res); //Cargar los detalles de la materia prima insuficiente
+                detalles.modal().show(); //Mostrar el modal
+            }else{
+            pedidos();
+            }
+        });
     }
 
-    //Al dar clic en "Sí" en el popup de confirmación
-    $(".finalizar").on("confirmed.bs.confirmation",function(){
-      var id = this.id;
-      finalizar(id);
-    });
-
-	</script>
+    </script>

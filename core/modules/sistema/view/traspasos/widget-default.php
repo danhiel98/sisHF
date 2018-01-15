@@ -3,9 +3,21 @@
 	$sucs = false;
 	$sucursales = SucursalData::getAll();
 	$prodSuc = ProductoSucursalData::getAllForSell($idSuc);
-	if (count($sucursales)>1) {
+
+	$sucursalesDisponibles = array();
+	foreach($sucursales as $suc){
+		if($suc->id != 1){ //Si no es la principal
+			$usuarios = UserData::getAllBySucId($suc->id);
+			if(count($usuarios) > 0){//Solamente aparecerán las sucursales donde se hayan creado usuarios previamente
+				array_push($sucursalesDisponibles,$suc); 
+			}
+		}
+	}
+
+	if (count($sucursalesDisponibles) > 0) {
 		$sucs = true;
 	}
+
 	$traspasos = TraspasoData::getAllBySuc($idSuc);
 ?>
 <div class="row">
@@ -124,20 +136,24 @@
 					<?php if ($sucs): ?>
 						<h2>No se han registrado traspasos</h2>
 						<?php if(count($prodSuc) > 0): ?>
-						Puede registrar uno dando click en el boton <b>"Registrar Traspaso"</b>
+						Puede registrar uno dando clic en el boton <b>"Registrar Traspaso"</b>
 						<?php else: ?>
-						No hay productos disponobles para realizar el traspaso.
+						No hay <a href="index.php?view=inventaryprod">productos</a> disponibles para realizar el traspaso.
 						<?php endif; ?>
 					<?php else: ?>
-						<h2>No se puede registrar traspasos</h2>
-						Para ello debe haber m&aacute;s de una sucursal registrada.
+						<h2>No se pueden registrar traspasos</h2>
+						<?php if(count($sucursales) < 2): ?>
+						Para ello debe haber m&aacute;s de una sucursal registradas.
 						<a href="index.php?view=sucursal">Ir a sucursales</a>
+						<?php else: ?>
+						Para realizar traspasos a otra sucursal debe haber al menos un <a href="index.php?view=users">usuario</a> registrado en la sucursal de destino.
+						<?php endif; ?>
 					<?php endif; ?>
 				</div>
 			</div>
 		<?php
 		}
 		?>
-		<br><br><br><br><br><br><br><br>
+		<br><br><br><br>
 	</div>
 </div>

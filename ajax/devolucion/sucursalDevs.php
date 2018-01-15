@@ -13,6 +13,12 @@
     $idSuc = $_REQUEST["id"];
     $devs = DevolucionData::getAllBySuc($idSuc);
 
+    $sucActual = false;
+
+    if($idSuc == $_SESSION["usr_suc"]){
+        $sucActual = true;
+    }
+
 ?>
 <?php if (count($devs) > 0): ?>
     <?php
@@ -45,6 +51,9 @@
                     <th>Fecha</th>
                     <th>Reembolso</th>
                     <th>Registrado Por</th>
+                    <?php if($sucActual): ?>
+                    <th></th>
+                    <?php endif; ?>
                 </thead>
                 <tbody>
                     <?php foreach ($devs as $dev): ?>
@@ -56,6 +65,19 @@
                             <td><?php echo $dev->fecha; ?></td>
                             <td>$ <?php echo $dev->reembolso; ?></td>
                             <td><?php echo $dev->getUser()->name." ".$dev->getUser()->lastname; ?></td>
+                            <?php if($sucActual): ?>
+                            <td style="width:40px;">
+                                <a title="¿Eliminar?" href="index.php?view=deldev&id=<?php echo $dev->id;?>" class="btn btn-danger btn-xs"
+                                data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+                                data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+                                data-btn-ok-class="btn-success btn-xs"
+                                data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+                                data-btn-cancel-class="btn-danger btn-xs"
+                                >
+                                    <i class="fa fa-trash fa-fw"></i>
+                                </a>
+                            </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

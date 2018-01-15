@@ -45,6 +45,11 @@ class PedidoData {
 		return Executor::doit($sql);
 	}
 
+	public static function del(){
+		$sql = "update ".self::$tablename." set estado = 0 where idPedido = $this->id";
+		Executor::doit($sql);
+	}
+
 	public static function delById($id){
 		$sql = "update ".self::$tablename." set estado = 0 where idPedido=$id";
 		Executor::doit($sql);
@@ -72,6 +77,7 @@ class PedidoData {
 		$data = new PedidoData();
 		while($r = $query[0]->fetch_array()){
 			$data->id = $r['idPedido'];
+			$data->idsucursal = $r['idSucursal'];
 			$data->idusuario = $r['idUsuario'];
 			$data->idcliente = $r['idCliente'];
 			$data->fechapedido = $r['fechaPedido'];

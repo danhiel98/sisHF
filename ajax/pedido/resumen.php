@@ -72,7 +72,7 @@
 
 			$(function(){
 				$("#groupIva").hide();
-				$("#cantidad").val("<?php echo number_format(($total/2),2,".",","); ?>");
+				$("#cantidad").val("<?php echo number_format(($total/2),2,".",""); ?>");
 
 				$("[data-type=prod].btn-del").on("click",function(){
 					$.ajax({

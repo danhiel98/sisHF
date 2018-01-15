@@ -33,6 +33,7 @@
 			$spaginas = count($clientes)%$limit;
 			if($spaginas>0){$paginas++;}
 			$clientes = ClientData::getByPage($start,$limit);
+			$num = $start;
 		?>
 	
 		<div class="table-responsive">
@@ -48,28 +49,28 @@
 					<th></th>
 				</thead>
 				<?php
-				foreach($clientes as $user){
+				foreach($clientes as $cli):
 					?>
 				<tr>
-					<td><?php echo $user->id; ?></td>
-					<td><?php echo $user->dui; ?></td>
-					<td><?php echo $user->nit; ?></td>
-					<td><?php echo $user->nrc;?></td>
-					<td><?php echo $user->name; ?></td>
-					<td><?php echo $user->email; ?></td>
+					<td><?php echo $num++; ?></td>
+					<td><?php echo $cli->dui; ?></td>
+					<td><?php echo $cli->nit; ?></td>
+					<td><?php echo $cli->nrc;?></td>
+					<td><?php echo $cli->name; ?></td>
+					<td><?php echo $cli->email; ?></td>
 					<?php
-						if ($user->birth != "") {
-							$fecha = array_reverse(preg_split("[-]",$user->birth));
-							$user->birth = $fecha[0]."/".$fecha[1]."/".$fecha[2];
+						if ($cli->birth != "") {
+							$fecha = array_reverse(preg_split("[-]",$cli->birth));
+							$cli->birth = $fecha[0]."/".$fecha[1]."/".$fecha[2];
 						}
 					?>
-					<td><?php echo $user->phone; ?></td>
+					<td><?php echo $cli->phone; ?></td>
 					<td style="width:40px;">
-						<a href="index.php?view=editclient&id=<?php echo $user->id;?>" class="btn btn-warning btn-xs">Editar</a>
+						<a href="index.php?view=editclient&id=<?php echo $cli->id;?>" class="btn btn-warning btn-xs">Editar</a>
 					</td>
 				</tr>
 				<?php
-				}
+				endforeach;
 				?>
 			</table>
 		</div>

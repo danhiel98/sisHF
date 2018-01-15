@@ -42,7 +42,7 @@
 			<input type="text" class="form-control" id="numComprobante" name="numero" pattern="[0-9]{1,10}" data-validation-pattern-message="Introduzca un valor válido" maxlength="8" required>
 		</div>
 	</div>
-	<div class="form-group control-group" id="groupLetras">
+	<div class="form-group control-group">
 		<label for="numero" class="col-sm-4 control-label">Son</label>
 		<div class="controls col-sm-8">
 			<textarea class="form-control" name="totalLetras" id="totalLetras" cols="10" rows="2" maxlenght="150"></textarea>
@@ -87,7 +87,6 @@
 	$("#tipo").on("change", function(){
 		tipo = $(this).val();
 		comprobante = $("#numComprobante");
-		groupLetras = $("#groupLetras");
 		iva = $("#groupIva");
 		totLetras = $("#totalLetras");
 		
@@ -97,7 +96,6 @@
 		if (tipo == 3){
 			totLetras.removeAttr("required");
 			totLetras.val("");
-			groupLetras.hide();
 			$.ajax({
 				url: "ajax/sell/numeroRecibo.php",
 				type: "POST",
@@ -111,7 +109,6 @@
 			if (tipo == 2){
 				iva.show();
 			}
-			groupLetras.show();	
 			comprobante.removeAttr("disabled");
 			comprobante.val("");
 		}

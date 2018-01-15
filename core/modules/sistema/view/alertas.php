@@ -20,9 +20,11 @@
     }
 
     foreach ($productos as $prod){
-        if ($prod->cantidad <= $prod->minimo){
-            $alertProd = true;
-            array_push($alertaProd, $prod);
+        if($prod->getProduct()->estado == 1){
+            if ($prod->cantidad <= $prod->minimo){
+                $alertProd = true;
+                array_push($alertaProd, $prod);
+            }
         }
     }
 

@@ -16,7 +16,7 @@
         <a class="btn btn-default" href="index.php?view=pedidos"><i class="fa fa-arrow-left"></i> Regresar</a>
         <div class="btn-group pull-right">
             <a class="btn btn-default" href="index.php?view=pagos&idP=<?php echo $id; ?>"><i class="fa fa-credit-card"></i> Ver Pagos</a>
-            <?php if($pedido->restante > 0): ?>
+            <?php if($pedido->restante > 0 && $pedido->idsucursal == $_SESSION["usr_suc"]): ?>
             <a class="btn btn-default" id="btnPago" data-toggle="modal" data-target="#agregar" href="#"><i class="fa fa-dollar"></i> Nuevo Pago</a>
             <?php endif; ?>
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">

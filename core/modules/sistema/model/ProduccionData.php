@@ -9,9 +9,9 @@ class ProduccionData {
 		$this->fechafin = "";
 		$this->cantidad = "";
 		$this->terminado = "";
-		$this->cancelado = "";
 		$this->fecharegistro = "NOW()";
-		$this->fechafinalizado = "NOW()"; //Se va a utilizar cuando la produccion haya finalizado (terminado o cancelado)
+		$this->fechafinalizado = "NOW()"; //Se va a utilizar cuando la produccion haya finalizado (terminado)
+		$this->estado = "";
 	}
 
 	public function getUser(){ return UserData::getById($this->idusuario);}
@@ -33,8 +33,8 @@ class ProduccionData {
 		return Executor::doit($sql);
 	}
 
-	public function cancelar(){
-		$sql = "update ".self::$tablename." set cancelado = 1, fechaFinalizado = NOW() where idProduccion=$this->id;";
+	public function del(){
+		$sql = "update ".self::$tablename." set estado = 0 where idProduccion = $this->id;";
 		return Executor::doit($sql);
 	}
 
@@ -51,9 +51,9 @@ class ProduccionData {
 			$data->fechafin = $r['fechaFin'];
 			$data->cantidad = $r['cantidadProducto'];
 			$data->terminado = $r['terminado'];
-			$data->cancelado = $r['cancelado'];
 			$data->fecharegistro = $r['fechaRegistro'];
 			$data->fechafinalizado = $r['fechaFinalizado'];
+			$data->estado = $r['estado'];
 			$found = $data;
 			break;
 		}
@@ -61,7 +61,7 @@ class ProduccionData {
 	}
 
 	public static function getAll(){
-		$sql = "select * from ".self::$tablename;
+		$sql = "select * from ".self::$tablename." where estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -73,7 +73,7 @@ class ProduccionData {
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
 			$array[$cnt]->terminado = $r['terminado'];
-			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->estado = $r['estado'];
 			$array[$cnt]->fecharegistro = $r['fechaRegistro'];
 			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
 			$cnt++;
@@ -82,7 +82,7 @@ class ProduccionData {
 	}
 
 	public static function getFinished(){
-		$sql = "select * from ".self::$tablename." where terminado = 1";
+		$sql = "select * from ".self::$tablename." where terminado = 1 and estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -103,7 +103,7 @@ class ProduccionData {
 
 	public static function getFinishedByPage($start,$limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where terminado = 1 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where terminado = 1 and estado = 1 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -123,7 +123,7 @@ class ProduccionData {
 	}
 
 	public static function getActive(){
-		$sql = "select * from ".self::$tablename." where terminado = 0 and cancelado = 0";
+		$sql = "select * from ".self::$tablename." where terminado = 0 and estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -142,7 +142,7 @@ class ProduccionData {
 
 	public static function getActiveByPage($start,$limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where terminado = 0 and cancelado = 0 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where terminado = 0 and estado = 1 limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -158,27 +158,8 @@ class ProduccionData {
 		}
 		return $array;
 	}
-
-	public static function getCancel(){
-		$sql = "select * from ".self::$tablename." where cancelado = 1";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new ProduccionData();
-			$array[$cnt]->id = $r['idProduccion'];
-			$array[$cnt]->idproducto = $r['idProducto'];
-			$array[$cnt]->fechainicio = $r['fechaInicio'];
-			$array[$cnt]->fechafin = $r['fechaFin'];
-			$array[$cnt]->cantidad = $r['cantidadProducto'];
-			$array[$cnt]->cancelado = $r['cancelado'];
-			$array[$cnt]->fecharegistro = $r['fechaRegistro'];
-			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
-			$cnt++;
-		}
-		return $array;
-	}
-
+	
+	/*
 	public static function getAllByPage($start_from,$limit){
 		$sql = "select * from ".self::$tablename." where idProduccion >= $start_from limit $limit";
 		$query = Executor::doit($sql);
@@ -192,7 +173,7 @@ class ProduccionData {
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
 			$array[$cnt]->terminado = $r['terminado'];
-			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->estado = $r['estado'];
 			$array[$cnt]->imagen = $r['imagen'];
 			$array[$cnt]->fecharegistro = $r['fechaRegistro'];
 			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
@@ -200,6 +181,7 @@ class ProduccionData {
 		}
 		return $array;
 	}
+	*/
 
 	public static function getLike($p){
 		$base = new Database();
@@ -217,28 +199,7 @@ class ProduccionData {
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
 			$array[$cnt]->terminado = $r['terminado'];
-			$array[$cnt]->cancelado = $r['cancelado'];
-			$array[$cnt]->fecharegistro = $r['fechaRegistro'];
-			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
-			$cnt++;
-		}
-		return $array;
-	}
-
-	public static function getAllByUserId($user_id){
-		$sql = "select * from ".self::$tablename." where user_id=$user_id order by created_at desc";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new ProduccionData();
-			$array[$cnt]->id = $r['idProducto'];
-			$array[$cnt]->idproducto = $r['idProducto'];
-			$array[$cnt]->fechainicio = $r['fechaInicio'];
-			$array[$cnt]->fechafin = $r['fechaFin'];
-			$array[$cnt]->cantidad = $r['cantidadProducto'];
-			$array[$cnt]->terminado = $r['terminado'];
-			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->estado = $r['estado'];
 			$array[$cnt]->fecharegistro = $r['fechaRegistro'];
 			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
 			$cnt++;
@@ -259,7 +220,7 @@ class ProduccionData {
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
 			$array[$cnt]->terminado = $r['terminado'];
-			$array[$cnt]->cancelado = $r['cancelado'];
+			$array[$cnt]->estado = $r['estado'];
 			$array[$cnt]->fecharegistro = $r['fechaRegistro'];
 			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
 			$cnt++;

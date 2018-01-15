@@ -621,9 +621,9 @@ CREATE TABLE produccion(
   fechaFin date not null,
   cantidadProducto smallint not null,
   terminado boolean default 0,
-  cancelado boolean default 0,
   fechaRegistro datetime not null default current_timestamp,
   fechaFinalizado datetime,
+  estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idProducto) references producto(idProducto)
 );
@@ -718,6 +718,7 @@ CREATE TABLE abono(
   cantidad decimal(9,2) not null,
   fecha datetime not null,
   tipoComprobante tinyint not null default 1,
+  totalLetras varchar(150),
   numeroComprobante varchar(32),
   estado boolean default 1 not null,
   foreign key(idSucursal) references sucursal(idSucursal),

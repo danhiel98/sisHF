@@ -52,24 +52,6 @@ class MateriaPrimaData {
 		return $found;
 	}
 
-	public static function getArrayById($id){
-		$sql = "select * from ".self::$tablename." where idMateriaPrima=$id";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new MateriaPrimaData();
-			$array[$cnt]->id = $r['idMateriaPrima'];
-			$array[$cnt]->nombre = $r['nombre'];
-			$array[$cnt]->descripcion = $r['descripcion'];
-			$array[$cnt]->minimo = $r['minimo'];
-			$array[$cnt]->existencias = $r['existencias'];
-			$cnt++;
-			break;
-		}
-		return $array;
-	}
-
 	public static function getAll(){
 		$sql = "select * from ".self::$tablename." where estado = 1";
 		$query = Executor::doit($sql);

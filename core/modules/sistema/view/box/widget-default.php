@@ -50,9 +50,33 @@
         </script>
         
         <?php endif; ?>
-
 		<div class="clearfix"></div>
-		<br>
+		
+		<div class="container-fluid">
+			<?php
+			if (isset($_COOKIE["errorFactura"]) && !empty($_COOKIE["errorFactura"])):
+			?>
+				<div class="alert alert-warning alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorFactura"]; ?></p>
+				</div>
+			<?php
+				setcookie("errorFactura","",time()-18600);
+			endif;
+			?>
+			<?php
+			if (isset($_COOKIE["okFactura"]) && !empty($_COOKIE["okFactura"])):
+			?>
+				<br>
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okFactura"]; ?></p>
+				</div>
+			<?php
+				setcookie("okFactura","",time()-18600);
+			endif;
+			?>
+		</div>
 		<div id="resultado">
 			<?php
 				if(count($caja)>0):
@@ -86,41 +110,58 @@
 						<th>Fecha</th>
 						<th>Tipo Comprobante</th>
 						<th>Total</th>
+						<th></th>
 					</thead>
-					<?php foreach($caja as $sell):?>
-					<tr>
-						<td style="width:30px;">
-							<a href="index.php?view=onesell&id=<?php echo $sell->id; ?>&b" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
-						</td>
-						<?php
-							$prodsx = FacturaData::getAllSellsByFactId($sell->id); #Productos vendidos en la factura
-							$servsx = FacturaData::getAllServicesByFactId($sell->id); #Servicios vendidos en la factura
-						?>
-						<td>
-							<?php echo $count++; ?>
-						</td>
-						<td>
-							<?php if($sell->idcliente != ""){echo $sell->getClient()->name;}else{echo "----";} ?>
-						</td>
-						<td><?php echo $sell->fecha; ?></td>
-						<td><?php echo $sell->getComprobante()->nombre; ?></td>
-						<td>
+					<tbody>
+
+						<?php foreach($caja as $sell):?>
+						<tr>
+							<td style="width:30px;">
+								<a href="index.php?view=onesell&id=<?php echo $sell->id; ?>&b" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
+							</td>
 							<?php
-								$total=0;
-								foreach($prodsx as $p){
-									$prd = $p->getProduct();
-									$total += $p->cantidad * $prd->precioventa;
-								}
-								foreach ($servsx as $s) {
-									$srv = $s->getService();
-									$total += $s->cantidad * $srv->precio;
-								}
-								$total_total += $total;
-								echo "<b>$ ".number_format($total,2,'.',',')."</b>";
+								$prodsx = FacturaData::getAllSellsByFactId($sell->id); #Productos vendidos en la factura
+								$servsx = FacturaData::getAllServicesByFactId($sell->id); #Servicios vendidos en la factura
 							?>
-						</td>
-					</tr>
-					<?php endforeach; ?>
+							<td>
+								<?php echo $count++; ?>
+							</td>
+							<td>
+								<?php if($sell->idcliente != ""){echo $sell->getClient()->name;}else{echo "----";} ?>
+							</td>
+							<td><?php echo $sell->fecha; ?></td>
+							<td><?php echo $sell->getComprobante()->nombre; ?></td>
+							<td>
+								<?php
+									$total=0;
+									foreach($prodsx as $p){
+										$prd = $p->getProduct();
+										$total += $p->cantidad * $prd->precioventa;
+									}
+									foreach ($servsx as $s) {
+										$srv = $s->getService();
+										$total += $s->cantidad * $srv->precio;
+									}
+									$total_total += $total;
+									echo "<b>$ ".number_format($total,2,'.',',')."</b>";
+								?>
+							</td>
+							<td style="width: 40px;">
+
+								<a title="¿Eliminar?" href="index.php?view=delsell&id=<?php echo $sell->id;?>" class="btn btn-danger btn-xs"
+								data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+								data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+								data-btn-ok-class="btn-success btn-xs"
+								data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+								data-btn-cancel-class="btn-danger btn-xs"
+								>
+									<i class="fa fa-trash fa-fw"></i>
+								</a>
+
+							</td>
+						</tr>
+						<?php endforeach; ?>
+					</tbody>
 				</table>
 			</div>
 			<h1>Total: <?php echo "$ ".number_format($total_total,2,".",","); ?></h1>
@@ -166,6 +207,7 @@
 			<?php
 				else:
 			?>
+				<br>
 				<div class="alert alert-warning">
 					¡Vaya! No hay ventas para procesar.
 				</div>

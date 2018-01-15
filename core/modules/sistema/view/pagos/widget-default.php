@@ -27,7 +27,7 @@
             <a href="report/pagos.php?idPedido=<?php echo $idPedido; ?>" class="btn btn-default"><i class='fa fa-download fa-fw'></i>Reporte </a>
         </div>
         <?php endif; ?>
-        <h1>Pagos Realizados <?php if(!$todos){echo "[Pedido #$idPedido]";} ?></h1>
+        <h1>Pagos Realizados <?php if(!$todos){echo "[Pedido]";} ?></h1>
 
         <?php if (count($sucursales) > 1 && $user->id == 1 && $idPedido == ""): ?>
             <div class="form-horizontal">
@@ -101,10 +101,26 @@
                             <th>Tipo Comprobante</th>
                             <th>No. Comprobante</th>
                             <th>Recibido Por</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($pagos as $p): ?>
+                        <?php
+                            $comp = $p->getComprobante()->nombre;
+                            $comprobante = "";
+                            switch ($comp){
+                                case "Factura":
+                                    $comprobante = "factura";
+                                    break;
+                                case "Comprobante de Crédito Fiscal":
+                                    $comprobante = "ccf";
+                                    break;
+                                case "Recibo":
+                                    $comprobante = "recibo";
+                                    break;
+                            }
+                        ?>
                         <tr>
                             <td><?php echo $num++; ?></td>
                             <?php if($todos): ?>
@@ -125,6 +141,9 @@
                                         echo $empleado->nombrecompleto;
                                     }
                                 ?>
+                            </td>
+                            <td style="width: 40px;">
+                                <a class="btn btn-default btn-xs" href="report/facturas/<?php echo $comprobante.".php?id=".$p->id."&abono"; ?>"><i class="fa fa-download"></i></a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

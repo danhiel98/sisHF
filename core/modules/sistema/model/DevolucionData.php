@@ -29,6 +29,11 @@ class DevolucionData {
 		Executor::doit($sql);
 	}
 
+	public function del(){
+		$sql = "update ".self::$tablename." set estado = 0 where idDevolucion = $this->id";
+		Executor::doit($sql);
+	}
+
 	public function update(){
 		$sql = "update ".self::$tablename." set idUsuario=\"$this->idusuario\", idFacturaVenta=\"$this->idfactura\", idCausa=\"$this->idcausa\", fecha=\"$this->fecha\", reembolso=\"$this->reembolso\" where idDevolucion = $this->id";
 		Executor::doit($sql);

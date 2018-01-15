@@ -24,7 +24,7 @@
 			<?php endif; ?>
 		</div>
 		<h1>Lista De Empleados</h1>
-		<br>
+		
 		<?php if(count($empleados)>0): ?>
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#all">Todos</a></li>

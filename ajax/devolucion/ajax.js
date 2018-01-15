@@ -27,6 +27,7 @@ $(function(){
                     cliente.val("");
                     comprobante.val("");
                     resultado.html("");
+                    $(".compGroup").addClass("has-warning");
                 }
             }
         });

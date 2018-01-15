@@ -1,5 +1,6 @@
 <?php
 	$materiaP = MateriaPrimaData::getAll();
+	$reabs = ReabastecimientoData::getAll();
 	$matP = false;
 	if (count($materiaP)>0){
 		$matP = true;
@@ -21,8 +22,32 @@
 		</div>
 		<?php endif; ?>
 		<h1><i class='glyphicon glyphicon-shopping-cart'></i> Compras de Materia Prima</h1>
-		<?php
-			$reabs = ReabastecimientoData::getAll();
+		<div class="container-fluid">
+			<?php
+			if (isset($_COOKIE["errorCompra"]) && !empty($_COOKIE["errorCompra"])):
+			?>
+				<div class="alert alert-warning alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorCompra"]; ?></p>
+				</div>
+			<?php
+				setcookie("errorCompra","",time()-18600);
+			endif;
+			?>
+			<?php
+			if (isset($_COOKIE["okCompra"]) && !empty($_COOKIE["okCompra"])):
+			?>
+				<br>
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okCompra"]; ?></p>
+				</div>
+			<?php
+				setcookie("okCompra","",time()-18600);
+			endif;
+			?>
+		</div>
+		<?php	
 			if(count($reabs)>0):
 				
 				$start = 1; $limit = 10;
@@ -46,12 +71,14 @@
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 					<thead>
-						<th></th>
-						<th>No. Factura</th>
-						<th>Proveedor</th>
-						<th>Fecha</th>
-						<th>Total</th>
-						<!--<th></th>-->
+						<tr>
+							<th></th>
+							<th>No. Factura</th>
+							<th>Proveedor</th>
+							<th>Fecha</th>
+							<th>Total</th>
+							<th></th>
+						</tr>
 					</thead>
 					<tbody>
 					<?php foreach($reabs as $re):?>
@@ -78,7 +105,19 @@
 								<?php echo number_format($total,2,'.',','); ?>
 								</strong>
 							</td>
-							<!--<td></td>-->
+							<td style="width: 40px;">
+
+								<a title="¿Eliminar?" href="index.php?view=delre&id=<?php echo $re->id;?>" class="btn btn-danger btn-xs"
+								data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+								data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+								data-btn-ok-class="btn-success btn-xs"
+								data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+								data-btn-cancel-class="btn-danger btn-xs"
+								>
+									<i class="fa fa-trash fa-fw"></i>
+								</a>
+
+							</td>
 						</tr>
 					<?php endforeach; ?>
 					</tbody>
@@ -128,15 +167,15 @@
 		<?php
 		else:
 		?>
-		<div class="jumbotron">
-			<div class="container">
-				<h2>No hay datos</h2>
-				<p>No se ha realizado ninguna operacion.</p>
-			</div>
+		<div class="alert alert-warning">
+			No hay datos.
+		</div>
+		<div class="alert alert-info">
+			No se ha realizado ninguna compra de materia prima.
 		</div>
 		<?php
 		endif;
 		?>
-		<br><br><br><br><br><br><br><br><br><br>
+		<br><br><br>
 	</div>
 </div>

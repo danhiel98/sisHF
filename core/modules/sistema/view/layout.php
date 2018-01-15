@@ -121,10 +121,10 @@
               </ul>
             </li>
             <?php if ($_SESSION["usr_suc"] == 1): ?>
-            <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 4): ?>
+			<li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Compras</a></li>
+			<?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 4): ?>
             <li><a href="index.php?view=produccion"><i class="fa fa-glass"></i> Producci&oacute;n</a></li>
             <?php endif; ?>
-            <li><a href="index.php?view=res"><i class="fa fa-th-list"></i> Compras</a></li>
             <?php endif; ?>
             <?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 4): ?>
             <li><a href="index.php?view=traspasos"><i class="fa fa-exchange"></i> Traspasos</a></li>

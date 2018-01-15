@@ -60,13 +60,13 @@
 		<div class="form-group control-group">
 			<label for="numComprobante" class="col-sm-4 control-label">No. Comprobante</label>
 			<div class="controls col-sm-8">
-				<input type="text" class="form-control" name="numComprobante" id="numComprobante" pattern="[0-9]{1,10}" data-validation-pattern-message="Introduzca un valor válido" maxlength="8" required>
+				<input type="text" class="form-control" name="numComprobante" id="numComprobante" pattern="[0-9]{1,10}" data-validation-pattern-message="Introduzca un valor válido" placeholder="Número de comprobante" maxlength="8" required>
 			</div>
 		</div>
 		<div class="form-group control-group" id="groupLetras">
 			<label for="totalLetras" class="col-sm-4 control-label">Son</label>
 			<div class="controls col-sm-8">
-				<textarea class="form-control" name="totalLetras" id="totalLetras" cols="10" rows="2" maxlenght="150"></textarea>
+				<textarea class="form-control" name="totalLetras" id="totalLetras" cols="10" rows="2" maxlenght="150" placeholder="Introduzca el valor a pagar en letras" required></textarea>
 			</div>
 		</div>
 	</div>
@@ -117,7 +117,7 @@
 	$("#tipo").on("change", function(){
 		tipo = $(this).val();
 		comprobante = $("#numComprobante");
-		groupLetras = $("#groupLetras");
+		//groupLetras = $("#groupLetras");
 		iva = $("#groupIva");
 		totLetras = $("#totalLetras");
 		
@@ -127,7 +127,7 @@
 		if (tipo == 3){
 			totLetras.removeAttr("required");
 			totLetras.val("");
-			groupLetras.hide();
+			//groupLetras.hide();
 			$.ajax({
 				url: "ajax/sell/numeroRecibo.php",
 				type: "POST",
@@ -141,7 +141,7 @@
 			if (tipo == 2){
 				iva.show();
 			}
-			groupLetras.show();	
+			//groupLetras.show();	
 			comprobante.removeAttr("readonly");
 			comprobante.val("");
 		}

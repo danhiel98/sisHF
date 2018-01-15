@@ -50,10 +50,26 @@
                         <th>Tipo Comprobante</th>
                         <th>No. Comprobante</th>
                         <th>Recibido Por</th>
+                        <th width="40px"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($pagos as $p): ?>
+                    <?php
+                        $comp = $p->getComprobante()->nombre;
+                        $comprobante = "";
+                        switch ($comp){
+                            case "Factura":
+                                $comprobante = "factura";
+                                break;
+                            case "Comprobante de Crédito Fiscal":
+                                $comprobante = "ccf";
+                                break;
+                            case "Recibo":
+                                $comprobante = "recibo";
+                                break;
+                        }
+                    ?>
                     <tr>
                         <td><?php echo $num++; ?></td>
                         <td><a data-toggle="modal" data-target="#detalleP" class="btn btn-default btn-xs btn-detail" id="<?php echo $p->idpedido; ?>"><i class="fa fa-list"></i> Detalles</a></td>
@@ -72,6 +88,9 @@
                                     echo $empleado->nombrecompleto;
                                 }
                             ?>
+                        </td>
+                        <td>
+                            <a class="btn btn-default btn-xs" href="report/facturas/<?php echo $comprobante.".php?id=".$p->id."&abono"; ?>"><i class="fa fa-download"></i></a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

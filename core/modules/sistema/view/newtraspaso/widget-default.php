@@ -1,5 +1,20 @@
 <?php
-	$sucursal = SucursalData::getAll();
+	$sucursales = SucursalData::getAll();
+
+	$sucursalesDisponibles = array();
+	foreach($sucursales as $suc){
+		if($suc->id != 1){ //Si no es la principal
+			$usuarios = UserData::getAllBySucId($suc->id);
+			if(count($usuarios) > 0){//Solamente aparecerán las sucursales donde se hayan creado usuarios previamente
+				array_push($sucursalesDisponibles,$suc); 
+			}
+		}
+	}
+	
+	if (count($sucursalesDisponibles) > 0) {
+		$sucs = true;
+	}
+
 	include("modals/resumen.php");
 ?>
 <?php if(isset($_SESSION["trasp"]) && count($_SESSION["trasp"])>0 && isset($_GET["x"])):?>
@@ -11,7 +26,8 @@
 <?php endif; ?>
 <script src="ajax/traspaso/ajax.js"></script>
 <div class="row">
-	<?php if (count($sucursal)>1): ?>
+	<a href="index.php?view=traspasos" class="btn btn-default"><i class="fa fa-arrow-left fa-fw"></i>Regresar</a>
+	<?php if ($sucs): ?>
 	<div class="col-md-12">
 		<h1>Realizar Traspaso De Productos</h1>
 		<input type="hidden" name="sOrigen" id="sOrigen" value="<?php echo $_SESSION["usr_suc"]; ?>">
@@ -42,7 +58,7 @@
 		<h1>No se pueden realizar traspasos</h1>
 		<div class="jumbotron">
 			<div class="container">
-				<h4>Para realizar alg&uacute;n traspaso debe haber otra sucursal registrada.</h4>
+				<h4>Para realizar alg&uacute;n traspaso debe haber otra sucursal registrada o debe haber un usuario registrado en la sucursal de destino.</h4>
 			</div>
 		</div>
 	<?php endif; ?>

@@ -10,7 +10,8 @@ class AbonoData {
 		$this->cantidad = "";
 		$this->fecha = "NOW()";
         $this->tipocomprobante = "";
-        $this->numerocomprobante = "";
+		$this->numerocomprobante = "";
+		$this->totalLetras = "";
 	}
 
     public function getPedido(){return PedidoData::getById($this->idpedido);}
@@ -19,13 +20,18 @@ class AbonoData {
 	public function getComprobante(){return ComprobanteData::getById($this->tipocomprobante);}
 
 	public function add(){
-		$sql = "insert into abono (idSucursal, idUsuario, idCliente, idPedido, cantidad, fecha, tipoComprobante, numeroComprobante) ";
-		$sql .= "values ($this->idsucursal,$this->idusuario,$this->idcliente,\"$this->idpedido\",\"$this->cantidad\",$this->fecha,\"$this->tipocomprobante\",\"$this->numerocomprobante\")";
+		$sql = "insert into abono (idSucursal, idUsuario, idCliente, idPedido, cantidad, fecha, tipoComprobante, numeroComprobante, totalLetras) ";
+		$sql .= "values ($this->idsucursal,$this->idusuario,$this->idcliente,\"$this->idpedido\",\"$this->cantidad\",$this->fecha,\"$this->tipocomprobante\",\"$this->numerocomprobante\",\"$this->totalLetras\")";
 		Executor::doit($sql);
 	}
 
 	public function update(){
-		$sql = "update ".self::$tablename." set idCliente=\"$this->idcliente\", idPedido=\"$this->idpedido\", cantidad=\"$this->cantidad\", fecha=\"$this->fecha\", tipoComprobante=\"$this->tipocomprobante\", numeroComprobante=\"$this->numerocomprobante\" where idAbono = $this->id";
+		$sql = "update ".self::$tablename." set idCliente=\"$this->idcliente\", idPedido=\"$this->idpedido\", cantidad=\"$this->cantidad\", fecha=\"$this->fecha\", tipoComprobante=\"$this->tipocomprobante\", numeroComprobante=\"$this->numerocomprobante\", totalLetras=\"$this->totalLetras\" where idAbono = $this->id";
+		Executor::doit($sql);
+	}
+
+	public function del(){
+		$sql = "update ".self::$tablename." set estado = 0 where idAbono = $this->id";
 		Executor::doit($sql);
 	}
 
@@ -42,7 +48,8 @@ class AbonoData {
             $data->cantidad = $r['cantidad'];
             $data->fecha = $r['fecha'];
             $data->tipocomprobante = $r['tipoComprobante'];
-            $data->numerocomprobante = $r['numeroComprobante'];
+			$data->numerocomprobante = $r['numeroComprobante'];
+			$data->totalLetras = $r['totalLetras'];
 			$found = $data;
 			break;
 		}
@@ -50,7 +57,7 @@ class AbonoData {
 	}
 
 	public static function getAllByPedidoId($id){
-		$sql = "select * from ".self::$tablename." where idPedido = $id order by fecha";
+		$sql = "select * from ".self::$tablename." where idPedido = $id and estado = 1 order by fecha";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -63,7 +70,8 @@ class AbonoData {
             $array[$cnt]->cantidad = $r['cantidad'];
             $array[$cnt]->fecha = $r['fecha'];
             $array[$cnt]->tipocomprobante = $r['tipoComprobante'];
-            $array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$array[$cnt]->totalLetras = $r['totalLetras'];
 			$cnt++;
 		}
 		return $array;
@@ -83,7 +91,8 @@ class AbonoData {
             $array[$cnt]->cantidad = $r['cantidad'];
             $array[$cnt]->fecha = $r['fecha'];
             $array[$cnt]->tipocomprobante = $r['tipoComprobante'];
-            $array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$array[$cnt]->totalLetras = $r['totalLetras'];
 			$cnt++;
 		}
 		return $array;
@@ -103,7 +112,8 @@ class AbonoData {
             $array[$cnt]->cantidad = $r['cantidad'];
             $array[$cnt]->fecha = $r['fecha'];
             $array[$cnt]->tipocomprobante = $r['tipoComprobante'];
-            $array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$array[$cnt]->totalLetras = $r['totalLetras'];
 			$cnt++;
 		}
 		return $array;
@@ -124,7 +134,8 @@ class AbonoData {
             $array[$cnt]->cantidad = $r['cantidad'];
             $array[$cnt]->fecha = $r['fecha'];
             $array[$cnt]->tipocomprobante = $r['tipoComprobante'];
-            $array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$array[$cnt]->numerocomprobante = $r['numeroComprobante'];
+			$array[$cnt]->totalLetras = $r['totalLetras'];
 			$cnt++;
 		}
 		return $array;

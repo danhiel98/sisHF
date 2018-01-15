@@ -2,7 +2,7 @@
   include("../conectarpdo.php");
   $cn = conexion();
   $valor = $_REQUEST["value"];
-  $sql= "select * from banco where nombre = \"$valor\"";
+  $sql= "select * from banco where nombre = \"$valor\" and estado = 1";
   $query = $cn->query($sql);
   $datos = $query->fetchAll();
   $banco = "";

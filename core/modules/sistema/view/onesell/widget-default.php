@@ -86,12 +86,10 @@ if(isset($_GET["id"]) && $_GET["id"] != ""){
 		<td><?php echo $user->name." ".$user->lastname;?></td>
 	</tr>
 	<?php endif; ?>
-	<?php if ($comprobante->id == 1 || $comprobante->id == 2): ?>
-	<tr>
-		<td>Son</td>
-		<td><?php echo $sell->totalLetras; ?></td>
-	</tr>
-	<?php endif; ?>
+<tr>
+	<td>Son</td>
+	<td><?php echo $sell->totalLetras; ?></td>
+</tr>
 </table>
 <br>
 <table class="table table-bordered table-hover">

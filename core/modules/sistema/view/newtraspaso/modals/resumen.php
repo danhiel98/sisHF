@@ -49,7 +49,7 @@
                 <div class="col-md-9">
                   <select class="form-control" name="destino" required>
                     <option value="">--SELECCIONE--</option>
-                    <?php foreach ($sucursal as $suc):?>
+                    <?php foreach ($sucursalesDisponibles as $suc):?>
                       <?php if ($suc->id != $_SESSION["origen"]): ?>
                         <option value="<?php echo $suc->id; ?>"><?php echo $suc->nombre; ?></option>
                       <?php endif; ?>
