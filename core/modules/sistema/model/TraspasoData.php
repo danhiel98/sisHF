@@ -33,6 +33,11 @@ class TraspasoData {
 		Executor::doit($sql);
 	}
 
+	public function updateTraspasoProd(){
+		$sql = "update traspasoProducto set cantidad = $this->cantidad where idTraspaso = $this->idtraspaso";
+		Executor::doit($sql);
+	}
+
 	public static function delById($id){
 		$sql = "update ".self::$tablename." set estado = 0 where idTraspaso = $id";
 		Executor::doit($sql);
@@ -43,6 +48,10 @@ class TraspasoData {
 		Executor::doit($sql);
 	}
 
+	public function delTraspasoProducto(){
+		$sql = "update traspasoProducto set estado = 0 where idTraspasoProducto = $this->idtraspasoprod";
+		Executor::doit($sql);
+	}
 	
 	public function update(){
 		$sql = "update ".self::$tablename." set idSucursalOrigen=$this->idorigen, idSucursalDestino=$this->destino where idTraspaso = $this->id";
@@ -83,7 +92,7 @@ class TraspasoData {
 	}
 
 	public static function getAllTraspasosByProductId($id){
-		$sql = "select * from traspasoProducto where idProducto = $id";
+		$sql = "select * from traspasoProducto where idProducto = $id and estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

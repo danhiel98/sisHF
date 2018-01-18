@@ -38,6 +38,31 @@
 			<?php endif; ?>
 		</div>
 		<h1>Traspasos Realizados</h1>
+		<div class="container-fluid">
+			<?php
+			if (isset($_COOKIE["errorTrasp"]) && !empty($_COOKIE["errorTrasp"])):
+			?>
+				<div class="alert alert-warning alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-warning fa-fw'></i> <?php echo $_COOKIE["errorTrasp"]; ?></p>
+				</div>
+			<?php
+				setcookie("errorTrasp","",time()-18600);
+			endif;
+			?>
+			<?php
+			if (isset($_COOKIE["okTrasp"]) && !empty($_COOKIE["okTrasp"])):
+			?>
+				<br>
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okTrasp"]; ?></p>
+				</div>
+			<?php
+				setcookie("okTrasp","",time()-18600);
+			endif;
+			?>
+		</div>
 		<?php
 			if(count($traspasos)>0){
 		?>
@@ -63,14 +88,18 @@
 			<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th></th>
-					<th>No.</th>
-					<th>Origen</th>
-					<th>Destino</th>
-					<th>Fecha</th>
-					<th>Registrado Por</th>
+					<tr>
+						<th></th>
+						<th>No.</th>
+						<th>Origen</th>
+						<th>Destino</th>
+						<th>Fecha</th>
+						<th>Registrado Por</th>
+						<th style="width: 40px;"></th>
+					</tr>
 				</thead>
-				<?php foreach($traspasos as $trasp):?>
+				<tbody>
+				<?php foreach($traspasos as $trasp): ?>
 					<tr>
 						<td style="width:30px;">
 							<a href="index.php?view=tradex&id=<?php echo $trasp->id; ?>" title="Detalles de traspaso" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a>
@@ -83,9 +112,20 @@
 							<?php echo $trasp->getSucursalD()->nombre; ?>
 						</td>
 						<td><?php echo $trasp->fecha; ?></td>
-						<td><?php echo $trasp->getUser()->name." ".$trasp->getUser()->lastname; ?></td>
+						<td><?php if(!is_null($trasp->getUser()->idempleado)){echo $trasp->getUser()->getEmpleado()->nombrecompleto;}else{echo $trasp->getUser()->fullname;}?></td>
+						<td>
+							<a title="¿Eliminar?" href="index.php?view=deltrasp&id=<?php echo $trasp->id;?>" class="btn btn-danger btn-xs"
+							data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+							data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+							data-btn-ok-class="btn-success btn-xs"
+							data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+							data-btn-cancel-class="btn-danger btn-xs">
+								<i class="fa fa-trash fa-fw"></i>
+							</a>
+						</td>
 					</tr>
-				<?php endforeach;?>
+				<?php endforeach; ?>
+				</tbody>
 				</table>
 			</div>
 			<div class="container-fluid">

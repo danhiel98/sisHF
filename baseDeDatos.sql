@@ -826,7 +826,7 @@ CREATE TABLE ingresoCajaChica(
   idUsuario smallint not null,
   idCajaChica tinyint not null default 1,
   cantidad decimal(9,2) not null,
-  fecha date not null,
+  fecha datetime not null,
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idCajaChica) references cajaChica(idCajaChica)
@@ -840,7 +840,7 @@ CREATE TABLE salidaCajaChica(
   cantidad decimal(9,2) not null,
   numComprobante varchar(32),
   descripcion varchar(200) not null,
-  fecha date not null,
+  fecha datetime not null,
   estado boolean default 1 not null,
   foreign key(idUsuario) references usuario(idUsuario),
   foreign key(idCajaChica) references cajaChica(idCajaChica),
