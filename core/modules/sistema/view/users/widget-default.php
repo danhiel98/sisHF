@@ -22,6 +22,9 @@
 	if ($u->tipo != 1 && $u->tipo != 2):
 		@header("location: index.php?view=home");
 	endif;
+
+	include "modals/changePassword.php";
+	include "modals/confirm.php";
 ?>
 <!-- x-editable (bootstrap 3) -->
 <link href="res/x-editable/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
@@ -49,7 +52,15 @@
 		<?php
 		if(count($users)>0):
 		?>
-		
+		<?php if(isset($_COOKIE['password_updated'])):?>
+			<div class="alert alert-success alert-dimissible">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<p><i class='glyphicon glyphicon-off'></i> <?php echo $_COOKIE['password_updated']; ?></p>
+			</div>
+		<?php
+			setcookie("password_updated","",time()-18600);
+			endif;
+		?>
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#all">Todos</a></li>
 			<?php if (count($sucursal)>1 && !$usrSuc): ?>
@@ -80,13 +91,18 @@
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover">
 						<thead>
-							<th>Nombres</th>
-							<th>Apellidos</th>
-							<th>Usuario</th>
-							<th>Correo Electr&oacute;nico</th>
-							<th>Sucursal</th>
-							<th style="text-align:center;">Estado</th>
-							<th style="text-align:center;">Tipo</th>
+							<tr>
+								<th>Nombres</th>
+								<th>Apellidos</th>
+								<th>Usuario</th>
+								<th>Correo Electr&oacute;nico</th>
+								<th>Sucursal</th>
+								<th style="text-align:center;">Estado</th>
+								<th style="text-align:center;">Tipo</th>
+								<?php if($u->id == 1): ?>
+								<th style="width:20px;"></th>
+								<?php endif; ?>
+							</tr>
 						</thead>
 						<?php foreach($users as $user): ?>
 							<?php 
@@ -102,18 +118,21 @@
 								<td><?php echo $user->getEmpleado()->getSucursal()->nombre; ?></td>
 								<td class="estado" style="text-align:center;">
 									<?php if($u->id != $user->id): ?>
-										<a href="#" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->activo; ?>" data-source="ajax/users/estados.php" title="Estado"></a>
+										<a href="#" id="estado" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->activo; ?>" data-source="ajax/users/estados.php" title="Estado"></a>
 									<?php else: ?>
 										<span class="notready"><?php if($user->activo){echo "Activo";}else{echo "Inactivo";} ?></span>
 									<?php endif; ?>
 								</td>
 								<td class="tipo" style="text-align:center;">
 									<?php if($u->id != $user->id): ?>
-										<a href="#" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->tipo; ?>" data-source="ajax/users/tipos.php<?php if($idSuc != 1){echo "?X";} ?>" title="Tipo"></a>
+										<a href="#" id="tipo" data-type="select" data-pk="<?php echo $user->id; ?>" data-value="<?php echo $user->tipo; ?>" data-source="ajax/users/tipos.php<?php if($idSuc != 1){echo "?X";} ?>" title="Tipo"></a>
 									<?php else: ?>
 										<span class="notready"><?php echo $user->getUserType()->nombre; ?></span>
 									<?php endif; ?>
 								</td>
+								<?php if($u->id == 1): ?>
+								<td><a class="btn btn-xs btn-warning btn-passwd" data-id="<?php echo $user->id; ?>" data-toggle="modal" data-target="#confirm" title="Nueva contraseña"><i class="fa fa-cog fa-fw"></i></a></td>
+								<?php endif; ?>
 							</tr>
 						<?php
 							endif;
@@ -188,6 +207,23 @@
 				<div id="resultadoSucursal"></div>
 			</div>
 		</div>
+		<script>
+			$(".btn-passwd").on("click",function(){
+				id = $(this).data("id");
+				$.ajax({
+					url: "ajax/usuario/resultadoID.php",
+					type: "POST",
+					data: {
+						id: id
+					},
+					success: function(data){
+						oDato = JSON.parse(data);
+						$("#usr").text(oDato.username);
+						$("#idUsr").val(oDato.id);
+					}
+				});
+			});
+		</script>
 		<?php
 		else:
 		?>

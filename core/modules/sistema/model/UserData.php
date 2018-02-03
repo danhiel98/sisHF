@@ -55,7 +55,7 @@ class UserData {
 	}
 
 	public function updateUE(){
-		$sql = "update ".self::$tablename." set usuario=\"$this->username\", email=\"$this->email\", activo=\"$this->activo\", tipo=\"$this->tipo\" where idUsuario=$this->id";
+		$sql = "update ".self::$tablename." set usuario=\"$this->user\", email=\"$this->email\" where idUsuario=$this->id";
 		Executor::doit($sql);
 	}
 

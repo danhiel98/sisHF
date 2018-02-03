@@ -9,7 +9,8 @@
 <div class="row vertical-offset-100">
 	<div class="col-md-5 col-md-offset-2 col-sm-8">
 		<?php if(isset($_COOKIE['password_updated'])):?>
-			<div class="alert alert-success">
+			<div class="alert alert-success alert-dimissible">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<p><i class='glyphicon glyphicon-off'></i> Se ha cambiado la contraseña exitosamente!</p>
 				<p>Inicie sesión con su nueva contraseña.</p>
 			</div>
