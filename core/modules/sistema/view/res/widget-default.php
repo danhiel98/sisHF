@@ -168,11 +168,13 @@
 		else:
 		?>
 		<div class="alert alert-warning">
-			No hay datos.
-		</div>
-		<div class="alert alert-info">
 			No se ha realizado ninguna compra de materia prima.
 		</div>
+		<?php if(!$matP): ?>
+			<div class="alert alert-info">
+				Para poder realizar una compra, debe haber <a href="index.php?view=inventarymp">materia prima</a> registrada.
+			</div>
+		<?php endif; ?>
 		<?php
 		endif;
 		?>
