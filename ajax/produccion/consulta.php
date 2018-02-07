@@ -66,8 +66,8 @@
             }
         ?>
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#process">En proceso</a></li>
-            <li><a href="#end">Terminado</a></li>
+            <li class="active" id="pendiente"><a href="#process">En proceso</a></li>
+            <li><a href="#end" id="terminado">Terminado</a></li>
         </ul>
         <div class="tab-content">
             <div id="process" class="tab-pane fade in active">
@@ -83,13 +83,15 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <thead>
-                            <th></th>
-                            <th>No.</th>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
-                            <th style="width: 80px;"></th>
+                            <tr>
+                                <th></th>
+                                <th>No.</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th style="width: 80px;"></th>
+                            </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($productnsA as $pa): ?>
@@ -101,8 +103,7 @@
                                 <td><?php echo $pa->fechainicio; ?></td>
                                 <td><?php echo $pa->fechafin; ?></td>
                                 <td>
-                                    <a href=""></a>
-                                    <a title="Finalizar" href="#" class="btn btn-xs btn-success finalizar" id="<?php echo $pa->id; ?>" data-opc="terminar"
+                                    <a title="Finalizar" href="#" class="btn btn-xs btn-success finalizar" id="<?php echo $pa->id; ?>" data-opc="terminar" data-estado="pendiente"
                                         data-toggle="confirmation-popout" data-popout="true" data-placement="left"
                                         data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
                                         data-btn-ok-class="btn-success btn-xs"
@@ -111,7 +112,7 @@
                                         data-title="¿Finalizar?">
                                         <i class="fa fa-check"></i>
                                     </a>
-                                    <a title="¿Eliminar?" href="#" class="btn btn-danger btn-xs finalizar" id="<?php echo $pa->id; ?>" data-opc="eliminar"
+                                    <a title="¿Eliminar?" href="#" class="btn btn-danger btn-xs finalizar" id="<?php echo $pa->id; ?>" data-opc="eliminar" data-estado="pendiente"
                                     data-toggle="confirmation-popout" data-popout="true" data-placement="left"
                                     data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
                                     data-btn-ok-class="btn-success btn-xs"
@@ -203,6 +204,7 @@
                                     <th>Fecha Inicio</th>
                                     <th>Fecha Fin</th>
                                     <th>Finalizado</th>
+                                    <th style="width: 40px;"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -215,6 +217,16 @@
                                     <td><?php echo $pt->fechainicio; ?></td>
                                     <td><?php echo $pt->fechafin; ?></td>
                                     <td><?php echo $pt->fechafinalizado; ?></td>
+                                    <td>
+                                        <a title="¿Eliminar?" href="#" class="btn btn-danger btn-xs finalizar" id="<?php echo $pt->id; ?>" data-opc="eliminar" data-estado="terminado"
+                                        data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+                                        data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+                                        data-btn-ok-class="btn-success btn-xs"
+                                        data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+                                        data-btn-cancel-class="btn-danger btn-xs">
+                                            <i class="fa fa-trash fa-fw"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -337,7 +349,7 @@
                     $("#detallesMP").html(res); //Cargar los detalles de la materia prima insuficiente
                     $("#detalles").modal().show(); //Mostrar el modal
                 }else{
-                    producciones("end"); //Todo está bien, se finaliza la producción
+                    producciones("pendiente"); //Todo está bien, se finaliza la producción
                 }
 			});
 		}

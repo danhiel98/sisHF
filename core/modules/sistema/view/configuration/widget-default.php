@@ -14,7 +14,7 @@
 	<br>
 	<ul class="nav nav-tabs">
 		<li class='active'><a href="#default">Datos Generales</a></li>
-		<li><a href="#passwd">Contrase&ntilde;a</a></li>
+		<li><a id="pass" href="#passwd">Contrase&ntilde;a</a></li>
 	</ul>
 	<div class="tab-content">
 		<div id="default" class="tab-pane fade in active">
@@ -57,36 +57,47 @@
 				<h2>Cambiar Contraseña</h2>
 				<br>
 				<form class="form-horizontal" id="changepasswd" method="post" action="index.php?view=changepasswd" role="form">
+					<div class="form-group control-group">
+						<label for="password" class="col-lg-4 control-label">Contraseña Actual</label>
+						<div class="col-lg-8 controls">
+								<input type="password" name="password" class="form-control" id="password" placeholder="Contrase&ntilde;a Actual" maxlength="30"  required>
+								<p class="help-block"></p>
+						</div>
+					</div>
 
 					<div class="form-group control-group">
-					<label for="password" class="col-lg-4 control-label">Contraseña Actual</label>
-					<div class="col-lg-8 controls">
-							<input type="password" name="password" class="form-control" id="password" placeholder="Contrase&ntilde;a Actual" maxlength="30"  required>
-							<p class="help-block"></p>
+						<label for="newpassword" class="col-lg-4 control-label">Nueva Contraseña</label>
+						<div class="col-lg-8 controls">
+						<input type="password" class="form-control"  id="newpassword" name="newpassword" placeholder="Nueva Contraseña" required>
+								<p class="help-block"></p>
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group control-group">
-					<label for="newpassword" class="col-lg-4 control-label">Nueva Contraseña</label>
-					<div class="col-lg-8 controls">
-					<input type="password" class="form-control"  id="newpassword" name="newpassword" placeholder="Nueva Contraseña" required>
-							<p class="help-block"></p>
+					<div class="form-group control-group">
+						<label for="confirmnewpassword" class="col-lg-4 control-label">Confirmar Nueva Contraseña</label>
+						<div class="col-lg-8 controls">
+								<input type="password" name="confirmnewpassword" class="form-control" id="confirmnewpassword" placeholder="Confirmar Nueva Contraseña" maxlength="30" data-validation-match-match="newpassword" required>
+								<p class="help-block"></p>
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group control-group">
-					<label for="confirmnewpassword" class="col-lg-4 control-label">Confirmar Nueva Contraseña</label>
-					<div class="col-lg-8 controls">
-							<input type="password" name="confirmnewpassword" class="form-control" id="confirmnewpassword" placeholder="Confirmar Nueva Contraseña" maxlength="30" data-validation-match-match="newpassword" required>
-							<p class="help-block"></p>
+					<div class="form-group">
+						<div class="col-lg-offset-4 col-lg-8">
+						<button type="submit" class="btn btn-success">Cambiar Contraseña</button>
+						</div>
 					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-lg-offset-4 col-lg-8">
-					<button type="submit" class="btn btn-success">Cambiar Contraseña</button>
+					<?php if(isset($_COOKIE["icorrectPassword"]) && !empty($_COOKIE["icorrectPassword"])): ?>
+					<script>
+						$("#pass").tab("show");
+					</script>
+					<div class="alert alert-warning alert-dimissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<?php echo $_COOKIE["icorrectPassword"]; ?>
 					</div>
-				</div>
+					<?php 
+							setcookie("icorrectPassword","",time()-18600);
+						endif; 
+						?>
 				</form>
 			</div>
 		</div>

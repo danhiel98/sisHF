@@ -43,15 +43,7 @@ if(isset($_GET["id"]) && $_GET["id"] != ""){
 <?php endif; ?>
 
 <div class="btn-group pull-right">
-	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu" role="menu">
-		<!--
-		<li><a target="_blank" href="pdf/documentos/factura_pdf.php?id=<?php echo $idFact;?>">PDF (.pdf)</a></li>
-		-->
-		<li><a target="_blank" href="report/facturas/<?php echo $strComp; ?>.php?id=<?php echo $idFact;?>">PDF (.pdf)</a></li>	
-	</ul>
+	<a class="btn btn-default" target="_blank" href="report/facturas/<?php echo $strComp; ?>.php?id=<?php echo $idFact;?>"><i class="fa fa-download fa-fw"></i> Descargar</a>
 </div>
 <h1>Resumen de Venta</h1>
 

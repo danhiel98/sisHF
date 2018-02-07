@@ -7,10 +7,11 @@
 		array_push($tipos,array("id"=>2,"nombre"=>"Persona Jurídica"));
 		$deptos = DireccionData::getAllDeptos();
 
-		$tipo = 0;
-		if (empty($client->nrc)){
+		$tipo = 1;
+
+		if(!empty($client->dui)){
 			$tipo = 1;
-		}elseif(empty($client->dui)){
+		}elseif (!empty($client->nit) || !empty($client->giro)){
 			$tipo = 2;
 		}
 
@@ -47,7 +48,7 @@
 				</div>
 			</div>
 			<div class="form-group control-group personN-group">
-				<label for="txtDui" class="col-lg-2 control-label">DUI*</label>
+				<label for="txtDui" class="col-lg-2 control-label">DUI</label>
 				<div class="col-md-6">
 					<input type="text" name="txtDui" class="form-control personN-input" id="txtDui" maxlength="10" data-validation-regex-regex="[0-9]{8}-[0-9]{1}" data-validation-regex-message="Introduzca un DUI válido" placeholder="DUI" onkeyup="fnc(this,'-',dui,true)" onpaste="return false" onkeypress="return soloNumeros(event)" value="<?php echo $client->dui;?>">
 					<p class="help-block"></p>
@@ -61,14 +62,14 @@
 				</div>
 			</div>
 			<div class="form-group control-group personJ-group">
-				<label for="txtNrc" class="col-lg-2 control-label">NRC*</label>
+				<label for="txtNrc" class="col-lg-2 control-label">NRC</label>
 				<div class="col-md-6">
 					<input type="text" name="txtNrc" maxlength="8" class="form-control personJ-input" id="txtNrc" placeholder="N&uacute;mero De Registro De Contribuyente" onkeyup="fnc(this,'-',nrc,true)" onpaste="return false" onkeypress="return soloNumeros(event)" data-validation-regex-regex="[0-9]{6}-[0-9]{1}" data-validation-regex-message="Introduzca un NCR válido" placeholder="N&uacute;mero De NCR" value="<?php echo $client->nrc;?>">
 					<p class="help-block"></p>
 				</div>
 			</div>
 			<div class="form-group control-group personJ-group">
-				<label for="giro" class="col-lg-2 control-label">Giro*</label>
+				<label for="giro" class="col-lg-2 control-label">Giro</label>
 				<div class="col-md-6 controls">
 					<input type="text" name="giro" class="form-control personJ-input" id="giro" maxlength="30" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un valor válido" placeholder="Giro" value="<?php echo $client->giro; ?>">
 					<p class="help-block"></p>
@@ -170,13 +171,13 @@
 			tipo = tipoCli;
 			if (tipo == 1){
 				personaN.show();
-				inputPerN.attr("required","required");
+				//inputPerN.attr("required","required");
 				inputPerJ.val("")
 				inputPerJ.removeAttr("required");
 				personaJ.hide();
 			}else if(tipo == 2){
 				personaJ.show();
-				inputPerJ.attr("required","required");
+				//inputPerJ.attr("required","required");
 				inputPerN.val("");
 				inputPerN.removeAttr("required");
 				personaN.hide();

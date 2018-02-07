@@ -15,6 +15,14 @@
 		
 		switch($opcion){
 			case "eliminar":
+				if($produccion->terminado == 1){
+					$materiaPrima = ProduccionMPData::getAllByProdId($produccion->id);
+					foreach ($materiaPrima as $mp){
+						$matPrim = MateriaPrimaData::getById($mp->idmateriaprima);
+						$matPrim->existencias += $mp->cantidad;
+						$matPrim->updateEx();
+					}
+				}
 				$produccion->del();
 				setcookie("okProd","¡Se eliminó la información correctamente!");
 				break;

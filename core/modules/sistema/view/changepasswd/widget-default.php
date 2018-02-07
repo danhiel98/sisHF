@@ -20,7 +20,8 @@ if((isset($_POST["password"]) && !empty($_POST["password"])) && isset($_POST["id
 			setcookie("password_updated","true");
 			print "<script>window.location='logout.php';</script>";
 		}else{
-			print "<script>window.location='index.php?view=security&msg=invalidpasswd';</script>";
+			setcookie("icorrectPassword","¡Vaya! No se ha podido cambiar la contraseña.");
+			print "<script>window.location='index.php?view=configuration';</script>";
 		}
 	}else {
 		print "<script>window.location='index.php';</script>";

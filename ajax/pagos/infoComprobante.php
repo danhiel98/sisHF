@@ -10,7 +10,7 @@
 		<option value="">--NINGUNO--</option>
 		<option value="1">Factura</option>
 	<?php
-		if ($cliente->nrc != "" && $cliente->nrc != null):
+		if ($cliente->nit != "" && $cliente->nit != null):
 	?>
 		<option value="2">Comprobante de Crédito Fiscal</option>
 	<?php
