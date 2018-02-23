@@ -41,12 +41,7 @@
 			<a class="btn btn-default" href="index.php?view=newuser&emp=true"><i class="icon-user-plus"></i> Nuevo Usuario</a>
 			<?php endif; ?>
 			<?php if (count($users) > 0): ?>
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu" role="menu">
-				<li><a href="report/users.php ">Excel (.xlsx)</a></li>
-			</ul>
+				<a class="btn btn-default" target="_blank" href="report/users.php "><i class="fa fa-download"></i> Descargar</a>
 			<?php endif; ?>
 		</div>
 
@@ -59,7 +54,7 @@
 		<?php if(isset($_COOKIE['password_updated'])):?>
 			<div class="alert alert-success alert-dimissible">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<p><i class='glyphicon glyphicon-off'></i> <?php echo $_COOKIE['password_updated']; ?></p>
+				<p><i class='fa fa-info'></i> <?php echo $_COOKIE['password_updated']; ?></p>
 			</div>
 		<?php
 			setcookie("password_updated","",time()-18600);
@@ -196,12 +191,7 @@
 						</div>
 						<div class="btn-group pull-right">
 							<div>
-								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-									<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<li><a id="reporteEPS" target="_blank">Excel (.xlsx)</a></li>
-								</ul>
+								<a class="btn btn-default" id="reporteEPS" target="_blank"><i class="fa fa-download"></i> Descargar</a>
 							</div>
 						</div>
 					</div>

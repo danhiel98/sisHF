@@ -1,18 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
 		<a href="index.php?view=boxhistory" class="btn btn-default"><i class="fa fa-arrow-left fa-fw"></i>Regresar</a>
-		<!-- Single button -->
-		<div class="btn-group pull-right">
-			<a href="./index.php?view=boxhistory" class="btn btn-default"><i class="fa fa-clock-o"></i> Historial</a>
-			<div class="btn-group">
-  			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    			<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-  			</button>
-  			<ul class="dropdown-menu pull-right" role="menu">
-    			<li><a href="report/corteCaja.php?id=<?php echo $_GET["id"];?>">Excel (.xlsx)</a></li>
-  			</ul>
-			</div>
-		</div>
 		<?php
 		if (!isset($_GET["id"]) || (isset($_GET["id"]) && empty($_GET["id"]))) {
 			@header("location: index.php?view=box");
@@ -30,6 +18,13 @@
 		if(count($products)>0){
 			$total_total = 0;
 			?>
+		<!-- Single button -->
+		<div class="btn-group pull-right">
+			<a href="./index.php?view=boxhistory" class="btn btn-default"><i class="fa fa-clock-o"></i> Historial</a>
+			<div class="btn-group">
+				<a class="btn btn-default" href="report/corteCaja.php?id=<?php echo $_GET["id"];?>"><i class="fa fa-download fa-fw"></i> Descargar</a>
+			</div>
+		</div>
 		<h1><i class='fa fa-archive'></i> Corte de Caja #<?php echo $num; ?></h1>
 		<table class="table table-bordered">
 			<tr>
@@ -87,6 +82,8 @@
 	<?php
 	}else {
 ?>
+	<div class="clearfix"></div>
+	<br>
 	<div class="jumbotron">
 		<div class="container">
 			<h2>No hay ventas</h2>
@@ -95,6 +92,6 @@
 	</div>
 
 <?php } ?>
-		<br><br><br><br><br><br><br><br><br><br>
+		<br><br><br>
 	</div>
 </div>

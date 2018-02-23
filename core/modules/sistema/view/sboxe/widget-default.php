@@ -81,12 +81,7 @@
 		</div>
 		<?php if($accion == "ent"): ?>
 			<div class="btn-group pull-right">
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="report/cajaChicaIngreso.php">Excel (.xlsx)</a></li>
-				</ul>
+				<a class="btn btn-default" href="report/cajaChicaIngreso.php"><i class="fa fa-download fa-fw"></i> Descargar</a>
 			</div>
 			<h1><i class='fa fa-archive'></i> Entradas (Caja Chica)</h1>
 			<?php
@@ -128,12 +123,7 @@
 		<?php elseif($accion == "sal"): ?>
 
 			<div class="btn-group pull-right">
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="report/cajaChicaSalida.php">Excel (.xlsx)</a></li>
-				</ul>
+				<a class="btn btn-default" href="report/cajaChicaSalida.php"><i class="fa fa-download fa-fw"></i> Descargar</a>
 			</div>
 			
 			<h1><i class='fa fa-archive'></i> Salidas (Caja Chica)</h1>

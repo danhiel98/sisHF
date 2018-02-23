@@ -10,12 +10,7 @@
 			<a data-toggle="modal" data-target="#agregar" class="btn btn-default"><i class='fa fa-smile-o'></i> Registrar Banco </a>
 			<?php if(count($banco) > 0): ?>
 				<div class="btn-group pull-right">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-						<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="report/banco.php">Excel (.xlsx)</a></li>
-					</ul>
+					<a class="btn btn-default" href="report/banco.php"><i class="fa fa-download fa-fw"></i> Descargar</a>
 				</div>
 			<?php endif; ?>
 		</div>

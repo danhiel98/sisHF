@@ -19,12 +19,7 @@
             <?php if($pedido->restante > 0 && $pedido->idsucursal == $_SESSION["usr_suc"]): ?>
             <a class="btn btn-default" id="btnPago" data-toggle="modal" data-target="#agregar" href="#"><i class="fa fa-dollar"></i> Nuevo Pago</a>
             <?php endif; ?>
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-download"></i> Descargar <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="report/pedidodetalle.php?id=<?php echo $_GET["id"];?>">Excel (.xlsx)</a></li>
-            </ul>
+            <a class="btn btn-default" href="report/pedidodetalle.php?id=<?php echo $_GET["id"];?>"><i class="fa fa-download fa-fw"></i> Descargar</a>
         </div>
         <h1>Resumen de Pedido</h1>
         <table class="table table-bordered">

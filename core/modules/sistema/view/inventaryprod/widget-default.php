@@ -14,12 +14,7 @@
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php if (count($products)>0): ?>
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu" role="menu">
-				<li><a href="report/inventarioproducto.php">Excel (.xlsx)</a></li>
-			</ul>
+			<a class="btn btn-default" href="report/inventarioproducto.php"><i class="fa fa-download fa-fw"></i> Descargar</a>
 			<?php endif; ?>
 		</div>
 		<h1><i class="glyphicon glyphicon-stats"></i> Inventario De Productos</h1>

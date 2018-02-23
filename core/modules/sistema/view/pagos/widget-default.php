@@ -143,7 +143,7 @@
                                 ?>
                             </td>
                             <td style="width: 40px;">
-                                <a class="btn btn-default btn-xs" href="report/facturas/<?php echo $comprobante.".php?id=".$p->id."&abono"; ?>"><i class="fa fa-download"></i></a>
+                                <a class="btn btn-default btn-xs" target="_blank" href="report/facturas/<?php echo $comprobante.".php?id=".$p->id."&abono"; ?>"><i class="fa fa-download"></i></a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

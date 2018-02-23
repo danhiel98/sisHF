@@ -13,12 +13,7 @@
 		<a class="btn btn-default" href="<?php if(isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo "index.php?view=box";} ?>"><i class="fa fa-arrow-left fa-fw"></i>Regresar</a>
 		<div class="btn-group pull-right">
 			<?php if(count($boxes)>0): ?>
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-			</button>
-  			<ul class="dropdown-menu" role="menu">
-    			<li><a href="report/boxhistory.php">Excel (.xlsx)</a></li>
-			</ul>
+			<a class="btn btn-default" href="report/boxhistory.php"><i class="fa fa-download fa-fw"></i> Descargar</a>
 			<?php endif; ?>
 		</div>
 		<h1><i class='fa fa-archive'></i> Cortes de Caja</h1>

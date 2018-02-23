@@ -18,7 +18,10 @@ $condicion = "";
 $tipo = "";
 if (!isset($_REQUEST["abono"])){ //En caso que no sea un pago de pedido
     $factura = FacturaData::getById($idFact);
-    
+    if(is_null($factura)){
+        echo "Ha ocurrido un error";
+        exit();
+    }
     $pVend = FacturaData::getAllSellsByFactId($idFact);
     $sVend = FacturaData::getAllServicesByFactId($idFact);
     
@@ -29,6 +32,10 @@ if (!isset($_REQUEST["abono"])){ //En caso que no sea un pago de pedido
 }else{
     $abono = true;
     $factura = AbonoData::getById($idFact);
+    if(is_null($factura)){
+        echo "Ha ocurrido un error";
+        exit();
+    }
     $pVend = PedidoData::getAllProductsByPedidoId($factura->idpedido);
     $sVend = PedidoData::getAllServicesByPedidoId($factura->idpedido);
     
@@ -138,7 +145,7 @@ foreach($pVend as $vend){
     $pdf->setXY(25,$y);
     
     if(!$abono){
-        $pdf->MultiCell(57,5.5,$prod->nombre);
+        $pdf->MultiCell(57,5.5,utf8_decode($prod->nombre));
     }else{
         $pdf->MultiCell(57,5.5,"$vend->cantidad $prod->nombre(s)");
     }
@@ -286,7 +293,7 @@ if(!$abono){
 
 
 $pdf->Output($archivoSalida);//cierra el objeto pdf
-
+/*
 //Creacion de las cabeceras que generarán el archivo pdf
 header ("Content-Type: application/download");
 header ("Content-Disposition: attachment; filename=$archivo");
@@ -296,4 +303,10 @@ fpassthru($fp);
 fclose($fp);
 
 //Eliminación del archivo en el servidor
+unlink($archivo);
+*/
+header("Content-type: application/pdf");
+header("Content-Length:". filesize("$archivo"));
+header("Content-Disposition: inline; filename=$archivo");
+readfile($archivo);
 unlink($archivo);

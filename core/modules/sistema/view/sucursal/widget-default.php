@@ -16,12 +16,7 @@
 			<?php if(count($sucursal) > 0): ?>
 			
 			<div class="btn-group pull-right">
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="report/sucursales.php ">Excel (.xlsx)</a></li>
-				</ul>
+				<a class="btn btn-default" target="_blank" href="report/sucursales.php "><i class="fa fa-download"></i> Descargar</a>
 			</div>
 
 			<?php endif; ?>

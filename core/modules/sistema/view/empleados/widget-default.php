@@ -14,12 +14,7 @@
 			<a href="index.php?view=newemploy" class="btn btn-default"><i class='fa fa-smile-o'></i> Registrar Empleado</a>
 			<?php if(count($empleados) > 0 ): ?>
 				<div class="btn-group pull-right">
-				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				    <i class="fa fa-download"></i> Descargar <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu" role="menu">
-				    <li><a href="report/empleadosAll.php">Excel(.xlsx)</a></li>
-				  </ul>
+					<a class="btn btn-default" target="_blank" href="report/empleadosAll.php"><i class="fa fa-download"></i> Descargar</a>
 				</div>
 			<?php endif; ?>
 		</div>
@@ -48,7 +43,7 @@
 							$limit = 1;
 						}
 					}
-						$idSuc = $_SESSION["usr_suc"];
+					$idSuc = $_SESSION["usr_suc"];
 					$paginas = floor(count($empleados)/$limit);
 					$spaginas = count($empleados)%$limit;
 					if($spaginas>0){$paginas++;}
@@ -149,12 +144,7 @@
 					</div>
 					<div class="btn-group pull-right">
 					<div>
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-download"></i> Descargar <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a id="reporteEPS" target="_blank">Excel (.xlsx)</a></li>
-						</ul>
+						<a class="btn btn-default" id="reporteEPS" target="_blank"><i class="fa fa-download"></i> Descargar</a>
 					</div>
 				</div>
 				</div>
