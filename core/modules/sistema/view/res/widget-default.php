@@ -1,4 +1,5 @@
 <?php
+	$usr = UserData::getById(Session::getUID());
 	$materiaP = MateriaPrimaData::getAll();
 	$reabs = ReabastecimientoData::getAll();
 	$matP = false;
@@ -66,6 +67,7 @@
 				$spaginas = count($reabs)%$limit;
 				if($spaginas>0){$paginas++;}
 				$reabs = ReabastecimientoData::getByPage($start,$limit);
+				$num = $start;
 		?>
 
 			<div class="table-responsive">
@@ -73,9 +75,11 @@
 					<thead>
 						<tr>
 							<th></th>
+							<th>No.</th>
 							<th>No. Factura</th>
 							<th>Proveedor</th>
 							<th>Fecha</th>
+							<th>Usuario</th>
 							<th>Total</th>
 							<th></th>
 						</tr>
@@ -85,26 +89,16 @@
 						<?php
 							$total = 0;
 							$reabT = ReabastecimientoMPData::getAllByReabId($re->id);
+							foreach($reabT as $rb){$total += $rb->total;}
 						?>
 						<tr>
-							<td style="width:30px;"><a href="index.php?view=onere&id=<?php echo $re->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
-							<td style="width:125px;">
-								<?php echo $re->comprobante; ?>
-							</td>
-							<td>
-								<?php echo $re->getProvider()->nombre;?>
-							</td>
-							<td>
-								<?php echo $re->fecha; ?>
-							</td>
-							<td>
-								<strong>$
-								<?php foreach($reabT as $rb){
-									$total += $rb->total;
-								}?>
-								<?php echo number_format($total,2,'.',','); ?>
-								</strong>
-							</td>
+							<td style="width: 30px;"><a href="index.php?view=onere&id=<?php echo $re->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+							<td style="width: 40px;"><?php echo $num++; ?></td>
+							<td style="width:125px;"><?php echo $re->comprobante; ?></td>
+							<td><?php echo $re->getProvider()->nombre;?></td>
+							<td><?php echo $re->fecha; ?></td>
+							<td><?php echo $usr->fullname; ?></td>
+							<td><strong>$ <?php echo number_format($total,2,'.',','); ?></strong></td>
 							<td style="width: 40px;">
 
 								<a title="¿Eliminar?" href="index.php?view=delre&id=<?php echo $re->id;?>" class="btn btn-danger btn-xs"
@@ -178,6 +172,5 @@
 		<?php
 		endif;
 		?>
-		<br><br><br>
 	</div>
 </div>

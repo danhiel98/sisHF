@@ -6,8 +6,12 @@
 	include ("../../core/modules/sistema/model/ProductData.php");
 	include ("../../core/modules/sistema/model/ProductoSucursalData.php");
 	include ("../../core/modules/sistema/model/AbonoData.php");
+	include ("../../core/modules/sistema/model/MantenimientoData.php");
 	
 	if (isset($_POST["idFin"]) && !empty($_POST["idFin"]) && isset($_POST["option"])) {
+		
+		$idSuc = $_SESSION["usr_suc"];
+		$idUsr = Session::getUID();
 		$opcion = $_POST["option"];
 		$id = $_POST["idFin"];
 		$pedido = PedidoData::getById($id); #Obtener la información del pedido a través de su ID
@@ -28,21 +32,34 @@
 
 				$error = false; #Verificar si no hay suficientes productos para continuar
 				$errorProd = array(); #Cuales son los productos insuficientes
-
+				
+				$mantto = new MantenimientoData();
+				$prodsMantto = array();
 				foreach ($products as $prd){
-					$prod = ProductoSucursalData::getBySucursalProducto($_SESSION["usr_suc"],$prd->idproducto);
+					$prod = ProductoSucursalData::getBySucursalProducto($idSuc,$prd->idproducto);
 					$resta = $prod->cantidad - $prd->cantidad; #Cantidad de productos existentes - cantidad de productos pedidos
 					if ($resta < 0){
 						$error = true; #Ha encontrado al menos un error
 						array_push($errorProd,$prd); #Agregar datos de los productos insuficiente encontrados
 					}
+					if ($prd->mantenimiento == 1){
+						array_push(
+							$prodsMantto,
+							array(
+								"id" => $prd->idproducto,
+								"cantidad" => $prd->cantidad,
+								"nombre" => $prd->getProduct()->nombre,
+								"meses" => $prd->getProduct()->mesesmantto
+							)
+						);
+					}
 				}
-				
+
 				if($pedido->restante > 0){
 				?>
 					<div class="alert alert-warning">
 						Debe realizar el último pago para poder entregar el pedido.
-						<a class="btn" id="newPago">Registrar pago</a>
+						<a href="#" id="newPago">Registrar pago</a>
 					</div>
 					<script>
 						$("#newPago").click(function(){
@@ -53,11 +70,28 @@
 				}else{
 					if (!$error){
 						foreach ($products as $prd){
-							$prod = ProductoSucursalData::getBySucursalProducto($_SESSION["usr_suc"],$prd->idproducto);
+							$prod = ProductoSucursalData::getBySucursalProducto($idSuc,$prd->idproducto);
 							$prod->cantidad -= $prd->cantidad;
 							$prod->updateEx();
 						}
 						$pedido->finalizar($pedido->id);
+
+						if (count($prodsMantto) > 0){
+							$mantto->idpedido = $pedido->id;
+							$mantto->idsucursal = $idSuc;
+							$mantto->idusuario = $idUsr;
+							foreach($prodsMantto as $p){
+								$fecha = new DateTime(date("Y-m-d"));
+								$fecha->add(new DateInterval("P".$p['meses']."M"));
+								$fecha->setTime(23, 59, 59);
+								$mantto->idproducto = $p['id'];
+								$mantto->title = "Mantenimiento de ".$p['cantidad']." ".$p['nombre'];
+								$mantto->start = $fecha->format("Y-m-d");
+								$mantto->end = $fecha->format("Y-m-d H:i:s");
+								$mantto->add();
+							}
+						}
+
 					}else{
 						?>
 						<div>
@@ -66,7 +100,7 @@
 						<div class="list-group">
 							<?php foreach($errorProd as $prd): ?>
 							<div class="list-group-item">
-								<?php $prod = ProductoSucursalData::getBySucursalProducto($_SESSION["usr_suc"],$prd->idproducto); ?>
+								<?php $prod = ProductoSucursalData::getBySucursalProducto($idSuc,$prd->idproducto); ?>
 									<?php echo $prod->getProduct()->nombre; ?>
 									<div class="pull-right">
 									<span data-toggle="tooltip" title="Existentes" class="label label-danger"><?php echo $prod->cantidad; ?></span>

@@ -60,32 +60,21 @@
   	<?php include "detallesError.php"; ?>
 	<script src="js/bootstrap-confirmation.js"></script>
     
-    <?php
-		if (isset($_COOKIE["okPdido"]) && !empty($_COOKIE["okPdido"])):
-	?>
+    <?php if (isset($_COOKIE["okPdido"]) && !empty($_COOKIE["okPdido"])): ?>
         <div class="alert alert-success alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okPdido"]; ?></p>
         </div>
-    <?php
-        setcookie("okPdido","",time()-18600);
-        endif;
-    ?>
+    <?php setcookie("okPdido","",time()-18600); endif; ?>
 
-    <?php
-		if (isset($_COOKIE["errorPdido"]) && !empty($_COOKIE["errorPdido"])):
-	?>
+    <?php if (isset($_COOKIE["errorPdido"]) && !empty($_COOKIE["errorPdido"])): ?>
         <div class="alert alert-warning alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["errorPdido"]; ?></p>
         </div>
-    <?php
-        setcookie("errorPdido","",time()-18600);
-        endif;
-    ?>
+    <?php setcookie("errorPdido","",time()-18600); endif; ?>
      
-    <?php if ($pdids): ?>
-    <?php 
+    <?php if ($pdids):
         $start = 1; $limit = 10;
         if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
             $start = $_REQUEST["start"];
@@ -102,14 +91,13 @@
     ?>
   	<ul class="nav nav-tabs">
 		<li class="active"><a href="#process">Pendientes</a></li>
-		<li><a href="#end">Entregados</a></li>
+		<li><a href="#end" id="entregado">Entregados</a></li>
     </ul>
     <div class="tab-content">
 		<div id="process" class="tab-pane fade in active">
         	<h2>Pedidos Pendientes</h2>
-            <?php if ($pdidsA): ?>
-            <?php include "../../core/modules/sistema/view/agregarPago.php"; ?>
-        	<?php 
+            <?php if ($pdidsA):
+                include "../../core/modules/sistema/view/agregarPago.php";
 				$paginas = floor(count($pedidosA)/$limit);
 				$spaginas = count($pedidosA)%$limit;
 				if($spaginas>0){$paginas++;}
@@ -118,14 +106,16 @@
 			<div class="table-responsive">
 				<table class="table table-hover table-bordered">
 					<thead>
-						<th style="width: 45px;"></th>
-						<th style="width: 45px;">No.</th>
-						<th>Cliente</th>
-						<th>Fecha de Solicitud</th>
-                        <th>Fecha de Entrega</th>
-                        <?php if($actualSuc): ?>
-                        <th style="width: 80px;"></th>
-                        <?php endif; ?>
+                        <tr>
+                            <th style="width: 45px;"></th>
+                            <th style="width: 45px;">No.</th>
+                            <th>Cliente</th>
+                            <th>Fecha de Solicitud</th>
+                            <th>Fecha de Entrega</th>
+                            <?php if($actualSuc): ?>
+                            <th style="width: 80px;"></th>
+                            <?php endif; ?>
+                        </tr>
 					</thead>
 					<tbody>
 					<?php foreach ($pedidosA as $pdo): ?>
@@ -146,14 +136,14 @@
                                     data-title="¿Finalizar?">
                                     <i class="fa fa-check"></i>
                                 </a>
-                                 <a title="¿Eliminar?" href="#" class="btn btn-danger btn-xs finalizar" id="<?php echo $pdo->id; ?>" data-opc="eliminar"
+                                <a title="¿Eliminar?" href="#" class="btn btn-danger btn-xs finalizar" id="<?php echo $pdo->id; ?>" data-opc="eliminar"
                                     data-toggle="confirmation-popout" data-popout="true" data-placement="left"
                                     data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
                                     data-btn-ok-class="btn-success btn-xs"
                                     data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
                                     data-btn-cancel-class="btn-danger btn-xs">
-                                        <i class="fa fa-trash fa-fw"></i>
-                                    </a>
+                                    <i class="fa fa-trash fa-fw"></i>
+                                </a>
                             </td>
                             <?php endif; ?>
 						</tr>
@@ -163,36 +153,33 @@
 			</div>
 			<div class="pull-right">
 				<ul class="pagination">
-					<?php if($start != 1):?>
-						<?php
-						$prev = "#";
+                    <?php if($start != 1):
+                        $prev = "#";
 						if($start != 1){
 							$prev = "?start=".($start-$limit)."&limit=".$limit."&sucursal=".$idSuc;
 						}
-						?>
+					?>
 						<li class="previous"><a class="pag" href="ajax/pedidos/consulta.php<?php echo $prev; ?>">&laquo;</a></li>
-						<?php endif; ?>
-						<?php 
+					<?php endif;
 						$anterior = 1;
 						for($i=1; $i<=$paginas; $i++):
 							$inicio = 1;
 							if ($i != 1){
-							$inicio = $limit + $anterior;
-							$anterior = $inicio;
+                                $inicio = $limit + $anterior;
+                                $anterior = $inicio;
 							}
 						?>
 						<li <?php if($start == $inicio){echo "class='active'";} ?>>
 							<a class="pag" href="ajax/pedidos/consulta.php?start=<?php echo $inicio; ?>&limit=<?php echo $limit."&sucursal=".$idSuc; ?>"><?php echo $i; ?></a>
 						</li>
-						<?php
+					    <?php
 						endfor;
-						?>
-						<?php if($start != $anterior): ?>
-						<?php 
-						$next = "#";
-						if($start != $anterior){
-							$next = "?start=".($start + $limit)."&limit=".$limit."&sucursal=".$idSuc;
-						}
+                        
+                        if($start != $anterior):
+                            $next = "#";
+                            if($start != $anterior){
+                                $next = "?start=".($start + $limit)."&limit=".$limit."&sucursal=".$idSuc;
+                            }
 						?>
 						<li class="previous"><a class="pag" href="ajax/pedidos/consulta.php<?php echo $next; ?>">&raquo;</a></li>
 					<?php endif; ?>
@@ -239,7 +226,7 @@
                     <tbody>
                     <?php foreach ($pedidosT as $pdo): ?>
                         <tr>
-                            <td><a href="index.php?view=detallepedido&id=<?php echo $pdo->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+                            <td><a href="index.php?view=detallepedido&id=<?php echo $pdo->id; ?>#end" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
                             <td><?php echo $count++; ?></td>
                             <td><?php echo $pdo->getClient()->name; ?></td>
                             <td><?php echo $pdo->fechapedido; ?></td>
@@ -252,37 +239,32 @@
             </div>
             <div class="pull-right">
                 <ul class="pagination">
-                    <?php if($start != 1):?>
-                        <?php
+                    <?php if($start != 1):
                         $prev = "#";
                         if($start != 1){
                             $prev = "?start=".($start-$limit)."&limit=".$limit."&sucursal=".$idSuc;
                         }
                         ?>
                         <li class="previous"><a class="pagF" href="ajax/pedidos/consultaFinished.php<?php echo $prev; ?>">&laquo;</a></li>
-                        <?php endif; ?>
-                        <?php 
-                        $anterior = 1;
-                        for($i=1; $i<=$paginas; $i++):
-                            $inicio = 1;
-                            if ($i != 1){
+                    <?php endif;
+                    $anterior = 1;
+                    for($i=1; $i<=$paginas; $i++):
+                        $inicio = 1;
+                        if ($i != 1){
                             $inicio = $limit + $anterior;
                             $anterior = $inicio;
-                            }
-                        ?>
-                        <li <?php if($start == $inicio){echo "class='active'";} ?>>
-                            <a class="pagF" href="ajax/pedidos/consultaFinished.php?start=<?php echo $inicio; ?>&limit=<?php echo $limit."&sucursal=".$idSuc; ?>"><?php echo $i; ?></a>
-                        </li>
-                        <?php
-                        endfor;
-                        ?>
-                        <?php if($start != $anterior): ?>
-                        <?php 
+                        }
+                    ?>
+                    <li <?php if($start == $inicio){echo "class='active'";} ?>>
+                        <a class="pagF" href="ajax/pedidos/consultaFinished.php?start=<?php echo $inicio; ?>&limit=<?php echo $limit."&sucursal=".$idSuc; ?>"><?php echo $i; ?></a>
+                    </li>
+                    <?php endfor; ?>
+                    <?php if($start != $anterior):
                         $next = "#";
                         if($start != $anterior){
                             $next = "?start=".($start + $limit)."&limit=".$limit."&sucursal=".$idSuc;
                         }
-                        ?>
+                    ?>
                         <li class="previous"><a class="pagF" href="ajax/pedidos/consultaFinished.php<?php echo $next; ?>">&raquo;</a></li>
                     <?php endif; ?>
                 </ul>
@@ -320,45 +302,50 @@
 
   <script>
     
-    $(document).ready(function(){
-      $(".nav-tabs a").click(function(){
-        $(this).tab('show');
-      });
-    });
-
-    $('[data-toggle=confirmation]').confirmation({
-      rootSelector: '[data-toggle=confirmation]',
-      container: 'body'});
-    $('[data-toggle=confirmation-singleton]').confirmation({
-      rootSelector: '[data-toggle=confirmation-singleton]',
-      container: 'body'});
-    $('[data-toggle=confirmation-popout]').confirmation({
-      rootSelector: '[data-toggle=confirmation-popout]',
-      container: 'body'});
-    $('#confirmation-delegate').confirmation({
-      selector: 'button'
-    });
-
-    function finalizar(id,opc){
-      $.ajax({
-        url: "ajax/pedidos/procesos.php",
-        type: "POST",
-        dataType: "html",
-        data: {
-            idFin: id,
-            option: opc
-        }
-      }).done(function(res){
-          var detalleProds = $("#detallesProd");
-          var detalles = $("#detalles");
-          //Esta función se encarga de obtener todos los datos de los pedidos, se encuentra en el archivo ajax.js
-          if (res != ""){ 
-                detalleProds.html(res); //Cargar los detalles de la materia prima insuficiente
-                detalles.modal().show(); //Mostrar el modal
-            }else{
-            pedidos();
-            }
+        $(document).ready(function(){
+        $(".nav-tabs a").click(function(){
+            $(this).tab('show');
         });
-    }
+        });
+
+        $('[data-toggle=confirmation]').confirmation({
+        rootSelector: '[data-toggle=confirmation]',
+        container: 'body'});
+        $('[data-toggle=confirmation-singleton]').confirmation({
+        rootSelector: '[data-toggle=confirmation-singleton]',
+        container: 'body'});
+        $('[data-toggle=confirmation-popout]').confirmation({
+        rootSelector: '[data-toggle=confirmation-popout]',
+        container: 'body'});
+        $('#confirmation-delegate').confirmation({
+        selector: 'button'
+        });
+
+        function finalizar(id,opc){
+        $.ajax({
+            url: "ajax/pedidos/procesos.php",
+            type: "POST",
+            dataType: "html",
+            data: {
+                idFin: id,
+                option: opc
+            }
+        }).done(function(res){
+            var detalleProds = $("#detallesProd");
+            var detalles = $("#detalles");
+            //Esta función se encarga de obtener todos los datos de los pedidos, se encuentra en el archivo ajax.js
+            if (res != ""){ 
+                    detalleProds.html(res); //Cargar los detalles de la materia prima insuficiente
+                    detalles.modal().show(); //Mostrar el modal
+                }else{
+                pedidos();
+                }
+            });
+        }
+
+        vHash = window.location.hash;
+        if (vHash == "#end"){
+            $("#entregado").tab("show");
+        }
 
     </script>

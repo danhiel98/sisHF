@@ -1,19 +1,18 @@
 <?php
-	$emp = false;
-
-	if (isset($_GET["emp"]) && $_GET["emp"] == "true") {
-		$emp = true;
-		$empleados = EmpleadoData::getAllForUser();
-		if (isset($_SESSION["usr_suc"]) && !isset($_SESSION["adm"])) {
-			$empleados = EmpleadoData::getAllForUserBySucId($_SESSION["usr_suc"]);
-		}
-		#Obtener los tipos de usuraios existentes
-		$tipos = UserTypeData::getAll();
-	}else{
-		if ($_SESSION["user_id"] != 1) {
-			@header("location: index.php?view=users");
-		}
+	
+	$empleados = EmpleadoData::getAllForUser();
+	
+	if (isset($_SESSION["usr_suc"]) && !isset($_SESSION["adm"])) {
+		$empleados = EmpleadoData::getAllForUserBySucId($_SESSION["usr_suc"]);
 	}
+
+	if(count($empleados) <= 0){
+		error();
+	}
+	#Obtener los tipos de usuraios existentes
+	$tipos = UserTypeData::getAll();
+	
+	// @header("location: index.php?view=users");
 ?>
 <script type="text/javascript" src="ajax/usuario/ajax.js"></script>
 <a href="index.php?view=users" class="btn btn-default"><i class="fa fa-arrow-left"></i> Regresar</a>
@@ -22,7 +21,7 @@
 	<h1>Agregar Usuario</h1>
 	<br>
 		<form class="form-horizontal" method="post" id="adduser" action="index.php?view=adduser" role="form">
-			<?php if (!$emp): ?>
+			<!-- <?php #if (!$emp): ?>
 			<div class="form-group control-group">
 			    <label for="name" class="col-lg-2 control-label">Nombres*</label>
 			    <div class="col-md-6 controls">
@@ -35,7 +34,7 @@
 					<input type="text" name="lastname" class="form-control" id="lastname" placeholder="Apellidos" data-validation-regex-regex="[A-Za-zÁ-Úá-ú ]{3,}" data-validation-regex-message="Introduzca un apellido válido" maxlength="30" required>
 				</div>
 			</div>
-			<?php else: ?>
+			<?php #else: ?> -->
 			<div class="form-group">
 			    <label for="employ" class="col-lg-2 control-label">Empleado*</label>
 			    <div class="col-md-6">
@@ -47,7 +46,7 @@
 			      </select>
 			    </div>
 			  </div>
-			<?php endif; ?>
+			<?php #endif; ?>
 			
 			<div class="form-group control-group">
 				<label for="sucursal" class="col-lg-2 control-label">Sucursal*</label>

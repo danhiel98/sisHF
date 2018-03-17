@@ -3,12 +3,16 @@
 
 	$sucursalesDisponibles = array();
 	foreach($sucursales as $suc){
-		if($suc->id != 1){ //Si no es la principal
-			$usuarios = UserData::getAllBySucId($suc->id);
-			if(count($usuarios) > 0){//Solamente aparecerán las sucursales donde se hayan creado usuarios previamente
-				array_push($sucursalesDisponibles,$suc); 
-			}
+		$usuarios = UserData::getAllBySucId($suc->id);
+		if(count($usuarios) > 0){//Solamente aparecerán las sucursales donde se hayan creado usuarios previamente
+			array_push($sucursalesDisponibles,$suc); 
 		}
+		// if($suc->id != 1){ //Si no es la principal
+		// 	$usuarios = UserData::getAllBySucId($suc->id);
+		// 	if(count($usuarios) > 0){//Solamente aparecerán las sucursales donde se hayan creado usuarios previamente
+		// 		array_push($sucursalesDisponibles,$suc); 
+		// 	}
+		// }
 	}
 	
 	if (count($sucursalesDisponibles) > 0) {

@@ -1,19 +1,19 @@
 $.ajaxSetup({
     error: function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status === 0) {
-            alert('No conectado: Verifique su conexión a internet.');
+            console.log('No conectado: Verifique su conexión a internet.');
         } else if (jqXHR.status == 404) {
-            alert('No se encontró la página solicitada [404]');
+            console.log('No se encontró la página solicitada [404]');
         } else if (jqXHR.status == 500) {
-            alert('Error interno del servidor [500].');
+            console.log('Error interno del servidor [500].');
         } else if (textStatus === 'parsererror') {
-            alert('Requested JSON parse failed.');
+            console.log('Requested JSON parse failed.');
         } else if (textStatus === 'timeout') {
-            alert('Time out error.');
+            console.log('Time out error.');
         } else if (textStatus === 'abort') {
-            alert('Solicitud abortada.');
+            console.log('Solicitud abortada.');
         } else {
-            alert('Error desconocido: ' + jqXHR.responseText);
+            console.log('Error desconocido: ' + jqXHR.responseText);
         }
     }
 });
@@ -25,6 +25,15 @@ $(function(){
             container: 'body'
         }
     );
+
+    $(".nav-tabs a").click(function () {
+        $(this).tab('show');
+    });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
 })
 
 function comparar(valor1,valor2){

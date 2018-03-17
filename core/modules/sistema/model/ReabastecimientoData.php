@@ -17,7 +17,7 @@
 
 		public function add(){
 			$sql = "insert into ".self::$tablename." (idUsuario, idProveedor, tipoComprobante, numComprobante, fecha, total) ";
-			$sql .= "value ($this->idusuario, $this->idproveedor, $this->tipoComprobante, $this->comprobante, $this->fecha, $this->total)";
+			$sql .= "value ($this->idusuario, $this->idproveedor, $this->tipoComprobante, \"$this->comprobante\", $this->fecha, $this->total)";
 			return Executor::doit($sql);
 		}
 
@@ -58,7 +58,7 @@
 
 		public static function getByPage($start, $limit){
 			$start = $start - 1;
-			$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
+			$sql = "select * from ".self::$tablename." where estado = 1 order by fecha desc limit $start,$limit";
 			$query = Executor::doit($sql);
 			$array = array();
 			$cnt = 0;

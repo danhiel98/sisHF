@@ -5,6 +5,7 @@
 	
 	if ((isset($_GET["id"]) && is_numeric($_GET["id"])) && !is_null($fact->getById($_GET["id"]))){
 		$sell = $fact->getById($id);
+		$mantto = MantenimientoData::getByIdFactura($sell->id);
 		$prodsV = $fact->getAllSellsByFactId($id);
 
 		foreach ($prodsV as $prod){
@@ -12,6 +13,7 @@
 			$prodSuc->cantidad = $prodSuc->cantidad + $prod->cantidad;
 			$prodSuc->updateEx();
 		}
+		$mantto->del();
 		$sell->del();
 		setcookie("okFactura","¡Se eliminó la información correctamente!");
 	}else{

@@ -83,7 +83,7 @@ class ServiceData {
 		$base = new Database();
 		$cnx = $base->connect();
 		$p = $cnx->real_escape_string($p);
-		$sql = "select * from ".self::$tablename." where nombre like '%$p%' or idServicio like '%$p%' and estado = 1";
+		$sql = "select * from ".self::$tablename." where nombre like '%$p%' or descripcion like '%$p%' and estado = 1";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

@@ -15,7 +15,6 @@ function usuarios(tab) {
 $(function () {
 	usuarios();
 });
-
 */
 
 function obtenerDatosDeSucursal(idSucursal){
@@ -25,6 +24,15 @@ function obtenerDatosDeSucursal(idSucursal){
 		dataType : 'html',
 		data : { sucursal: idSucursal }
 	}).done(function(resultado){
+		btnRep = $("#reporteEPS");
+		chars = resultado.length;
+		if (chars != 771 && chars != 839){
+			btnRep.attr("href","report/usuario.php?idSuc=" + idSucursal);
+			btnRep.show();
+		}else{
+			btnRep.removeAttr("href");
+			btnRep.hide();
+		}
 		$("#resultadoSucursal").html(resultado);
 	})
 }

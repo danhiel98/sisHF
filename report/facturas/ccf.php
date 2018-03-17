@@ -12,15 +12,19 @@ include "../../core/modules/sistema/model/DireccionData.php";
 include "../../core/modules/sistema/model/AbonoData.php";
 include "../../core/modules/sistema/model/PedidoData.php";
 
-$idFact = $_GET["id"];
+if (isset($_GET["id"]) && is_numeric($_GET["id"])){
+    $idFact = $_GET["id"];
+}else{
+    error();
+}
+
 $abono = false;
 $condicion = "";
 $tipo = "";
 if (!isset($_REQUEST["abono"])){ //En caso que no sea un pago de pedido
     $factura = FacturaData::getById($idFact);
     if(is_null($factura)){
-        echo "Ha ocurrido un error";
-        exit();
+        error();
     }
     $pVend = FacturaData::getAllSellsByFactId($idFact);
     $sVend = FacturaData::getAllServicesByFactId($idFact);
@@ -144,10 +148,11 @@ foreach($pVend as $vend){
     }
     $pdf->setXY(25,$y);
     
+    $nombre = utf8_decode($prod->nombre);
     if(!$abono){
-        $pdf->MultiCell(57,5.5,utf8_decode($prod->nombre));
+        $pdf->MultiCell(57,5.5,$nombre);
     }else{
-        $pdf->MultiCell(57,5.5,"$vend->cantidad $prod->nombre(s)");
+        $pdf->MultiCell(57,5.5,"$vend->cantidad $nombre(s)");
     }
     $pdf->setXY(86,$y);
     
@@ -186,10 +191,11 @@ foreach($sVend as $vend){
         $pdf->Cell(10,5.5,"");
     }
     $pdf->setXY(25,$y);
+    $nombre = $serv->nombre;
     if(!$abono){
-        $pdf->MultiCell(57,5.5,$serv->nombre);
+        $pdf->MultiCell(57,5.5,$nombre);
     }else{
-        $pdf->MultiCell(57,5.5,"$vend->cantidad $serv->nombre(s)");
+        $pdf->MultiCell(57,5.5,"$vend->cantidad $nombre(s)");
     }
     $pdf->setXY(86,$y);
     

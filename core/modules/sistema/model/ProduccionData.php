@@ -69,6 +69,7 @@ class ProduccionData {
 			$array[$cnt] = new ProduccionData();
 			$array[$cnt]->id = $r['idProduccion'];
 			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->fechainicio = $r['fechaInicio'];
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
@@ -90,6 +91,7 @@ class ProduccionData {
 			$array[$cnt] = new ProduccionData();
 			$array[$cnt]->id = $r['idProduccion'];
 			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->fechainicio = $r['fechaInicio'];
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
@@ -103,7 +105,7 @@ class ProduccionData {
 
 	public static function getFinishedByPage($start,$limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where terminado = 1 and estado = 1 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where terminado = 1 and estado = 1 order by fechaRegistro desc limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -111,6 +113,7 @@ class ProduccionData {
 			$array[$cnt] = new ProduccionData();
 			$array[$cnt]->id = $r['idProduccion'];
 			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->fechainicio = $r['fechaInicio'];
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
@@ -131,6 +134,7 @@ class ProduccionData {
 			$array[$cnt] = new ProduccionData();
 			$array[$cnt]->id = $r['idProduccion'];
 			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->fechainicio = $r['fechaInicio'];
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
@@ -142,7 +146,7 @@ class ProduccionData {
 
 	public static function getActiveByPage($start,$limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where terminado = 0 and estado = 1 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where terminado = 0 and estado = 1 order by fechaRegistro desc limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -150,6 +154,7 @@ class ProduccionData {
 			$array[$cnt] = new ProduccionData();
 			$array[$cnt]->id = $r['idProduccion'];
 			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->fechainicio = $r['fechaInicio'];
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
@@ -158,30 +163,6 @@ class ProduccionData {
 		}
 		return $array;
 	}
-	
-	/*
-	public static function getAllByPage($start_from,$limit){
-		$sql = "select * from ".self::$tablename." where idProduccion >= $start_from limit $limit";
-		$query = Executor::doit($sql);
-		$array = array();
-		$cnt = 0;
-		while($r = $query[0]->fetch_array()){
-			$array[$cnt] = new ProduccionData();
-			$array[$cnt]->id = $r['idProducto'];
-			$array[$cnt]->idproducto = $r['idProducto'];
-			$array[$cnt]->fechainicio = $r['fechaInicio'];
-			$array[$cnt]->fechafin = $r['fechaFin'];
-			$array[$cnt]->cantidad = $r['cantidadProducto'];
-			$array[$cnt]->terminado = $r['terminado'];
-			$array[$cnt]->estado = $r['estado'];
-			$array[$cnt]->imagen = $r['imagen'];
-			$array[$cnt]->fecharegistro = $r['fechaRegistro'];
-			$array[$cnt]->fechafinalizado = $r['fechaFinalizado'];
-			$cnt++;
-		}
-		return $array;
-	}
-	*/
 
 	public static function getLike($p){
 		$base = new Database();
@@ -195,6 +176,7 @@ class ProduccionData {
 			$array[$cnt] = new ProduccionData();
 			$array[$cnt]->id = $r['idProducto'];
 			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->fechainicio = $r['fechaInicio'];
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];
@@ -216,6 +198,7 @@ class ProduccionData {
 			$array[$cnt] = new ProduccionData();
 			$array[$cnt]->id = $r['idProducto'];
 			$array[$cnt]->idproducto = $r['idProducto'];
+			$array[$cnt]->idusuario = $r['idUsuario'];
 			$array[$cnt]->fechainicio = $r['fechaInicio'];
 			$array[$cnt]->fechafin = $r['fechaFin'];
 			$array[$cnt]->cantidad = $r['cantidadProducto'];

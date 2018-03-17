@@ -1,18 +1,16 @@
 <script type="text/javascript" src="ajax/pedido/ajax.js"></script>
 <?php
-	$clientes = ClientData::getAll();
 	$sucursal = SucursalData::getAll();
+	$clientes = ClientData::getAll();
 	$servicios = ServiceData::getAll();
+	$productos = ProductData::getAll();
+	include("modals/resumen.php");
+	if ((!count($productos) > 0 && !count($servicios) > 0) || !count($clientes)>0){
+		@header("location: index.php?view=pedidos");
+	}
 ?>
-<?php if(isset($_SESSION["cartp"]) && count($_SESSION["cartp"])>0 && isset($_GET["x"])):?>
-	<script type="text/javascript">
-		$(function(){
-			$("#btnResumen").click();
-		});
-	</script>
-<?php endif; ?>
+
 <div class="row">
-	<?php include("modals/resumen.php"); ?>
 	<div class="col-md-12">
 		<a class="btn btn-default" href="index.php?view=pedidos"><i class="fa fa-arrow-left"></i> Regresar</a>
 		<h1>Pedido</h1>
@@ -21,44 +19,10 @@
 				<i class="fa fa-list"></i> Ver Resumen</span>
 			</button>
 		</div>
-		<input type="hidden" name="sOrigen" id="sOrigen" value="<?php echo $_SESSION["usr_suc"]; ?>">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#prods">Productos</a></li>
-			<li><a href="#servs">Servicios</a></li>
+			<li class="active"><a data-toggle="tab" href="#prods">Productos</a></li>
+			<li><a data-toggle="tab" href="#servs">Servicios</a></li>
 		</ul>
-		<div class="tab-content">
-			<div id="prods" class="tab-pane fade in active">
-				<p><b>Buscar producto por nombre:</b></p>
-				<div class="row">
-					<div class="col-md-5 col-sm-6 col-xs-10">
-						<div class="input-group">
-							<input type="text" name="product" id="busqueda" placeholder="Buscar producto" class="form-control" autofocus>
-							<span class="input-group-addon"><i class="fa fa-search fa-fw"></i>Buscar</span>
-						</div>
-					</div>
-					<div class="clearfix"></div>
-					<br>
-					<div class="col-md-12">
-						<div id="tabla_resultado">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id="servs" class="tab-pane fade">
-				<p><b>Agregar servicio al pedido</b></p>
-				<br>
-				<div class="row">
-					<div class="col-md-12" id="resultado_srv">
-					</div>
-				</div>
-			</div>
-		</div>
+		<div class="tab-content" id="resultado"></div>
 	</div>
 </div>
-<script>
-	$(document).ready(function(){
-		$(".nav-tabs a").click(function(){
-			$(this).tab('show');
-		});
-	});
-</script>

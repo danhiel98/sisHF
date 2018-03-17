@@ -12,9 +12,11 @@ $motivos = CausaDevolucionData::getAll();
 			<h4 class="modal-title" id="myModalLabel"><i class='fa fa-reply'></i> Nueva Devoluci&oacute;n</h4>
 		</div>
 		<div class="modal-body">
-			<div class="form-group control-group compGroup">
-				<label for="numComprobante" class="col-lg-2 control-label">No. Comprobante:</label>
-				<div class="col-lg-8 controls">
+			<div class="form-group col-md-2">
+				<label for="numComprobante" class="col-md-12 control-label">No. Comprobante:</label>
+			</div>
+			<div class="form-group control-group compGroup col-md-4">
+				<div class="col-md-12 controls">
 					<div class="input-group controls">
 						<input name="numComprobante" id="numComprobante" type="text" class="form-control" required>
                 		<span class="input-group-addon">
@@ -23,21 +25,32 @@ $motivos = CausaDevolucionData::getAll();
               		</div>
 				</div>
 			</div>
-			<div class="form-group control-group">
-				<label for="cliente" class="col-lg-2 control-label">Cliente:</label>
-				<div class="col-lg-8 controls">
+
+			<div class="form-group col-md-2">
+				<label for="cliente" class="col-md-12 control-label">Cliente:</label>
+			</div>
+			<div class="form-group control-group col-md-5">
+				<div class="col-md-12 controls">
 					<input name="cliente" id="cliente" type="text" class="form-control" readonly required>
 				</div>
 			</div>
-			<div class="form-group control-group">
-				<label for="comprobante" class="col-lg-2 control-label">Tipo Comprobante:</label>
-				<div class="col-lg-8 controls">
+
+			<div class="clearfix"></div>
+
+			<div class="form-group col-md-2">
+				<label for="comprobante" class="col-md-12 control-label">Tipo Comprobante:</label>
+			</div>
+			<div class="form-group control-group col-md-4">
+				<div class="col-md-12 controls">
 					<input name="comprobante" id="comprobante" type="text" class="form-control" readonly required>
 				</div>
 			</div>
-			<div class="form-group control-group">
-				<label for="motivo" class="col-lg-2 control-label">Motivo:</label>
-				<div class="col-lg-8 controls">
+
+			<div class="form-group col-md-2">
+				<label for="motivo" class="col-md-12 control-label">Motivo:</label>
+			</div>
+			<div class="form-group control-group col-md-5">
+				<div class="col-md-12 controls">
 					<select name="motivo" id="motivo" class="form-control" required>
 						<option value="">--SELECCIONE--</option>
 						<?php foreach ($motivos as $mot): ?>
@@ -46,9 +59,13 @@ $motivos = CausaDevolucionData::getAll();
 					</select>
 				</div>
 			</div>
-			<div class="form-group control-group">
-				<label for="reembolso" class="col-lg-2 control-label">Reembolso:</label>
-				<div class="col-lg-8 controls">
+
+			<div class="clearfix"></div>
+			<div class="form-group col-md-2">
+				<label for="reembolso" class="col-md-12 control-label">Reembolso:</label>
+			</div>
+			<div class="form-group control-group col-md-4">
+				<div class="col-md-12 controls">
 					<div class="input-group">
 						<span class="input-group-addon">
 							<i class="fa fa-fw fa-dollar"></i>

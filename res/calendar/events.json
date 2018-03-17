@@ -1,0 +1,21 @@
+{
+	"success": 1,
+	"result": [
+		{
+			"id": "1",
+			"title": "Evento 1",
+			"url": "",
+			"class": "event-special",
+			"start": "1519624800000",
+			"end": "1519711199059"
+		},
+		{
+			"id": "2",
+			"title": "Evento 2",
+			"url": "",
+			"class": "event-warning",
+			"start": "1519711200000",
+			"end": "1519797599059"
+		}
+	]
+}

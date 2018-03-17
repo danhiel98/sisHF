@@ -38,7 +38,7 @@
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
 			<?php if($emps): ?>
-			<a class="btn btn-default" href="index.php?view=newuser&emp=true"><i class="icon-user-plus"></i> Nuevo Usuario</a>
+			<a class="btn btn-default" href="index.php?view=newuser"><i class="icon-user-plus"></i> Nuevo Usuario</a>
 			<?php endif; ?>
 			<?php if (count($users) > 0): ?>
 				<a class="btn btn-default" target="_blank" href="report/users.php "><i class="fa fa-download"></i> Descargar</a>
@@ -86,11 +86,13 @@
 				$spaginas = count($users)%$limit;
 				if($spaginas>0){$paginas++;}
 				$users = UserData::getAllByPage($start,$limit);
+				$num = $start;
 				?>
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
+								<th>No.</th>
 								<th>Nombres</th>
 								<th>Apellidos</th>
 								<th>Usuario</th>
@@ -110,6 +112,7 @@
 							if((isset($_SESSION["usr_suc"]) && ($idSuc == $_SESSION["usr_suc"])) || isset($_SESSION["adm"])):
 							?>
 							<tr>
+								<td style="width: 30px;"><?php echo $num++; ?></td>
 								<td><?php echo $user->getEmpleado()->nombre; ?></td>
 								<td><?php echo $user->getEmpleado()->apellido; ?></td>
 								<td><?php echo $user->username; ?></td>

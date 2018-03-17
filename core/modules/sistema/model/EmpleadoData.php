@@ -98,7 +98,7 @@ class EmpleadoData {
 
 	public static function getAllByPage($inicio,$cantidad){
 		$inicio = $inicio - 1;
-		$sql = "select * from ".self::$tablename." where activo = 1 limit $inicio,$cantidad";
+		$sql = "select * from ".self::$tablename." where activo = 1 order by idSucursal limit $inicio,$cantidad";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -205,9 +205,9 @@ class EmpleadoData {
 		return $array;
 	}
 
-	public static function getAllBySucPage($id,$inicio,$cantidad){
+	public static function getAllBySucPage($idSuc,$inicio,$cantidad){
 		$inicio = $inicio - 1;
-		$sql = "select * from ".self::$tablename." where idSucursal = $id and activo = 1 limit $inicio,$cantidad";
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and activo = 1 limit $inicio,$cantidad";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

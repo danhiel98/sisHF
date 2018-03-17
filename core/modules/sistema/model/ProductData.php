@@ -10,26 +10,27 @@ class ProductData {
 		$this->existencias = "";
 		$this->imagen = "";
 		$this->idusuario = "";
-		$this->mantenimiento = "";
+		$this->mantenimiento = "NULL";
+		$this->mesesmantto = "NULL";
 		$this->estado = "";
 	}
 
 	public function getCategory(){ return CategoryData::getById($this->idcategoria);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (idUsuario, idCategoria, nombre, descripcion, existencias, mantenimiento, precioCosteo, precioVenta)";
-		$sql .= "value ($this->idusuario,$this->idcategoria,\"$this->nombre\",\"$this->descripcion\",$this->existencias,$this->mantenimiento,$this->preciocosteo,$this->precioventa)";
+		$sql = "insert into ".self::$tablename." (idUsuario, idCategoria, nombre, descripcion, existencias, mantenimiento, precioCosteo, precioVenta, mesesMantto)";
+		$sql .= "value ($this->idusuario,$this->idcategoria,\"$this->nombre\",\"$this->descripcion\",$this->existencias,$this->mantenimiento,$this->preciocosteo,$this->precioventa,$this->mesesmantto)";
 		return Executor::doit($sql);
 	}
 
 	public function add_with_image(){
-		$sql = "insert into ".self::$tablename." (imagen, idUsuario, idCategoria, nombre, descripcion, existencias, mantenimiento, precioCosteo, precioVenta) ";
-		$sql .= "value (\"$this->imagen\",$this->idusuario,$this->idcategoria,\"$this->nombre\",\"$this->descripcion\",$this->existencias,$this->mantenimiento,$this->preciocosteo,$this->precioventa)";
+		$sql = "insert into ".self::$tablename." (imagen, idUsuario, idCategoria, nombre, descripcion, existencias, mantenimiento, precioCosteo, precioVenta, mesesMantto) ";
+		$sql .= "value (\"$this->imagen\",$this->idusuario,$this->idcategoria,\"$this->nombre\",\"$this->descripcion\",$this->existencias,$this->mantenimiento,$this->preciocosteo,$this->precioventa,$this->mesesmantto)";
 		return Executor::doit($sql);
 	}
 
 	public static function delById($id){
-		$sql = "update ".self::$tablename." set estado = 0 where idProducto =$id";
+		$sql = "update ".self::$tablename." set estado = 0 where idProducto = $id";
 		Executor::doit($sql);
 	}
 
@@ -39,12 +40,12 @@ class ProductData {
 	}
 
 	public function update(){
-		$sql = "update ".self::$tablename." set idCategoria=$this->idcategoria, nombre=\"$this->nombre\", descripcion=\"$this->descripcion\", mantenimiento=$this->mantenimiento, preciocosteo=$this->preciocosteo, precioventa=$this->precioventa where idProducto=$this->id";
+		$sql = "update ".self::$tablename." set idCategoria=$this->idcategoria, nombre=\"$this->nombre\", descripcion=\"$this->descripcion\", mantenimiento=$this->mantenimiento, mesesMantto=$this->mesesmantto, preciocosteo=$this->preciocosteo, precioventa=$this->precioventa where idProducto=$this->id";
 		return Executor::doit($sql);
 	}
 
 	public function updateEx(){
-		$sql = "update ".self::$tablename." set existencias = $this->existencias where idProducto=$this->id";
+		$sql = "update ".self::$tablename." set existencias = $this->existencias where idProducto = $this->id";
 		return Executor::doit($sql);
 	}
 
@@ -72,6 +73,7 @@ class ProductData {
 			$data->precioventa = $r['precioVenta'];
 			$data->existencias = $r['existencias'];
 			$data->mantenimiento = $r['mantenimiento'];
+			$data->mesesmantto = $r['mesesMantto'];
 			$data->imagen = $r['imagen'];
 			$data->fecha = $r['fechaRegistro'];
 			$data->estado = $r['estado'];
@@ -96,6 +98,7 @@ class ProductData {
 			$array[$cnt]->precioventa = $r['precioVenta'];
 			$array[$cnt]->existencias = $r['existencias'];
 			$array[$cnt]->mantenimiento = $r['mantenimiento'];
+			$array[$cnt]->mesesmantto = $r['mesesMantto'];
 			$array[$cnt]->imagen = $r['imagen'];
 			$array[$cnt]->fecha = $r['fechaRegistro'];
 			$array[$cnt]->estado = $r['estado'];
@@ -104,8 +107,9 @@ class ProductData {
 		return $array;
 	}
 
-	public static function getAllByPage($start_from,$limit){
-		$sql = "select * from ".self::$tablename." where estado = 1 and idProducto >= $start_from limit $limit";
+	public static function getAllByPage($inicio,$cantidad){
+		$inicio = $inicio - 1;
+		$sql = "select * from ".self::$tablename." where estado = 1 limit $inicio,$cantidad";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;
@@ -119,6 +123,7 @@ class ProductData {
 			$array[$cnt]->precioventa = $r['precioVenta'];
 			$array[$cnt]->existencias = $r['existencias'];
 			$array[$cnt]->mantenimiento = $r['mantenimiento'];
+			$array[$cnt]->mesesmantto = $r['mesesMantto'];
 			$array[$cnt]->imagen = $r['imagen'];
 			$array[$cnt]->fecha = $r['fechaRegistro'];
 			$array[$cnt]->estado = $r['estado'];
@@ -145,6 +150,7 @@ class ProductData {
 			$array[$cnt]->precioventa = $r['precioVenta'];
 			$array[$cnt]->existencias = $r['existencias'];
 			$array[$cnt]->mantenimiento = $r['mantenimiento'];
+			$array[$cnt]->mesesmantto = $r['mesesMantto'];
 			$array[$cnt]->imagen = $r['imagen'];
 			$array[$cnt]->fecha = $r['fechaRegistro'];
 			$array[$cnt]->estado = $r['estado'];
@@ -168,6 +174,7 @@ class ProductData {
 			$array[$cnt]->precioventa = $r['precioVenta'];
 			$array[$cnt]->existencias = $r['existencias'];
 			$array[$cnt]->mantenimiento = $r['mantenimiento'];
+			$array[$cnt]->mesesmantto = $r['mesesMantto'];
 			$array[$cnt]->imagen = $r['imagen'];
 			$array[$cnt]->fecha = $r['fechaRegistro'];
 			$array[$cnt]->estado = $r['estado'];

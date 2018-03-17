@@ -25,21 +25,26 @@
 			$spaginas = count($usuarios)%$limit;
 			if($spaginas>0){$paginas++;}
 			$usuarios = UserData::getAllBySucPage($id,$start,$limit);
+			$num = $start;
 	?>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th>Nombres</th>
-					<th>Apellidos</th>
-					<th>Usuario</th>
-					<th>Correo Electr&oacute;nico</th>
-					<th>Sucursal</th>
-					<th style="text-align:center;">Estado</th>
-					<th style="text-align:center;">Tipo</th>
+					<tr>
+						<th>No.</th>
+						<th>Nombres</th>
+						<th>Apellidos</th>
+						<th>Usuario</th>
+						<th>Correo Electr&oacute;nico</th>
+						<th>Sucursal</th>
+						<th style="text-align:center;">Estado</th>
+						<th style="text-align:center;">Tipo</th>
+					</tr>
 				</thead>
 				<?php foreach($usuarios as $user): ?>
 					<?php if((isset($_SESSION["usr_suc"]) && ($user->getEmpleado()->getSucursal()->id == $_SESSION["usr_suc"])) || isset($_SESSION["adm"])): ?>
 					<tr>
+						<td style="width: 30px;"><?php echo $num++; ?></td>
 						<td><?php echo $user->getEmpleado()->nombre; ?></td>
 						<td><?php echo $user->getEmpleado()->apellido; ?></td>
 						<td><?php echo $user->username; ?></td>
@@ -111,14 +116,14 @@
 		<?php
 		else:
 		?>
-			<div class="alert alert-info">
-				<strong>Vaya! </strong> No hay usuarios registrados en la sucursal seleccionada.
+			<div class="alert alert-warning">
+				<strong>¡Vaya! </strong> No hay usuarios registrados en la sucursal seleccionada.
 			</div>
 		<?php
 		endif;
 	else:
 ?>
-	<div class="alert alert-warning">
+	<div class="alert alert-info">
 		Seleccione una sucursal.
 	</div>
 <?php
@@ -134,7 +139,7 @@
 			$( deferred.resolve );
 		})
 	).done(function(){
-		console.log("Script cargados correctamente!");
+		// console.log("Script cargados correctamente!");
 	}).fail(function(){
 		console.log("Algo salió mal");
 	});

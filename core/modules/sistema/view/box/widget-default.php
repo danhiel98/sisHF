@@ -107,8 +107,8 @@
 						<th></th>
 						<th>No.</th>
 						<th>Cliente</th>
-						<th>Fecha</th>
 						<th>Tipo Comprobante</th>
+						<th>Fecha</th>
 						<th>Total</th>
 						<th></th>
 					</thead>
@@ -123,14 +123,10 @@
 								$prodsx = FacturaData::getAllSellsByFactId($sell->id); #Productos vendidos en la factura
 								$servsx = FacturaData::getAllServicesByFactId($sell->id); #Servicios vendidos en la factura
 							?>
-							<td>
-								<?php echo $count++; ?>
-							</td>
-							<td>
-								<?php if($sell->idcliente != ""){echo $sell->getClient()->name;}else{echo "----";} ?>
-							</td>
-							<td><?php echo $sell->fecha; ?></td>
+							<td style="width: 40px;"><?php echo $count++; ?></td>
+							<td><?php if($sell->idcliente != ""){echo $sell->getClient()->name;}else{echo "----";} ?></td>
 							<td><?php echo $sell->getComprobante()->nombre; ?></td>
+							<td><?php echo $sell->fecha; ?></td>
 							<td>
 								<?php
 									$total=0;
@@ -147,7 +143,6 @@
 								?>
 							</td>
 							<td style="width: 40px;">
-
 								<a title="¿Eliminar?" href="index.php?view=delsell&id=<?php echo $sell->id;?>" class="btn btn-danger btn-xs"
 								data-toggle="confirmation-popout" data-popout="true" data-placement="left"
 								data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
@@ -157,7 +152,6 @@
 								>
 									<i class="fa fa-trash fa-fw"></i>
 								</a>
-
 							</td>
 						</tr>
 						<?php endforeach; ?>

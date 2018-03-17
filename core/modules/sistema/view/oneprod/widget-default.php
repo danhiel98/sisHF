@@ -1,21 +1,26 @@
-<?php if(isset($_GET["id"]) && is_numeric($_GET["id"])){
-	$idProd = $_GET["id"];
-	$prodxn = ProduccionData::getById($idProd);
-	if (is_null($prodxn)) {
-		@header("location: index.php?view=produccion");
-	}
-	$matP = ProduccionMPData::getAllByProdId($idProd);
+<?php
 	
-	$estado = "";
-	if ($prodxn->terminado == 1) {
-		$estado = "Finalizado";
-	}else{
-		$estado = "En Proceso";
-	}
+	if(isset($_GET["id"]) && is_numeric($_GET["id"])){
+	
+		$idProd = $_GET["id"];
+		$prodxn = ProduccionData::getById($idProd);
+		if (is_null($prodxn)) {
+			@header("location: index.php?view=produccion");
+		}
+		$matP = ProduccionMPData::getAllByProdId($idProd);
+		
+		$estado = "";
+		if ($prodxn->terminado == 1) {
+			$estado = "Finalizado";
+		}else{
+			$estado = "En Proceso";
+		}
 
-}
+	}else{
+		error();
+	}
 ?>
-<a class="btn btn-default" href="index.php?view=produccion"><i class="fa fa-arrow-left"></i> Regresar</a>
+<a class="btn btn-default btn-back" href="index.php?view=produccion"><i class="fa fa-arrow-left"></i> Regresar</a>
 <div class="btn-group pull-right">
 	<a class="btn btn-default" href="report/produccion.php?idProd=<?php echo $idProd; ?>"><i class="fa fa-download fa-fw"></i>Reporte</a>
 </div>
@@ -63,7 +68,7 @@
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<th>C&oacute;digo</th>
+				<!-- <th>C&oacute;digo</th> -->
 				<th>Nombre del Producto</th>
 				<th>Cantidad</th>
 			</tr>
@@ -71,11 +76,19 @@
 		<tbody>
 		<?php foreach($matP as $mpp): ?>
 			<tr>
-				<td><?php echo $mpp->id; ?></td>
+				<!-- <td><?php #echo $mpp->id; ?></td> -->
 				<td><?php echo $mpp->getMateriaPrima()->nombre; ?></td>
-				<td><?php echo $mpp->cantidad; ?></td>
+				<td style="width: 80px;"><?php echo $mpp->cantidad; ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>
 	</table>
 </div>
+<script>
+
+	btnBack = $(".btn-back");
+	vHash = document.location.hash;
+	href = btnBack.attr("href") + vHash;
+	btnBack.attr("href",href);
+
+</script>

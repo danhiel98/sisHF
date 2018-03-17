@@ -1,11 +1,11 @@
 <?php
 	$idSuc = $_SESSION["usr_suc"];
-	$sucursal = SucursalData::getAll();
+	$sucursales = SucursalData::getAll();
 	$empleados = EmpleadoData::getAll();
-	$usrSuc = false;
+	$admin = true;
 	if (!isset($_SESSION["adm"])) {
 		$empleados = EmpleadoData::getAllBySucId($idSuc);
-		$usrSuc = true;
+		$admin = false;
 	}
 ?>
 <div class="row">
@@ -23,7 +23,7 @@
 		<?php if(count($empleados)>0): ?>
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#all">Todos</a></li>
-				<?php if (count($sucursal)>1 && !$usrSuc): ?>
+				<?php if (count($sucursales)>1 && $admin): ?>
 				<li><a href="#suc">Por Sucursal</a></li>
 				<?php endif; ?>
 			</ul>
@@ -47,45 +47,51 @@
 					$paginas = floor(count($empleados)/$limit);
 					$spaginas = count($empleados)%$limit;
 					if($spaginas>0){$paginas++;}
-					if ($usrSuc){
+					if ($admin){
+						$empleados = EmpleadoData::getAllByPage($start,$limit);
+					}else{
 						$empleados = EmpleadoData::getAllBySucPage($idSuc,$start,$limit);
 					}
+					$num = $start;
 				?>
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
+								<th>No.</th>
 								<th>DUI</th>
 								<th>NIT</th>
 								<th>Apellidos</th>
 								<th>Nombres</th>
-								<th>Sexo</th>
+								<!-- <th>Sexo</th> -->
 								<th>Tel&eacute;fono</th>
 								<th>&Aacute;rea</th>
+								<?php if ($idSuc == 1): ?>
 								<th>Sucursal</th>
+								<?php endif; ?>
 								<th></th>
 							</tr>
 						</thead>
-						<?php
-						foreach($empleados as $empleado):
-							?>
-							<tr>
-								<td><?php echo $empleado->dui; ?></td>
-								<td><?php echo $empleado->nit; ?></td>
-								<td><?php echo $empleado->apellido; ?></td>
-								<td><?php echo $empleado->nombre; ?></td>
-								<td><?php echo $empleado->sexo; ?></td>
-								<td><?php echo $empleado->telefono; ?></td>
-								<td><?php echo $empleado->area; ?></td>
-								<td><?php echo $empleado->getSucursal()->nombre; ?></td>
-								<td style="width:40px;">
-									<a href="index.php?view=editemploy&id=<?php echo $empleado->id;?>" class="btn btn-warning btn-xs">Editar</a>
-									<!--<a onclick="return confirm('¿Seguro que desea eliminar el registro?');" href="index.php?view=delemploy&id=<?php echo $empleado->id;?>" class="btn btn-danger btn-xs">Eliminar</a>-->
-								</td>
-							</tr>
-							<?php
-						endforeach;
-						?>
+						<tbody>
+							<?php foreach($empleados as $empleado): ?>
+								<tr>
+									<td style="width: 30px;"><?php echo $num++; ?></td>
+									<td><?php echo $empleado->dui; ?></td>
+									<td><?php echo $empleado->nit; ?></td>
+									<td><?php echo $empleado->apellido; ?></td>
+									<td><?php echo $empleado->nombre; ?></td>
+									<!-- <td><?php #echo $empleado->sexo; ?></td> -->
+									<td><?php echo $empleado->telefono; ?></td>
+									<td><?php echo $empleado->area; ?></td>
+									<?php if ($idSuc == 1): ?>
+									<td><?php echo $empleado->getSucursal()->nombre; ?></td>
+									<?php endif; ?>
+									<td style="width:40px;">
+										<a href="index.php?view=editemploy&id=<?php echo $empleado->id;?>" class="btn btn-warning btn-xs">Editar</a>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
 					</table>
 				</div>
 				<div class="pull-right">
@@ -127,7 +133,7 @@
 				</div>
 			</div>
 
-			<?php if (count($sucursal)>1): ?>
+			<?php if (count($sucursales) > 1): ?>
 			
 			<script type="text/javascript" src="ajax/empleados/ajax.js"></script>
 			
@@ -137,7 +143,7 @@
 					<div class="col-md-6">
 						<select class="form-control" name="sucursal" id="sucursal">
 							<option value="">--SELECCIONE--</option>
-							<?php foreach ($sucursal as $s): ?>
+							<?php foreach ($sucursales as $s): ?>
 								<option value="<?php echo $s->id; ?>"><?php echo $s->nombre; ?></option>
 							<?php endforeach; ?>
 						</select>
@@ -161,18 +167,19 @@
 	</div>
 </div>
 <script>
-	$(document).ready(function(){
-	    $(".nav-tabs a").click(function(){
-	        $(this).tab('show');
-	    });
-	});
-	$(function(){
-		$("#sucursal").on("change",function(){
-			var valor = $(this).val();
-			if (valor >= 1){
-				$("#reporteEPS").attr("href","report/empleados.php?idEmple="+valor);
-			}else{
-			}
-		});
-	});
+	// $(document).ready(function(){
+	//     $(".nav-tabs a").click(function(){
+	//         $(this).tab('show');
+	//     });
+	// });
+	// $(function(){
+	// 	$("#sucursal").on("change",function(){
+	// 		var valor = $(this).val();
+	// 		if (valor >= 1){
+				
+	// 		}else{
+	// 			$("#reporteEPS").removeAttr("href");
+	// 		}
+	// 	});
+	// });
 </script>

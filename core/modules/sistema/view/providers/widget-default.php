@@ -39,26 +39,28 @@
 			$spaginas = count($providers)%$limit;
 			if($spaginas>0){$paginas++;}
 			$providers = ProviderData::getByPage($start,$limit);
-		
+			$num = $start;
 		?>
 		
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th>ID</th>
-					<th>Nombre</th>
-					<th>Provee</th>
-					<th>Direcci&oacute;n</th>
-					<th>Tel&eacute;fono</th>
-					<th>Correo Electr&oacute;nico</th>
-					<th></th>
+					<tr>
+						<th>No.</th>
+						<th>Nombre</th>
+						<th>Provee</th>
+						<th>Direcci&oacute;n</th>
+						<th>Tel&eacute;fono</th>
+						<th>Correo Electr&oacute;nico</th>
+						<th></th>
+					</tr>
 				</thead>
 				<tbody>
 				<?php
 				foreach($providers as $prov):
 					?>
 					<tr>
-						<td><?php echo $prov->id; ?></td>
+						<td style="width: 30px;"><?php echo $num++; ?></td>
 						<td><?php echo $prov->nombre; ?></td>
 						<td><?php echo $prov->tipoprovee; ?></td>
 						<td><?php echo $prov->direccion; ?></td>

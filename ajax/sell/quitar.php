@@ -1,13 +1,13 @@
 <?php
 
 	@session_start();
-	if ((isset($_POST["idProd"]) && !empty($_POST["idProd"])) || (isset($_POST["idServ"]) && !empty($_POST["idServ"]))) {
+	if ((isset($_POST["product_id"]) && !empty($_POST["product_id"])) || (isset($_POST["service_id"]) && !empty($_POST["service_id"]))) {
 		if(!empty($_SESSION["cart"])){
 			$prd = false;
 			$srv = false;
-			if (isset($_POST["idProd"])) {
+			if (isset($_POST["product_id"])) {
 				$prd = true;
-			}elseif (isset($_POST["idServ"])) {
+			}elseif (isset($_POST["service_id"])) {
 				$srv = true;
 			}
 
@@ -18,11 +18,11 @@
 				$newcart = array();
 				foreach($cart as $c){
 					if ($prd) {
-						if(($c["product_id"] != $_POST["idProd"])){
+						if(($c["product_id"] != $_POST["product_id"])){
 							$newcart[] = $c;
 						}
 					}elseif($srv){
-						if(($c["service_id"] != $_POST["idServ"])){
+						if(($c["service_id"] != $_POST["service_id"])){
 							$newcart[] = $c;
 						}
 					}

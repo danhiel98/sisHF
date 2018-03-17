@@ -15,4 +15,11 @@ include "controller/forms/lbInputText.php";
 include "controller/forms/lbInputPassword.php";
 include "controller/forms/lbValidator.php";
 
+date_default_timezone_set('America/El_Salvador');
+
+function error(){
+    echo "501 Error Interno";
+    exit();
+}
+
 ?>

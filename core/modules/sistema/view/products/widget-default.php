@@ -4,7 +4,7 @@
 ?>
 <div class="row">
 	<div class="col-md-12">
-		<div class="btn-group  pull-right">
+		<div class="btn-group pull-right">
 			<?php if ($idSuc == 1): ?>
 			<a href="index.php?view=newproduct" class="btn btn-default">Agregar Producto</a>
 			<?php endif; ?>
@@ -14,62 +14,53 @@
 				</div>
 			<?php endif; ?>
 		</div>
+		
 		<h1>Lista de Productos</h1>
 		<div class="clearfix"></div>
+		
 		<?php
-		$page = 1;
-		if(isset($_GET["page"])){
-			$page=$_GET["page"];
-		}
-		$limit=10;
-		if(isset($_GET["limit"]) && $_GET["limit"]!="" && $_GET["limit"]!=$limit){
-			$limit=$_GET["limit"];
-		}
-		if(count($products)>0){
-			if($page==1){
-				$curr_products = ProductData::getAllByPage($products[0]->id,$limit);
-			}else{
-				$curr_products = ProductData::getAllByPage($products[($page-1)*$limit]->id,$limit);
+		if(count($products)>0):
+			$start = 1; $limit = 10;
+			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
+				$start = $_REQUEST["start"];
+				$limit = $_REQUEST["limit"];
+				#Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
+				if ($start <= 0 ){
+					$start = 1;
+				}
+				if ($limit <= 0 ){
+					$limit = 1;
+				}
 			}
-			$npaginas = floor(count($products)/$limit);
+			$paginas = floor(count($products)/$limit);
 			$spaginas = count($products)%$limit;
-			if($spaginas>0){ $npaginas++;}
+			if($spaginas>0){$paginas++;}
+			$products = ProductData::getAllByPage($start,$limit);
+			$num = $start;
 		?>
-		<h3>P&aacute;gina <?php echo $page." de ".$npaginas; ?></h3>
-		<div class="btn-group pull-right">
-			<?php
-			$px=$page-1;
-			if($px>0):
-			?>
-				<a class="btn btn-sm btn-default" href="<?php echo "index.php?view=products&limit=$limit&page=".($px); ?>"><i class="glyphicon glyphicon-chevron-left"></i> Atr&aacute;s </a>
-			<?php endif; ?>
-			<?php
-			$px=$page+1;
-			if($px<=$npaginas):
-			?>
-				<a class="btn btn-sm btn-default" href="<?php echo "index.php?view=products&limit=$limit&page=".($px); ?>">Adelante <i class="glyphicon glyphicon-chevron-right"></i></a>
-			<?php endif; ?>
-		</div>
+
 		<div class="clearfix"></div>
 		<br>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th>ID</th>
-					<th style="width: 80px;">Imagen</th>
-					<th>Nombre</th>
-					<th>Descripci&oacute;n</th>
-					<th>Categoría</th>
-					<th style="width: 120px;">Precio Costeo</th>
-					<th style="width: 110px;">Precio Venta</th>
-					<th style="width: 100px;">Req. Mantto</th>
-					<?php if ($idSuc == 1): ?>
-					<th></th>
+					<tr>
+						<th>No.</th>
+						<th style="width: 80px;">Imagen</th>
+						<th>Nombre</th>
+						<th>Descripci&oacute;n</th>
+						<th>Categoría</th>
+						<th style="width: 120px;">Precio Costeo</th>
+						<th style="width: 110px;">Precio Venta</th>
+						<th style="width: 100px;">Req. Mantto</th>
+						<?php if ($idSuc == 1): ?>
+						<th></th>
+					</tr>
 					<?php endif; ?>
 				</thead>
-				<?php foreach($curr_products as $product):?>
+				<?php foreach($products as $product):?>
 				<tr>
-					<td style="width: 50px;"><?php echo $product->id; ?></td>
+					<td style="width: 50px;"><?php echo $num++; ?></td>
 					<td>
 						<?php if($product->imagen!=""):?>
 							<img src="storage/products/<?php echo $product->imagen;?>" style="width:64px;">
@@ -90,22 +81,47 @@
 				<?php endforeach;?>
 			</table>
 		</div>
-		<div class="btn-group pull-right">
-		<?php
-		for($i = 0; $i<$npaginas; $i++){
-			echo "<a href='index.php?view=products&limit=$limit&page=".($i+1)."' class='btn btn-default btn-sm'>".($i+1)."</a> ";
-		}
-		?>
+		<div class="container-fluid">
+			<div class="pull-right">
+				<ul class="pagination">
+					<?php if($start != 1):?>
+					<?php
+						$prev = "#";
+						if($start != 1){
+							$prev = "&start=".($start-$limit)."&limit=".$limit;
+						}
+					?>
+					<li class="previous"><a href="index.php?view=products<?php echo $prev; ?>">&laquo;</a></li>
+					<?php endif; ?>
+					<?php 
+						$anterior = 1;
+						for($i=1; $i<=$paginas; $i++):
+							$inicio = 1;
+							if ($i != 1){
+								$inicio = $limit + $anterior;
+								$anterior = $inicio;
+							}
+						?>
+						<li <?php if($start == $inicio){echo "class='active'";} ?>>
+							<a href="index.php?view=products&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
+						</li>
+						<?php
+						endfor;
+					?>
+					<?php if($start != $anterior): ?>
+					<?php 
+						$next = "#";
+						if($start != $anterior){
+							$next = "&start=".($start + $limit)."&limit=".$limit;
+						}
+					?>
+					<li class="previous"><a href="index.php?view=products<?php echo $next; ?>">&raquo;</a></li>
+					<?php endif; ?>
+				</ul>
+			</div>
 		</div>
-		<form class="form-inline">
-			<label for="limit">L&iacute;mite</label>
-			<input type="hidden" name="view" value="products">
-			<input type="number" value=<?php echo $limit?> name="limit" style="width:60px;" class="form-control" min="1">
-		</form>
 		<div class="clearfix"></div>
-	<?php
-	}else{
-	?>
+	<?php else: ?>
 		<div class="col-md-12">
 			<div class="alert alert-warning">
 				No hay productos.
@@ -114,9 +130,7 @@
 				No se han agregado productos a la base de datos<?php if($idSuc == 1): ?>, puede agregar uno dando clic en el bot&oacute;n <strong>"Agregar Producto"</strong><?php endif; ?>.
 			</div>
 		</div>
-	<?php
-	}
-	?>
+	<?php endif; ?>
 		<br>
 	</div>
 </div>

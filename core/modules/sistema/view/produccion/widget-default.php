@@ -1,4 +1,14 @@
-<script type="text/javascript" src="ajax/produccion/ajax.js"></script>
+<?php
+
+	$idSuc = $_SESSION["usr_suc"];
+	if($idSuc != 1){
+		error();
+	}
+
+	#print_r($_SERVER);
+
+?>
+<script type="text/javascript" src="ajax/producciones/ajax.js"></script>
 <div class="row">
 	<div class="col-md-12">
 		<div id="btnAdd"></div>

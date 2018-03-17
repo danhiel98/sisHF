@@ -34,7 +34,7 @@
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th>No.</th>
+					<th style="width: 40px;">No.</th>
 					<th>DUI</th>
 					<th>NIT</th>
 					<th>NRC</th>

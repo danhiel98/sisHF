@@ -101,7 +101,7 @@
                             <th>Tipo Comprobante</th>
                             <th>No. Comprobante</th>
                             <th>Recibido Por</th>
-                            <th></th>
+                            <th <?php #if(!$todos){echo "style='width: 75px;'";} ?>></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,6 +144,17 @@
                             </td>
                             <td style="width: 40px;">
                                 <a class="btn btn-default btn-xs" target="_blank" href="report/facturas/<?php echo $comprobante.".php?id=".$p->id."&abono"; ?>"><i class="fa fa-download"></i></a>
+                                <?php if(!$todos): ?>
+                                <!-- <a title="¿Eliminar?" href="index.php?view=delabono&id=<?php echo $p->id;?>" class="btn btn-danger btn-xs"
+                                    data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+                                    data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+                                    data-btn-ok-class="btn-success btn-xs"
+                                    data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+                                    data-btn-cancel-class="btn-danger btn-xs"
+                                    >
+                                    <i class="fa fa-trash fa-fw"></i>
+                                </a> -->
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>

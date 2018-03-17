@@ -34,12 +34,14 @@
     <div class="table-responsive">
         <table class="table table-hover table-bordered">
             <thead>
-                <th style="width: 45px;"></th>
-                <th style="width: 45px;">No.</th>
-                <th>Cliente</th>
-                <th>Fecha de Solicitud</th>
-                <th>Fecha de Entrega</th>
-                <th>Fecha Entregado</th>
+                <tr>
+                    <th style="width: 45px;"></th>
+                    <th style="width: 45px;">No.</th>
+                    <th>Cliente</th>
+                    <th>Fecha de Solicitud</th>
+                    <th>Fecha de Entrega</th>
+                    <th>Fecha Entregado</th>
+                </tr>
             </thead>
             <tbody>
             <?php foreach ($pedidosT as $pdo): ?>

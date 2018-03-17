@@ -74,7 +74,7 @@
 			<div class="form-group control-group">
 				<label for="inicial" class="col-lg-2 control-label">Inventario Inicial</label>
 				<div class="col-md-6 controls">
-				<input type="text" name="inicial" class="form-control" id="inicial" onkeypress="return soloNumeros(event)" placeholder="Inventario Inicial" data-validation-regex-regex="[0-9]{1,9}" data-validation-regex-message="Introduzca un Inventario Inicialválido"   onpaste="return false"  maxlength="9" min="1">
+				<input type="text" name="inicial" class="form-control" id="inicial" onkeypress="return soloNumeros(event)" placeholder="Inventario Inicial" data-validation-regex-regex="[0-9]{1,9}" data-validation-regex-message="Introduzca un Inventario Inicialválido" onpaste="return false"  maxlength="9" min="0">
 					<p class="help-block"></p>
 				</div>
 			</div>
@@ -86,11 +86,32 @@
 				</div>
 			</div>
 
+			<div class="form-group control-group" id="mesesMantto-group" style="display: none;">
+				<label for="mesesMantto" class="col-lg-2 control-label">Meses para Mantenimiento</label>
+				<div class="col-md-6 controls">
+					<input type="text" name="mesesMantto" id="mesesMantto" class="form-control" placeholder="Meses de espera para dar el mantenimiento" data-validation-regex-regex="[0-9]{1,3}" data-validation-regex-message="Cantidad de meses no válida" maxlength="3" minlength="1" min="1">
+				</div>
+			</div>
+
 			<div class="form-group">
 				<div class="col-lg-offset-2 col-lg-10">
-				<button name="addProduct" type="submit" class="btn btn-primary">Agregar Producto</button>
+					<button name="addProduct" type="submit" class="btn btn-primary">Agregar Producto</button>
 				</div>
 			</div>
     	</form>
   	</div>
 </div>
+<script>
+	grupo = $("#mesesMantto-group");
+	input = grupo.find("#mesesMantto");
+	$("#mantto").on("change", function(){
+		if(this.checked){
+			input.attr("required","required");
+			grupo.show();
+		}else{
+			input.removeAttr("required");
+			input.val("");
+			grupo.hide();
+		}
+	});
+</script>

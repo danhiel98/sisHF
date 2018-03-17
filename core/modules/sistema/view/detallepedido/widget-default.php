@@ -13,7 +13,7 @@
         $client = $pedido->getClient();
 ?>
     <div>
-        <a class="btn btn-default" href="index.php?view=pedidos"><i class="fa fa-arrow-left"></i> Regresar</a>
+        <a class="btn btn-default btn-back" href="index.php?view=pedidos"><i class="fa fa-arrow-left"></i> Regresar</a>
         <div class="btn-group pull-right">
             <a class="btn btn-default" href="index.php?view=pagos&idP=<?php echo $id; ?>"><i class="fa fa-credit-card"></i> Ver Pagos</a>
             <?php if($pedido->restante > 0 && $pedido->idsucursal == $_SESSION["usr_suc"]): ?>
@@ -75,10 +75,12 @@
 
         <table class="table table-bordered table-hover">
             <thead>
-                <th>Cantidad</th>
-                <th>Nombre del Producto / Servicio</th>
-                <th>Precio Unitario</th>
-                <th>Total</th>
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Nombre del Producto / Servicio</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
             </thead>
             <tbody>
                 <?php
@@ -86,10 +88,10 @@
                     $prod = $pedid->getProduct();
                 ?>
                 <tr>
-                    <td><?php echo $pedid->cantidad ;?></td>
+                    <td style="width: 80px;"><?php echo $pedid->cantidad ;?></td>
                     <td><?php echo $prod->nombre ;?></td>
-                    <td>$ <?php echo number_format($pedid->precio,2,".",",") ;?></td>
-                    <td><b>$ <?php echo number_format($pedid->total,2,".",","); $total += $pedid->total;?></b></td>
+                    <td style="width: 150px;">$ <?php echo number_format($pedid->precio,2,".",",") ;?></td>
+                    <td style="width: 120px;"><b>$ <?php echo number_format($pedid->total,2,".",","); $total += $pedid->total;?></b></td>
                 </tr>
                 <?php endforeach; ?>
                 <?php
@@ -97,15 +99,23 @@
                     $prod = $pedid->getService();
                 ?>
                 <tr>
-                    <td><?php echo $pedid->cantidad ;?></td>
+                    <td style="width: 80px;"><?php echo $pedid->cantidad ;?></td>
                     <td><?php echo $prod->nombre ;?></td>
-                    <td>$ <?php echo number_format($pedid->precio,2,".",",") ;?></td>
-                    <td><b>$ <?php echo number_format($pedid->total,2,".",","); $total += $pedid->total;?></b></td>
+                    <td style="width: 150px;">$ <?php echo number_format($pedid->precio,2,".",",") ;?></td>
+                    <td style="width: 120px;"><b>$ <?php echo number_format($pedid->total,2,".",","); $total += $pedid->total;?></b></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
         <h1>Total: $ <?php echo number_format($total,2,'.',','); ?></h1>
     </div>
-    <?php else: @header("Location: index.php?view=pedidos"); ?>
-<?php endif; ?>
+    <?php 
+        else: @header("Location: index.php?view=pedidos");
+    endif;
+    ?>
+    <script>
+        btnBack = $(".btn-back");
+        vHash = document.location.hash;
+        href = btnBack.attr("href") + vHash;
+        btnBack.attr("href",href);
+    </script>

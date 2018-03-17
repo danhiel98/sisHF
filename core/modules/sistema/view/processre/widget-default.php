@@ -36,8 +36,7 @@
 			$reab->updateTot();
 
 			unset($_SESSION["reabastecerMP"]);
-			setcookie("comprado","comprado");
-			print "<script>window.location='index.php?view=onere&id=$s[1]';</script>";
+			@header("location: index.php?view=onere&id=".$s[1]);
 		}
 		
 	}

@@ -1,41 +1,61 @@
-function obtener_registros(buscar){
+function obtenerTodo(){
 	$.ajax({
 		url : 'ajax/produccion/resultado.php',
 		type : 'POST',
-		dataType : 'html',
-		data : {
+		dataType : 'html'
+	}).done(function(resultado){
+		$.getScript("js/jqBootstrapValidation.js");
+		$("#tabla_resultado").html(resultado);
+	});
+}
+
+function buscar(buscar) {
+	$.ajax({
+		url: 'ajax/produccion/buscar.php',
+		type: 'POST',
+		dataType: 'html',
+		data: {
 			productos: buscar
 		},
-	}).done(function(resultado){
-		$.getScript("js/jqBootstrapValidation.js", function(data, textStatus, jqxhr){
-			//
-		});
-		$("#tabla_resultado").html(resultado);
-	})
+		beforeSend: function(){
+			$("#resultadoSearch").html("Cargando...");
+		}
+	}).done(function (resultado) {
+		$.getScript("js/jqBootstrapValidation.js");
+		$("#resultadoSearch").html(resultado);
+	});
+}
+
+function datosResumen(){
+	$.ajax({
+		url: "ajax/produccion/resumen.php",
+		type: "POST",
+		dataType: "html",
+		success: function(res){
+			
+			r = res.length;
+			btns = $(".btn-ok");
+			btnInfo = $("#btnInfo");
+
+			if (r == 68){
+				btns.hide();
+				btnInfo.show();
+				// btnInfo.attr("type","submit");
+			}else{
+				// btnInfo.attr("type","button");
+				btnInfo.hide();
+				btns.show();
+			}
+			$("#resultadoResumen").html(res);
+		}
+	});
 }
 
 $(document).on('keyup focus', '#busqueda', function(){
 	var valorBusqueda = $(this).val();
-	if (valorBusqueda != "") {
-		obtener_registros(valorBusqueda);
-	}else {
-		obtener_registros();
-	}
+	buscar(valorBusqueda);
 });
 
-function producciones(tab){
-	$.ajax({
-		url: "ajax/produccion/consulta.php",
-		type: "POST",
-		dataType: "html",
-		data: {
-			tab: tab
-		}
-	}).done(function(res){
-		$("#resultado").html(res);
-	});
-}
-
 $(function(){
-	producciones();
+	obtenerTodo();
 });

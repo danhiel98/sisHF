@@ -228,7 +228,7 @@ class FacturaData {
 
 	public static function getSellsUnBoxedBySucPage($idSuc,$start,$limit){
 		$start--;
-		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and idCierreCaja IS NULL and estado = 1 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and idCierreCaja IS NULL and estado = 1 order by fecha desc limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

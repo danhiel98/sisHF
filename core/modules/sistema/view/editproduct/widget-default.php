@@ -1,6 +1,8 @@
 <?php
   $product = ProductData::getById($_GET["id"]);
-  if($product != null):
+  if($product == null){
+	  error();
+  }
 ?>
 <a href="index.php?view=products" class="btn btn-default"><i class="fa fa-arrow-left"></i> Regresar</a>
 <div class="row">
@@ -86,18 +88,13 @@
 					<input type="checkbox" name="mantto" id="mantto" <?php if($product->mantenimiento){ echo "checked";}?>>
 				</div>
 			</div>
-			<!--
-			<div class="form-group control-group">
-				<label for="is_active" class="col-lg-3 control-label" >Est&aacute; activo</label>
-				<div class="col-md-8 controls">
-				<div class="checkbox">
-					<label>
-					<input type="checkbox" name="is_active" <?php if($product->estado){ echo "checked";}?>>
-					</label>
-				</div>
+
+			<div class="form-group control-group" id="mesesMantto-group" <?php if(!$product->mantenimiento){ echo "style='display: none;'";} ?>>
+				<label for="mesesMantto" class="col-lg-3 control-label">Meses para Mantenimiento</label>
+				<div class="col-md-6 controls">
+					<input type="text" name="mesesMantto" id="mesesMantto" class="form-control" placeholder="Meses de espera para dar el mantenimiento" data-validation-regex-regex="[0-9]{1,3}" data-validation-regex-message="Cantidad de meses no válida" maxlength="3" minlength="1" min="1" value="<?php echo $product->mesesmantto;?>">
 				</div>
 			</div>
-			-->
 			<div class="form-group">
 				<div class="col-lg-offset-3 col-lg-8">
 				<input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
@@ -108,4 +105,17 @@
     	<br>
   	</div>
 </div>
-<?php endif; ?>
+<script>
+	grupo = $("#mesesMantto-group");
+	input = grupo.find("#mesesMantto");
+	$("#mantto").on("change", function(){
+		if(this.checked){
+			input.attr("required","required");
+			grupo.show();
+		}else{
+			input.removeAttr("required");
+			input.val("");
+			grupo.hide();
+		}
+	});
+</script>

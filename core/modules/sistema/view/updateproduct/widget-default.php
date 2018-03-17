@@ -11,9 +11,11 @@
 		$product->precioventa = $_POST["precioventa"];
 	 	$product->descripcion = $_POST["descripcion"];
 		$product->mantenimiento = 0;
+		$product->mesesmantto = "NULL";
 
 		if (isset($_POST["mantto"])) {
 			$product->mantenimiento = 1;
+			$product->mesesmantto = $_POST["mesesMantto"];
 		}
 
 		#$product->minimo = $_POST["minimo"];
@@ -36,6 +38,5 @@
 
 		setcookie("prdupd","true");
 	}
-
+	@header("location: index.php?view=editproduct&id=".$_POST['product_id']);
 ?>
-<script>window.location='index.php?view=editproduct&id=<?php echo $_POST["product_id"]; ?>'</script>

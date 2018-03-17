@@ -4,9 +4,16 @@ function obtenerDatosDeSucursal(idSucursal){
 		type : 'POST',
 		dataType : 'html',
 		data : { sucursal: idSucursal },
-		})
-
+	})
 	.done(function(resultado){
+		btnRep = $("#reporteEPS");
+		if (resultado.length != 72 && resultado.length != 104){
+			btnRep.attr("href", "report/empleados.php?idEmple=" + idSucursal);
+			btnRep.show();
+		}else{
+			btnRep.removeAttr("href");
+			btnRep.hide();
+		}
 		$("#tabla_resultado").html(resultado);
 	})
 }

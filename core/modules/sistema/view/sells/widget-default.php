@@ -4,48 +4,21 @@
 
     $user = UserData::getById(Session::getUID());
     $sucursales = SucursalData::getAll();
-    $fact = FacturaData::getSellsBySuc($idSuc);
     $prods = ProductoSucursalData::getAllForSell($idSuc);
     $clients = ClientData::getAll();
     $servs = ServiceData::getAll();
 
-    $ventas = false;
-    $clientes = false;
-    $products = false;
-    $services = false;
-        
-
-    
-    $prodsMsg = "<a href='index.php?view=inventaryprod'>productos</a> disponibles";
-    $clientsMsg = "<a href='index.php?view=clients'>clientes</a> registrados";
-    
-    if (count($fact)>0){$ventas = true;}
-
-    if (count($clients)>0){$clientes = true;}
-    
-    if (count($prods)>0){$products = true;}
-    
-    if (count($servs)>0){$services = true;}
+    count($clients) > 0 ? $clientes = true : $clientes = false;
+    count($prods) > 0 ? $products = true : $products = false;
+    count($servs) > 0 ? $services = true : $services = false;
 ?>
 <script type="text/javascript" src="ajax/busquedafecha/ajax.js"></script>
 <div class="row">
     <div class="col-md-12">
   	    <div class="btn-group pull-right">
-        
             <?php if(($services || $products) && $clientes): ?>
             <a class="btn btn-default" href="index.php?view=sell"><i class="fa fa-usd"></i> Vender</a>
             <?php endif; ?>
-            
-            <!--
-            <?php if($ventas): ?>
-            <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-download"></i> Descargar <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a id="btn_envio" target="_blank" href="#">Excel (.xlsx)</a></li>
-            </ul>
-            <?php endif; ?>
-            -->
 
         </div>
 		

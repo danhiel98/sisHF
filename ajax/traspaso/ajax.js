@@ -24,7 +24,6 @@ $(document).on('keyup focus', '#busqueda', function(){
 	}
 });
 
-
 function obtenerDatosDeSucursal(idSucursal){
 	$.ajax({
 		url : 'ajax/traspaso/resultado.php',
@@ -46,27 +45,3 @@ $(function(){
 		obtenerDatosDeSucursal(idSuc);
 	});
 });
-
-/*
-function agregarProducto(idProducto, cantidad){
-	$.ajax({
-		url : 'ajax/traspaso/resultadoProd.php',
-		type : 'POST',
-		dataType : 'html',
-		data : {
-			idProd: idProducto,
-			cant: cantidad
-		},
-		})
-	.done(function(resultado){
-		$("btn-add").html(resultado);
-	})
-}
-
-$(document).on('click', '.btn-add', function(){
-	var idProducto = this.id;
-	var idx = "v"+idProducto;
-	var cantidad = $("#"+idx).val();
-	agregarProducto(idProducto, cantidad);
-});
-*/

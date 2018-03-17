@@ -10,6 +10,7 @@
         $abono->cantidad = $_POST["cantidad"];
         $abono->tipocomprobante = $_POST["tipoComprobante"];
         $abono->numerocomprobante = $_POST["numComprobante"];
+        $abono->totalLetras = $_POST["totalLetras"];
         $abono->add();
         
         $pedido = PedidoData::getById($abono->idpedido);

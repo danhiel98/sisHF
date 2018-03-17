@@ -26,27 +26,32 @@
 			$spaginas = count($empleados)%$limit;
 			if($spaginas>0){$paginas++;}
 			$empleados = EmpleadoData::getAllBySucPage($idSuc,$start,$limit);
+			$num = $start;
 ?>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th>DUI</th>
-					<th>NIT</th>
-					<th>Apellidos</th>
-					<th>Nombres</th>
-					<th>Sexo</th>
-					<th>Tel&eacute;fono</th>
-					<th>&Aacute;rea</th>
-					<th></th>
+					<tr>
+						<th>No.</th>
+						<th>DUI</th>
+						<th>NIT</th>
+						<th>Apellidos</th>
+						<th>Nombres</th>
+						<!-- <th>Sexo</th> -->
+						<th>Tel&eacute;fono</th>
+						<th>&Aacute;rea</th>
+						<th></th>
+					</tr>
 				</thead>
 			<?php foreach($empleados as $emp): ?>
 				<?php if ($emp->getSucursal()->id == $_REQUEST["sucursal"]): ?>
 				<tr>
+					<td style="width: 30px;"><?php echo $num++; ?></td>
 					<td><?php echo $emp->dui; ?></td>
 					<td><?php echo $emp->nit; ?></td>
 					<td><?php echo $emp->apellido; ?></td>
 					<td><?php echo $emp->nombre; ?></td>
-					<td><?php echo $emp->sexo; ?></td>
+					<!-- <td><?php #echo $emp->sexo; ?></td> -->
 					<td><?php echo $emp->telefono; ?></td>
 					<td><?php echo $emp->area; ?></td>
 					<td style="width:40px;">
@@ -109,7 +114,7 @@
 		</script>
 		<?php else: ?>
 			<div class="alert alert-warning">
-				Vaya! No hay datos en la sucursal selecionada.
+				¡Vaya! No hay datos en la sucursal selecionada.
 			</div>
 		<?php
 		endif;

@@ -31,18 +31,18 @@
 ?>
 		<table class="table table-bordered table-hover table-responsive">
 			<thead>
-				<th style="width: 45px;">ID</th>
-				<th>Nombre</th>
-				<th>Descripción</th>
-				<th>Existencias</th>
-				<th style="width: 140px;"></th>
+				<tr>
+					<th>Nombre</th>
+					<th>Descripción</th>
+					<th>Existencias</th>
+					<th style="width: 135px;"></th>
+				</tr>
 			</thead>
-	<?php
+		<?php
 		foreach ($prodSuc as $pr):
 			$found = false;
-			?>
+		?>
 			<tr>
-				<td><?php echo $pr->getProduct()->id; ?></td>
 				<td><?php echo $pr->getProduct()->nombre; ?></td>
 				<td><?php echo $pr->getProduct()->descripcion; ?></td>
 				<td><?php echo $pr->cantidad; ?></td>
@@ -56,28 +56,26 @@
 							<div class="form-group control-group">
 								<div class="controls">
 									<input type="text" class="form-control input-sm" name="cantidad" value="1" style="max-width: 70px;" min="1" max="<?php echo $pr->cantidad; ?>" placeholder="Cantidad" pattern="[\d]{1,8}" onkeypress="return soloNumeros(event)" maxlength="8" required>
-									<button type="submit" class="btn btn-sm btn-success" id="<?php echo $pr->getProduct()->id; ?>"><i class="fa fa-cart-plus fa-fw"></i></button>
+									<button type="submit" class="btn btn-sm btn-success" id="<?php echo $pr->getProduct()->id; ?>"><i class="fa fa-plus fa-fw"></i></button>
 									<p class="help-block"></p>
 								</div>
 	  						</div>
 						</form>
 					<?php endif; ?>
-					</td>
-				</tr>
-	<?php
-		endforeach;
-	?>
+				</td>
+			</tr>
+		<?php endforeach; ?>
 		</table>
 	<?php
 	else:
 	?>
-		<div class="alert alert-danger">
+		<div class="alert alert-warning">
 		<?php if ($prod): ?>
-				No se encontraron coincidencias con sus criterios de búsqueda.
+			No se encontraron coincidencias con sus criterios de búsqueda.
 		<?php else: ?>
-				No hay productos disponibles en la sucursal actual.
+			No hay productos disponibles en la sucursal actual.
 		<?php endif; ?>
 		</div>
 	<?php
 	endif;
-?>
+	?>

@@ -5,9 +5,9 @@ USE sistemaHierroForjado;
 -- Volcando estructura para tabla el_salvador.zonesv
 DROP TABLE IF EXISTS `zonesv`;
 CREATE TABLE IF NOT EXISTS `zonesv` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `ZoneName` varchar(15) NOT NULL COMMENT 'Nombre de las zonas geógraficas de El Salvador',
-  PRIMARY KEY (`ID`)
+	`ID` int(11) NOT NULL AUTO_INCREMENT,
+	`ZoneName` varchar(15) NOT NULL COMMENT 'Nombre de las zonas geógraficas de El Salvador',
+	PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Zonas geográficas de El Salvador';
 
 -- Volcando datos para la tabla el_salvador.zonesv: ~4 rows (aproximadamente)
@@ -21,13 +21,13 @@ INSERT INTO `zonesv` (`ID`, `ZoneName`) VALUES
 
 DROP TABLE IF EXISTS `depsv`;
 CREATE TABLE IF NOT EXISTS `depsv` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `DepName` varchar(30) NOT NULL COMMENT 'Nombre del departamento',
-  `ISOCode` char(5) NOT NULL COMMENT 'Código ISO Departamentos',
-  `ZONESV_ID` int(11) NOT NULL COMMENT 'Zona geográfica del departamento',
-  PRIMARY KEY (`ID`),
-  KEY `fk_DEPSV_ZONESV_idx` (`ZONESV_ID`),
-  CONSTRAINT `fk_DEPSV_ZONESV` FOREIGN KEY (`ZONESV_ID`) REFERENCES `zonesv` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+	`ID` int(11) NOT NULL AUTO_INCREMENT,
+	`DepName` varchar(30) NOT NULL COMMENT 'Nombre del departamento',
+	`ISOCode` char(5) NOT NULL COMMENT 'Código ISO Departamentos',
+	`ZONESV_ID` int(11) NOT NULL COMMENT 'Zona geográfica del departamento',
+	PRIMARY KEY (`ID`),
+	KEY `fk_DEPSV_ZONESV_idx` (`ZONESV_ID`),
+	CONSTRAINT `fk_DEPSV_ZONESV` FOREIGN KEY (`ZONESV_ID`) REFERENCES `zonesv` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='Departamentos de El Salvador';
 
 -- Volcando datos para la tabla el_salvador.depsv: ~0 rows (aproximadamente)
@@ -53,12 +53,12 @@ INSERT INTO `depsv` (`ID`, `DepName`, `ISOCode`, `ZONESV_ID`) VALUES
 -- Volcando estructura para tabla el_salvador.munsv
 DROP TABLE IF EXISTS `munsv`;
 CREATE TABLE IF NOT EXISTS `munsv` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `MunName` varchar(100) NOT NULL COMMENT 'Nombre del Municipio',
-  `DEPSV_ID` int(11) NOT NULL COMMENT 'Departamento al cual pertenece el municipio',
-  PRIMARY KEY (`ID`,`DEPSV_ID`),
-  KEY `fk_MUNSV_DEPSV1_idx` (`DEPSV_ID`),
-  CONSTRAINT `fk_MUNSV_DEPSV1` FOREIGN KEY (`DEPSV_ID`) REFERENCES `depsv` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+	`ID` int(11) NOT NULL AUTO_INCREMENT,
+	`MunName` varchar(100) NOT NULL COMMENT 'Nombre del Municipio',
+	`DEPSV_ID` int(11) NOT NULL COMMENT 'Departamento al cual pertenece el municipio',
+	PRIMARY KEY (`ID`,`DEPSV_ID`),
+	KEY `fk_MUNSV_DEPSV1_idx` (`DEPSV_ID`),
+	CONSTRAINT `fk_MUNSV_DEPSV1` FOREIGN KEY (`DEPSV_ID`) REFERENCES `depsv` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=263 DEFAULT CHARSET=utf8 COMMENT='Municipios de El Salvador';
 
 -- Volcando datos para la tabla el_salvador.munsv: ~0 rows (aproximadamente)
@@ -329,71 +329,47 @@ INSERT INTO `munsv` (`ID`, `MunName`, `DEPSV_ID`) VALUES
 	(262, 'Verapaz', 10);
 
 CREATE TABLE tipoPago(
-  idTipoPago tinyint primary key,
-  nombre varchar(7) not null
+	idTipoPago tinyint primary key,
+	nombre varchar(7) not null
 );
 insert into tipoPago values(1, 'contado');
 insert into tipoPago values(2, 'tarjeta');
 
-/*
-CREATE TABLE administrador(
-  idAdministrador tinyint PRIMARY KEY AUTO_INCREMENT,
-  nombre varchar(30) not null,
-  apellido varchar(30) not null,
-  usuario varchar(30) not null,
-  email varchar(100) not null,
-  clave varchar(60) not null,
-  idPreguntaSecreta tinyint,
-  respuestaPregunta varchar(60),
-  fechaCreacion datetime not null default current_timestamp,
-  foreign key(idPreguntaSecreta) references preguntaSecreta(idPreguntaSecreta)
-);
-insert into administrador values(null, 'Administrador', 'Principal', 'admin', 'admin@gmail.com', '90b9aa7e25f80cf4f64e990b78a9fc5ebd6cecad', null, null, now());
-*/
-
-/*OK*/
 CREATE TABLE sucursal(
-  idSucursal tinyint PRIMARY KEY AUTO_INCREMENT,
-  nombre varchar(30) not null,
-  direccion varchar(200) not null,
-  telefono varchar(10) not null,
-  estado boolean default 1 not null
+	idSucursal tinyint PRIMARY KEY AUTO_INCREMENT,
+	nombre varchar(30) not null,
+	direccion varchar(200) not null,
+	telefono varchar(10) not null,
+	estado boolean default 1 not null
 );
 insert into sucursal values(null,'Sucursal Principal','San Salvador','',1);
 
-/*OK*/
 CREATE TABLE empleado(
-  idEmpleado mediumint PRIMARY KEY AUTO_INCREMENT,
-  idSucursal tinyint not null,
-  idDepto int not null,
-  idMunic int not null,
-  dui varchar(10) not null,
-  nit varchar(20) not null,
-  nombre varchar(30) not null,
-  apellido varchar(30) not null,
-  estadoCivil varchar(30) not null,
-  sexo enum("Hombre","Mujer") not null,
-  fechaNacimiento date not null,
-  direccion varchar(100) not null,
-  nivelAcademico varchar(50) not null,
-  area varchar(50) not null,
-  telefono varchar(10) not null,
-  activo boolean default 1 not null,
-  foreign key(idDepto) references depsv(ID),
-  foreign key(idMunic) references munsv(ID),
-  foreign key(idSucursal) references sucursal(idSucursal)
+	idEmpleado mediumint PRIMARY KEY AUTO_INCREMENT,
+	idSucursal tinyint not null,
+	idDepto int not null,
+	idMunic int not null,
+	dui varchar(10) not null,
+	nit varchar(20) not null,
+	nombre varchar(30) not null,
+	apellido varchar(30) not null,
+	estadoCivil varchar(30) not null,
+	sexo enum("Hombre","Mujer") not null,
+	fechaNacimiento date not null,
+	direccion varchar(100) not null,
+	nivelAcademico varchar(50) not null,
+	area varchar(50) not null,
+	telefono varchar(10) not null,
+	activo boolean default 1 not null,
+	foreign key(idDepto) references depsv(ID),
+	foreign key(idMunic) references munsv(ID),
+	foreign key(idSucursal) references sucursal(idSucursal)
 );
-/*
-insert into empleado values(null,1,'02637456-8','1011-230290-101-2','Pedro','Lainez','Soltero/a','Hombre','1990-02-23','Col. El Rosario','Zacatecoluca','La Paz','Bachillerato','Pintar','7352-3121',1);
-insert into empleado values(null,1,'67543556-0','1010-040287-104-1','Rosa','Perez','Soltero/a','Mujer','1987-02-04','Col. La Esperanza','Zacatecoluca','La Paz','Bachillerato','Secretaria','6743-5673',1);
-insert into empleado values(null,1,'67831124-4','1014-311292-100-3','Juan','Pineda','Casado/a','Hombre','1992-12-31','Col. 14 de Febrero','Tecoluca','San Vicente','Bachillerato','Soldar','7643-3743',1);
-insert into empleado values(null,1,'56473828-2','1010-091292-102-2','Esmeralda','Medoza','Casado/a','Mujer','1992-12-09','Col. La Esperanza','Zacatecoluca','La Paz','Bachillerato','Pintar','7354-3903',1);
-*/
 
 CREATE TABLE tipoUsuario(
-  idTipo tinyint PRIMARY KEY AUTO_INCREMENT,
-  nombre varchar(15) not null,
-  activo boolean not null default 1
+	idTipo tinyint PRIMARY KEY AUTO_INCREMENT,
+	nombre varchar(15) not null,
+	activo boolean not null default 1
 );
 
 insert into tipoUsuario values
@@ -403,8 +379,8 @@ insert into tipoUsuario values
 (null,"Producción",1);
 
 CREATE TABLE tipoComprobante(
-  idTipo tinyint PRIMARY KEY AUTO_INCREMENT,
-  nombre varchar(30) not null
+	idTipo tinyint PRIMARY KEY AUTO_INCREMENT,
+	nombre varchar(30) not null
 );
 
 insert into tipoComprobante values
@@ -412,140 +388,129 @@ insert into tipoComprobante values
 (null,"Comprobante de Crédito Fiscal"),
 (null,"Recibo");
 
-/*OK*/
 CREATE TABLE usuario(
-  idUsuario smallint PRIMARY KEY AUTO_INCREMENT,
-  idEmpleado mediumint,
-  nombre varchar(30) not null,
-  apellido varchar(30) not null,
-  usuario varchar(30) not null,
-  email varchar(100),
-  clave varchar(60) not null,
-  tipo tinyint not null default 0,
-  fechaCreacion datetime not null default current_timestamp,
-  activo boolean default 1 not null,
-  foreign key(tipo) references tipoUsuario(idTipo),
-  foreign key(idEmpleado) references empleado(idEmpleado)
+	idUsuario smallint PRIMARY KEY AUTO_INCREMENT,
+	idEmpleado mediumint,
+	nombre varchar(30) not null,
+	apellido varchar(30) not null,
+	usuario varchar(30) not null,
+	email varchar(100),
+	clave varchar(60) not null,
+	tipo tinyint not null default 0,
+	fechaCreacion datetime not null default current_timestamp,
+	activo boolean default 1 not null,
+	foreign key(tipo) references tipoUsuario(idTipo),
+	foreign key(idEmpleado) references empleado(idEmpleado)
 );
 insert into usuario values(null,null,'Administrador','Principal','admin','admin@gmail.com','90b9aa7e25f80cf4f64e990b78a9fc5ebd6cecad',1,now(),1);
 
-/*OK*/
 CREATE TABLE banco(
-  idBanco tinyint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  nombre varchar(30) not null,
-  direccion varchar(200),
-  telefono varchar(10),
-  numeroCuenta varchar(25) not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario)
+	idBanco tinyint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	nombre varchar(30) not null,
+	direccion varchar(200),
+	telefono varchar(10),
+	numeroCuenta varchar(25) not null,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario)
 );
 
-/*OK*/
 CREATE TABLE gasto(
-  idGasto mediumint PRIMARY KEY AUTO_INCREMENT,
-  idSucursal tinyint not null, 
-  idUsuario smallint not null,
-  idEmpleado mediumint,
-  descripcion varchar(100) not null,
-  numeroComprobante varchar(32),
-  pago decimal(9,2) not null,
-  fecha date not null,
-  estado boolean default 1 not null,
-  foreign key(idSucursal) references sucursal(idSucursal),
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idEmpleado) references empleado(idEmpleado)
+	idGasto mediumint PRIMARY KEY AUTO_INCREMENT,
+	idSucursal tinyint not null, 
+	idUsuario smallint not null,
+	idEmpleado mediumint,
+	descripcion varchar(100) not null,
+	numeroComprobante varchar(32),
+	pago decimal(9,2) not null,
+	fecha date not null,
+	estado boolean default 1 not null,
+	foreign key(idSucursal) references sucursal(idSucursal),
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idEmpleado) references empleado(idEmpleado)
 );
 
-/*OK*/
 CREATE TABLE envioBanco(
-  idEnvioBanco smallint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idBanco tinyint not null,
-  cantidad decimal(9,2) not null,
-  numComprobante varchar(32) not null,
-  fecha datetime not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idBanco) references banco(idBanco)
+	idEnvioBanco smallint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idBanco tinyint not null,
+	cantidad decimal(9,2) not null,
+	numComprobante varchar(32) not null,
+	fecha datetime not null,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idBanco) references banco(idBanco)
 );
 
-/*OK*/
 CREATE TABLE proveedor(
-  idProveedor smallint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  nombre varchar(40) not null,
-  tipoProvee enum("Productos","Servicios") not null,
-  direccion varchar(200) not null,
-  telefono varchar(10) not null,
-  correo varchar(50),
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario)
+	idProveedor smallint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	nombre varchar(40) not null,
+	tipoProvee enum("Productos","Servicios") not null,
+	direccion varchar(200) not null,
+	telefono varchar(10) not null,
+	correo varchar(50),
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario)
 );
-/*
-insert into proveedor values(null,2,'Galvanissa','Productos','San Salvador','2394-4599','galvanissa@gmail.com',1);
-*/
 
-/*OK*/
 CREATE TABLE materiaPrima(
-  idMateriaPrima int PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  nombre varchar(50) not null,
-  descripcion varchar(200) not null,
-  minimo smallint not null,
-  existencias mediumint not null default 0,
-  /*precioUnitario decimal(6,2) not null,*/
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario)
+idMateriaPrima int PRIMARY KEY AUTO_INCREMENT,
+idUsuario smallint not null,
+nombre varchar(50) not null,
+descripcion varchar(200) not null,
+minimo smallint not null,
+existencias mediumint not null default 0,
+estado boolean default 1 not null,
+foreign key(idUsuario) references usuario(idUsuario)
 );
 
 CREATE TABLE facturaMateriaPrima(
-  idFacturaMateriaPrima mediumint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idProveedor smallint not null,
-  tipoComprobante tinyint, /* Factura, CCF, Ticket */
-  tipoPago tinyint not null default 1,
-  numComprobante varchar(32),
-  fecha datetime not null default current_timestamp,
-  total decimal(9,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idProveedor) references proveedor(idProveedor),
-  foreign key(tipoComprobante) references tipoComprobante(idTipo),
-  foreign key(tipoPago) references tipoPago(idTipoPago)
-  /*foreign key(idCierreCaja) references cierreCaja(idCierreCaja)*/
+	idFacturaMateriaPrima mediumint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idProveedor smallint not null,
+	tipoComprobante tinyint, /* Factura, CCF, Ticket */
+	tipoPago tinyint not null default 1,
+	numComprobante varchar(32),
+	fecha datetime not null default current_timestamp,
+	total decimal(9,2) not null,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idProveedor) references proveedor(idProveedor),
+	foreign key(tipoComprobante) references tipoComprobante(idTipo),
+	foreign key(tipoPago) references tipoPago(idTipoPago)
 );
 
 CREATE TABLE compraMateriaPrima(
-  idCompraMateriaPrima int PRIMARY KEY AUTO_INCREMENT,
-  idFacturaMateriaPrima mediumint not null,
-  idMateriaPrima int not null,
-  cantidad int not null,
-  precioUnitario double(9,2) not null,
-  total double(9,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idFacturaMateriaPrima) references facturaMateriaPrima(idFacturaMateriaPrima),
-  foreign key(idMateriaPrima) references materiaPrima(idMateriaPrima)
+	idCompraMateriaPrima int PRIMARY KEY AUTO_INCREMENT,
+	idFacturaMateriaPrima mediumint not null,
+	idMateriaPrima int not null,
+	cantidad int not null,
+	precioUnitario double(9,2) not null,
+	total double(9,2) not null,
+	estado boolean default 1 not null,
+	foreign key(idFacturaMateriaPrima) references facturaMateriaPrima(idFacturaMateriaPrima),
+	foreign key(idMateriaPrima) references materiaPrima(idMateriaPrima)
 );
 
 CREATE TABLE cierreCaja(
-  idCierreCaja tinyint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idSucursal tinyint not null,
-  fecha datetime not null default current_timestamp,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idSucursal) references sucursal(idsucursal)
+	idCierreCaja tinyint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idSucursal tinyint not null,
+	fecha datetime not null default current_timestamp,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idSucursal) references sucursal(idsucursal)
 );
 
 
 CREATE TABLE categoria(
-  idCategoria tinyint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  nombre varchar(50) not null,
-  fecha datetime default current_timestamp,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario)
+idCategoria tinyint PRIMARY KEY AUTO_INCREMENT,
+idUsuario smallint not null,
+nombre varchar(50) not null,
+fecha datetime default current_timestamp,
+estado boolean default 1 not null,
+foreign key(idUsuario) references usuario(idUsuario)
 )DEFAULT CHARSET=utf8;
 insert into categoria values
 (null,1,"Cerrajerí­a Ornamental",NOW(),1),
@@ -555,231 +520,249 @@ insert into categoria values
 
 
 CREATE TABLE servicio(
-  idServicio smallint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  nombre varchar(50) not null,
-  descripcion varchar(200) not null,
-  precio decimal(9,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario)
+	idServicio smallint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	nombre varchar(50) not null,
+	descripcion varchar(200) not null,
+	precio decimal(9,2) not null,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario)
 );
 
 CREATE TABLE producto(
-  idProducto mediumint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idCategoria tinyint not null,
-  nombre varchar(50) not null,
-  descripcion varchar(255) not null,
-  existencias int not null,
-  precioCosteo decimal(9,2) not null,
-  precioVenta decimal(9,2) not null,
-  mantenimiento boolean not null default 0,
-  imagen varchar(255),
-  fechaRegistro datetime default current_timestamp not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idCategoria) references categoria(idCategoria)
+	idProducto mediumint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idCategoria tinyint not null,
+	nombre varchar(50) not null,
+	descripcion varchar(255) not null,
+	existencias int not null,
+	precioCosteo decimal(9,2) not null,
+	precioVenta decimal(9,2) not null,
+	mantenimiento boolean not null default 0,
+	mesesMantto tinyint,
+	imagen varchar(255),
+	fechaRegistro datetime default current_timestamp not null,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idCategoria) references categoria(idCategoria)
 );
 
 CREATE TABLE productoSucursal(
-  idProductoSucursal int PRIMARY KEY AUTO_INCREMENT,
-  idSucursal tinyint not null default 1,
-  idProducto mediumint not null,
-  minimo int not null,
-  cantidad int not null,
-  foreign key(idProducto) references producto(idProducto),
-  foreign key(idSucursal) references sucursal(idSucursal)
+	idProductoSucursal int PRIMARY KEY AUTO_INCREMENT,
+	idSucursal tinyint not null default 1,
+	idProducto mediumint not null,
+	minimo int not null,
+	cantidad int not null,
+	foreign key(idProducto) references producto(idProducto),
+	foreign key(idSucursal) references sucursal(idSucursal)
 );
 
 CREATE TABLE traspaso(
-  idTraspaso mediumint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idSucursalOrigen tinyint not null,
-  idSucursalDestino tinyint not null,
-  fecha datetime not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idSucursalOrigen) references sucursal(idSucursal),
-  foreign key(idSucursalDestino) references sucursal(idSucursal)
+	idTraspaso mediumint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idSucursalOrigen tinyint not null,
+	idSucursalDestino tinyint not null,
+	fecha datetime not null,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idSucursalOrigen) references sucursal(idSucursal),
+	foreign key(idSucursalDestino) references sucursal(idSucursal)
 );
 
 CREATE TABLE traspasoProducto(
-  idTraspasoProducto int PRIMARY KEY AUTO_INCREMENT,
-  idTraspaso mediumint not null,
-  idProducto mediumint not null,
-  cantidad mediumint not null,
-  estado boolean default 1 not null,
-  foreign key(idTraspaso) references traspaso(idTraspaso),
-  foreign key(idProducto) references producto(idProducto)
+	idTraspasoProducto int PRIMARY KEY AUTO_INCREMENT,
+	idTraspaso mediumint not null,
+	idProducto mediumint not null,
+	cantidad mediumint not null,
+	estado boolean default 1 not null,
+	foreign key(idTraspaso) references traspaso(idTraspaso),
+	foreign key(idProducto) references producto(idProducto)
 );
 
 CREATE TABLE produccion(
-  idProduccion mediumint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idProducto mediumint not null,
-  fechaInicio date not null,
-  fechaFin date not null,
-  cantidadProducto smallint not null,
-  terminado boolean default 0,
-  fechaRegistro datetime not null default current_timestamp,
-  fechaFinalizado datetime,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idProducto) references producto(idProducto)
+	idProduccion mediumint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idProducto mediumint not null,
+	fechaInicio date not null,
+	fechaFin date not null,
+	cantidadProducto smallint not null,
+	terminado boolean default 0,
+	fechaRegistro datetime not null default current_timestamp,
+	fechaFinalizado datetime,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idProducto) references producto(idProducto)
 );
-/*
-  fechaInicio y fechaFin: Desde cuando empieza la producción y hasta cuando es el límite...
-  fechaRegistro y fechaFinalizado: Cuando se registró y cuando ya está realizado el producto o se canceló...
-*/
 
 CREATE TABLE materiaPrimaProduccion(
-  idMateriaPrimaProduccion int PRIMARY KEY AUTO_INCREMENT,
-  idProduccion mediumint not null,
-  idMateriaPrima int not null,
-  cantidad decimal(6,2) not null,
-  /*total decimal(6,2) not null,*/
-  foreign key(idProduccion) references produccion(idProduccion),
-  foreign key(idMateriaPrima) references materiaPrima(idMateriaPrima)
+	idMateriaPrimaProduccion int PRIMARY KEY AUTO_INCREMENT,
+	idProduccion mediumint not null,
+	idMateriaPrima int not null,
+	cantidad decimal(6,2) not null,
+	foreign key(idProduccion) references produccion(idProduccion),
+	foreign key(idMateriaPrima) references materiaPrima(idMateriaPrima)
 );
 
-/*OK*/
 CREATE TABLE cliente(
-  idCliente mediumint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idDepto int not null,
-  giro varchar(50),
-  dui varchar(10),
-  nombre varchar(60) not null,
-  sexo enum("Hombre","Mujer"),
-  fechaNacimiento date,
-  direccion varchar(100) not null,
-  telefono varchar(10) not null,
-  nit varchar(20),
-  email varchar(50),
-  nrc varchar(20), /* No. De Registro De Contribuyente */
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idDepto) references depsv(ID)
+	idCliente mediumint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idDepto int not null,
+	giro varchar(50),
+	dui varchar(10),
+	nombre varchar(60) not null,
+	sexo enum("Hombre","Mujer"),
+	fechaNacimiento date,
+	direccion varchar(100) not null,
+	telefono varchar(10) not null,
+	nit varchar(20),
+	email varchar(50),
+	nrc varchar(20) comment "No. De Registro De Contribuyente",
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idDepto) references depsv(ID)
 );
 
 CREATE TABLE pedido(
-  idPedido int PRIMARY KEY AUTO_INCREMENT,
-  idSucursal tinyint not null,
-  idUsuario smallint not null,
-  idCliente mediumint not null,
-  fechaPedido datetime not null,
-  fechaEntrega date not null,
-  entregado boolean not null default 0,
-  cancelado boolean not null default 0,
-  fechaFinalizado datetime,
-  /*
-  adelanto decimal(9,2) not null,
-  tipoPago tinyint not null,
-  */
-  restante decimal(9,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idCliente) references cliente(idCliente),
-  foreign key(idSucursal) references sucursal(idSucursal)
-  /*foreign key(tipoPago) references tipoPago(idTipoPago)*/
+	idPedido int PRIMARY KEY AUTO_INCREMENT,
+	idSucursal tinyint not null,
+	idUsuario smallint not null,
+	idCliente mediumint not null,
+	fechaPedido datetime not null,
+	fechaEntrega date not null,
+	entregado boolean not null default 0,
+	cancelado boolean not null default 0,
+	fechaFinalizado datetime,
+	restante decimal(9,2) not null,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idCliente) references cliente(idCliente),
+	foreign key(idSucursal) references sucursal(idSucursal)
 );
 
 CREATE TABLE pedidoProducto(
-  idPedidoProducto int PRIMARY KEY AUTO_INCREMENT,
-  idPedido int not null,
-  idProducto mediumint not null,
-  cantidad int not null,
-  precio decimal(9,2) not null,
-  total decimal(9,2) not null,
-  mantenimiento boolean not null default 0,
-  estado boolean default 1 not null,
-  foreign key(idPedido) references pedido(idPedido),
-  foreign key(idProducto) references producto(idProducto)
+	idPedidoProducto int PRIMARY KEY AUTO_INCREMENT,
+	idPedido int not null,
+	idProducto mediumint not null,
+	cantidad int not null,
+	precio decimal(9,2) not null,
+	total decimal(9,2) not null,
+	mantenimiento boolean not null default 0,
+	estado boolean default 1 not null,
+	foreign key(idPedido) references pedido(idPedido),
+	foreign key(idProducto) references producto(idProducto)
 );
 
 CREATE TABLE pedidoServicio(
-  idPedidoServicio int PRIMARY KEY AUTO_INCREMENT,
-  idPedido int not null,
-  idServicio smallint not null,
-  cantidad smallint not null default 1,
-  precio decimal(9,2) not null,
-  total decimal(9,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idPedido) references pedido(idPedido),
-  foreign key(idServicio) references servicio(idServicio)
+	idPedidoServicio int PRIMARY KEY AUTO_INCREMENT,
+	idPedido int not null,
+	idServicio smallint not null,
+	cantidad smallint not null default 1,
+	precio decimal(9,2) not null,
+	total decimal(9,2) not null,
+	estado boolean default 1 not null,
+	foreign key(idPedido) references pedido(idPedido),
+	foreign key(idServicio) references servicio(idServicio)
 );
 
 CREATE TABLE abono(
-  idAbono mediumint PRIMARY KEY AUTO_INCREMENT,
-  idSucursal tinyint not null,
-  idUsuario smallint not null,
-  idCliente mediumint not null,
-  idPedido int not null,
-  cantidad decimal(9,2) not null,
-  fecha datetime not null,
-  tipoComprobante tinyint not null default 1,
-  totalLetras varchar(150),
-  numeroComprobante varchar(32),
-  estado boolean default 1 not null,
-  foreign key(idSucursal) references sucursal(idSucursal),
-  foreign key(tipoComprobante) references tipoComprobante(idTipo),
-  foreign key(idPedido) references pedido(idPedido),
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idCliente) references cliente(idCliente)
+	idAbono mediumint PRIMARY KEY AUTO_INCREMENT,
+	idSucursal tinyint not null,
+	idUsuario smallint not null,
+	idCliente mediumint not null,
+	idPedido int not null,
+	cantidad decimal(9,2) not null,
+	fecha datetime not null,
+	tipoComprobante tinyint not null default 1,
+	totalLetras varchar(150),
+	numeroComprobante varchar(32),
+	estado boolean default 1 not null,
+	foreign key(idSucursal) references sucursal(idSucursal),
+	foreign key(tipoComprobante) references tipoComprobante(idTipo),
+	foreign key(idPedido) references pedido(idPedido),
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idCliente) references cliente(idCliente)
 );
 
 CREATE TABLE facturaVenta(
-  idFacturaVenta int PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idSucursal tinyint not null,
-  idCliente mediumint,
-  idCierreCaja tinyint,
-  numeroFactura varchar(12) not null,
-  fecha datetime default current_timestamp not null,
-  tipoComprobante tinyint not null,
-  tipoPago tinyint not null default 1,
-  totalLetras varchar(150),
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idSucursal) references sucursal(idSucursal),
-  foreign key(idCliente) references cliente(idCliente),
-  foreign key(idCierreCaja) references cierreCaja(idCierreCaja),
-  foreign key(tipoComprobante) references tipoComprobante(idTipo),
-  foreign key(tipoPago) references tipoPago(idTipoPago)
+	idFacturaVenta int PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idSucursal tinyint not null,
+	idCliente mediumint,
+	idCierreCaja tinyint,
+	numeroFactura varchar(12) not null,
+	fecha datetime default current_timestamp not null,
+	tipoComprobante tinyint not null,
+	tipoPago tinyint not null default 1,
+	totalLetras varchar(150),
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idSucursal) references sucursal(idSucursal),
+	foreign key(idCliente) references cliente(idCliente),
+	foreign key(idCierreCaja) references cierreCaja(idCierreCaja),
+	foreign key(tipoComprobante) references tipoComprobante(idTipo),
+	foreign key(tipoPago) references tipoPago(idTipoPago)
 );
 
 CREATE TABLE ventaProducto(
-  idVentaProducto int PRIMARY KEY AUTO_INCREMENT,
-  idFacturaVenta int not null,
-  idProducto mediumint not null,
-  precio decimal(9,2) not null,
-  cantidad smallint not null,
-  total decimal(9,2) not null,
-  mantenimiento boolean not null default 0,
-  estado boolean default 1 not null,
-  foreign key(idFacturaVenta) references facturaVenta(idFacturaVenta),
-  foreign key(idProducto) references producto(idProducto)
+	idVentaProducto int PRIMARY KEY AUTO_INCREMENT,
+	idFacturaVenta int not null,
+	idProducto mediumint not null,
+	precio decimal(9,2) not null,
+	cantidad smallint not null,
+	total decimal(9,2) not null,
+	mantenimiento boolean not null default 0,
+	estado boolean default 1 not null,
+	foreign key(idFacturaVenta) references facturaVenta(idFacturaVenta),
+	foreign key(idProducto) references producto(idProducto)
 );
 
 CREATE TABLE ventaServicio(
-  idVentaServicio int PRIMARY KEY AUTO_INCREMENT,
-  idFacturaVenta int not null,
-  idServicio smallint not null,
-  precio decimal(9,2) not null,
-  cantidad smallint not null default 1,
-  total decimal(9,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idFacturaVenta) references facturaVenta(idFacturaVenta),
-  foreign key(idServicio) references servicio(idServicio)
+	idVentaServicio int PRIMARY KEY AUTO_INCREMENT,
+	idFacturaVenta int not null,
+	idServicio smallint not null,
+	precio decimal(9,2) not null,
+	cantidad smallint not null default 1,
+	total decimal(9,2) not null,
+	estado boolean default 1 not null,
+	foreign key(idFacturaVenta) references facturaVenta(idFacturaVenta),
+	foreign key(idServicio) references servicio(idServicio)
 );
 
+CREATE TABLE mantenimiento(
+	idMantenimiento mediumint primary key AUTO_INCREMENT,
+	idFactura int default null,
+	idPedido int default null,
+	idProducto mediumint not null,
+	idSucursal tinyint not null default 1,
+	idUsuario smallint not null,
+	title varchar(100) not null,
+	url varchar(50),
+	class varchar(40) not null default "event-info",
+	start datetime not null comment "Tiempo de inicio",
+	end datetime not null comment "Tiempo de fin",
+	realizado boolean default 0,
+	fechaRealizado date,
+	fechaRegistro datetime default current_timestamp not null,
+	estado boolean default 1 not null,
+	foreign key(idFactura) references facturaVenta(idFacturaVenta),
+	foreign key(idPedido) references pedido(idPedido),
+	foreign key(idProducto) references producto(idProducto),
+	foreign key(idSucursal) references sucursal(idSucursal),
+	foreign key(idUsuario) references usuario(idUsuario)
+);
+
+CREATE VIEW manttoProds AS
+SELECT idMantenimiento, idFactura, idPedido, idProducto, idSucursal, idUsuario, title, url, class, CONCAT_WS("",UNIX_TIMESTAMP(start),"000") as start, CONCAT_WS("",UNIX_TIMESTAMP(end),"000") as end, DATE_FORMAT(start,"%d-%m-%Y") as fecha, realizado, fechaRealizado, fechaRegistro
+FROM mantenimiento
+WHERE (estado = 1);
+
 CREATE TABLE causaDevolucion(
-  idCausa tinyint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  fecha datetime not null default current_timestamp,
-  descripcion varchar(150) not null,
-  estado boolean not null default 1,
-  foreign key(idUsuario) references usuario(idUsuario)
+	idCausa tinyint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	fecha datetime not null default current_timestamp,
+	descripcion varchar(150) not null,
+	estado boolean not null default 1,
+	foreign key(idUsuario) references usuario(idUsuario)
 );
 
 insert into causaDevolucion values
@@ -788,69 +771,69 @@ insert into causaDevolucion values
 (null,1,NOW(),"Entrega tardía",1);
 
 CREATE TABLE devolucion(
-  idDevolucion smallint PRIMARY KEY AUTO_INCREMENT,
-  idSucursal tinyint not null,
-  idUsuario smallint not null,
-  idFacturaVenta int not null,
-  idCausa tinyint not null,
-  fecha date not null,
-  reembolso decimal(9,2) not null,
-  estado boolean default 1 not null,
-  foreign key(idSucursal) references sucursal(idSucursal),
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idFacturaVenta) references facturaVenta(idFacturaVenta),
-  foreign key(idCausa) references causaDevolucion(idCausa)
+	idDevolucion smallint PRIMARY KEY AUTO_INCREMENT,
+	idSucursal tinyint not null,
+	idUsuario smallint not null,
+	idFacturaVenta int not null,
+	idCausa tinyint not null,
+	fecha date not null,
+	reembolso decimal(9,2) not null,
+	estado boolean default 1 not null,
+	foreign key(idSucursal) references sucursal(idSucursal),
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idFacturaVenta) references facturaVenta(idFacturaVenta),
+	foreign key(idCausa) references causaDevolucion(idCausa)
 );
 
 CREATE TABLE productoDevolucion(
-  idProdDev tinyint primary key AUTO_INCREMENT,
-  idDevolucion smallint not null,
-  idProducto mediumint not null,
-  cantidad smallint not null,
-  precio decimal(9,2) not null,
-  foreign key(idDevolucion) references devolucion(idDevolucion),
-  foreign key(idProducto) references producto(idProducto)
+	idProdDev tinyint primary key AUTO_INCREMENT,
+	idDevolucion smallint not null,
+	idProducto mediumint not null,
+	cantidad smallint not null,
+	precio decimal(9,2) not null,
+	foreign key(idDevolucion) references devolucion(idDevolucion),
+	foreign key(idProducto) references producto(idProducto)
 );
 
 CREATE TABLE cajaChica(
-  idCajaChica tinyint PRIMARY KEY AUTO_INCREMENT,
-  minimo decimal(6,2) not null,
-  cantidad decimal(9,2) not null,
-  entradas decimal(9,2) not null,
-  salidas decimal(9,2) not null
+	idCajaChica tinyint PRIMARY KEY AUTO_INCREMENT,
+	minimo decimal(6,2) not null,
+	cantidad decimal(9,2) not null,
+	entradas decimal(9,2) not null,
+	salidas decimal(9,2) not null
 );
 insert into cajaChica values(null, 0, 0, 0, 0);
 
 CREATE TABLE ingresoCajaChica(
-  idIngresoCajaChica smallint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idCajaChica tinyint not null default 1,
-  cantidad decimal(9,2) not null,
-  fecha datetime not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idCajaChica) references cajaChica(idCajaChica)
+	idIngresoCajaChica smallint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idCajaChica tinyint not null default 1,
+	cantidad decimal(9,2) not null,
+	fecha datetime not null,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idCajaChica) references cajaChica(idCajaChica)
 );
 
 CREATE TABLE salidaCajaChica(
-  idSalidaCajaChica smallint PRIMARY KEY AUTO_INCREMENT,
-  idUsuario smallint not null,
-  idCajaChica tinyint not null default 1,
-  idEmpleado mediumint,
-  cantidad decimal(9,2) not null,
-  numComprobante varchar(32),
-  descripcion varchar(200) not null,
-  fecha datetime not null,
-  estado boolean default 1 not null,
-  foreign key(idUsuario) references usuario(idUsuario),
-  foreign key(idCajaChica) references cajaChica(idCajaChica),
-  foreign key(idEmpleado) references empleado(idEmpleado)
+	idSalidaCajaChica smallint PRIMARY KEY AUTO_INCREMENT,
+	idUsuario smallint not null,
+	idCajaChica tinyint not null default 1,
+	idEmpleado mediumint,
+	cantidad decimal(9,2) not null,
+	numComprobante varchar(32),
+	descripcion varchar(200) not null,
+	fecha datetime not null,
+	estado boolean default 1 not null,
+	foreign key(idUsuario) references usuario(idUsuario),
+	foreign key(idCajaChica) references cajaChica(idCajaChica),
+	foreign key(idEmpleado) references empleado(idEmpleado)
 );
 
 CREATE TABLE configuraciones(
-  idConfig smallint PRIMARY KEY AUTO_INCREMENT,
-  nombre varchar(20) not null,
-  valor varchar(50) not null
+	idConfig smallint PRIMARY KEY AUTO_INCREMENT,
+	nombre varchar(20) not null,
+	valor varchar(50) not null
 );
 
 insert into configuraciones values(null,'iva','0.13');

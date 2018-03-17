@@ -21,19 +21,16 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
-			
 			<a data-toggle="modal" data-target="#agregar" class="btn btn-default"><i class='fa fa-plus'></i> Agregar Materia Prima</a>
 			<?php if ($matP): ?>
-			<?php if ($_SESSION["usr_suc"] == 1 && ($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3)): ?>
-			<a href="index.php?view=re" class="btn btn-default"><i class='fa fa-shopping-cart'></i> Realizar Compra</a>
+				<?php if ($_SESSION["usr_suc"] == 1 && ($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3)): ?>
+				<a href="index.php?view=re" class="btn btn-default"><i class='fa fa-shopping-cart'></i> Realizar Compra</a>
+				<?php endif; ?>
+				<div class="btn-group pull-right">
+					<a class="btn btn-default" href="report/materiaPrima.php"><i class="fa fa-download fa-fw"></i> Descargar</a>
+				</div>
 			<?php endif; ?>
-			<div class="btn-group pull-right">
-				<a class="btn btn-default" href="report/materiaPrima.php"><i class="fa fa-download fa-fw"></i> Descargar</a>
-  			</div>
-			<?php endif; ?>
-			
 		</div>
-
 		<h1><i class="glyphicon glyphicon-stats"></i> Inventario De Materia Prima</h1>
 		<div class="container-fluid">
 			<?php
@@ -61,17 +58,6 @@
 		</div>
 		<div class="clearfix"></div>
 		<?php
-		
-		$page = 1;
-		if(isset($_GET["page"])){
-			$page=$_GET["page"];
-		}
-
-		$limit = 10;
-		if(isset($_GET["limit"]) && $_GET["limit"]!="" && $_GET["limit"]!=$limit){
-			$limit=$_GET["limit"];
-		}
-		
 		if($matP){
 			$start = 1; $limit = 10;
 			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
@@ -96,34 +82,38 @@
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th style="width:30px;">No.</th>
-					<th>Nombre</th>
-					<th>Descripci&oacute;n</th>
-					<th style="width: 30px;">M&iacute;nimo</th>
-					<th style="width: 30px;">Existencias</th>
-					<th></th>
+					<tr>
+						<th style="width:30px;">No.</th>
+						<th>Nombre</th>
+						<th>Descripci&oacute;n</th>
+						<th>M&iacute;nimo</th>
+						<th>Existencias</th>
+						<th></th>
+					</tr>
 				</thead>
-				<?php foreach($materiaP as $prod):?>
-				<tr class="<?php if($prod->existencias <= $prod->minimo){echo 'warning';} ?>">
-					<td><?php echo $num++; ?></td>
-					<td style="width: 120px;"><?php echo $prod->nombre; ?></td>
-					<td style="width: 250px;"><?php echo $prod->descripcion; ?></td>
-					<td><?php echo $prod->minimo; ?></td>
-					<td style="text-align: center;"><?php echo $prod->existencias; ?></td>
-					<td style="width: 40px;">
-						<a id="<?php echo $prod->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"><i class="fa fa-edit fa-fw"></i></a>
-						<a title="¿Eliminar?" href="index.php?view=delmp&id=<?php echo $prod->id;?>" class="btn btn-danger btn-xs"
-							data-toggle="confirmation-popout" data-popout="true" data-placement="left"
-							data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
-							data-btn-ok-class="btn-success btn-xs"
-							data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
-							data-btn-cancel-class="btn-danger btn-xs"
-							>
-								<i class="fa fa-trash fa-fw"></i>
-						</a>
-					</td>
-				</tr>
-				<?php endforeach;?>
+				<tbody>
+					<?php foreach($materiaP as $prod):?>
+					<tr class="<?php if($prod->existencias <= $prod->minimo){echo 'warning';} ?>">
+						<td><?php echo $num++; ?></td>
+						<td style="width: 120px;"><?php echo $prod->nombre; ?></td>
+						<td ><?php echo $prod->descripcion; ?></td>
+						<td style="text-align: center; width: 50px;"><?php echo $prod->minimo; ?></td>
+						<td style="text-align: center; width: 50px;"><?php echo $prod->existencias; ?></td>
+						<td style="width: 80px;">
+							<a id="<?php echo $prod->id; ?>" class="btn btn-xs btn-warning btn-edit" data-toggle="modal" data-target="#editar"><i class="fa fa-edit fa-fw"></i></a>
+							<a title="¿Eliminar?" href="index.php?view=delmp&id=<?php echo $prod->id;?>" class="btn btn-danger btn-xs"
+								data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+								data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+								data-btn-ok-class="btn-success btn-xs"
+								data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+								data-btn-cancel-class="btn-danger btn-xs"
+								>
+									<i class="fa fa-trash fa-fw"></i>
+							</a>
+						</td>
+					</tr>
+					<?php endforeach;?>
+				</tbody>
 			</table>
 		</div>
 		<div class="container-fluid">

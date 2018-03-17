@@ -10,7 +10,7 @@
 ?>
 <div class="row">
 	<div class="col-md-12">
-		<a class="btn btn-default" href="<?php if(isset($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];}else{echo "index.php?view=box";} ?>"><i class="fa fa-arrow-left fa-fw"></i>Regresar</a>
+		<a class="btn btn-default" href="index.php?view=box"><i class="fa fa-arrow-left fa-fw"></i>Regresar</a>
 		<div class="btn-group pull-right">
 			<?php if(count($boxes)>0): ?>
 			<a class="btn btn-default" href="report/boxhistory.php"><i class="fa fa-download fa-fw"></i> Descargar</a>

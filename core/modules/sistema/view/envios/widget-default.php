@@ -69,7 +69,7 @@
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 					<thead>
-						<th>No.</th>
+						<th style="width: 40px;">No.</th>
 						<th>Banco</th>
 						<th>No. Cuenta</th>
 						<th>Cantidad</th>

@@ -12,14 +12,18 @@ include "../../core/modules/sistema/model/ServiceData.php";
 include "../../core/modules/sistema/model/AbonoData.php";
 include "../../core/modules/sistema/model/PedidoData.php";
 
-$idFact = $_GET["id"];
+if (isset($_GET["id"]) && is_numeric($_GET["id"])){
+    $idFact = $_GET["id"];
+}else{
+    error();
+}
+
 $tipo = "";
 $totalSumas = 0;
 if (!isset($_REQUEST["abono"])){ //En caso que no sea un pago de pedido
     $factura = FacturaData::getById($idFact);
     if(is_null($factura)){
-        echo "Ha ocurrido un error";
-        exit();
+        error();
     }
     $numeroComprobante = $factura->numerofactura;
     
