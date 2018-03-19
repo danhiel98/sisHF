@@ -34,11 +34,13 @@ $total = 0;
 <br>
 <table class="table table-bordered table-hover">
 	<thead>
-		<th>Codigo</th>
-		<th>Cantidad</th>
-		<th>Nombre del Producto</th>
-		<th>Precio Unitario</th>
-		<th>Total</th>
+		<tr>
+			<th>Codigo</th>
+			<th>Cantidad</th>
+			<th>Nombre del Producto</th>
+			<th>Precio Unitario</th>
+			<th>Total</th>				
+		</tr>
 	</thead>
 <?php
 	foreach($vendidos as $vend){

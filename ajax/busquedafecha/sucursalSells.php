@@ -12,9 +12,7 @@
     $idSuc = $_REQUEST["id"];
 	$fact = FacturaData::getSellsBySuc($idSuc);
 ?>
-	<?php if ($fact): ?>
-	
-	<?php
+	<?php if ($fact):
 
 		$start = 1; $limit = 10;
 		if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
@@ -39,19 +37,19 @@
         <div class="table-responsive">
           	<table class="table table-hover table-bordered">
 				<thead>
-					<th></th>
-					<th>No.</th>
-					<th>No. Comprobante</th>
-					<th>Tipo De Comprobante</th>
-					<th>Cliente</th>
-					<th>Vendedor</th>
-					<th>Fecha</th>
-					<th>Total</th>
+					<tr>
+						<th></th>
+						<th>No.</th>
+						<th>No. Comprobante</th>
+						<th>Tipo De Comprobante</th>
+						<th>Cliente</th>
+						<th>Vendedor</th>
+						<th>Fecha</th>
+						<th>Total</th>
+					</tr>
 				</thead>
             	<tbody>
-              	
 				<?php foreach ($fact as $fa): ?>
-
 					<?php
 					$prodsx = FacturaData::getAllSellsByFactId($fa->id); #Productos vendidos en la factura
 					$servsx = FacturaData::getAllServicesByFactId($fa->id); #Servicios vendidos en la factura

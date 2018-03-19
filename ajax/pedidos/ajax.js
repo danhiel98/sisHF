@@ -1,13 +1,16 @@
-function pedidos(){
+function pedidos(tab) {
 	$.ajax({
 		url: "ajax/pedidos/consulta.php",
 		type: "POST",
 		dataType: "html",
-	}).done(function(res){
+		data: {
+			tab: tab
+		}
+	}).done(function (res) {
 		$("#resultado").html(res);
 	});
 }
 
-$(function(){
+$(function () {
 	pedidos();
 });

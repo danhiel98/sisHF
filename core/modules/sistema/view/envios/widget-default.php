@@ -69,14 +69,16 @@
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 					<thead>
-						<th style="width: 40px;">No.</th>
-						<th>Banco</th>
-						<th>No. Cuenta</th>
-						<th>Cantidad</th>
-						<th>No. Comprobante</th>
-						<th>Fecha</th>
-						<th>Registrado por</th>
-						<th></th>
+						<tr>
+							<th style="width: 40px;">No.</th>
+							<th>Banco</th>
+							<th>No. Cuenta</th>
+							<th>Cantidad</th>
+							<th>No. Comprobante</th>
+							<th>Fecha</th>
+							<th>Registrado por</th>
+							<th></th>
+						</tr>
 					</thead>
 					<tbody>
 						<?php

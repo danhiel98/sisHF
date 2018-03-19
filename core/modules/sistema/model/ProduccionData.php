@@ -105,7 +105,7 @@ class ProduccionData {
 
 	public static function getFinishedByPage($start,$limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where terminado = 1 and estado = 1 order by fechaRegistro desc limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where terminado = 1 and estado = 1 order by fechaFinalizado desc limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

@@ -34,9 +34,11 @@
 	</table>
 	<table class="table table-bordered table-hover table-responsive">
 		<thead>
-			<th>Producto</th>
-			<th>Descripci&oacute;n</th>
-			<th>Cantidad</th>
+			<tr>
+				<th>Producto</th>
+				<th>Descripci&oacute;n</th>
+				<th>Cantidad</th>
+			</tr>
 		</thead>
 		<tbody>
 			<?php foreach($prodtrasp as $pt): ?>

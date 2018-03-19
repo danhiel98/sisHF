@@ -9,11 +9,13 @@
 		<div class="table-responsive">
 			<table class="table table-bordered">
 				<thead>
-					<th>Producto/Servicio</th>
-					<th style="text-align:center;">Precio</th>
-					<th style="text-align:center;">Cantidad</th>
-					<th style="text-align:center;">Total</th>
-					<th style="text-align:center;">Mantto</th>
+					<tr>
+						<th>Producto/Servicio</th>
+						<th style="text-align:center;">Precio</th>
+						<th style="text-align:center;">Cantidad</th>
+						<th style="text-align:center;">Total</th>
+						<th style="text-align:center;">Mantto</th>
+					</tr>
 				</thead>
 				<tbody>
 				<?php

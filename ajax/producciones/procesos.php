@@ -17,27 +17,29 @@
 			case "eliminar":
 				$error = false;
 				if($produccion->terminado == 1){
+					$prodSuc = ProductoSucursalData::getBySucursalProducto(1,$produccion->idproducto);
+					$prodSuc->cantidad -= $produccion->cantidad;
+					if ($prodSuc->cantidad < 0){
+						$error = true;
+					}
+				}
+				if (!$error){
 					$materiaPrima = ProduccionMPData::getAllByProdId($produccion->id);
 					foreach ($materiaPrima as $mp){
 						$matPrim = MateriaPrimaData::getById($mp->idmateriaprima);
 						$matPrim->existencias += $mp->cantidad;
 						$matPrim->updateEx();
 					}
-					
-					$prodSuc = ProductoSucursalData::getBySucursalProducto(1,$produccion->idproducto);
-					$prodSuc->cantidad -= $produccion->cantidad;
-					if ($prodSuc->cantidad <= 0){
-						$error = true;
-					}
-				}
-				if (!$error){
+
 					$produccion->del();
 					if(isset($prodSuc)){
 						$prodSuc->updateEx();
 					}
 					setcookie("okProd","¡Se eliminó la información correctamente!");
-					break;
+				}else{
+					setcookie("errorProd","Ocurrió un error al tratar de eliminar la produción.");
 				}
+				break;
 			case "terminar":
 				#Obtener toda la materia prima según el id de producción en donde se utilizó
 				$materiaPrima = ProduccionMPData::getAllByProdId($produccion->id);

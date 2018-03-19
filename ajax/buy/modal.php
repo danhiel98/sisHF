@@ -57,17 +57,19 @@
 								<th>Total</th>
 							</tr>
 						</thead>
-						<?php foreach($_SESSION["reabastecerMP"] as $p):
-								$product = MateriaPrimaData::getById($p["idMateriaPrima"]);
-								$total += $p["precio"]*$p["cantidad"];
-						?>
-							<tr>
-								<td><?php echo $product->nombre; ?></td>
-								<td style="width: 70px;"><?php echo $p["cantidad"]; ?></td>
-								<td style="width: 120px;">$<?php echo number_format($p["precio"], 2); ?></td>
-								<td style="width: 70px;">$<?php echo number_format($p["precio"]*$p["cantidad"], 2); ?></td>
-							</tr>
+						<tbody>
+							<?php foreach($_SESSION["reabastecerMP"] as $p):
+									$product = MateriaPrimaData::getById($p["idMateriaPrima"]);
+									$total += $p["precio"]*$p["cantidad"];
+								?>
+								<tr>
+									<td><?php echo $product->nombre; ?></td>
+									<td style="width: 70px;"><?php echo $p["cantidad"]; ?></td>
+									<td style="width: 120px;">$<?php echo number_format($p["precio"], 2); ?></td>
+									<td style="width: 70px;">$<?php echo number_format($p["precio"]*$p["cantidad"], 2); ?></td>
+								</tr>
 							<?php endforeach; ?>
+						</tbody>
 					</table>
 					<h2>Total a pagar: <strong>$ <?php echo number_format($total,2,".",","); ?></strong></h2>
 				<?php else: ?>

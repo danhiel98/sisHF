@@ -66,11 +66,13 @@
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th style="width: 45px;">No.</th>
-					<th>Nombre</th>
-					<th>Descripci&oacute;n</th>
-					<th style="width: 90px;">Precio</th>
-					<th></th>
+					<tr>
+						<th style="width: 45px;">No.</th>
+						<th>Nombre</th>
+						<th>Descripci&oacute;n</th>
+						<th style="width: 90px;">Precio</th>
+						<th></th>	
+					</tr>
 				</thead>
 				<tbody>
 					<?php

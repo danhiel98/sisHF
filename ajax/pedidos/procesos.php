@@ -18,12 +18,29 @@
 
 		switch($opcion){
 			case "eliminar":
-				$pagos = AbonoData::getAllByPedidoId($id);
-				foreach($pagos as $p){
-					$p->del();
+				$pedido = PedidoData::getById($id);
+				if (!is_null($pedido)){
+					$pagos = AbonoData::getAllByPedidoId($id);
+					$prodsV = $pedido->getAllProductsByPedidoId($id);
+					$mantto = MantenimientoData::getByIdPedido($id);
+					
+					foreach ($prodsV as $prod){
+						$prodSuc = ProductoSucursalData::getBySucursalProducto($pedido->idsucursal,$prod->idproducto);
+						$prodSuc->cantidad = $prodSuc->cantidad + $prod->cantidad;
+						$prodSuc->updateEx();
+					}
+
+					foreach($pagos as $p){
+						$p->del();
+					}
+					if(!is_null($mantto)){
+						$mantto->del();
+					}
+					setcookie("okPdido","¡Se eliminó la información correctamente!");
+					$pedido->del();
+				}else{
+					setcookie("okPdido","¡No se pudo eliminar la información!");
 				}
-				setcookie("okPdido","¡Se eliminó la información correctamente!");
-				$pedido->delById($id);
 
 				break;
 			case "terminar":

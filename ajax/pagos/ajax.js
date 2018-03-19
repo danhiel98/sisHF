@@ -55,9 +55,10 @@ $(function(){
     $(".finalizar").on("confirmed.bs.confirmation", function () {
         var id = this.id;
         var opc = $(this).data("opc");
+        var est = $(this).data("estado");
         $("#idPedido").val(id);
         obtenerDatos(id);
-        finalizar(id, opc);
+        finalizar(id, opc, est);
     });
 
     /*

@@ -40,42 +40,46 @@
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover	">
 			<thead>
-				<th></th>
-				<th>No.</th>
-				<th>Total</th>
-				<th>Fecha</th>
+				<tr>
+					<th></th>
+					<th>No.</th>
+					<th>Total</th>
+					<th>Fecha</th>
+				</tr>
 			</thead>
-			<?php foreach($boxes as $box):
-				$facts = FacturaData::getByBoxId($box->id);
-				$count++;
-			?>
-			<tr>
-				<td style="width:30px;">
-					<a href="./index.php?view=b&id=<?php echo $box->id."&no=".$count; ?>" class="btn btn-default btn-xs"><i class="fa fa-arrow-right"></i></a>
-				</td>
-				<td style="width:50px;"><?php echo $count; ?></td>
-				<td>
-				<?php
-					$total=0;
-					foreach($facts as $fc){
-						$prodsx = FacturaData::getAllSellsByFactId($fc->id); #Productos vendidos en la factura
-						$servsx = FacturaData::getAllServicesByFactId($fc->id); #Servicios vendidos en la factura
-						foreach ($prodsx as $p) {
-							$precio = $p->total;
-							$total += $precio;
-						}
-						foreach ($servsx as $s) {
-							$precio = $s->total;
-							$total += $precio;
-						}
-					}
-					$total_total += $total;
-					echo "<b>$ ".number_format($total,2,".",",")."</b>";
+			<tbody>
+				<?php foreach($boxes as $box):
+					$facts = FacturaData::getByBoxId($box->id);
+					$count++;
 				?>
-				</td>
-				<td><?php echo $box->fecha; ?></td>
-			</tr>
-			<?php endforeach; ?>
+				<tr>
+					<td style="width:30px;">
+						<a href="./index.php?view=b&id=<?php echo $box->id."&no=".$count; ?>" class="btn btn-default btn-xs"><i class="fa fa-arrow-right"></i></a>
+					</td>
+					<td style="width:50px;"><?php echo $count; ?></td>
+					<td>
+					<?php
+						$total=0;
+						foreach($facts as $fc){
+							$prodsx = FacturaData::getAllSellsByFactId($fc->id); #Productos vendidos en la factura
+							$servsx = FacturaData::getAllServicesByFactId($fc->id); #Servicios vendidos en la factura
+							foreach ($prodsx as $p) {
+								$precio = $p->total;
+								$total += $precio;
+							}
+							foreach ($servsx as $s) {
+								$precio = $s->total;
+								$total += $precio;
+							}
+						}
+						$total_total += $total;
+						echo "<b>$ ".number_format($total,2,".",",")."</b>";
+					?>
+					</td>
+					<td><?php echo $box->fecha; ?></td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
 		</table>
 	</div>
 	<h1>Total: <?php echo "$ ".number_format($total_total,2,".",","); ?></h1>

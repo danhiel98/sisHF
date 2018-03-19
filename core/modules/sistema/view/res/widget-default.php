@@ -96,11 +96,10 @@
 							<td style="width: 40px;"><?php echo $num++; ?></td>
 							<td style="width:125px;"><?php echo $re->comprobante; ?></td>
 							<td><?php echo $re->getProvider()->nombre;?></td>
-							<td><?php echo $re->fecha; ?></td>
-							<td><?php echo $usr->fullname; ?></td>
-							<td><strong>$ <?php echo number_format($total,2,'.',','); ?></strong></td>
+							<td style="min-width: 150px;"><?php echo $re->fecha; ?></td>
+							<td style="min-width: 150px;"><?php echo $usr->fullname; ?></td>
+							<td style="min-width: 85px;"><strong>$ <?php echo number_format($total,2,'.',','); ?></strong></td>
 							<td style="width: 40px;">
-
 								<a title="¿Eliminar?" href="index.php?view=delre&id=<?php echo $re->id;?>" class="btn btn-danger btn-xs"
 								data-toggle="confirmation-popout" data-popout="true" data-placement="left"
 								data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
@@ -110,7 +109,6 @@
 								>
 									<i class="fa fa-trash fa-fw"></i>
 								</a>
-
 							</td>
 						</tr>
 					<?php endforeach; ?>

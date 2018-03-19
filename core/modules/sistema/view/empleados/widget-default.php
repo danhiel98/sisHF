@@ -8,6 +8,7 @@
 		$admin = false;
 	}
 ?>
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
@@ -24,7 +25,7 @@
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#all">Todos</a></li>
 				<?php if (count($sucursales)>1 && $admin): ?>
-				<li><a href="#suc">Por Sucursal</a></li>
+				<li><a href="#suc" id="tabSuc">Por Sucursal</a></li>
 				<?php endif; ?>
 			</ul>
 			<br>
@@ -63,7 +64,6 @@
 								<th>NIT</th>
 								<th>Apellidos</th>
 								<th>Nombres</th>
-								<!-- <th>Sexo</th> -->
 								<th>Tel&eacute;fono</th>
 								<th>&Aacute;rea</th>
 								<?php if ($idSuc == 1): ?>
@@ -80,7 +80,6 @@
 									<td><?php echo $empleado->nit; ?></td>
 									<td><?php echo $empleado->apellido; ?></td>
 									<td><?php echo $empleado->nombre; ?></td>
-									<!-- <td><?php #echo $empleado->sexo; ?></td> -->
 									<td><?php echo $empleado->telefono; ?></td>
 									<td><?php echo $empleado->area; ?></td>
 									<?php if ($idSuc == 1): ?>
@@ -149,10 +148,10 @@
 						</select>
 					</div>
 					<div class="btn-group pull-right">
-					<div>
-						<a class="btn btn-default" id="reporteEPS" target="_blank"><i class="fa fa-download"></i> Descargar</a>
+						<div>
+							<a class="btn btn-default" id="reporteEPS" target="_blank"><i class="fa fa-download"></i> Descargar</a>
+						</div>
 					</div>
-				</div>
 				</div>
 				<div class="clearfix"></div>
 				<br>
@@ -167,19 +166,8 @@
 	</div>
 </div>
 <script>
-	// $(document).ready(function(){
-	//     $(".nav-tabs a").click(function(){
-	//         $(this).tab('show');
-	//     });
-	// });
-	// $(function(){
-	// 	$("#sucursal").on("change",function(){
-	// 		var valor = $(this).val();
-	// 		if (valor >= 1){
-				
-	// 		}else{
-	// 			$("#reporteEPS").removeAttr("href");
-	// 		}
-	// 	});
-	// });
+	vHash = document.location.hash;
+	if (vHash == "#suc"){
+		$("#tabSuc").tab("show");
+	}
 </script>

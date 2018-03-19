@@ -1,9 +1,9 @@
 <?php
 
 	$fact = new FacturaData();
-	$id = $_GET["id"];
 	
 	if ((isset($_GET["id"]) && is_numeric($_GET["id"])) && !is_null($fact->getById($_GET["id"]))){
+		$id = $_GET["id"];
 		$sell = $fact->getById($id);
 		$mantto = MantenimientoData::getByIdFactura($sell->id);
 		$prodsV = $fact->getAllSellsByFactId($id);
@@ -13,7 +13,10 @@
 			$prodSuc->cantidad = $prodSuc->cantidad + $prod->cantidad;
 			$prodSuc->updateEx();
 		}
-		$mantto->del();
+
+		if(!is_null($mantto)){
+			$mantto->del();
+		}
 		$sell->del();
 		setcookie("okFactura","¡Se eliminó la información correctamente!");
 	}else{

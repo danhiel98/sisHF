@@ -63,7 +63,7 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#all">Todos</a></li>
 			<?php if (count($sucursal)>1 && !$usrSuc): ?>
-				<li><a href="#suc">Por Sucursal</a></li>
+				<li><a href="#suc" id="tabSuc">Por Sucursal</a></li>
 			<?php endif; ?>
 		</ul>
 		<br>
@@ -272,5 +272,10 @@
 			url: 'ajax/users/procesos.php'
 		});
 	});
+
+	vHash = document.location.hash;
+	if (vHash == "#suc"){
+		$("#tabSuc").tab("show");
+	}
 
 </script>

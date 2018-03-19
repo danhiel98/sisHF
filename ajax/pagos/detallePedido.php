@@ -65,11 +65,13 @@
 
         <table class="table table-bordered table-hover">
             <thead>
-                <th>C&oacute;digo</th>
-                <th>Cantidad</th>
-                <th>Nombre del Producto / Servicio</th>
-                <th>Precio Unitario</th>
-                <th>Total</th>
+                <tr>
+                    <th>C&oacute;digo</th>
+                    <th>Cantidad</th>
+                    <th>Nombre del Producto / Servicio</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
             </thead>
             <tbody>
                 <?php

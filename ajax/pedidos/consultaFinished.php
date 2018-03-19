@@ -7,10 +7,15 @@
 	include ("../../core/modules/sistema/model/ProductData.php");
 
     $idSuc = $_SESSION["usr_suc"];
+    $actualSuc = false;
 
     if (isset($_REQUEST["sucursal"]) && !empty($_REQUEST["sucursal"])){
-		$idSuc = $_REQUEST["sucursal"];
-	}
+        $idSuc = $_REQUEST["sucursal"];
+    }
+    
+    if($idSuc == $_SESSION["usr_suc"]){
+        $actualSuc = true;
+    }
 
     $pedidosT = PedidoData::getEntregadoBySuc($idSuc);
     $start = 1; $limit = 10;
@@ -29,7 +34,7 @@
     $spaginas = count($pedidosT)%$limit;
     if($spaginas>0){$paginas++;}
     $pedidosT = PedidoData::getEntregadoByPage($idSuc,$start,$limit);
-
+    $num = $start;
 ?>
     <div class="table-responsive">
         <table class="table table-hover table-bordered">
@@ -41,17 +46,21 @@
                     <th>Fecha de Solicitud</th>
                     <th>Fecha de Entrega</th>
                     <th>Fecha Entregado</th>
+                    <?php if($actualSuc): ?>
+                    <th style="width: 40px;"></th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
             <?php foreach ($pedidosT as $pdo): ?>
                 <tr>
                     <td><a href="index.php?view=detallepedido&id=<?php echo $pdo->id; ?>" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-eye-open"></i></a></td>
-                    <td><?php echo $pdo->id; ?></td>
+                    <td><?php echo $num++; ?></td>
                     <td><?php echo $pdo->getClient()->name; ?></td>
                     <td><?php echo $pdo->fechapedido; ?></td>
                     <td><?php echo $pdo->fechaentrega; ?></td>
                     <td><?php echo $pdo->fechafinalizado; ?></td>
+                    <td></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

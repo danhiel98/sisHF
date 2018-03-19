@@ -1,5 +1,11 @@
 <?php
 	
+	$idSuc = $_SESSION["usr_suc"];
+
+	if($idSuc != 1){
+		error();
+	}
+
 	$regresar = "index.php?view=produccion";
 	if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != "http://localhost/sisHF/index.php?view=newproducn&delAll"){
 		$regresar = $_SERVER['HTTP_REFERER'];

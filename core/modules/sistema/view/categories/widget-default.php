@@ -62,9 +62,11 @@
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 					<thead>
-						<th style="width:45px;">No.</th>
-						<th>Nombre</th>
-						<th></th>
+						<tr>
+							<th style="width:45px;">No.</th>
+							<th>Nombre</th>
+							<th></th>
+						</tr>
 					</thead>
 					<tbody>
 						<?php
@@ -136,7 +138,7 @@
 			<?php
 		else:
 		?>
-			<p class='alert alert-danger'>No hay Categorías</p>
+			<p class='alert alert-warning'>No hay Categorías</p>
 		<?php
 		endif;
 		?>

@@ -31,11 +31,13 @@
 				<?php if(count($traspasos)>0):?>
 				<table class="table table-bordered table-hover">
 					<thead>
-						<th>No.</th>
-						<th>Origen</th>
-						<th>Destino</th>
-						<th>Cantidad</th>
-						<th>Fecha</th>
+						<tr>
+							<th>No.</th>
+							<th>Origen</th>
+							<th>Destino</th>
+							<th>Cantidad</th>
+							<th>Fecha</th>
+						</tr>
 					</thead>
 				<?php $n = 0; ?>
 				<?php foreach($traspasos as $ts):?>

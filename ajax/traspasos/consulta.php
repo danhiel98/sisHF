@@ -1,7 +1,8 @@
 <?php
 
     @session_start();
-	include ("../../core/autoload.php");
+    include ("../../core/autoload.php");
+    include ("../../core/modules/sistema/model/ProductoSucursalData.php");
 	include ("../../core/modules/sistema/model/SucursalData.php");
     include ("../../core/modules/sistema/model/TraspasoData.php");
     include ("../../core/modules/sistema/model/EmpleadoData.php");
@@ -12,9 +13,39 @@
 
     $traspasos = $trasp->getAllBySuc($idSuc);
 	$realizados = $trasp->getAllSends($idSuc);
-	$recibidos = $trasp->getAllReceived($idSuc);
+    $recibidos = $trasp->getAllReceived($idSuc);
+    $sucursales = SucursalData::getAll();
+    $prodSuc = ProductoSucursalData::getAllForSell($idSuc);
+    
+    $sucs = false;
+    $sucursalesDisponibles = array();
+	foreach($sucursales as $suc){
+		if($suc->id != 1){ //Si no es la principal
+			$usuarios = UserData::getAllBySucId($suc->id);
+			if(count($usuarios) > 0){//Solamente aparecerán las sucursales donde se hayan creado usuarios previamente
+				array_push($sucursalesDisponibles,$suc); 
+			}
+		}
+	}
+    if (count($sucursalesDisponibles) > 0) {
+		$sucs = true;
+	}
 ?>
-    <?php if(count($traspasos) > 0): ?>
+    <?php if(count($traspasos) > 0): 
+            $start = 1; $limit = 10;
+            if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
+                $start = $_REQUEST["start"];
+                $limit = $_REQUEST["limit"];
+                #Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
+                if ($start <= 0 ){
+                    $start = 1;
+                }
+                if ($limit <= 0 ){
+                    $limit = 1;
+                }
+            }
+        
+        ?>
         <ul class="nav nav-tabs">
             <li class="active"><a href="#realizado">Realizados</a></li>
             <li><a href="#recibido" id="recibidos">Recibidos</a></li>
@@ -24,18 +55,6 @@
                 <h2>Traspasos Enviados</h2>
                 <?php
                 if (count($realizados) > 0):
-                    $start = 1; $limit = 10;
-                    if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
-                        $start = $_REQUEST["start"];
-                        $limit = $_REQUEST["limit"];
-                        #Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
-                        if ($start <= 0 ){
-                            $start = 1;
-                        }
-                        if ($limit <= 0 ){
-                            $limit = 1;
-                        }
-                    }
                     $paginas = floor(count($realizados)/$limit);
                     $spaginas = count($realizados)%$limit;
                     if($spaginas>0){$paginas++;}
@@ -169,7 +188,7 @@
                                         <th>Destino</th>
                                         <th>Fecha</th>
                                         <th>Registrado Por</th>
-                                        <th style="width: 40px;"></th>
+                                        <!-- <th style="width: 40px;"></th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -187,7 +206,7 @@
                                         </td>
                                         <td><?php echo $t->fecha; ?></td>
                                         <td><?php if(!is_null($t->getUser()->idempleado)){echo $t->getUser()->getEmpleado()->nombrecompleto;}else{echo $t->getUser()->fullname;}?></td>
-                                        <td>
+                                        <!-- <td>
                                             <a title="¿Eliminar?" href="index.php?view=deltrasp&id=<?php echo $t->id;?>" class="btn btn-danger btn-xs"
                                             data-toggle="confirmation-popout" data-popout="true" data-placement="left"
                                             data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
@@ -196,7 +215,7 @@
                                             data-btn-cancel-class="btn-danger btn-xs">
                                                 <i class="fa fa-trash fa-fw"></i>
                                             </a>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>
@@ -242,7 +261,7 @@
                                     url: $(this).attr("href"),
                                     type: "GET",
                                     success: function(res){
-                                        $("#resultadoEntregado").html(res);
+                                        $("#resultadoR").html(res);
                                     }
                                 });
                                 return false;
@@ -251,7 +270,7 @@
                     </div>
                 <?php else: ?>
                     <div class="alert alert-warning">
-                        ¡Vaya! Aún no se han enviado productos desde esta sucursal.
+                        ¡Vaya! Aún no se han enviado productos hacia esta sucursal.
                     </div>
                 <?php endif; ?>
             </div>
@@ -298,7 +317,7 @@
                     Para ello debe haber m&aacute;s de una sucursal registradas.
                     <a href="index.php?view=sucursal">Ir a sucursales</a>
                     <?php else: ?>
-                    Para realizar traspasos a otra sucursal debe haber al menos un <a href="index.php?view=users">usuario</a> registrado en la sucursal de destino.
+                    Para realizar traspasos a otra sucursal debe haber al menos un <a target="_blank" href="index.php?view=users">usuario</a> registrado en la sucursal de destino.
                     <?php endif; ?>
                 <?php endif; ?>
             </div>

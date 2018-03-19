@@ -40,16 +40,18 @@
             ?>
             <table class="table table-bordered table-hover">
                 <thead>
-                    <th style="width: 45px;">Id</th>
-                    <th>Producto</th>
-                    <th style="width: 200px;">Disponibles</th>
-                    <th style="width: 200px;">Precio Unitario</th>
-                    <th style="width: 120px;">Mantenimiento</th>
-                    <th style="width: 120px;"></th>
+                    <tr>
+                        <th style="width: 45px;">Id</th>
+                        <th>Producto</th>
+                        <th style="width: 200px;">Disponibles</th>
+                        <th style="width: 200px;">Precio Unitario</th>
+                        <th style="width: 120px;">Mantenimiento</th>
+                        <th style="width: 120px;"></th>
+                    </tr>
                 </thead>
                 <tbody>
                 <?php
-                foreach($productos as $prod){
+                foreach($productos as $prod):
                     $found = false;
                     $mantto = false;
                     $cantidad = 0;
@@ -98,9 +100,7 @@
                             </form>
                         </td>
                     </tr>
-                <?php
-                    }
-                ?>
+                <?php endforeach; ?>
                 </tbody>
             </table>
             <script type="text/javascript">
@@ -131,10 +131,12 @@
         ?>
         <table class="table table-bordered table-hover">
 			<thead>
-				<th style="width:45px;">Id</th>
-				<th>Servicio</th>
-				<th>Precio</th>
-				<th style="width: 140px;"></th>
+                <tr>
+                    <th style="width:45px;">Id</th>
+                    <th>Servicio</th>
+                    <th>Precio</th>
+                    <th style="width: 140px;"></th>
+                </tr>
 			</thead>
 			<tbody>
             <?php foreach ($servicios as $srv): $found = false; $cantidad = 0; ?>

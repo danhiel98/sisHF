@@ -18,9 +18,11 @@
 					<h4 class="modal-title" id="myModalLabel"><i class='fa fa-list'></i> Resumen De Venta</h4>
 				</div>
 				<div class="modal-body">
-					<div class="form-group control-group">
-						<label for="cliente" class="col-sm-4 control-label">Cliente</label>
-						<div class="col-sm-8 controls">
+					<div class="form-group col-md-2">
+						<label for="cliente" class="col-md-12 control-label">Cliente</label>
+					</div>	
+					<div class="form-group control-group col-md-5">
+						<div class="col-md-12 controls">
 							<select name="cliente" id="cliente" class="form-control <?php if(count($clientes)>0){echo 'selectpicker'; } ?>" data-live-search="true" data-size="5">
 								<option value="">--NINGUNO--</option>
 								<?php foreach ($clientes as $cl):?>
@@ -34,10 +36,13 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group control-group">
-						<label for="tipo" class="col-sm-4 control-label">Comprobante</label>
-						<div class="controls col-sm-8">
-							<select class="form-control" name="tipo" id="tipo" required>
+
+					<div class="form-group col-md-2">
+						<label for="tipo" class="col-md-12 control-label">Comprobante</label>
+					</div>
+					<div class="form-group control-group col-md-4">
+						<div class=" col-md-12 controls">
+							<select class="form-control" name="tipo" id="tipo" style="font-size: 0.85em;" required>
 								<option value="">--SELECCIONE--</option>
 								<option value="1">Factura</option>
 								<?php if (count($clientes)>0): ?>
@@ -46,19 +51,31 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group control-group">
-						<label for="numero" class="col-sm-4 control-label">No. Comprobante</label>
-						<div class="controls col-sm-8">
+
+					<div class="clearfix"></div>
+
+					<div class="form-group col-md-2">
+						<label for="numero" class="col-md-12 control-label">No. Comprobante</label>
+					</div>
+					<div class="form-group control-group col-md-4">
+						<div class="col-md-12 controls">
 							<input type="text" class="form-control" id="numComprobante" name="numero" pattern="[0-9]{1,10}" data-validation-pattern-message="Introduzca un valor válido" maxlength="8" required>
 						</div>
 					</div>
-					<div class="form-group control-group">
-						<label for="numero" class="col-sm-4 control-label">Son</label>
-						<div class="controls col-sm-8">
-							<textarea class="form-control" name="totalLetras" id="totalLetras" cols="10" rows="2" maxlenght="150"></textarea>
+
+					<div class="form-group col-md-2">
+						<label for="numero" class="col-md-12 control-label">Son</label>
+					</div>
+					<div class="form-group control-group col-md-5">
+						<div class="col-md-12 controls">
+							<textarea class="form-control" name="totalLetras" id="totalLetras" cols="10" rows="2" maxlenght="150" required></textarea>
 						</div>
 					</div>
-					<input type="hidden" name="origen" value="<?php echo $_SESSION["usr_suc"]; ?>">
+
+					<div class="clearfix"></div>
+
+					<!-- <input type="hidden" name="origen" value="<?php echo $_SESSION["usr_suc"]; ?>"> -->
+
 					<div id="resumenX"></div>
 				</div>
 				<div class="modal-footer">

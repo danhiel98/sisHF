@@ -104,13 +104,15 @@
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 					<thead>
-						<th></th>
-						<th>No.</th>
-						<th>Cliente</th>
-						<th>Tipo Comprobante</th>
-						<th>Fecha</th>
-						<th>Total</th>
-						<th></th>
+						<tr>
+							<th></th>
+							<th>No.</th>
+							<th>Cliente</th>
+							<th>Tipo Comprobante</th>
+							<th>Fecha</th>
+							<th>Total</th>
+							<th></th>
+						</tr>
 					</thead>
 					<tbody>
 

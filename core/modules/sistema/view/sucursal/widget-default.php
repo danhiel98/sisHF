@@ -50,108 +50,104 @@
 			?>
 		</div>
 		<!-- Si hay más de 0 sucursales: -->
-		<?php if(count($sucursal)>0): ?>
-		<?php
-		
-		$start = 1; $limit = 10;
-		if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
-			$start = $_REQUEST["start"];
-			$limit = $_REQUEST["limit"];
-			#Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
-			if ($start <= 0 ){
-				$start = 1;
+		<?php if(count($sucursal)>0):
+			$start = 1; $limit = 10;
+			if(isset($_REQUEST["start"]) && isset($_REQUEST["limit"])){
+				$start = $_REQUEST["start"];
+				$limit = $_REQUEST["limit"];
+				#Para evitar que se muestre un error, se valida que los valores enviados no sean negativos
+				if ($start <= 0 ){
+					$start = 1;
+				}
+				if ($limit <= 0 ){
+					$limit = 1;
+				}
 			}
-			if ($limit <= 0 ){
-				$limit = 1;
-			}
-		}
-		$paginas = floor(count($sucursal)/$limit);
-		$spaginas = count($sucursal)%$limit;
-		if($spaginas>0){$paginas++;}
-		$sucursal = SucursalData::getByPage($start,$limit);
-		$num = $start;
-		?>
+			$paginas = floor(count($sucursal)/$limit);
+			$spaginas = count($sucursal)%$limit;
+			if($spaginas>0){$paginas++;}
+			$sucursal = SucursalData::getByPage($start,$limit);
+			$num = $start;
+			?>
 		
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
-				<thead>
-					<tr>
-						<th style="text-align: center; width: 45px;">No.</th>
-						<th>Nombre</th>
-						<th>Direcci&oacute;n</th>
-						<th style="width: 100px;">Tel&eacute;fono</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach($sucursal as $suc): ?>
-					<tr>
-						<td style="text-align: center;"><?php echo $num++; ?></td>
-						<td><?php echo $suc->nombre; ?></td>
-						<td><?php echo $suc->direccion; ?></td>
-						<td style="min-width:90px;"><?php echo $suc->telefono; ?></td>
-						<td style="width: 80px;">
-							<a data-toggle="modal" data-target="#editar" id="<?php echo $suc->id;?>" class="btn btn-warning btn-xs btn-edit"><i class="fa fa-edit fa-fw"></i></a>
-							<a <?php if($suc->id == 1){echo "disabled";} ?> title="¿Eliminar?" href="index.php?view=delsuc&id=<?php echo $suc->id;?>" class="btn btn-danger btn-xs"
-								data-toggle="confirmation-popout" data-popout="true" data-placement="left"
-								data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
-								data-btn-ok-class="btn-success btn-xs"
-								data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
-								data-btn-cancel-class="btn-danger btn-xs"
-								>
-								<i class="fa fa-trash fa-fw"></i>
-							</a>
-						</td>
-					</tr>
-					<?php endforeach; ?>
-				</tbody>
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th style="text-align: center; width: 45px;">No.</th>
+							<th>Nombre</th>
+							<th>Direcci&oacute;n</th>
+							<th style="width: 100px;">Tel&eacute;fono</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($sucursal as $suc): ?>
+						<tr>
+							<td style="text-align: center;"><?php echo $num++; ?></td>
+							<td><?php echo $suc->nombre; ?></td>
+							<td><?php echo $suc->direccion; ?></td>
+							<td style="min-width:90px;"><?php echo $suc->telefono; ?></td>
+							<td style="width: 80px;">
+								<a data-toggle="modal" data-target="#editar" id="<?php echo $suc->id;?>" class="btn btn-warning btn-xs btn-edit"><i class="fa fa-edit fa-fw"></i></a>
+								<a <?php if($suc->id == 1){echo "disabled";} ?> title="¿Eliminar?" href="index.php?view=delsuc&id=<?php echo $suc->id;?>" class="btn btn-danger btn-xs"
+									data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+									data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+									data-btn-ok-class="btn-success btn-xs"
+									data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+									data-btn-cancel-class="btn-danger btn-xs"
+									>
+									<i class="fa fa-trash fa-fw"></i>
+								</a>
+							</td>
+						</tr>
+						<?php endforeach; ?>
+					</tbody>
 
-			</table>
-		</div>
+				</table>
+			</div>
 
-		<div class="container-fluid">
-			<div class="pull-right">
-				<ul class="pagination">
-					<?php if($start != 1):?>
-					<?php
-						$prev = "#";
-						if($start != 1){
-							$prev = "&start=".($start-$limit)."&limit=".$limit;
-						}
-					?>
-					<li class="previous"><a href="index.php?view=sucursal<?php echo $prev; ?>">&laquo;</a></li>
-					<?php endif; ?>
-					<?php 
-						$anterior = 1;
-						for($i=1; $i<=$paginas; $i++):
-							$inicio = 1;
-							if ($i != 1){
-								$inicio = $limit + $anterior;
-								$anterior = $inicio;
+			<div class="container-fluid">
+				<div class="pull-right">
+					<ul class="pagination">
+						<?php if($start != 1):?>
+						<?php
+							$prev = "#";
+							if($start != 1){
+								$prev = "&start=".($start-$limit)."&limit=".$limit;
 							}
 						?>
-						<li <?php if($start == $inicio){echo "class='active'";} ?>>
-							<a href="index.php?view=sucursal&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
-						</li>
-						<?php
-						endfor;
-					?>
-					<?php if($start != $anterior): ?>
-					<?php 
-						$next = "#";
-						if($start != $anterior){
-							$next = "&start=".($start + $limit)."&limit=".$limit;
-						}
-					?>
-					<li class="previous"><a href="index.php?view=sucursal<?php echo $next; ?>">&raquo;</a></li>
-					<?php endif; ?>
-				</ul>
+						<li class="previous"><a href="index.php?view=sucursal<?php echo $prev; ?>">&laquo;</a></li>
+						<?php endif; ?>
+						<?php 
+							$anterior = 1;
+							for($i=1; $i<=$paginas; $i++):
+								$inicio = 1;
+								if ($i != 1){
+									$inicio = $limit + $anterior;
+									$anterior = $inicio;
+								}
+							?>
+							<li <?php if($start == $inicio){echo "class='active'";} ?>>
+								<a href="index.php?view=sucursal&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
+							</li>
+							<?php
+							endfor;
+						?>
+						<?php if($start != $anterior): ?>
+						<?php 
+							$next = "#";
+							if($start != $anterior){
+								$next = "&start=".($start + $limit)."&limit=".$limit;
+							}
+						?>
+						<li class="previous"><a href="index.php?view=sucursal<?php echo $next; ?>">&raquo;</a></li>
+						<?php endif; ?>
+					</ul>
+				</div>
 			</div>
-		</div>
-		<?php
-		else:
-			echo "<p class='alert alert-danger'>No hay sucursales</p>";
-		endif;
-		?>
+		<?php else: ?>
+			<p class='alert alert-warning'>No hay sucursales</p>
+		<?php endif; ?>
 	</div>
 </div>

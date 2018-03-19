@@ -45,13 +45,13 @@ class PedidoData {
 		return Executor::doit($sql);
 	}
 
-	public static function del(){
+	public function del(){
 		$sql = "update ".self::$tablename." set estado = 0 where idPedido = $this->id";
 		Executor::doit($sql);
 	}
 
 	public static function delById($id){
-		$sql = "update ".self::$tablename." set estado = 0 where idPedido=$id";
+		$sql = "update ".self::$tablename." set estado = 0 where idPedido = $id";
 		Executor::doit($sql);
 	}
 
@@ -71,7 +71,7 @@ class PedidoData {
 	}
 
 	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where idPedido=$id";
+		$sql = "select * from ".self::$tablename." where idPedido = $id";
 		$query = Executor::doit($sql);
 		$found = null;
 		$data = new PedidoData();
@@ -183,7 +183,7 @@ class PedidoData {
 
 	public static function getEntregadoByPage($idSuc,$start,$limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and entregado = 1 AND estado = 1 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where idSucursal = $idSuc and entregado = 1 AND estado = 1 order by fechaFinalizado desc limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

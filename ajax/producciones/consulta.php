@@ -30,6 +30,12 @@
     $prods = ProductData::getAll();
 
     include "detallesError.php";
+
+    $finished = false;
+    if (isset($_POST["tab"]) && $_POST["tab"] == "terminado"){
+        $finished = true;
+    }
+
 ?>
     <?php if (count($matp)>0 && count($prods)>0): ?>
 		<script type="text/javascript">
@@ -39,17 +45,19 @@
 			});
 		</script>
     <?php endif; ?>
-    <?php
-		if (isset($_COOKIE["okProd"]) && !empty($_COOKIE["okProd"])):
-	?>
+    <?php if (isset($_COOKIE["okProd"]) && !empty($_COOKIE["okProd"])): ?>
         <div class="alert alert-success alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["okProd"]; ?></p>
         </div>
-    <?php
-        setcookie("okProd","",time()-18600);
-        endif;
-    ?>
+    <?php setcookie("okProd","",time()-18600); endif; ?>
+
+    <?php if (isset($_COOKIE["errorProd"]) && !empty($_COOKIE["errorProd"])): ?>
+        <div class="alert alert-warning alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p><i class='fa fa-info fa-fw'></i> <?php echo $_COOKIE["errorProd"]; ?></p>
+        </div>
+    <?php setcookie("errorProd","",time()-18600); endif; ?>
     <?php if ($prodxs): ?>
         <?php 
             $start = 1; $limit = 10;
@@ -62,11 +70,11 @@
             }
         ?>
         <ul class="nav nav-tabs">
-            <li class="active" id="pendiente"><a href="#proc">En proceso</a></li>
-            <li><a href="#end" id="terminado">Terminado</a></li>
+            <li <?php if (!$finished){ echo "class='active'"; } ?> id="pendiente"><a href="#proc">En proceso</a></li>
+            <li <?php if ($finished){ echo "class='active'"; } ?>><a href="#end" id="terminado">Terminado</a></li>
         </ul>
         <div class="tab-content">
-            <div id="proc" class="tab-pane fade in active">
+            <div id="proc" class="tab-pane fade <?php if (!$finished){ echo 'in active'; } ?>">
                 <h2>Producciones en proceso</h2>
                 <?php
                 if ($prodxsA):
@@ -177,12 +185,12 @@
                 </script>
                 <?php else: ?>
                     <div class="alert alert-info">
-                        Vaya! No hay producciones en proceso.
+                        ¡Vaya! No hay producciones en proceso.
                     </div>
                 <?php endif; ?>
             </div>
 
-            <div id="end" class="tab-pane fade">
+            <div id="end" class="tab-pane fade <?php if ($finished){ echo 'in active'; } ?>">
                 <h2>Producciones finalizadas</h2>
                 <?php
                 if ($prodxsT):
@@ -348,7 +356,11 @@
                     $("#detallesMP").html(res); //Cargar los detalles de la materia prima insuficiente
                     $("#detalles").modal().show(); //Mostrar el modal
                 }else{
-                    producciones("pendiente"); //Todo está bien, se finaliza la producción
+                    if(est == "pendiente" && opc == "eliminar"){
+                        producciones("pendiente");
+                    }else{
+                        producciones("terminado"); //Todo está bien, se finaliza la producción
+                    }
                 }
 			});
 		}
@@ -358,7 +370,7 @@
             var opc = $(this).data("opc");
             var est = $(this).data("estado");
 			finalizar(id,opc,est);
-        });    
+        });
 
         vHash = window.location.hash;
         if (vHash == "#end"){

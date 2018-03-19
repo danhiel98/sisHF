@@ -37,29 +37,29 @@
 						<th>NIT</th>
 						<th>Apellidos</th>
 						<th>Nombres</th>
-						<!-- <th>Sexo</th> -->
 						<th>Tel&eacute;fono</th>
 						<th>&Aacute;rea</th>
 						<th></th>
 					</tr>
 				</thead>
-			<?php foreach($empleados as $emp): ?>
-				<?php if ($emp->getSucursal()->id == $_REQUEST["sucursal"]): ?>
-				<tr>
-					<td style="width: 30px;"><?php echo $num++; ?></td>
-					<td><?php echo $emp->dui; ?></td>
-					<td><?php echo $emp->nit; ?></td>
-					<td><?php echo $emp->apellido; ?></td>
-					<td><?php echo $emp->nombre; ?></td>
-					<!-- <td><?php #echo $emp->sexo; ?></td> -->
-					<td><?php echo $emp->telefono; ?></td>
-					<td><?php echo $emp->area; ?></td>
-					<td style="width:40px;">
-						<a href="index.php?view=editemploy&id=<?php echo $emp->id;?>" class="btn btn-warning btn-xs">Editar</a>
-					</td>
-				</tr>
-				<?php endif; ?>
-			<?php endforeach; ?>
+				<tbody>
+					<?php foreach($empleados as $emp): ?>
+						<?php if ($emp->getSucursal()->id == $_REQUEST["sucursal"]): ?>
+						<tr>
+							<td style="width: 30px;"><?php echo $num++; ?></td>
+							<td><?php echo $emp->dui; ?></td>
+							<td><?php echo $emp->nit; ?></td>
+							<td><?php echo $emp->apellido; ?></td>
+							<td><?php echo $emp->nombre; ?></td>
+							<td><?php echo $emp->telefono; ?></td>
+							<td><?php echo $emp->area; ?></td>
+							<td style="width:40px;">
+								<a href="index.php?view=editemploy&id=<?php echo $emp->id;?>#suc" class="btn btn-warning btn-xs">Editar</a>
+							</td>
+						</tr>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</tbody>
 			</table>
 		</div>
 		<div class="pull-right">

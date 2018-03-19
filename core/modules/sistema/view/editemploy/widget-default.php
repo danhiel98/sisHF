@@ -17,7 +17,7 @@
 		$sucs = true;
 	}
 ?>
-<a href="index.php?view=empleados" class="btn btn-default"><i class="fa fa-arrow-left"></i> Regresar</a>
+<a href="index.php?view=empleados" class="btn btn-default btn-back"><i class="fa fa-arrow-left"></i> Regresar</a>
 <script type="text/javascript" src="ajax/empleados/main.js"></script>
 <div class="row">
 	<div class="col-md-12">
@@ -188,3 +188,9 @@
 		</form>
 	</div>
 </div>
+<script>
+	btnBack = $(".btn-back");
+	vHash = document.location.hash;
+	href = btnBack.attr("href") + vHash;
+	btnBack.attr("href",href);
+</script>

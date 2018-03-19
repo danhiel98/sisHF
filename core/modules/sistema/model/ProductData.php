@@ -109,7 +109,7 @@ class ProductData {
 
 	public static function getAllByPage($inicio,$cantidad){
 		$inicio = $inicio - 1;
-		$sql = "select * from ".self::$tablename." where estado = 1 limit $inicio,$cantidad";
+		$sql = "select * from ".self::$tablename." where estado = 1 order by fechaRegistro desc limit $inicio,$cantidad";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

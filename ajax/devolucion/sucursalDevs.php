@@ -44,16 +44,18 @@
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead>
-                    <th></th>
-                    <th>No.</th>
-                    <th style="width: 140px;">No. Comprobante</th>
-                    <th>Motivo</th>
-                    <th>Fecha</th>
-                    <th>Reembolso</th>
-                    <th>Registrado Por</th>
-                    <?php if($sucActual): ?>
-                    <th></th>
-                    <?php endif; ?>
+                    <tr>
+                        <th></th>
+                        <th>No.</th>
+                        <th style="width: 140px;">No. Comprobante</th>
+                        <th>Motivo</th>
+                        <th>Fecha</th>
+                        <th>Reembolso</th>
+                        <th>Registrado Por</th>
+                        <?php if($sucActual): ?>
+                        <th></th>
+                        <?php endif; ?>
+                    </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($devs as $dev): ?>

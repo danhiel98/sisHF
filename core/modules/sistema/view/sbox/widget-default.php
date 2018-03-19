@@ -26,14 +26,18 @@
 		-->
 		<table class="table table-bordered table-hover" class="sbox">
 			<thead>
-				<th style="width: 150px;">Total Entradas</th>
-				<td>$ <?php echo number_format($cajaC->entradas,2,'.',','); ?></td>
-				<td style="width: 20px;"><a class="btn btn-primary btn-xs" <?php if($cajaC->entradas <= 0){ echo "disabled onclick='return false'";} ?> href="index.php?view=sboxe&val=ent"><i class="fa fa-arrow-right"></i> Historial</a></td>
+				<tr>
+					<th style="width: 150px;">Total Entradas</th>
+					<td>$ <?php echo number_format($cajaC->entradas,2,'.',','); ?></td>
+					<td style="width: 20px;"><a class="btn btn-primary btn-xs" <?php if($cajaC->entradas <= 0){ echo "disabled onclick='return false'";} ?> href="index.php?view=sboxe&val=ent"><i class="fa fa-arrow-right"></i> Historial</a></td>
+				</tr>
 			</thead>
 			<thead>
-				<th style="width: 150px;">Total Salidas</th>
-				<td>$ <?php echo number_format($cajaC->salidas,2,'.',','); ?></td>
-				<td style="width: 20px;"><a class="btn btn-primary btn-xs" <?php if($cajaC->salidas <= 0){ echo "disabled onclick='return false'";} ?> href="index.php?view=sboxe&val=sal"><i class="fa fa-arrow-right"></i> Historial</a></td>
+				<tr>
+					<th style="width: 150px;">Total Salidas</th>
+					<td>$ <?php echo number_format($cajaC->salidas,2,'.',','); ?></td>
+					<td style="width: 20px;"><a class="btn btn-primary btn-xs" <?php if($cajaC->salidas <= 0){ echo "disabled onclick='return false'";} ?> href="index.php?view=sboxe&val=sal"><i class="fa fa-arrow-right"></i> Historial</a></td>
+				</tr>
 			</thead>
 		</table>
 		<h1>Disponible: $ <?php echo number_format($cajaC->cantidad,2,'.',','); ?></h1>

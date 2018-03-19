@@ -40,13 +40,15 @@
         <div class="">
             <table class="table table-hover table-bordered">
                 <thead>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Usuario</th>
-                    <th>Correo Electr&oacute;nico</th>
-                    <th style="text-align:center;">Activo</th>
-                    <th style="text-align:center;">Admin</th>
-                    <th></th>
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Usuario</th>
+                        <th>Correo Electr&oacute;nico</th>
+                        <th style="text-align:center;">Activo</th>
+                        <th style="text-align:center;">Admin</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
                 <?php foreach($usuariosSuc as $user): ?>

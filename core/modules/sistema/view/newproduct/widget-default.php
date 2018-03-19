@@ -1,3 +1,13 @@
+<?php
+
+	$idSuc = $_SESSION["usr_suc"];
+
+	if ($idSuc != 1){
+		error();
+	}
+
+?>
+
 <a href="index.php?view=products" class="btn btn-default"><i class="fa fa-arrow-left"></i> Regresar</a>
 <div class="row">
 	<div class="col-md-12">

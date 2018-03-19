@@ -26,43 +26,45 @@
     $productnsT = ProduccionData::getFinishedByPage($start,$limit);
     $num = $start;
 ?>
-    <table class="table table-hover table-bordered">
-        <thead>
-            <tr>
-                <th></th>
-                <th>No.</th>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-                <th>Finalizado</th>
-                <th style="width: 40px;"></th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($productnsT as $pt): ?>
-            <tr>
-                <td style="width:40px;"><a href="index.php?view=oneprod&id=<?php echo $pt->id; ?>" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Detalles"></i></a></td>
-                <td><?php echo $num++; ?></td>
-                <td><?php echo $pt->getProduct()->nombre; ?></td>
-                <td><?php echo $pt->cantidad; ?></td>
-                <td><?php echo $pt->fechainicio; ?></td>
-                <td><?php echo $pt->fechafin; ?></td>
-                <td><?php echo $pt->fechafinalizado; ?></td>
-                <td>
-                    <a title="¿Eliminar?" href="#" class="btn btn-danger btn-xs finalizar" id="<?php echo $pt->id; ?>" data-opc="eliminar" data-estado="terminado"
-                    data-toggle="confirmation-popout" data-popout="true" data-placement="left"
-                    data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
-                    data-btn-ok-class="btn-success btn-xs"
-                    data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
-                    data-btn-cancel-class="btn-danger btn-xs">
-                        <i class="fa fa-trash fa-fw"></i>
-                    </a>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>No.</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Finalizado</th>
+                    <th style="width: 40px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($productnsT as $pt): ?>
+                <tr>
+                    <td style="width:40px;"><a href="index.php?view=oneprod&id=<?php echo $pt->id; ?>" class="btn btn-default btn-xs"><i class="fa fa-eye" title="Detalles"></i></a></td>
+                    <td><?php echo $num++; ?></td>
+                    <td><?php echo $pt->getProduct()->nombre; ?></td>
+                    <td><?php echo $pt->cantidad; ?></td>
+                    <td><?php echo $pt->fechainicio; ?></td>
+                    <td><?php echo $pt->fechafin; ?></td>
+                    <td><?php echo $pt->fechafinalizado; ?></td>
+                    <td>
+                        <a title="¿Eliminar?" href="#" class="btn btn-danger btn-xs finalizar" id="<?php echo $pt->id; ?>" data-opc="eliminar" data-estado="terminado"
+                        data-toggle="confirmation-popout" data-popout="true" data-placement="left"
+                        data-btn-ok-label="Sí" data-btn-ok-icon="fa fa-check fa-fw"
+                        data-btn-ok-class="btn-success btn-xs"
+                        data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times fa-fw"
+                        data-btn-cancel-class="btn-danger btn-xs">
+                            <i class="fa fa-trash fa-fw"></i>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 
     <div class="pull-right">
         <ul class="pagination">

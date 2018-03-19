@@ -54,9 +54,11 @@
         <div class="table-responsive">
             <table class="table table-bordered table-dashed">
                 <thead>
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>	
+					</tr>
                 </thead>
                 <tbody>
                 <?php foreach($prods as $prd): ?>

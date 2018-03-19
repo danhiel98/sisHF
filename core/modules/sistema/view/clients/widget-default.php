@@ -34,14 +34,16 @@
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead>
-					<th style="width: 40px;">No.</th>
-					<th>DUI</th>
-					<th>NIT</th>
-					<th>NRC</th>
-					<th>Nombre</th>
-					<th>Correo Electr&oacute;nico</th>
-					<th>Tel&eacute;fono</th>
-					<th></th>
+					<tr>
+						<th style="width: 40px;">No.</th>
+						<th>DUI</th>
+						<th>NIT</th>
+						<th>NRC</th>
+						<th>Nombre</th>
+						<th>Correo Electr&oacute;nico</th>
+						<th>Tel&eacute;fono</th>
+						<th></th>	
+					</tr>
 				</thead>
 				<?php
 				foreach($clientes as $cli):

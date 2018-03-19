@@ -70,7 +70,7 @@
 							}
 						?>
 						<tr <?php if($productoSucursal->cantidad <= $productoSucursal->minimo){echo "class='warning'";} ?>>
-							<td><?php echo $product->id; ?></td>
+							<td><?php echo $num++; ?></td>
 							<td><?php echo $product->nombre; ?></td>
 							<td><?php echo $product->descripcion; ?></td>
 							<?php if ($idSuc == 1): ?>
@@ -79,7 +79,7 @@
 							<td><?php echo $productoSucursal->cantidad; ?></td>
 							<td><?php echo $total; ?></td>
 							<td style="width:40px;">
-								<a href="index.php?view=detailprod&idProd=<?php echo $product->id; ?>" class="btn btn-default btn-sm"><i class="fa fa-bars fa-fw"></i> Detalles</a>
+								<a href="index.php?view=detailprod&idProd=<?php echo $product->id; ?>" class="btn btn-default btn-xs"><i class="fa fa-bars fa-fw"></i> Detalles</a>
 							</td>
 						</tr>
 					<?php endforeach;?>

@@ -19,17 +19,19 @@
     <?php if(count($prods) > 0): ?>
         <table class="table table-bordered">
             <thead>
-                <th>C&oacute;digo</th>
-                <th>Nombre del Producto / Servicio</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th></th>
+                <tr>
+                    <th>C&oacute;digo</th>
+                    <th>Nombre del Producto / Servicio</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-        <?php
+            <?php
             foreach ($prods as $prd):
                 $prod = $prd->getProduct();
-        ?>
+                ?>
                 <tr>
                     <td><?php echo $prod->id; ?></td>
                     <td><?php echo $prod->nombre; ?></td>
@@ -39,9 +41,7 @@
                         <a data-id="<?php echo $prod->id; ?>" data-option="add" class="btn btn-warning btn-sm" href="ajax/devolucion/addDevolver.php"> Devolver</a>
                     </td>
                 </tr>
-        <?php
-            endforeach;
-        ?>
+            <?php endforeach; ?>
             </tbody>
         </table>
         <script>

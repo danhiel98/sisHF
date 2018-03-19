@@ -14,10 +14,12 @@
 ?>
     <table class="table table-bordered table-hover table-responsive">
         <thead>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th style="width:50px;">Existencias</th>
-            <th style="width: 140px;">Agregar</th>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th style="width:50px;">Existencias</th>
+                <th style="width: 140px;">Agregar</th>
+            </tr>
         </thead>
         <tbody>
             <?php

@@ -89,7 +89,7 @@ class EnvioData {
 
 	public static function getByPage($start,$limit){
 		$start = $start - 1;
-		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where estado = 1 order by idEnvioBanco desc limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

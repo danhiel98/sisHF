@@ -1,5 +1,5 @@
 <?php
-	if (isset($_GET["id"])) {
+	if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 		$client = ClientData::getById($_GET["id"]);
 		$tipos = array();
 

@@ -56,7 +56,7 @@
 					</li>
 					<?php endif; ?>
 					<li>
-						<a href="index.php?view=calendar">Calendario <span class="label label-info"><?php echo $totalCalendar; ?></span></a>
+						<a target="_blank" href="index.php?view=calendar">Calendario <span class="label label-info"><?php echo $totalCalendar; ?></span></a>
 					</li>
 				<?php else: ?>
 					<li>
@@ -143,7 +143,7 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="index.php?view=calendar">Calendario <span class="label label-info"><?php echo $totalCalendar; ?></span></a>
+						<a target="_blank" href="index.php?view=calendar">Calendario <span class="label label-info"><?php echo $totalCalendar; ?></span></a>
 					</li>
 				</ul>
 			</li>

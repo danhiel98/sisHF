@@ -71,7 +71,7 @@ class MateriaPrimaData {
 
 	public static function getAllByPage($start, $limit){
 		$start--;
-		$sql = "select * from ".self::$tablename." where estado = 1 limit $start,$limit";
+		$sql = "select * from ".self::$tablename." where estado = 1 order by idMateriaPrima desc limit $start,$limit";
 		$query = Executor::doit($sql);
 		$array = array();
 		$cnt = 0;

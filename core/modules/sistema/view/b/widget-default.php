@@ -40,11 +40,13 @@
 		<br>
 		<table class="table table-bordered table-hover">
 			<thead>
-				<th></th>
-				<th>Tipo Comprobante</th>
-				<th>No.</th>
-				<th>Cliente</th>
-				<th>Total</th>
+				<tr>
+					<th></th>
+					<th>Tipo Comprobante</th>
+					<th>No.</th>
+					<th>Cliente</th>
+					<th>Total</th>
+				</tr>
 			</thead>
 			<?php foreach($products as $sell):?>
 			<tr>
