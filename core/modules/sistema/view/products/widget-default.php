@@ -6,7 +6,7 @@
 	<div class="col-md-12">
 		<div class="btn-group pull-right">
 			<?php if ($idSuc == 1): ?>
-			<a href="index.php?view=newproduct" class="btn btn-default">Agregar Producto</a>
+			<a href="index.php?view=newproduct" class="btn btn-default"><i class="fa fa-glass fa-fw"></i> Agregar Producto</a>
 			<?php endif; ?>
 			<?php if (count($products)>0): ?>
 				<div class="btn-group pull-right">

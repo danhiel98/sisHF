@@ -1,4 +1,12 @@
 <?php
+
+	$idSuc = $_SESSION["usr_suc"];
+	$idUsr = Session::getUID();
+
+	if ($idSuc != 1 || $idUsr != 1){
+		error();
+	}
+
 	include("modals/agregar.php");
 	include("modals/editar.php");
 	#Se obtienen todas las sucursales registradas

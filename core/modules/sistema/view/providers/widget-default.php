@@ -1,4 +1,11 @@
 <?php
+
+	$usr = UserData::getById(Session::getUID());
+
+	if ($usr->tipo != 1 && $usr->tipo != 2 && $usr->tipo != 4){
+		error();
+	}
+
 	$provs =  false;
 	include("modals/agregar.php");
 	$providers = ProviderData::getAll();

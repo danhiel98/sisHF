@@ -1,5 +1,11 @@
 <?php
 	
+	$u = UserData::getById(Session::getUID());
+
+	if ($_SESSION["usr_suc"] != 1){
+		error();
+	}
+
 	$materiaP = MateriaPrimaData::getAll();
 	include('modals/agregar.php');
 	include('modals/editar.php');
@@ -15,7 +21,6 @@
 	if (count($providers)>0){
 		$provs = true;
 	}
-	$u = UserData::getById(Session::getUID());
 ?>
 <script src="ajax/matprim/mpajax.js"></script>
 <div class="row">

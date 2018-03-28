@@ -35,7 +35,7 @@
 		$totalMP = count($alertaMP);
 		$totalProd = count($alertaProd);
 		$totalAlertas = $totalMP + $totalProd + $totalCalendar;
-?>
+	?>
 
 		<ul class="nav navbar-nav navbar-right ">
 			<li class="dropdown">

@@ -1,6 +1,10 @@
 <?php
 	
 	$u = UserData::getById(Session::getUID());
+	#Si el usuario NO es administrador:
+	if ($u->tipo != 1 && $u->tipo != 2){
+		error();
+	}
 	$emps = false; #Para validar si hay empleados disponibles para crearles cuenta de usuario
 	if ($u->tipo == 1){
 		$empleados = EmpleadoData::getAllForUser();
@@ -22,10 +26,6 @@
 
 	$sucursal = SucursalData::getAll();
 	$users = UserData::getAll();
-	#Si el usuario NO es administrador:
-	if ($u->tipo != 1 && $u->tipo != 2){
-		@header("location: index.php?view=home");
-	}
 
 	include "modals/changePassword.php";
 	include "modals/confirm.php";

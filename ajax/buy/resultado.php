@@ -21,7 +21,6 @@
 		<table class="table table-bordered table-hover table-responsive">
 			<thead>
 				<tr>
-					<th style="width:40px;">ID</th>
 					<th>Nombre</th>
 					<th>Descripci&oacute;n</th>
 					<th>En Inventario</th>
@@ -33,7 +32,6 @@
 			<tbody>
 				<?php foreach ($matPrim as $mp): ?>
 				<tr>
-					<td><?php echo $mp->id; ?></td>
 					<td style="max-width: 120px;"><?php echo $mp->nombre; ?></td>
 					<td style="max-width: 250px;"><?php echo $mp->descripcion; ?></td>
 					<td style="width: 50px; text-align: center;"><?php echo $mp->existencias; ?></td>

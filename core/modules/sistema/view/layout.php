@@ -94,6 +94,7 @@
 						<li><a href="index.php?view=clients"><i class="fa fa-user-o"></i> Clientes</a></li>
 						<?php endif; ?>
 						<div class="clearfix"></div>
+						<?php if($idSuc == 1): ?> <!-- Solamente se pueden registrar envíos de dinero desde la sucursal principal -->
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-bank"></i> Bancos<span class="caret"></span></a>
 							<ul class="dropdown-menu">
@@ -101,6 +102,7 @@
 								<li><a href="index.php?view=envios"><i class="fa fa-send-o"></i> Env&iacute;os</a></li>
 							</ul>
 						</li>
+						<?php endif;?>
 						<?php if($idSuc == 1): ?> <!-- Solamente se pueden registrar gastos en la sucursal principal -->
 							<li><a href="index.php?view=gastos"><i class="fa fa-usd"></i> Gastos</a></li>       
 							<?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 4): ?>

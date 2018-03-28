@@ -1,12 +1,17 @@
 <?php
+
 	if(!isset($_GET["id"]) || !is_numeric($_GET["id"])){
 		error();
 	}
 	$id = $_GET["id"];
 	$u = UserData::getById(Session::getUID());
-	if (!$u->tipo == 1 || !$u->tipo == 2):
-		@header("location: index.php?view=home");
-	endif;
+	
+	
+
+	if ($u->tipo != 1 && $u->tipo != 2){
+		error();
+	}
+
 	$sucs = false; #Para ver si se encuentran más de 0 sucursales
 	$empleado = EmpleadoData::getById($id);
 	if (is_null($empleado)) {

@@ -1,4 +1,12 @@
 <?php
+	
+	$idUsr = Session::getUID();
+	$usr = UserData::getById($idUsr);
+
+	if ($usr->tipo != 1 && $usr->tipo != 2){
+		error();
+	}
+
 	$idSuc = $_SESSION["usr_suc"];
 	$sucursales = SucursalData::getAll();
 	$empleados = EmpleadoData::getAll();
@@ -66,7 +74,7 @@
 								<th>Nombres</th>
 								<th>Tel&eacute;fono</th>
 								<th>&Aacute;rea</th>
-								<?php if ($idSuc == 1): ?>
+								<?php if ($usr->tipo == 1): ?>
 								<th>Sucursal</th>
 								<?php endif; ?>
 								<th></th>
@@ -82,7 +90,7 @@
 									<td><?php echo $empleado->nombre; ?></td>
 									<td><?php echo $empleado->telefono; ?></td>
 									<td><?php echo $empleado->area; ?></td>
-									<?php if ($idSuc == 1): ?>
+									<?php if ($usr->tipo == 1): ?>
 									<td><?php echo $empleado->getSucursal()->nombre; ?></td>
 									<?php endif; ?>
 									<td style="width:40px;">
