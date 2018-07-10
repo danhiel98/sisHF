@@ -94,7 +94,7 @@
 									<td><?php echo $empleado->getSucursal()->nombre; ?></td>
 									<?php endif; ?>
 									<td style="width:40px;">
-										<a href="index.php?view=editemploy&id=<?php echo $empleado->id;?>" class="btn btn-warning btn-xs">Editar</a>
+										<a href="index.php?view=editemploy&id=<?php echo $empleado->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> </a>
 									</td>
 								</tr>
 							<?php endforeach; ?>

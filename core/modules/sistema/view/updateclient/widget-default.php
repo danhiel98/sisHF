@@ -16,7 +16,7 @@
 		$client->phone = $_POST["txtPhone"];
 		$client->nrc = $_POST["txtNrc"];
 		if ($client->birth != "") {
-			$fecha = array_reverse(preg_split("[/]",$client->birth));
+			$fecha = array_reverse(preg_split("[/]", $client->birth));
 			$client->birth = $fecha[0]."-".$fecha[1]."-".$fecha[2];
 		}
 		$client->update();

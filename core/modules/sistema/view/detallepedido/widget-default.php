@@ -5,7 +5,7 @@
         $pedido = PedidoData::getById($id);
     }
 
-    if (count($pedido) == 1):
+    if (!is_null($pedido)):
         include "core/modules/sistema/view/agregarPago.php";
         $prodP = PedidoData::getAllProductsByPedidoId($_GET["id"]);
         $servP = PedidoData::getAllServicesByPedidoId($_GET["id"]);

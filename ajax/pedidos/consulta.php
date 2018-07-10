@@ -62,8 +62,7 @@
     }
     
     include "detallesError.php";
-?>
-    <script src="js/bootstrap-confirmation.js"></script>
+?>    
     
     <?php if (isset($_COOKIE["okPdido"]) && !empty($_COOKIE["okPdido"])): ?>
         <div class="alert alert-success alert-dismissible">
@@ -372,9 +371,18 @@
             });
         }
 
+        $(".finalizar").on("confirmed.bs.confirmation",function(){
+            var id = this.id;
+            var opc = $(this).data("opc");
+            var est = $(this).data("estado");
+			finalizar(id,opc,est);
+        });
+
         vHash = window.location.hash;
         if (vHash == "#end"){
             $("#entregado").tab("show");
         }
+
+        $.getScript("js/bootstrap-confirmation.js");
 
     </script>

@@ -1,7 +1,7 @@
 <?php
-
 	$usr = UserData::getById(Session::getUID());
 
+	//Si es vendedor se va a mstrar un mensaje de error
 	if ($usr->tipo != 1 && $usr->tipo != 2 && $usr->tipo != 4){
 		error();
 	}
@@ -63,9 +63,7 @@
 					</tr>
 				</thead>
 				<tbody>
-				<?php
-				foreach($providers as $prov):
-					?>
+				<?php foreach($providers as $prov): ?>
 					<tr>
 						<td style="width: 30px;"><?php echo $num++; ?></td>
 						<td><?php echo $prov->nombre; ?></td>
@@ -74,13 +72,11 @@
 						<td style="width:90px;"><?php echo $prov->telefono; ?></td>
 						<td><?php echo $prov->correo; ?></td>
 						<td style="width:40px;">
-							<a id="<?php echo $prov->id;?>" data-toggle="modal" data-target="#editar" class="btn btn-warning btn-xs btn-edit">Editar</a>
+							<a id="<?php echo $prov->id;?>" data-toggle="modal" data-target="#editar" class="btn btn-warning btn-xs btn-edit"><i class="fa fa-edit"></i> </a>
 						</td>
 					</tr>
 				</tbody>
-					<?php
-				endforeach;
-			?>
+				<?php endforeach; ?>
 			</table>
 		</div>
 
@@ -108,9 +104,7 @@
 						<li <?php if($start == $inicio){echo "class='active'";} ?>>
 							<a href="index.php?view=providers&start=<?php echo $inicio; ?>&limit=<?php echo $limit; ?>"><?php echo $i; ?></a>
 						</li>
-						<?php
-						endfor;
-					?>
+						<?php endfor; ?>
 					<?php if($start != $anterior): ?>
 					<?php 
 						$next = "#";
@@ -123,13 +117,8 @@
 				</ul>
 			</div>
 		</div>
-
-		<?php
-		else:
-		?>
+		<?php else: ?>
 			<p class='alert alert-warning'>No hay proveedores registrados</p>
-		<?php
-		endif;
-		?>
+		<?php endif; ?>
 	</div>
 </div>

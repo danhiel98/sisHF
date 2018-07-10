@@ -24,10 +24,13 @@
 					$prodsV = $pedido->getAllProductsByPedidoId($id);
 					$mantto = MantenimientoData::getByIdPedido($id);
 					
-					foreach ($prodsV as $prod){
-						$prodSuc = ProductoSucursalData::getBySucursalProducto($pedido->idsucursal,$prod->idproducto);
-						$prodSuc->cantidad = $prodSuc->cantidad + $prod->cantidad;
-						$prodSuc->updateEx();
+					# Si el pedido ya se habia entregado, se va a 'reembolsar' los productos
+					if ($pedido->entregado == 1){
+						foreach ($prodsV as $prod){
+							$prodSuc = ProductoSucursalData::getBySucursalProducto($pedido->idsucursal,$prod->idproducto);
+							$prodSuc->cantidad = $prodSuc->cantidad + $prod->cantidad;
+							$prodSuc->updateEx();
+						}
 					}
 
 					foreach($pagos as $p){

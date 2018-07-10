@@ -100,7 +100,7 @@
 					<?php foreach($materiaP as $prod):?>
 					<tr class="<?php if($prod->existencias <= $prod->minimo){echo 'warning';} ?>">
 						<td><?php echo $num++; ?></td>
-						<td style="width: 120px;"><?php echo $prod->nombre; ?></td>
+						<td><?php echo $prod->nombre; ?></td>
 						<td ><?php echo $prod->descripcion; ?></td>
 						<td style="text-align: center; width: 50px;"><?php echo $prod->minimo; ?></td>
 						<td style="text-align: center; width: 50px;"><?php echo $prod->existencias; ?></td>

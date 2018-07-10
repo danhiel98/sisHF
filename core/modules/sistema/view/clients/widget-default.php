@@ -63,7 +63,7 @@
 					?>
 					<td><?php echo $cli->phone; ?></td>
 					<td style="width:40px;">
-						<a href="index.php?view=editclient&id=<?php echo $cli->id;?>" class="btn btn-warning btn-xs">Editar</a>
+						<a href="index.php?view=editclient&id=<?php echo $cli->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> </a>
 					</td>
 				</tr>
 				<?php

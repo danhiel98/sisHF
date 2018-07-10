@@ -33,7 +33,7 @@
 
 		foreach ($products as $prd){
 			$prodSuc = ProductoSucursalData::getBySucursalProducto($idSucursal,$prd->id);
-			if (count($prodSuc) == 1 && $prodSuc->cantidad > 0){
+			if (!is_null($prodSuc) && $prodSuc->cantidad > 0){
 				array_push($productos,$prodSuc);
 			}
         }

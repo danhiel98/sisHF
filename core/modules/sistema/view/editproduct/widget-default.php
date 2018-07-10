@@ -26,7 +26,7 @@
 				<label for="imagen" class="col-lg-3 control-label">Imagen*</label>
 				<div class="col-md-8">
 					<input type="file" name="imagen" id="imagen" placeholder="">
-					<?php if($product->imagen != ""):?>
+					<?php if($product->imagen != "" && file_exists("storage/products/".$product->imagen)):?>
 					<br>
 					<img src="storage/products/<?php echo $product->imagen;?>" class="img-responsive">
 					<?php endif;?>

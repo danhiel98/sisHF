@@ -35,7 +35,7 @@
 						<th>Nombre</th>
 						<th>Descripción</th>
 						<th style="width:50px;">Existencias</th>
-						<th style="width: 140px;">Agregar</th>
+						<th style="width: 100px;">Agregar</th>
 					</tr>
 				</thead>
 				<tbody>

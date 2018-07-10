@@ -62,7 +62,7 @@
 				<tr>
 					<td style="width: 50px;"><?php echo $num++; ?></td>
 					<td>
-						<?php if($product->imagen!=""):?>
+						<?php if($product->imagen !="" && file_exists("storage/products/".$product->imagen)):?>
 							<img src="storage/products/<?php echo $product->imagen;?>" style="width:64px;">
 						<?php endif;?>
 					</td>
@@ -74,7 +74,7 @@
 					<td style="text-align: center;"><span class="fa <?php if($product->mantenimiento){echo "fa-check";}else{echo "fa-times";} ?>"></span></td>
 					<?php if ($idSuc == 1): ?>
 					<td style="width:30px;">
-						<a href="index.php?view=editproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
+						<a href="index.php?view=editproduct&id=<?php echo $product->id; ?>" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
 					</td>
 					<?php endif; ?>
 				</tr>

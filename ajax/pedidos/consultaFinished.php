@@ -68,16 +68,15 @@
     </div>
     <div class="pull-right">
         <ul class="pagination">
-            <?php if($start != 1):?>
-                <?php
+            <?php if($start != 1):
                 $prev = "#";
                 if($start != 1){
                     $prev = "?start=".($start-$limit)."&limit=".$limit."&sucursal=".$idSuc;
                 }
                 ?>
                 <li class="previous"><a class="pagF" href="ajax/pedidos/consultaFinished.php<?php echo $prev; ?>">&laquo;</a></li>
-                <?php endif; ?>
-                <?php 
+            <?php endif; ?>
+            <?php 
                 $anterior = 1;
                 for($i=1; $i<=$paginas; $i++):
                     $inicio = 1;
@@ -89,11 +88,10 @@
                 <li <?php if($start == $inicio){echo "class='active'";} ?>>
                     <a class="pagF" href="ajax/pedidos/consultaFinished.php?start=<?php echo $inicio; ?>&limit=<?php echo $limit."&sucursal=".$idSuc; ?>"><?php echo $i; ?></a>
                 </li>
-                <?php
+            <?php
                 endfor;
-                ?>
-                <?php if($start != $anterior): ?>
-                <?php 
+                
+            if($start != $anterior):
                 $next = "#";
                 if($start != $anterior){
                     $next = "?start=".($start + $limit)."&limit=".$limit."&sucursal=".$idSuc;

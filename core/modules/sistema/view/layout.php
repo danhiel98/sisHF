@@ -87,7 +87,7 @@
 						<li><a href="index.php?view=empleados"><i class="icon-users"></i> Empleados </a></li>
 						<li><a href="index.php?view=users"><i class="fa fa-users"></i> Usuarios </a></li>
 						<?php endif; ?>
-						<?php if($idSuc == 1): ?>
+						<?php if($idSuc == 1 && $u->tipo != 3): ?>
 						<li><a href="index.php?view=providers"><i class="fa fa-truck"></i> Proveedores </a></li>
 						<?php endif; ?>
 						<?php if($u->tipo == 1 || $u->tipo == 2 || $u->tipo == 3): ?>

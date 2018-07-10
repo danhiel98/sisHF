@@ -46,20 +46,17 @@
 		</div>
 
 		<h1>Lista de Usuarios</h1>
-		<br>
-		
 		<?php
 		if(count($users)>0):
-		?>
-		<?php if(isset($_COOKIE['password_updated'])):?>
+			if(isset($_COOKIE['password_updated'])):?>
 			<div class="alert alert-success alert-dimissible">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<p><i class='fa fa-info'></i> <?php echo $_COOKIE['password_updated']; ?></p>
 			</div>
-		<?php
+			<?php
 			setcookie("password_updated","",time()-18600);
 			endif;
-		?>
+			?>
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#all">Todos</a></li>
 			<?php if (count($sucursal)>1 && !$usrSuc): ?>

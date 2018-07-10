@@ -24,11 +24,15 @@
 					}
 				}
 				if (!$error){
-					$materiaPrima = ProduccionMPData::getAllByProdId($produccion->id);
-					foreach ($materiaPrima as $mp){
-						$matPrim = MateriaPrimaData::getById($mp->idmateriaprima);
-						$matPrim->existencias += $mp->cantidad;
-						$matPrim->updateEx();
+					# Si la producción se había finalizado
+					if ($produccion->terminado == 1){
+						# Obtener la materia prima utilizada y reailizar el 'reembolso'
+						$materiaPrima = ProduccionMPData::getAllByProdId($produccion->id);
+						foreach ($materiaPrima as $mp){
+							$matPrim = MateriaPrimaData::getById($mp->idmateriaprima);
+							$matPrim->existencias += $mp->cantidad;
+							$matPrim->updateEx();
+						}
 					}
 
 					$produccion->del();

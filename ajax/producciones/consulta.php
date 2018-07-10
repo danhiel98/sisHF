@@ -89,7 +89,7 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>No.</th>
+                                <th style="width: 50px;">No.</th>
                                 <th>Producto</th>
                                 <th>Cantidad</th>
                                 <th>Fecha Inicio</th>
