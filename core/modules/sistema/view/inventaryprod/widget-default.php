@@ -54,7 +54,7 @@
 						<th>Mínimo</th>
 						<?php endif; ?>
 						<th>Existencias</th>
-						<th>Total Existencias</th>
+						<th style="width: 150px; max-width: 150px;">Total Existencias</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -74,10 +74,10 @@
 							<td><?php echo $product->nombre; ?></td>
 							<td><?php echo $product->descripcion; ?></td>
 							<?php if ($idSuc == 1): ?>
-							<td><?php echo $productoSucursal->minimo; ?></td>
+							<td style="text-align: center;"><?php echo $productoSucursal->minimo; ?></td>
 							<?php endif; ?>
-							<td><?php echo $productoSucursal->cantidad; ?></td>
-							<td><?php echo $total; ?></td>
+							<td style="text-align: center;"><?php echo $productoSucursal->cantidad; ?></td>
+							<td style="text-align: center;"><?php echo $total; ?></td>
 							<td style="width:40px;">
 								<a href="index.php?view=detailprod&idProd=<?php echo $product->id; ?>" class="btn btn-default btn-xs"><i class="fa fa-bars fa-fw"></i> Detalles</a>
 							</td>

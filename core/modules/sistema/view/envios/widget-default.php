@@ -64,6 +64,7 @@
 				$spaginas = count($envio)%$limit;
 				if($spaginas>0){$paginas++;}
 				$envio = EnvioData::getByPage($start,$limit);
+				$num = $start;
 		?>
 			
 			<div class="table-responsive">
@@ -85,7 +86,7 @@
 						foreach($envio as $env):
 						?>
 							<tr>
-								<td><?php echo $env->id; ?></td>
+								<td><?php echo $num++; ?></td>
 								<td><?php echo $env->getBanco()->nombre; ?></td>
 								<td><?php echo $env->getBanco()->numCuenta; ?></td>
 								<td>$ <?php echo number_format($env->cantidad,2,'.',','); ?></td>

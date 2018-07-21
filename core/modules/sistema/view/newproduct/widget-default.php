@@ -42,7 +42,7 @@
 			<div class="form-group control-group">
 				<label for="descripcion" class="col-lg-2 control-label">Descripci&oacute;n</label>
 				<div class="col-md-6 controls">
-					<textarea maxlength="200" name="descripcion" class="form-control" id="descripcion" placeholder="Descripci&oacute;n del Producto" data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,200}" data-validation-regex-message="Introduzca una descripción válida" ></textarea>
+					<textarea maxlength="200" name="descripcion" class="form-control" id="descripcion" placeholder="Descripci&oacute;n del Producto" data-validation-regex-regex="[0-9A-Za-zÁ-Úá-ú#°/,. ]{3,200}" data-validation-regex-message="Introduzca una descripción válida" required></textarea>
 					<p class="help-block"></p>
 				</div>
 			</div>
@@ -76,7 +76,7 @@
 			<div class="form-group control-group">
 				<label for="minimo" class="col-lg-2 control-label">M&iacute;nima en Inventario*</label>
 				<div class="col-md-6 controls">
-				<input type="text" name="minimo" onkeypress="return soloNumeros(event)" required class="form-control" id="minimo" placeholder="Cantidad m&iacute;nima en inventario" data-validation-regex-regex="[0-9]{1,9}" data-validation-regex-message="Introduzca un M&iacute;nima en Inventario válido" onpaste="return false"  maxlength="9" min="1">
+				<input type="text" name="minimo" onkeypress="return soloNumeros(event)" class="form-control" id="minimo" placeholder="Cantidad m&iacute;nima en inventario" data-validation-regex-regex="[0-9]{1,9}" data-validation-regex-message="Introduzca un M&iacute;nima en Inventario válido" onpaste="return false" maxlength="9" min="1" required>
 					<p class="help-block"></p>
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 			<div class="form-group control-group">
 				<label for="inicial" class="col-lg-2 control-label">Inventario Inicial</label>
 				<div class="col-md-6 controls">
-				<input type="text" name="inicial" class="form-control" id="inicial" onkeypress="return soloNumeros(event)" placeholder="Inventario Inicial" data-validation-regex-regex="[0-9]{1,9}" data-validation-regex-message="Introduzca un Inventario Inicialválido" onpaste="return false"  maxlength="9" min="0">
+				<input type="text" name="inicial" class="form-control" id="inicial" onkeypress="return soloNumeros(event)" placeholder="Inventario Inicial" data-validation-regex-regex="[0-9]{1,9}" data-validation-regex-message="Introduzca un Inventario Inicial válido" onpaste="return false" maxlength="9" min="0" required>
 					<p class="help-block"></p>
 				</div>
 			</div>
